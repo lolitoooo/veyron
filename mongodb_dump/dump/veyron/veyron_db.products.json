@@ -1,0 +1,1814 @@
+[{
+  "_id": {
+    "$oid": "68680310f991d4d83480e4f6"
+  },
+  "name": "CHEMISE À TEXTURE EN CROCHET",
+  "description": "Chemise coupe décontractée confectionnée dans un tissu à texture ouverte. Col cubain et manches courtes. Fermeture par boutonnage sur le devant.",
+  "price": 29.97,
+  "discount": 33.29,
+  "discountPrice": 19.99,
+  "category": {
+    "$oid": "6856c43e289eed3f7a954ac7"
+  },
+  "brand": "VEYRON",
+  "stock": 80,
+  "images": [
+    {
+      "url": "/images/product-1751646977920-170499295.jpg",
+      "alt": "CHEMISE À TEXTURE EN CROCHET",
+      "isMain": true,
+      "_id": {
+        "$oid": "68680310f991d4d83480e4f7"
+      }
+    }
+  ],
+  "sizes": [
+    "Unique",
+    "XS",
+    "M",
+    "S"
+  ],
+  "colors": [
+    {
+      "name": "Marron",
+      "code": "#5B3C11",
+      "images": [
+        {
+          "url": "/images/product-1751646881150-897403176.jpg",
+          "alt": "CHEMISE À TEXTURE EN CROCHET - Marron",
+          "isMain": true,
+          "_id": {
+            "$oid": "68680310f991d4d83480e4f9"
+          }
+        },
+        {
+          "url": "/images/product-1751646883871-809342344.jpg",
+          "alt": "CHEMISE À TEXTURE EN CROCHET - Marron",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680310f991d4d83480e4fa"
+          }
+        },
+        {
+          "url": "/images/product-1751646887110-135452036.jpg",
+          "alt": "CHEMISE À TEXTURE EN CROCHET - Marron",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680310f991d4d83480e4fb"
+          }
+        },
+        {
+          "url": "/images/product-1751646895992-216536147.jpg",
+          "alt": "CHEMISE À TEXTURE EN CROCHET - Marron",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680310f991d4d83480e4fc"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "68680310f991d4d83480e4f8"
+      }
+    },
+    {
+      "name": "Blanc",
+      "code": "#FFFFFF",
+      "images": [
+        {
+          "url": "/images/product-1751646902214-449065018.jpg",
+          "alt": "CHEMISE À TEXTURE EN CROCHET - Blanc",
+          "isMain": true,
+          "_id": {
+            "$oid": "68680310f991d4d83480e4fe"
+          }
+        },
+        {
+          "url": "/images/product-1751646905286-816031406.jpg",
+          "alt": "CHEMISE À TEXTURE EN CROCHET - Blanc",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680310f991d4d83480e4ff"
+          }
+        },
+        {
+          "url": "/images/product-1751646907411-527442115.jpg",
+          "alt": "CHEMISE À TEXTURE EN CROCHET - Blanc",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680310f991d4d83480e500"
+          }
+        },
+        {
+          "url": "/images/product-1751646909442-75141700.jpg",
+          "alt": "CHEMISE À TEXTURE EN CROCHET - Blanc",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680310f991d4d83480e501"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "68680310f991d4d83480e4fd"
+      }
+    }
+  ],
+  "variants": [
+    {
+      "size": "Unique",
+      "color": "Marron",
+      "stock": 10,
+      "price": 29.97,
+      "sku": "CHE-MAR-Unique",
+      "_id": {
+        "$oid": "68680310f991d4d83480e502"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 29.97,
+      "sku": "CHE-BLA-Unique",
+      "_id": {
+        "$oid": "68680310f991d4d83480e503"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Marron",
+      "stock": 10,
+      "price": 29.97,
+      "sku": "CHE-MAR-XS",
+      "_id": {
+        "$oid": "68680310f991d4d83480e504"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 29.97,
+      "sku": "CHE-BLA-XS",
+      "_id": {
+        "$oid": "68680310f991d4d83480e505"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Marron",
+      "stock": 10,
+      "price": 29.97,
+      "sku": "CHE-MAR-M",
+      "_id": {
+        "$oid": "68680310f991d4d83480e506"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 29.97,
+      "sku": "CHE-BLA-M",
+      "_id": {
+        "$oid": "68680310f991d4d83480e507"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Marron",
+      "stock": 10,
+      "price": 29.97,
+      "sku": "CHE-MAR-S",
+      "_id": {
+        "$oid": "68680310f991d4d83480e508"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 29.97,
+      "sku": "CHE-BLA-S",
+      "_id": {
+        "$oid": "68680310f991d4d83480e509"
+      }
+    }
+  ],
+  "rating": 0,
+  "numReviews": 0,
+  "featured": false,
+  "isActive": true,
+  "attributes": [],
+  "createdAt": {
+    "$date": "2025-07-04T16:36:32.932Z"
+  },
+  "slug": "chemise-texture-en-crochet",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686806809af0e8d7e4701b9b"
+  },
+  "name": "CHEMISE JACQUARD GÉOMÉTRIQUE",
+  "description": "Chemise relaxed fit confectionnée en tissu avec mélange de coton. Col bowling et manches courtes. Bas avec fentes latérales. Fermeture boutonnée sur le devant.",
+  "price": 39.95,
+  "discount": 0,
+  "category": {
+    "$oid": "6856c43e289eed3f7a954ac7"
+  },
+  "brand": "VEYRON",
+  "stock": 120,
+  "images": [
+    {
+      "url": "/images/product-1751647871042-10972301.jpg",
+      "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE",
+      "isMain": true,
+      "_id": {
+        "$oid": "686806809af0e8d7e4701b9c"
+      }
+    }
+  ],
+  "sizes": [
+    "Unique",
+    "XS",
+    "S",
+    "M"
+  ],
+  "colors": [
+    {
+      "name": "Beige",
+      "code": "#EDDCCA",
+      "images": [
+        {
+          "url": "/images/product-1751647761306-730962670.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Beige",
+          "isMain": true,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701b9e"
+          }
+        },
+        {
+          "url": "/images/product-1751647768369-840362539.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Beige",
+          "isMain": false,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701b9f"
+          }
+        },
+        {
+          "url": "/images/product-1751647770829-408832195.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Beige",
+          "isMain": false,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701ba0"
+          }
+        },
+        {
+          "url": "/images/product-1751647773414-404735308.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Beige",
+          "isMain": false,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701ba1"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "686806809af0e8d7e4701b9d"
+      }
+    },
+    {
+      "name": "Bleu",
+      "code": "#03224C",
+      "images": [
+        {
+          "url": "/images/product-1751647802202-512265390.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Bleu",
+          "isMain": true,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701ba3"
+          }
+        },
+        {
+          "url": "/images/product-1751647804515-121187327.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Bleu",
+          "isMain": false,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701ba4"
+          }
+        },
+        {
+          "url": "/images/product-1751647806275-716650506.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Bleu",
+          "isMain": false,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701ba5"
+          }
+        },
+        {
+          "url": "/images/product-1751647808137-693848741.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Bleu",
+          "isMain": false,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701ba6"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "686806809af0e8d7e4701ba2"
+      }
+    },
+    {
+      "name": "Orange",
+      "code": "#FFA500",
+      "images": [
+        {
+          "url": "/images/product-1751647828442-417994074.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Orange",
+          "isMain": true,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701ba8"
+          }
+        },
+        {
+          "url": "/images/product-1751647830275-990796346.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Orange",
+          "isMain": false,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701ba9"
+          }
+        },
+        {
+          "url": "/images/product-1751647832212-181316462.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Orange",
+          "isMain": false,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701baa"
+          }
+        },
+        {
+          "url": "/images/product-1751647834673-475008329.jpg",
+          "alt": "CHEMISE JACQUARD GÉOMÉTRIQUE - Orange",
+          "isMain": false,
+          "_id": {
+            "$oid": "686806809af0e8d7e4701bab"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "686806809af0e8d7e4701ba7"
+      }
+    }
+  ],
+  "variants": [
+    {
+      "size": "Unique",
+      "color": "Beige",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-BEI-Unique",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bac"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Bleu",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-BLE-Unique",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bad"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Orange",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-ORA-Unique",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bae"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Beige",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-BEI-XS",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701baf"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Bleu",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-BLE-XS",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bb0"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Orange",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-ORA-XS",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bb1"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Beige",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-BEI-S",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bb2"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Bleu",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-BLE-S",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bb3"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Orange",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-ORA-S",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bb4"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Beige",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-BEI-M",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bb5"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Bleu",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-BLE-M",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bb6"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Orange",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "CHE-ORA-M",
+      "_id": {
+        "$oid": "686806809af0e8d7e4701bb7"
+      }
+    }
+  ],
+  "rating": 0,
+  "numReviews": 0,
+  "featured": false,
+  "isActive": true,
+  "attributes": [],
+  "createdAt": {
+    "$date": "2025-07-04T16:51:12.295Z"
+  },
+  "slug": "chemise-jacquard-g-om-trique",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686807d99af0e8d7e4701d80"
+  },
+  "name": "CHEMISE EN JACQUARD BRODÉE",
+  "description": "Chemise relaxed fit confectionnée en tissu de coton avec applications en relief ton sur ton. Col à rabat et manches courtes. Fermeture par boutonnage sur le devant.",
+  "price": 49.95,
+  "discount": 0,
+  "category": {
+    "$oid": "6856c43e289eed3f7a954ac7"
+  },
+  "brand": "VEYRON",
+  "stock": 80,
+  "images": [
+    {
+      "url": "/images/product-1751648216159-979345306.jpg",
+      "alt": "CHEMISE EN JACQUARD BRODÉE",
+      "isMain": true,
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d81"
+      }
+    }
+  ],
+  "sizes": [
+    "Unique",
+    "XS",
+    "S",
+    "M"
+  ],
+  "colors": [
+    {
+      "name": "Beige",
+      "code": "#E8DCCA",
+      "images": [
+        {
+          "url": "/images/product-1751648158187-940291947.jpg",
+          "alt": "CHEMISE EN JACQUARD BRODÉE - ",
+          "isMain": true,
+          "_id": {
+            "$oid": "686807d99af0e8d7e4701d83"
+          }
+        },
+        {
+          "url": "/images/product-1751648160773-513363533.jpg",
+          "alt": "CHEMISE EN JACQUARD BRODÉE - ",
+          "isMain": false,
+          "_id": {
+            "$oid": "686807d99af0e8d7e4701d84"
+          }
+        },
+        {
+          "url": "/images/product-1751648162570-224992191.jpg",
+          "alt": "CHEMISE EN JACQUARD BRODÉE - ",
+          "isMain": false,
+          "_id": {
+            "$oid": "686807d99af0e8d7e4701d85"
+          }
+        },
+        {
+          "url": "/images/product-1751648164550-101820067.jpg",
+          "alt": "CHEMISE EN JACQUARD BRODÉE - ",
+          "isMain": false,
+          "_id": {
+            "$oid": "686807d99af0e8d7e4701d86"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d82"
+      }
+    },
+    {
+      "name": "Noir",
+      "code": "#000000",
+      "images": [
+        {
+          "url": "/images/product-1751648173321-674987979.jpg",
+          "alt": "CHEMISE EN JACQUARD BRODÉE - Noir",
+          "isMain": true,
+          "_id": {
+            "$oid": "686807d99af0e8d7e4701d88"
+          }
+        },
+        {
+          "url": "/images/product-1751648175373-917174978.jpg",
+          "alt": "CHEMISE EN JACQUARD BRODÉE - Noir",
+          "isMain": false,
+          "_id": {
+            "$oid": "686807d99af0e8d7e4701d89"
+          }
+        },
+        {
+          "url": "/images/product-1751648177513-35047806.jpg",
+          "alt": "CHEMISE EN JACQUARD BRODÉE - Noir",
+          "isMain": false,
+          "_id": {
+            "$oid": "686807d99af0e8d7e4701d8a"
+          }
+        },
+        {
+          "url": "/images/product-1751648179584-187236882.jpg",
+          "alt": "CHEMISE EN JACQUARD BRODÉE - Noir",
+          "isMain": false,
+          "_id": {
+            "$oid": "686807d99af0e8d7e4701d8b"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d87"
+      }
+    }
+  ],
+  "variants": [
+    {
+      "size": "Unique",
+      "color": "Beige",
+      "stock": 10,
+      "price": 49.95,
+      "sku": "CHE-BEI-Unique",
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d8c"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Noir",
+      "stock": 10,
+      "price": 49.95,
+      "sku": "CHE-NOI-Unique",
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d8d"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Beige",
+      "stock": 10,
+      "price": 49.95,
+      "sku": "CHE-BEI-XS",
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d8e"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Noir",
+      "stock": 10,
+      "price": 49.95,
+      "sku": "CHE-NOI-XS",
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d8f"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Beige",
+      "stock": 10,
+      "price": 49.95,
+      "sku": "CHE-BEI-S",
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d90"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Noir",
+      "stock": 10,
+      "price": 49.95,
+      "sku": "CHE-NOI-S",
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d91"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Beige",
+      "stock": 10,
+      "price": 49.95,
+      "sku": "CHE-BEI-M",
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d92"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Noir",
+      "stock": 10,
+      "price": 49.95,
+      "sku": "CHE-NOI-M",
+      "_id": {
+        "$oid": "686807d99af0e8d7e4701d93"
+      }
+    }
+  ],
+  "rating": 0,
+  "numReviews": 0,
+  "featured": false,
+  "isActive": true,
+  "attributes": [],
+  "createdAt": {
+    "$date": "2025-07-04T16:56:57.239Z"
+  },
+  "slug": "chemise-en-jacquard-brod-e",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686808ff9af0e8d7e4701f9a"
+  },
+  "name": "TOP BANDEAU VOLANTS",
+  "description": "Top à décolleté droit et épaules dénudées. Détail de volants. Tissu en matières variées ton sur ton.",
+  "price": 17.95,
+  "discount": 27.63,
+  "discountPrice": 12.99,
+  "category": {
+    "$oid": "6856c47a289eed3f7a954ace"
+  },
+  "brand": "VEYRON",
+  "stock": 120,
+  "images": [
+    {
+      "url": "/images/product-1751648510495-488442949.jpg",
+      "alt": "TOP BANDEAU VOLANTS",
+      "isMain": true,
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701f9b"
+      }
+    }
+  ],
+  "sizes": [
+    "Unique",
+    "XS",
+    "S",
+    "M"
+  ],
+  "colors": [
+    {
+      "name": "Blanc",
+      "code": "#FFFFFF",
+      "images": [
+        {
+          "url": "/images/product-1751648384716-993916770.jpg",
+          "alt": "TOP BANDEAU VOLANTS - ",
+          "isMain": true,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701f9d"
+          }
+        },
+        {
+          "url": "/images/product-1751648386834-330219664.jpg",
+          "alt": "TOP BANDEAU VOLANTS - ",
+          "isMain": false,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701f9e"
+          }
+        },
+        {
+          "url": "/images/product-1751648388705-47529656.jpg",
+          "alt": "TOP BANDEAU VOLANTS - ",
+          "isMain": false,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701f9f"
+          }
+        },
+        {
+          "url": "/images/product-1751648390993-924962128.jpg",
+          "alt": "TOP BANDEAU VOLANTS - ",
+          "isMain": false,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701fa0"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701f9c"
+      }
+    },
+    {
+      "name": "Jaune",
+      "code": "#FDFD96",
+      "images": [
+        {
+          "url": "/images/product-1751648429115-456253908.jpg",
+          "alt": "TOP BANDEAU VOLANTS - Jaune",
+          "isMain": true,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701fa2"
+          }
+        },
+        {
+          "url": "/images/product-1751648432121-269342671.jpg",
+          "alt": "TOP BANDEAU VOLANTS - Jaune",
+          "isMain": false,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701fa3"
+          }
+        },
+        {
+          "url": "/images/product-1751648438919-896304468.jpg",
+          "alt": "TOP BANDEAU VOLANTS - Jaune",
+          "isMain": false,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701fa4"
+          }
+        },
+        {
+          "url": "/images/product-1751648441687-962284964.jpg",
+          "alt": "TOP BANDEAU VOLANTS - Jaune",
+          "isMain": false,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701fa5"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fa1"
+      }
+    },
+    {
+      "name": "Noir",
+      "code": "#000000",
+      "images": [
+        {
+          "url": "/images/product-1751648417472-28132189.jpg",
+          "alt": "TOP BANDEAU VOLANTS - Noir",
+          "isMain": true,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701fa7"
+          }
+        },
+        {
+          "url": "/images/product-1751648419978-57306158.jpg",
+          "alt": "TOP BANDEAU VOLANTS - Noir",
+          "isMain": false,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701fa8"
+          }
+        },
+        {
+          "url": "/images/product-1751648422417-495735939.jpg",
+          "alt": "TOP BANDEAU VOLANTS - Noir",
+          "isMain": false,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701fa9"
+          }
+        },
+        {
+          "url": "/images/product-1751648425888-143113295.jpg",
+          "alt": "TOP BANDEAU VOLANTS - Noir",
+          "isMain": false,
+          "_id": {
+            "$oid": "686808ff9af0e8d7e4701faa"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fa6"
+      }
+    }
+  ],
+  "variants": [
+    {
+      "size": "Unique",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-BLA-Unique",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fab"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Jaune",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-JAU-Unique",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fac"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Noir",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-NOI-Unique",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fad"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-BLA-XS",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fae"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Jaune",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-JAU-XS",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701faf"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Noir",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-NOI-XS",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fb0"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-BLA-S",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fb1"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Jaune",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-JAU-S",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fb2"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Noir",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-NOI-S",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fb3"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-BLA-M",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fb4"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Jaune",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-JAU-M",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fb5"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Noir",
+      "stock": 10,
+      "price": 17.95,
+      "sku": "TOP-NOI-M",
+      "_id": {
+        "$oid": "686808ff9af0e8d7e4701fb6"
+      }
+    }
+  ],
+  "rating": 0,
+  "numReviews": 0,
+  "featured": false,
+  "isActive": true,
+  "attributes": [],
+  "createdAt": {
+    "$date": "2025-07-04T17:01:51.757Z"
+  },
+  "slug": "top-bandeau-volants",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68680a539af0e8d7e47021b7"
+  },
+  "name": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES",
+  "description": "T-shirt à col rond et manches longues. Tissu côtelé.",
+  "price": 15.95,
+  "discount": 0,
+  "category": {
+    "$oid": "6856c47a289eed3f7a954ace"
+  },
+  "brand": "VEYRON",
+  "stock": 80,
+  "images": [
+    {
+      "url": "/images/product-1751648848324-205166971.jpg",
+      "alt": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES",
+      "isMain": true,
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021b8"
+      }
+    }
+  ],
+  "sizes": [
+    "Unique",
+    "XS",
+    "S",
+    "M"
+  ],
+  "colors": [
+    {
+      "name": "Gris",
+      "code": "#293133",
+      "images": [
+        {
+          "url": "/images/product-1751648808907-536763431.jpg",
+          "alt": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES - Gris",
+          "isMain": true,
+          "_id": {
+            "$oid": "68680a539af0e8d7e47021ba"
+          }
+        },
+        {
+          "url": "/images/product-1751648810794-496936982.jpg",
+          "alt": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES - Gris",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680a539af0e8d7e47021bb"
+          }
+        },
+        {
+          "url": "/images/product-1751648812543-612747123.jpg",
+          "alt": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES - Gris",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680a539af0e8d7e47021bc"
+          }
+        },
+        {
+          "url": "/images/product-1751648814634-736868903.jpg",
+          "alt": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES - Gris",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680a539af0e8d7e47021bd"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021b9"
+      }
+    },
+    {
+      "name": "Marron",
+      "code": "#5B3C11",
+      "images": [
+        {
+          "url": "/images/product-1751648821803-329082543.jpg",
+          "alt": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES - Marron",
+          "isMain": true,
+          "_id": {
+            "$oid": "68680a539af0e8d7e47021bf"
+          }
+        },
+        {
+          "url": "/images/product-1751648824069-254554589.jpg",
+          "alt": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES - Marron",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680a539af0e8d7e47021c0"
+          }
+        },
+        {
+          "url": "/images/product-1751648826481-538880779.jpg",
+          "alt": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES - Marron",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680a539af0e8d7e47021c1"
+          }
+        },
+        {
+          "url": "/images/product-1751648828621-943280962.jpg",
+          "alt": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES - Marron",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680a539af0e8d7e47021c2"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021be"
+      }
+    }
+  ],
+  "variants": [
+    {
+      "size": "Unique",
+      "color": "Gris",
+      "stock": 10,
+      "price": 15.95,
+      "sku": "T-S-GRI-Unique",
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021c3"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Marron",
+      "stock": 10,
+      "price": 15.95,
+      "sku": "T-S-MAR-Unique",
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021c4"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Gris",
+      "stock": 10,
+      "price": 15.95,
+      "sku": "T-S-GRI-XS",
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021c5"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Marron",
+      "stock": 10,
+      "price": 15.95,
+      "sku": "T-S-MAR-XS",
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021c6"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Gris",
+      "stock": 10,
+      "price": 15.95,
+      "sku": "T-S-GRI-S",
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021c7"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Marron",
+      "stock": 10,
+      "price": 15.95,
+      "sku": "T-S-MAR-S",
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021c8"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Gris",
+      "stock": 10,
+      "price": 15.95,
+      "sku": "T-S-GRI-M",
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021c9"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Marron",
+      "stock": 10,
+      "price": 15.95,
+      "sku": "T-S-MAR-M",
+      "_id": {
+        "$oid": "68680a539af0e8d7e47021ca"
+      }
+    }
+  ],
+  "rating": 0,
+  "numReviews": 0,
+  "featured": false,
+  "isActive": true,
+  "attributes": [],
+  "createdAt": {
+    "$date": "2025-07-04T17:07:31.979Z"
+  },
+  "slug": "t-shirt-c-tel-effet-d-lav-manches-longues",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68680c929af0e8d7e4702f05"
+  },
+  "name": "TOP GILET CROCHET",
+  "description": "Top confectionné en tissu type crochet. Décolleté en V et sans manches. Fermeture avant avec nœuds.",
+  "price": 39.95,
+  "discount": 0,
+  "category": {
+    "$oid": "6856c47a289eed3f7a954ace"
+  },
+  "brand": "VEYRON",
+  "stock": 80,
+  "images": [
+    {
+      "url": "/images/product-1751649425969-863968369.jpg",
+      "alt": "TOP GILET CROCHET",
+      "isMain": true,
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f06"
+      }
+    }
+  ],
+  "sizes": [
+    "Unique",
+    "XS",
+    "S",
+    "M"
+  ],
+  "colors": [
+    {
+      "name": "Marron",
+      "code": "#3B3B11",
+      "images": [
+        {
+          "url": "/images/product-1751649378477-152765737.jpg",
+          "alt": "TOP GILET CROCHET - Marron",
+          "isMain": true,
+          "_id": {
+            "$oid": "68680c929af0e8d7e4702f08"
+          }
+        },
+        {
+          "url": "/images/product-1751649380661-485885672.jpg",
+          "alt": "TOP GILET CROCHET - Marron",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680c929af0e8d7e4702f09"
+          }
+        },
+        {
+          "url": "/images/product-1751649382564-919928752.jpg",
+          "alt": "TOP GILET CROCHET - Marron",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680c929af0e8d7e4702f0a"
+          }
+        },
+        {
+          "url": "/images/product-1751649385830-982474258.jpg",
+          "alt": "TOP GILET CROCHET - Marron",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680c929af0e8d7e4702f0b"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f07"
+      }
+    },
+    {
+      "name": "Blanc",
+      "code": "#FFFFFF",
+      "images": [
+        {
+          "url": "/images/product-1751649393606-310031339.jpg",
+          "alt": "TOP GILET CROCHET - ",
+          "isMain": true,
+          "_id": {
+            "$oid": "68680c929af0e8d7e4702f0d"
+          }
+        },
+        {
+          "url": "/images/product-1751649395813-490336870.jpg",
+          "alt": "TOP GILET CROCHET - ",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680c929af0e8d7e4702f0e"
+          }
+        },
+        {
+          "url": "/images/product-1751649397983-846852292.jpg",
+          "alt": "TOP GILET CROCHET - ",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680c929af0e8d7e4702f0f"
+          }
+        },
+        {
+          "url": "/images/product-1751649399961-986661238.jpg",
+          "alt": "TOP GILET CROCHET - ",
+          "isMain": false,
+          "_id": {
+            "$oid": "68680c929af0e8d7e4702f10"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f0c"
+      }
+    }
+  ],
+  "variants": [
+    {
+      "size": "Unique",
+      "color": "Marron",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "TOP-MAR-Unique",
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f11"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "TOP-BLA-Unique",
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f12"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Marron",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "TOP-MAR-XS",
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f13"
+      }
+    },
+    {
+      "size": "XS",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "TOP-BLA-XS",
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f14"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Marron",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "TOP-MAR-S",
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f15"
+      }
+    },
+    {
+      "size": "S",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "TOP-BLA-S",
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f16"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Marron",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "TOP-MAR-M",
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f17"
+      }
+    },
+    {
+      "size": "M",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 39.95,
+      "sku": "TOP-BLA-M",
+      "_id": {
+        "$oid": "68680c929af0e8d7e4702f18"
+      }
+    }
+  ],
+  "rating": 0,
+  "numReviews": 0,
+  "featured": false,
+  "isActive": true,
+  "attributes": [],
+  "createdAt": {
+    "$date": "2025-07-04T17:17:06.410Z"
+  },
+  "slug": "top-gilet-crochet",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6868151e8cd76fbe38a54c8c"
+  },
+  "name": "CRAVATE 100 % SOIE À POIS",
+  "description": "\nCravate large confectionnée en tissu de soie.",
+  "price": 49.95,
+  "discount": 0,
+  "category": {
+    "$oid": "6856c484289eed3f7a954ad2"
+  },
+  "brand": "VEYRON",
+  "stock": 21,
+  "images": [
+    {
+      "url": "/images/product-1751651598073-10798696.jpg",
+      "alt": "CRAVATE 100 % SOIE À POIS",
+      "isMain": true,
+      "_id": {
+        "$oid": "6868151e8cd76fbe38a54c8d"
+      }
+    }
+  ],
+  "sizes": [
+    "Unique"
+  ],
+  "colors": [
+    {
+      "name": "Noir",
+      "code": "#000000",
+      "images": [
+        {
+          "url": "/images/product-1751651507559-562120182.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Noir",
+          "isMain": true,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c8f"
+          }
+        },
+        {
+          "url": "/images/product-1751651511640-498570005.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Noir",
+          "isMain": false,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c90"
+          }
+        },
+        {
+          "url": "/images/product-1751651516588-525427397.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Noir",
+          "isMain": false,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c91"
+          }
+        },
+        {
+          "url": "/images/product-1751651519071-574077418.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Noir",
+          "isMain": false,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c92"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "6868151e8cd76fbe38a54c8e"
+      }
+    },
+    {
+      "name": "Bleu",
+      "code": "#03224C",
+      "images": [
+        {
+          "url": "/images/product-1751651521059-640581336.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Bleu",
+          "isMain": true,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c94"
+          }
+        },
+        {
+          "url": "/images/product-1751651523630-532443729.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Bleu",
+          "isMain": false,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c95"
+          }
+        },
+        {
+          "url": "/images/product-1751651525317-220084319.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Bleu",
+          "isMain": false,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c96"
+          }
+        },
+        {
+          "url": "/images/product-1751651530169-67179278.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Bleu",
+          "isMain": false,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c97"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "6868151e8cd76fbe38a54c93"
+      }
+    },
+    {
+      "name": "Vert",
+      "code": "#22844E",
+      "images": [
+        {
+          "url": "/images/product-1751651538043-845293634.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Vert",
+          "isMain": true,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c99"
+          }
+        },
+        {
+          "url": "/images/product-1751651540112-923008936.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Vert",
+          "isMain": false,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c9a"
+          }
+        },
+        {
+          "url": "/images/product-1751651541905-260369952.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Vert",
+          "isMain": false,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c9b"
+          }
+        },
+        {
+          "url": "/images/product-1751651543996-274148215.jpg",
+          "alt": "CRAVATE 100 % SOIE À POIS - Vert",
+          "isMain": false,
+          "_id": {
+            "$oid": "6868151e8cd76fbe38a54c9c"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "6868151e8cd76fbe38a54c98"
+      }
+    }
+  ],
+  "variants": [
+    {
+      "size": "Unique",
+      "color": "Noir",
+      "stock": 10,
+      "price": 49.95,
+      "sku": "CRA-NOI-Unique",
+      "_id": {
+        "$oid": "6868151e8cd76fbe38a54c9d"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Bleu",
+      "stock": 10,
+      "price": 49.95,
+      "sku": "CRA-BLE-Unique",
+      "_id": {
+        "$oid": "6868151e8cd76fbe38a54c9e"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Vert",
+      "stock": 1,
+      "price": 49.95,
+      "sku": "CRA-VER-Unique",
+      "_id": {
+        "$oid": "6868151e8cd76fbe38a54c9f"
+      }
+    }
+  ],
+  "rating": 0,
+  "numReviews": 0,
+  "featured": false,
+  "isActive": true,
+  "attributes": [],
+  "createdAt": {
+    "$date": "2025-07-04T17:53:34.171Z"
+  },
+  "slug": "cravate-100-soie-pois",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693d707113f4be9d5133c3"
+  },
+  "name": "BANDANA À IMPRIMÉ CACHEMIRE",
+  "description": "Bandana confectionné en tissu de coton.",
+  "price": 15.95,
+  "discount": 49.9,
+  "discountPrice": 7.99,
+  "category": {
+    "$oid": "6856c484289eed3f7a954ad2"
+  },
+  "brand": "VEYRON",
+  "stock": 20,
+  "images": [
+    {
+      "url": "/images/product-1751727471457-397951352.jpg",
+      "alt": "BANDANA À IMPRIMÉ CACHEMIRE",
+      "isMain": true,
+      "_id": {
+        "$oid": "68693d707113f4be9d5133c4"
+      }
+    }
+  ],
+  "sizes": [
+    "Unique"
+  ],
+  "colors": [
+    {
+      "name": "Bleu",
+      "code": "#03224C",
+      "images": [
+        {
+          "url": "/images/product-1751727442791-253452596.jpg",
+          "alt": "BANDANA À IMPRIMÉ CACHEMIRE - Bleu",
+          "isMain": true,
+          "_id": {
+            "$oid": "68693d707113f4be9d5133c6"
+          }
+        },
+        {
+          "url": "/images/product-1751727445252-55313840.jpg",
+          "alt": "BANDANA À IMPRIMÉ CACHEMIRE - Bleu",
+          "isMain": false,
+          "_id": {
+            "$oid": "68693d707113f4be9d5133c7"
+          }
+        },
+        {
+          "url": "/images/product-1751727447139-569554433.jpg",
+          "alt": "BANDANA À IMPRIMÉ CACHEMIRE - Bleu",
+          "isMain": false,
+          "_id": {
+            "$oid": "68693d707113f4be9d5133c8"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "68693d707113f4be9d5133c5"
+      }
+    },
+    {
+      "name": "Blanc",
+      "code": "#FFFFFF",
+      "images": [
+        {
+          "url": "/images/product-1751727449286-234027462.jpg",
+          "alt": "BANDANA À IMPRIMÉ CACHEMIRE - Blanc",
+          "isMain": true,
+          "_id": {
+            "$oid": "68693d707113f4be9d5133ca"
+          }
+        },
+        {
+          "url": "/images/product-1751727451435-130824392.jpg",
+          "alt": "BANDANA À IMPRIMÉ CACHEMIRE - Blanc",
+          "isMain": false,
+          "_id": {
+            "$oid": "68693d707113f4be9d5133cb"
+          }
+        },
+        {
+          "url": "/images/product-1751727453888-634850707.jpg",
+          "alt": "BANDANA À IMPRIMÉ CACHEMIRE - Blanc",
+          "isMain": false,
+          "_id": {
+            "$oid": "68693d707113f4be9d5133cc"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "68693d707113f4be9d5133c9"
+      }
+    }
+  ],
+  "variants": [
+    {
+      "size": "Unique",
+      "color": "Bleu",
+      "stock": 10,
+      "price": 15.95,
+      "sku": "BAN-BLE-Unique",
+      "_id": {
+        "$oid": "68693d707113f4be9d5133cd"
+      }
+    },
+    {
+      "size": "Unique",
+      "color": "Blanc",
+      "stock": 10,
+      "price": 15.95,
+      "sku": "BAN-BLA-Unique",
+      "_id": {
+        "$oid": "68693d707113f4be9d5133ce"
+      }
+    }
+  ],
+  "rating": 0,
+  "numReviews": 0,
+  "featured": false,
+  "isActive": true,
+  "attributes": [],
+  "createdAt": {
+    "$date": "2025-07-05T14:57:52.482Z"
+  },
+  "slug": "bandana-imprim-cachemire",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693ebe7113f4be9d5135cf"
+  },
+  "name": "ÉCHARPE LARGE À FRANGES",
+  "description": "Écharpe avec finitions à franges ton sur ton.",
+  "price": 29.95,
+  "discount": 0,
+  "category": {
+    "$oid": "6856c484289eed3f7a954ad2"
+  },
+  "brand": "VEYRON",
+  "stock": 16,
+  "images": [
+    {
+      "url": "/images/product-1751727803923-498760450.jpg",
+      "alt": "ÉCHARPE LARGE À FRANGES",
+      "isMain": true,
+      "_id": {
+        "$oid": "68693ebe7113f4be9d5135d0"
+      }
+    }
+  ],
+  "sizes": [
+    "Unique"
+  ],
+  "colors": [
+    {
+      "name": "Blanc",
+      "code": "#FFFFFF",
+      "images": [
+        {
+          "url": "/images/product-1751727783072-536411560.jpg",
+          "alt": "ÉCHARPE LARGE À FRANGES - Blanc",
+          "isMain": true,
+          "_id": {
+            "$oid": "68693ebe7113f4be9d5135d2"
+          }
+        },
+        {
+          "url": "/images/product-1751727784705-665737185.jpg",
+          "alt": "ÉCHARPE LARGE À FRANGES - Blanc",
+          "isMain": false,
+          "_id": {
+            "$oid": "68693ebe7113f4be9d5135d3"
+          }
+        },
+        {
+          "url": "/images/product-1751727786666-496719522.jpg",
+          "alt": "ÉCHARPE LARGE À FRANGES - Blanc",
+          "isMain": false,
+          "_id": {
+            "$oid": "68693ebe7113f4be9d5135d4"
+          }
+        },
+        {
+          "url": "/images/product-1751727788881-899798179.jpg",
+          "alt": "ÉCHARPE LARGE À FRANGES - Blanc",
+          "isMain": false,
+          "_id": {
+            "$oid": "68693ebe7113f4be9d5135d5"
+          }
+        }
+      ],
+      "_id": {
+        "$oid": "68693ebe7113f4be9d5135d1"
+      }
+    }
+  ],
+  "variants": [
+    {
+      "size": "Unique",
+      "color": "Blanc",
+      "stock": 16,
+      "price": 29.95,
+      "sku": "ÉCH-BLA-Unique",
+      "_id": {
+        "$oid": "68693ebe7113f4be9d5135d6"
+      }
+    }
+  ],
+  "rating": 0,
+  "numReviews": 0,
+  "featured": false,
+  "isActive": false,
+  "attributes": [],
+  "createdAt": {
+    "$date": "2025-07-05T15:03:26.220Z"
+  },
+  "slug": "charpe-large-franges",
+  "__v": 0
+}]

@@ -1,0 +1,36 @@
+[{
+  "_id": {
+    "$oid": "686f5754d45dc641b913b4c5"
+  },
+  "userId": {
+    "$oid": "6867eea3f991d4d83480e48f"
+  },
+  "items": [
+    {
+      "productId": {
+        "$oid": "686807d99af0e8d7e4701d80"
+      },
+      "name": "CHEMISE EN JACQUARD BRODÉE",
+      "price": 49.95,
+      "quantity": 1,
+      "image": "http://localhost:3000/images/product-1751648164550-101820067.jpg",
+      "variant": {
+        "size": "Unique",
+        "color": "Beige",
+        "colorCode": "#E8DCCA"
+      },
+      "variantId": "686807d99af0e8d7e4701d80-Unique-Beige",
+      "_id": {
+        "$oid": "68bec930eefd3362daa8e490"
+      }
+    }
+  ],
+  "total": 49.95,
+  "createdAt": {
+    "$date": "2025-07-10T06:01:56.263Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-08T12:16:48.121Z"
+  },
+  "__v": 26
+}]

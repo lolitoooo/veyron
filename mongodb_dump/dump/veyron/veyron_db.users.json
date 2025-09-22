@@ -1,0 +1,2285 @@
+[{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f723b"
+  },
+  "firstName": "Adelin",
+  "lastName": "Royer",
+  "email": "adelin_royer@yahoo.fr",
+  "password": "$2b$10$yDIUAD8ST2sbNaPwbRCPE.OaEtqUYpQ5Vhe2AuBUo5pm1fS5J29Ta",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/12.jpg",
+  "phone": "0641798327",
+  "birthDate": "2002-11-18",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-05-04T16:52:41.348Z"
+  },
+  "createdAt": {
+    "$date": "2024-01-14T03:00:28.615Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f723c"
+  },
+  "firstName": "Oriane",
+  "lastName": "Barbier",
+  "email": "oriane_barbier87@hotmail.fr",
+  "password": "$2b$10$LgEn7HwaH0bKPdEL5Qrxl.NDCsJEz5uPUNU8942WzfLGrESsXEeBe",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/84325628",
+  "phone": "0680994385",
+  "birthDate": "1961-12-20",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-12-23T13:26:39.188Z"
+  },
+  "createdAt": {
+    "$date": "2024-02-28T01:22:22.318Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f723d"
+  },
+  "firstName": "Aimé",
+  "lastName": "Paris",
+  "email": "aime.paris90@yahoo.fr",
+  "password": "$2b$10$POLbCMeupHNRLfMQOODf1.epylSkxH/nU47AH/ggm1e2glGdlaAtC",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/89267851",
+  "phone": "+33 663455222",
+  "birthDate": "2003-08-19",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-05-28T20:30:30.382Z"
+  },
+  "createdAt": {
+    "$date": "2024-03-16T19:19:42.642Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f723e"
+  },
+  "firstName": "Corentine",
+  "lastName": "Dupuis",
+  "email": "corentine_dupuis98@gmail.com",
+  "password": "$2b$10$CDZ6itqIAmQQ36o1lzQYfOf8Zx.kOGqbQeLcfmmpsU4bREij23liK",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/3538978",
+  "phone": "+33 125978623",
+  "birthDate": "2002-05-31",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-05-18T14:48:13.560Z"
+  },
+  "createdAt": {
+    "$date": "2024-02-08T13:57:40.168Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f723f"
+  },
+  "firstName": "Athanase",
+  "lastName": "Masson",
+  "email": "athanase.masson@hotmail.fr",
+  "password": "$2b$10$FtNOuAxPM6UydaZXdZVOrOmKjITWJfZIX73OnCHPKMX46iQM6XZ/G",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/49.jpg",
+  "phone": "+33 665526645",
+  "birthDate": "2006-11-28",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-09-25T05:55:46.200Z"
+  },
+  "createdAt": {
+    "$date": "2024-03-03T04:23:48.605Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7240"
+  },
+  "firstName": "Isabelle",
+  "lastName": "Roux",
+  "email": "isabelle_roux@gmail.com",
+  "password": "$2b$10$I2Z6VpWcI0CiBYsq0pWCNubmhghDR.Pp6fhSkBcc.RhS.5/WtL4Ae",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/24279488",
+  "phone": "+33 408235542",
+  "birthDate": "1977-04-27",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-07-03T15:21:25.613Z"
+  },
+  "createdAt": {
+    "$date": "2024-03-19T03:00:24.034Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7241"
+  },
+  "firstName": "Esther",
+  "lastName": "Pons",
+  "email": "esther.pons36@yahoo.fr",
+  "password": "$2b$10$BUrDTLZ32EKJQn78EzoADuHVLjA/cxb0RFRkK6AqnoOBgaIY20RsK",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/96.jpg",
+  "phone": "+33 705909336",
+  "birthDate": "1976-02-06",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-08-20T10:43:08.861Z"
+  },
+  "createdAt": {
+    "$date": "2024-03-08T20:53:38.325Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7242"
+  },
+  "firstName": "Thaïs",
+  "lastName": "Lopez",
+  "email": "thais.lopez13@yahoo.fr",
+  "password": "$2b$10$Q8LWd0Tp8Zz846zUOWkmMOPuE6ftYGb4HsD2ie.Sx3hLcyey75YSm",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/79792388",
+  "phone": "+33 780765859",
+  "birthDate": "1997-11-17",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-10-19T15:36:18.707Z"
+  },
+  "createdAt": {
+    "$date": "2024-01-16T12:53:32.377Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7243"
+  },
+  "firstName": "Enguerrand",
+  "lastName": "Thomas",
+  "email": "enguerrand.thomas51@gmail.com",
+  "password": "$2b$10$i2f0jPmX5h/6KS7vj64NTOZkVncDsFTqJPmPuFrzRR8JJs7Wz.Raa",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/66.jpg",
+  "phone": "+33 750104805",
+  "birthDate": "2007-04-19",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-03-09T15:44:09.179Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7244"
+  },
+  "firstName": "Alcidie",
+  "lastName": "Paul",
+  "email": "alcidie.paul@yahoo.fr",
+  "password": "$2b$10$qO/VSjSu72V7J6PKi0.FpO/tBEx2OVgdN6diMEHRuhNzVam/b/35a",
+  "role": "admin",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/42.jpg",
+  "phone": "+33 648831512",
+  "birthDate": "1985-12-30",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-05-11T16:24:17.659Z"
+  },
+  "createdAt": {
+    "$date": "2024-02-23T11:23:18.983Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7245"
+  },
+  "firstName": "Gerbert",
+  "lastName": "Duval",
+  "email": "gerbert.duval23@gmail.com",
+  "password": "$2b$10$v7SwX/BRqCQZ8lupslmUg.r4xDi8KNgOFdR2AUkh5ET0itiLWjhMq",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/10227737",
+  "phone": "0284736145",
+  "birthDate": "2003-04-20",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-08-26T05:15:41.704Z"
+  },
+  "createdAt": {
+    "$date": "2024-05-21T19:54:48.986Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7246"
+  },
+  "firstName": "Pascale",
+  "lastName": "Joly",
+  "email": "pascale.joly@yahoo.fr",
+  "password": "$2b$10$s9UN2NdgxuuVCP7YONknO.b9jqtg5Mvw1ro31XQVDJqZKR6JciDNS",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/56.jpg",
+  "phone": "0487807164",
+  "birthDate": "1962-10-29",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-06-19T21:58:38.278Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7247"
+  },
+  "firstName": "Clotilde",
+  "lastName": "Dupuis",
+  "email": "clotilde.dupuis17@gmail.com",
+  "password": "$2b$10$prFLSOyXe364lq5g7QemkuwrpkvDYs57YXHIth31FlEQzOSMx497W",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/39.jpg",
+  "phone": "+33 654547623",
+  "birthDate": "1996-11-10",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-05-31T14:16:37.018Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7248"
+  },
+  "firstName": "Adonis",
+  "lastName": "Denis",
+  "email": "adonis.denis36@gmail.com",
+  "password": "$2b$10$A1AkpjWYTzq3z10e8KcSsukalFu08FrbgZS2azLFw6ctpx5.SKgM2",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/37786974",
+  "phone": "0725492687",
+  "birthDate": "2005-02-06",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-02-05T12:42:40.008Z"
+  },
+  "createdAt": {
+    "$date": "2024-06-25T07:00:08.743Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7249"
+  },
+  "firstName": "Émérance",
+  "lastName": "Arnaud",
+  "email": "emerance.arnaud@hotmail.fr",
+  "password": "$2b$10$9zTUGU4aQiF4odivTyfWHu1zbC4NCCd4B5ebgXGJBfMyvMhpbDz5.",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/24528519",
+  "phone": "+33 316573228",
+  "birthDate": "1990-12-05",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-02-24T14:32:09.157Z"
+  },
+  "createdAt": {
+    "$date": "2024-04-10T09:04:13.858Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f724a"
+  },
+  "firstName": "Hugues",
+  "lastName": "Roux",
+  "email": "hugues_roux74@gmail.com",
+  "password": "$2b$10$XZShpVqU63VS.f3.ulLVzORStl1rh3OAufyyI83adDUBbMxkwJFAK",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/7.jpg",
+  "phone": "+33 342474225",
+  "birthDate": "1996-12-10",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-05-29T11:51:59.214Z"
+  },
+  "createdAt": {
+    "$date": "2024-05-26T04:49:11.776Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f724b"
+  },
+  "firstName": "Alphée",
+  "lastName": "Robert",
+  "email": "alphee_robert77@gmail.com",
+  "password": "$2b$10$8MEXQakKWwWDcSHu2W41fu.mSqCaMJ9uZbKM2qGO2.GdK7F20D.km",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/3.jpg",
+  "phone": "0291729806",
+  "birthDate": "1984-05-13",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-04-22T12:14:31.499Z"
+  },
+  "createdAt": {
+    "$date": "2024-06-21T00:10:27.863Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f724c"
+  },
+  "firstName": "Angoustan",
+  "lastName": "Picard",
+  "email": "angoustan_picard@yahoo.fr",
+  "password": "$2b$10$1T68JEMOY/h9cJQAwaV0nOSwD/U4QEtbF9jDHyEMGnb.EF/t/F3US",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/32069003",
+  "phone": "0181104763",
+  "birthDate": "2001-06-10",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-02-12T15:20:50.749Z"
+  },
+  "createdAt": {
+    "$date": "2024-04-13T02:10:35.258Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f724d"
+  },
+  "firstName": "René",
+  "lastName": "Denis",
+  "email": "rene_denis71@gmail.com",
+  "password": "$2b$10$iPh8ZIrAlQHKXTlu0a3cd.e6jB6TvTXgYjmEI5FoNPIjBwIdHXQ1u",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/7.jpg",
+  "phone": "+33 728890135",
+  "birthDate": "1979-02-19",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-04-05T11:46:13.266Z"
+  },
+  "createdAt": {
+    "$date": "2024-06-04T03:51:54.976Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f724e"
+  },
+  "firstName": "Éleuthère",
+  "lastName": "Remy",
+  "email": "eleuthere_remy@gmail.com",
+  "password": "$2b$10$vYdN4acc6mIxtuYCvUP3vehz3MNITL0WAJO7bk0yAnOa8OzAi20L6",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/23.jpg",
+  "phone": "0789083863",
+  "birthDate": "1995-11-24",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-06-01T14:17:11.842Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f724f"
+  },
+  "firstName": "Céline",
+  "lastName": "Roche",
+  "email": "celine.roche@yahoo.fr",
+  "password": "$2b$10$VdRXP37yotrsDLQnbskqfu7I/dRKeUnwzZaVdzQxsOSFfNw8pb7Uq",
+  "role": "admin",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/87.jpg",
+  "phone": "0298225399",
+  "birthDate": "1972-07-29",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-05-17T22:39:19.496Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7250"
+  },
+  "firstName": "Gisèle",
+  "lastName": "Lacroix",
+  "email": "gisele_lacroix@gmail.com",
+  "password": "$2b$10$gsnv3pXp4WF8nsC0o9IKOuk1EyDyRGG1rE/OADJfRhkY89Om/ecEC",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/73854467",
+  "phone": "0167685852",
+  "birthDate": "1975-01-11",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-05-22T21:32:28.317Z"
+  },
+  "createdAt": {
+    "$date": "2024-05-22T19:19:07.009Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7251"
+  },
+  "firstName": "Clélie",
+  "lastName": "Blanchard",
+  "email": "clelie.blanchard87@gmail.com",
+  "password": "$2b$10$7Ra1RYhaSk7YXVedyK6Lw.hC1tt9xSV8K2Mdw205rbYMF6F1yJ9.G",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/18458917",
+  "phone": "0359302031",
+  "birthDate": "2000-10-20",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-07-04T01:35:17.546Z"
+  },
+  "createdAt": {
+    "$date": "2024-06-02T06:19:23.326Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7252"
+  },
+  "firstName": "Delphine",
+  "lastName": "Gauthier",
+  "email": "delphine.gauthier@gmail.com",
+  "password": "$2b$10$CKUjlyqyHaj2jRpG3VfppOySPDLxMHcO377H.SVkfqqRKNptH28m.",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/24711533",
+  "phone": "0476260922",
+  "birthDate": "1986-09-20",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-10-18T12:49:39.156Z"
+  },
+  "createdAt": {
+    "$date": "2024-04-15T07:06:04.308Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7253"
+  },
+  "firstName": "Brunehilde",
+  "lastName": "Guillot",
+  "email": "brunehilde.guillot@gmail.com",
+  "password": "$2b$10$USdyg/Y0dRqPrBWoCBFH1OG1NuUSiFvraQ57LjWm2VJzI74RyL/RW",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/31.jpg",
+  "phone": "+33 448032553",
+  "birthDate": "1971-02-18",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-05-23T21:38:06.847Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7254"
+  },
+  "firstName": "Samuel",
+  "lastName": "Barre",
+  "email": "samuel_barre@hotmail.fr",
+  "password": "$2b$10$P9lx/V8H7pqmCRkEhQATLO7i2aEwvfejA3Gj2yJFLomAddJ4KPJbG",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/68.jpg",
+  "phone": "+33 356554522",
+  "birthDate": "1962-04-14",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-03-24T10:00:13.913Z"
+  },
+  "createdAt": {
+    "$date": "2024-08-04T06:08:32.860Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7255"
+  },
+  "firstName": "Laura",
+  "lastName": "Olivier",
+  "email": "laura_olivier@hotmail.fr",
+  "password": "$2b$10$Z8q9Lk4elJOL5I3WGHe3kexJIB54qHtmiMk2X2wevJ6dNh5FHDZf2",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/15.jpg",
+  "phone": "+33 278777135",
+  "birthDate": "1984-03-05",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-02-28T08:53:15.135Z"
+  },
+  "createdAt": {
+    "$date": "2024-08-26T12:25:17.138Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7256"
+  },
+  "firstName": "Mélisande",
+  "lastName": "Clement",
+  "email": "melisande_clement99@gmail.com",
+  "password": "$2b$10$MAUeAgjCHLGtac5I67AFdOQ/YnytknbrZuRclAM/Wyv/0wsJKO.o6",
+  "role": "admin",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/46.jpg",
+  "phone": "+33 238101812",
+  "birthDate": "1981-11-13",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-09-08T18:55:11.262Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7257"
+  },
+  "firstName": "Oger",
+  "lastName": "Dupuy",
+  "email": "oger_dupuy@yahoo.fr",
+  "password": "$2b$10$TpqQbrI8wrEUgNEySBXfYODYdSYk3ToiMs.dF5tlDm0/xBMG9GRte",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/64.jpg",
+  "phone": "0642293231",
+  "birthDate": "1961-05-19",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-08-25T06:19:12.449Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7258"
+  },
+  "firstName": "Althée",
+  "lastName": "Picard",
+  "email": "althee.picard23@gmail.com",
+  "password": "$2b$10$fRo2OkvDz8Rx1DA.apQg.uLf5IqqaIpmfHfnhpjObCURASmj5M1eu",
+  "role": "admin",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/64.jpg",
+  "phone": "0721850481",
+  "birthDate": "1970-06-18",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-08-06T22:32:12.478Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7259"
+  },
+  "firstName": "Priscille",
+  "lastName": "Guillot",
+  "email": "priscille.guillot42@hotmail.fr",
+  "password": "$2b$10$mFYFGG5vtKzQHUIVS343GexVHLNDp7AGmrkj3tuokDlUtX7.B5VYq",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/97.jpg",
+  "phone": "+33 792995939",
+  "birthDate": "2005-03-07",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-09-19T00:53:21.455Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f725a"
+  },
+  "firstName": "Anaëlle",
+  "lastName": "Vasseur",
+  "email": "anaelle.vasseur59@yahoo.fr",
+  "password": "$2b$10$9AHfoMuzhnRuBctfaXElLu1nXwMpyJbzkNjy0IgAZ/S/hh.51QsS.",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/12.jpg",
+  "phone": "0344004557",
+  "birthDate": "1977-10-17",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-11-04T14:51:46.233Z"
+  },
+  "createdAt": {
+    "$date": "2024-07-19T08:56:40.528Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f725b"
+  },
+  "firstName": "Arnaud",
+  "lastName": "Le gall",
+  "email": "arnaud.legall@hotmail.fr",
+  "password": "$2b$10$LWqmMzzBALsv.oOnSDnR5eFejkdKabF2yUFjj5hFmZj4odHHN1/Aq",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/69.jpg",
+  "phone": "0724776159",
+  "birthDate": "2002-05-10",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-04-01T12:35:22.197Z"
+  },
+  "createdAt": {
+    "$date": "2024-09-12T20:32:48.477Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f725c"
+  },
+  "firstName": "Arthème",
+  "lastName": "Guillaume",
+  "email": "artheme_guillaume70@gmail.com",
+  "password": "$2b$10$/KUqZCdKezA7ugwJD/LkPO3nN6TVZ8OYhrBsMu7E4HPEK0hVIgngy",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/49.jpg",
+  "phone": "+33 141635839",
+  "birthDate": "1978-10-12",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-05-12T06:26:45.490Z"
+  },
+  "createdAt": {
+    "$date": "2024-09-16T04:35:19.209Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f725d"
+  },
+  "firstName": "Quintia",
+  "lastName": "Adam",
+  "email": "quintia_adam68@hotmail.fr",
+  "password": "$2b$10$TtaTJxKXEgm8j8059tNnFO3rZOEQfaIbtkAVn1Qm/xHFp6k2W9IiO",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/35.jpg",
+  "phone": "+33 674051786",
+  "birthDate": "1975-05-10",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-03-07T05:58:58.398Z"
+  },
+  "createdAt": {
+    "$date": "2024-09-05T02:38:06.128Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f725e"
+  },
+  "firstName": "Maurice",
+  "lastName": "Lacroix",
+  "email": "maurice_lacroix82@gmail.com",
+  "password": "$2b$10$63oam7Qi1wko1JHvq/3rzebXYTyewlkzPO8VCg/ItrUJDo1cLqW2G",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/24616879",
+  "phone": "0723806582",
+  "birthDate": "1978-11-02",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-05-23T10:32:21.222Z"
+  },
+  "createdAt": {
+    "$date": "2024-08-20T17:20:51.302Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f725f"
+  },
+  "firstName": "Valère",
+  "lastName": "Poirier",
+  "email": "valere_poirier@hotmail.fr",
+  "password": "$2b$10$4fZwOBMQma1TU6VlN7pgUO3ZptT8at6GKzljfXDb/b51H1BPP5e.C",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/48758565",
+  "phone": "+33 770609092",
+  "birthDate": "1993-06-27",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-07-24T14:08:30.499Z"
+  },
+  "createdAt": {
+    "$date": "2024-09-02T19:04:44.433Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7260"
+  },
+  "firstName": "Mireille",
+  "lastName": "Benoit",
+  "email": "mireille.benoit@yahoo.fr",
+  "password": "$2b$10$AHbTdbJKTfwEx3Y2yqVdp.5MGY/sYzAFWRqwbQ5gxYQXfI4obUXVa",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/62325292",
+  "phone": "+33 468908659",
+  "birthDate": "1968-01-28",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-05-29T14:32:21.669Z"
+  },
+  "createdAt": {
+    "$date": "2024-08-23T19:41:25.652Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7261"
+  },
+  "firstName": "Astrée",
+  "lastName": "Andre",
+  "email": "astree_andre@yahoo.fr",
+  "password": "$2b$10$tktdoWcNUwvZtngCuDPWyukVds2JDrmM8XoZVn0qV0CNRB8koJXYq",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/16.jpg",
+  "phone": "0450676242",
+  "birthDate": "1960-06-08",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-07-30T01:17:04.242Z"
+  },
+  "createdAt": {
+    "$date": "2024-08-29T21:38:49.541Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7262"
+  },
+  "firstName": "Félicie",
+  "lastName": "Brun",
+  "email": "felicie.brun@hotmail.fr",
+  "password": "$2b$10$LvfCAysfVZCmC9VRZEgxvODfttwoBcGeVGl5muRvywQTxa8DD7rpy",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/85197553",
+  "phone": "0430069956",
+  "birthDate": "1996-03-21",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-05-29T13:45:36.563Z"
+  },
+  "createdAt": {
+    "$date": "2024-08-04T10:58:18.872Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7263"
+  },
+  "firstName": "David",
+  "lastName": "Paul",
+  "email": "david_paul@yahoo.fr",
+  "password": "$2b$10$j1nXf58oggvA9sQaEGzwm.AtBbQ37kfE7xdk5fwivlm9LXTJEddZe",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/39.jpg",
+  "phone": "0115659229",
+  "birthDate": "1980-02-28",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-11-25T10:06:27.129Z"
+  },
+  "createdAt": {
+    "$date": "2024-07-06T16:59:27.254Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7264"
+  },
+  "firstName": "Gaspar",
+  "lastName": "Mercier",
+  "email": "gaspar_mercier@gmail.com",
+  "password": "$2b$10$ap.vDmQgPUmXIEFPq2HQouFkbLWtTDwivHasYIdgVbh2.Y6g0PxvO",
+  "role": "admin",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/89247033",
+  "phone": "0484913387",
+  "birthDate": "1973-04-02",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-07-12T22:46:12.338Z"
+  },
+  "createdAt": {
+    "$date": "2024-09-19T04:59:34.646Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7265"
+  },
+  "firstName": "Sandra",
+  "lastName": "Charpentier",
+  "email": "sandra_charpentier@yahoo.fr",
+  "password": "$2b$10$DQ9dp0PizX/2XrUuiI1SgeVI6pCfj5rS90vYLPC6f4SBtE1TfDi9u",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/97282616",
+  "phone": "+33 262191509",
+  "birthDate": "2003-12-20",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-08-12T07:20:54.889Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7266"
+  },
+  "firstName": "Arcadie",
+  "lastName": "Menard",
+  "email": "arcadie.menard@yahoo.fr",
+  "password": "$2b$10$LEEjt/TT8lP4N4qLR6J0Gu1Eu9FteOo43wMNJ4w59spXkkOA6Nnni",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/51.jpg",
+  "phone": "0708063335",
+  "birthDate": "2002-02-10",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-07-12T00:44:15.350Z"
+  },
+  "createdAt": {
+    "$date": "2024-07-03T08:55:13.823Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7267"
+  },
+  "firstName": "Rolande",
+  "lastName": "Poirier",
+  "email": "rolande.poirier62@gmail.com",
+  "password": "$2b$10$pBXP08i5.zsxw1Xsumo4IevTPanxA0dk8lvpJtYD.QvK26q4ne2/O",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/43.jpg",
+  "phone": "0624915377",
+  "birthDate": "1989-01-17",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-01-13T11:14:41.560Z"
+  },
+  "createdAt": {
+    "$date": "2024-07-02T08:09:38.431Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7268"
+  },
+  "firstName": "Arthème",
+  "lastName": "Garcia",
+  "email": "artheme_garcia29@hotmail.fr",
+  "password": "$2b$10$7Sw9HcjtUEAOYT3/Ox3gnerEDnfzUHM97Jg84N4wbvoV.v5kgBChi",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/79201073",
+  "phone": "+33 682887074",
+  "birthDate": "1986-06-21",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-09-26T03:30:07.599Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-17T04:48:17.649Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7269"
+  },
+  "firstName": "Amarande",
+  "lastName": "Bernard",
+  "email": "amarande.bernard@yahoo.fr",
+  "password": "$2b$10$6wendX0oRAqsyJfg1ZX2c.nqQ4NZBpparI.uHhFJrUPdu3DnumKnu",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/89.jpg",
+  "phone": "+33 746145706",
+  "birthDate": "1987-09-23",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-03-02T20:07:00.131Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-09T20:30:50.378Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f726a"
+  },
+  "firstName": "Séraphin",
+  "lastName": "Rolland",
+  "email": "seraphin_rolland11@hotmail.fr",
+  "password": "$2b$10$xGCTsPLYTgfONJ6kn9k8GeMgKZ7CPe8r4K0O2lTB.JTWwsoQP4yam",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/29.jpg",
+  "phone": "0443728309",
+  "birthDate": "2005-07-19",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-05-27T03:58:23.785Z"
+  },
+  "createdAt": {
+    "$date": "2024-11-20T04:35:30.830Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f726b"
+  },
+  "firstName": "Landry",
+  "lastName": "Philippe",
+  "email": "landry.philippe16@yahoo.fr",
+  "password": "$2b$10$1C5iX8SLi51LcUMb4zGKy.0Od6nLIKvfjAkn6DWtaZOHoGY34Ei1e",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/90.jpg",
+  "phone": "+33 698630315",
+  "birthDate": "1979-01-16",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-05-02T13:52:23.896Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-28T01:57:29.489Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f726c"
+  },
+  "firstName": "Léna",
+  "lastName": "Fernandez",
+  "email": "lena_fernandez@yahoo.fr",
+  "password": "$2b$10$69q8FiLWcZQzYS6t.hI3DudR7LpBuwEN8tsMjvyNEfxIEv7SG09tq",
+  "role": "admin",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/34736732",
+  "phone": "0256221904",
+  "birthDate": "2004-09-15",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-02-09T22:00:37.268Z"
+  },
+  "createdAt": {
+    "$date": "2024-11-28T10:42:49.880Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f726d"
+  },
+  "firstName": "Dorian",
+  "lastName": "Martin",
+  "email": "dorian.martin@hotmail.fr",
+  "password": "$2b$10$ILgv0rGo0TNNzsW6gp7K.uE5KtP.nKxokAmdKdKf0ZxVIx2OgdWPO",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/71804133",
+  "phone": "0437566534",
+  "birthDate": "1979-12-07",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-02-05T21:02:40.019Z"
+  },
+  "createdAt": {
+    "$date": "2024-11-15T10:04:21.333Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f726e"
+  },
+  "firstName": "Léonne",
+  "lastName": "Vasseur",
+  "email": "leonne.vasseur41@yahoo.fr",
+  "password": "$2b$10$nrcL6.gOTFsM.djnxvoi6u3i5dnHCZ7Q6WK8L7kyUFJe6WGAB8r0q",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/9.jpg",
+  "phone": "+33 631710758",
+  "birthDate": "2000-11-29",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-10-12T10:18:12.505Z"
+  },
+  "createdAt": {
+    "$date": "2024-11-05T13:07:08.380Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f726f"
+  },
+  "firstName": "Morgan",
+  "lastName": "Roux",
+  "email": "morgan.roux@hotmail.fr",
+  "password": "$2b$10$1NcE8GirF8hzDvOyP9HhKeaofbge0rQNz8yItEpn2XJab6YczIgeS",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/89.jpg",
+  "phone": "0105176800",
+  "birthDate": "1967-10-30",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2024-12-30T15:00:38.829Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7270"
+  },
+  "firstName": "Clémence",
+  "lastName": "Gaillard",
+  "email": "clemence.gaillard@gmail.com",
+  "password": "$2b$10$RVtE9IXsdIQ18YUd3OocqOB/MvM7XmJ5RdUvS3qz6ySavRTCnyHwK",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/80.jpg",
+  "phone": "+33 140406346",
+  "birthDate": "1996-09-20",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-08-04T11:06:14.955Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-17T12:46:40.450Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7271"
+  },
+  "firstName": "Pélagie",
+  "lastName": "Pierre",
+  "email": "pelagie.pierre@hotmail.fr",
+  "password": "$2b$10$IYx9NOY5bSr9fkDOECBWved9vOK3WUraytEBlrf.HdkZyKy3Pzc3u",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/20981463",
+  "phone": "0419284842",
+  "birthDate": "1974-09-20",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-03-29T15:20:36.621Z"
+  },
+  "createdAt": {
+    "$date": "2024-11-28T11:45:21.784Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7272"
+  },
+  "firstName": "Arielle",
+  "lastName": "Nguyen",
+  "email": "arielle.nguyen@yahoo.fr",
+  "password": "$2b$10$T6/589CvJwmPesnTsC1LKO17sIqMICQfTNIi/3D6b12YcTokZq4Ky",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/98.jpg",
+  "phone": "0166719787",
+  "birthDate": "1984-12-08",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-11-12T02:58:53.114Z"
+  },
+  "createdAt": {
+    "$date": "2024-12-15T05:07:26.680Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7273"
+  },
+  "firstName": "Didier",
+  "lastName": "Fernandez",
+  "email": "didier.fernandez@gmail.com",
+  "password": "$2b$10$lSGfyV//ESbZzK6ROLVicOmSaquz5K2IkZlnBZwjzJJqIg4KmUmfS",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/15.jpg",
+  "phone": "0747373394",
+  "birthDate": "1966-12-11",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-02-19T05:20:35.734Z"
+  },
+  "createdAt": {
+    "$date": "2024-11-12T15:48:45.315Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7274"
+  },
+  "firstName": "Ariste",
+  "lastName": "Jean",
+  "email": "ariste_jean22@yahoo.fr",
+  "password": "$2b$10$l3mbh3idk9HbKPR2DRa8je9zMP38wIrzd6.AMI6shHucwvnFZGGmu",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/63.jpg",
+  "phone": "0609935129",
+  "birthDate": "1975-05-18",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-12-14T12:49:32.864Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-27T15:36:03.072Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7275"
+  },
+  "firstName": "Avoye",
+  "lastName": "Brun",
+  "email": "avoye_brun80@hotmail.fr",
+  "password": "$2b$10$V0wEFLIOgtmf9hPFS4bXM.S9/5JhmLRBgPxSXveVhw6sSAqvMtsFu",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/34.jpg",
+  "phone": "0778546655",
+  "birthDate": "1985-09-19",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": false,
+  "lastLogin": {
+    "$date": "2024-09-01T18:52:06.251Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-27T21:24:30.439Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7276"
+  },
+  "firstName": "Thierry",
+  "lastName": "Morel",
+  "email": "thierry_morel65@yahoo.fr",
+  "password": "$2b$10$zdEsYEC7I6zeZ6TQsOdR9uFicyoEpGWiMoJwJFLpSBo7nrUL0CIKG",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/38.jpg",
+  "phone": "+33 374151954",
+  "birthDate": "1976-07-06",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": false,
+  "lastLogin": {
+    "$date": "2025-02-04T19:04:18.932Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-18T08:25:12.025Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7277"
+  },
+  "firstName": "Alexandre",
+  "lastName": "Legrand",
+  "email": "alexandre_legrand@yahoo.fr",
+  "password": "$2b$10$UPBjJWiR0JIuLIqbymrr.uKSdKB3MYYV7RGkcBLAlHljjJcVxhFOC",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/92.jpg",
+  "phone": "0625809746",
+  "birthDate": "1963-05-02",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-12-23T17:33:38.399Z"
+  },
+  "createdAt": {
+    "$date": "2024-11-05T11:09:41.854Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7278"
+  },
+  "firstName": "Ange",
+  "lastName": "Deschamps",
+  "email": "ange_deschamps@hotmail.fr",
+  "password": "$2b$10$oQE7uBSK/Qxk17KBOFjYwe37TPWTrXWD3d1hijQenVFyJ4D5T/M1y",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/23.jpg",
+  "phone": "0537745949",
+  "birthDate": "1968-11-14",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-07-02T04:57:03.915Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-03T08:55:27.610Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7279"
+  },
+  "firstName": "Amaryllis",
+  "lastName": "Chevalier",
+  "email": "amaryllis.chevalier83@yahoo.fr",
+  "password": "$2b$10$1WgI1EKiVeaQiL4ThSjvC.yGQP8.B2cuUqTxLAj2dEsFgN.8NNXUW",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/14044045",
+  "phone": "0160604936",
+  "birthDate": "1972-10-09",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-07-03T23:01:26.194Z"
+  },
+  "createdAt": {
+    "$date": "2024-11-23T22:52:05.716Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f727a"
+  },
+  "firstName": "Alphonse",
+  "lastName": "Lopez",
+  "email": "alphonse.lopez@gmail.com",
+  "password": "$2b$10$aMBktDaHivZOh99LVpL1WO7ktqNS4QHeUdELevpstwJOv4LSzBB1u",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/29861846",
+  "phone": "0336813476",
+  "birthDate": "1980-10-02",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-04-06T04:53:28.887Z"
+  },
+  "createdAt": {
+    "$date": "2024-12-11T17:56:36.607Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f727b"
+  },
+  "firstName": "Arcade",
+  "lastName": "Sanchez",
+  "email": "arcade_sanchez83@yahoo.fr",
+  "password": "$2b$10$ceZr.LAPaxgA7UdoMZ3UM.ISrBa4Dwq0hJQHJDBN2YH32JP2wobgi",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/54022566",
+  "phone": "0574153581",
+  "birthDate": "1987-11-05",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-04-14T13:04:58.674Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-09T08:33:35.967Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f727c"
+  },
+  "firstName": "Irina",
+  "lastName": "Michel",
+  "email": "irina_michel@hotmail.fr",
+  "password": "$2b$10$Ek63n7JTZkcIeE63jizoPujnubrpRuRWZL05n0GzM9ASwpzAgNmzW",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/34.jpg",
+  "phone": "0292648450",
+  "birthDate": "1961-02-13",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-09-20T21:24:21.324Z"
+  },
+  "createdAt": {
+    "$date": "2024-12-29T17:31:19.075Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f727d"
+  },
+  "firstName": "Henriette",
+  "lastName": "Pons",
+  "email": "henriette.pons@yahoo.fr",
+  "password": "$2b$10$eAIm6FFbrCNkbr/xxqKr/uEZP.XhZXh567qte6QO9u3MNANyTuOcy",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/74.jpg",
+  "phone": "+33 234732946",
+  "birthDate": "2005-05-16",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-04-20T15:24:35.505Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-12T16:09:00.388Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f727e"
+  },
+  "firstName": "Théodore",
+  "lastName": "Roche",
+  "email": "theodore.roche95@hotmail.fr",
+  "password": "$2b$10$tz96ERGOH80IaEnGDbJyB.c3d0ezy5xN.XfWMEcPs6xiuGcNHA9GS",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/54767401",
+  "phone": "0182925303",
+  "birthDate": "1975-04-14",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-11-24T14:39:54.895Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-29T10:34:24.613Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f727f"
+  },
+  "firstName": "Parfait",
+  "lastName": "Sanchez",
+  "email": "parfait.sanchez52@gmail.com",
+  "password": "$2b$10$aH601Y2kub4rXztfVr8iX.R9pYSqgjoEL/Uk2FCrpTsUiYnW8C3xW",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/1.jpg",
+  "phone": "0299990962",
+  "birthDate": "1972-04-16",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-01-01T03:14:38.711Z"
+  },
+  "createdAt": {
+    "$date": "2024-12-09T20:02:35.854Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7280"
+  },
+  "firstName": "Morgane",
+  "lastName": "Berger",
+  "email": "morgane_berger@gmail.com",
+  "password": "$2b$10$3P/Xi0LxTwv.1Il.rcXBl.aBQcrvTBrcZqPXEzzxexmSh5XmKiOlS",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/68.jpg",
+  "phone": "0309986954",
+  "birthDate": "1997-03-08",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-02-25T15:15:39.603Z"
+  },
+  "createdAt": {
+    "$date": "2024-10-14T11:38:39.519Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7281"
+  },
+  "firstName": "Avigaëlle",
+  "lastName": "Mercier",
+  "email": "avigaelle.mercier74@yahoo.fr",
+  "password": "$2b$10$9esXNUw4Cg46Fkgb5cgJ5eyOjl44NVJ77VnMEqu67sdrsYyUNvcPy",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/37.jpg",
+  "phone": "+33 728248447",
+  "birthDate": "1988-01-28",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-10-14T18:31:09.520Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-22T02:48:02.478Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7282"
+  },
+  "firstName": "Armine",
+  "lastName": "Rey",
+  "email": "armine_rey13@hotmail.fr",
+  "password": "$2b$10$TF6hWkw8gcybQkhIVuTPRuOMgqG68JCthZVHK0Xk/Avz684iqu.H2",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/24505211",
+  "phone": "0452422746",
+  "birthDate": "2000-06-03",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-04-04T16:47:32.824Z"
+  },
+  "createdAt": {
+    "$date": "2025-03-26T10:06:06.016Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7283"
+  },
+  "firstName": "Alice",
+  "lastName": "Schneider",
+  "email": "alice_schneider80@gmail.com",
+  "password": "$2b$10$LTmmt7CuCAHD8eXU.dKoyugShPZxQcouJaWxMA/h.fDm/iobDmKy6",
+  "role": "admin",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/66.jpg",
+  "phone": "0177948167",
+  "birthDate": "1964-07-11",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-08-30T20:31:14.089Z"
+  },
+  "createdAt": {
+    "$date": "2025-04-30T11:01:25.583Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7284"
+  },
+  "firstName": "Dorothée",
+  "lastName": "Julien",
+  "email": "dorothee_julien16@gmail.com",
+  "password": "$2b$10$SY1Oa3h7H2PDIKEROOPLGurAs6NpzSTUHZZmIJDlt1QYqWRjMGLgS",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/49106118",
+  "phone": "+33 516421445",
+  "birthDate": "2006-10-20",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-05-29T08:58:01.356Z"
+  },
+  "createdAt": {
+    "$date": "2025-06-10T14:01:54.661Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7285"
+  },
+  "firstName": "Axel",
+  "lastName": "Guillaume",
+  "email": "axel_guillaume@hotmail.fr",
+  "password": "$2b$10$KILURFTDTDuiptF.IWeBaO.glO3Rsu/xf8p0H3iP0rx4RtBNzJQRu",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/8840506",
+  "phone": "+33 507187052",
+  "birthDate": "1982-07-21",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2025-02-06T21:05:22.703Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7286"
+  },
+  "firstName": "Jeanne",
+  "lastName": "Garnier",
+  "email": "jeanne.garnier@hotmail.fr",
+  "password": "$2b$10$1yab95Zkre2OnQUMO/8ctuV75Iv6Xv4m.swzV9iSQ3LWy3cwibczy",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/62077928",
+  "phone": "0477967456",
+  "birthDate": "1971-08-16",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-04-29T08:40:15.465Z"
+  },
+  "createdAt": {
+    "$date": "2025-03-05T18:45:49.267Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7287"
+  },
+  "firstName": "Virginie",
+  "lastName": "Marie",
+  "email": "virginie_marie@hotmail.fr",
+  "password": "$2b$10$a75Hy2/6AzKtTIAjfuxU9.rDe2YkmiX7gCUCnDnOoWqlZvYycXYrm",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/30823521",
+  "phone": "+33 252033865",
+  "birthDate": "1998-11-24",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2025-01-07T06:34:09.751Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7288"
+  },
+  "firstName": "Caroline",
+  "lastName": "Philippe",
+  "email": "caroline.philippe5@yahoo.fr",
+  "password": "$2b$10$ba444i94Vt5pS9zC9yFmBe0cxUBSkwy5utTgVAWEHBPldPqMQ0aXO",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/4.jpg",
+  "phone": "0115405261",
+  "birthDate": "1982-10-18",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-06-21T16:49:54.810Z"
+  },
+  "createdAt": {
+    "$date": "2025-04-24T16:15:49.852Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7289"
+  },
+  "firstName": "Paule",
+  "lastName": "Garnier",
+  "email": "paule_garnier64@hotmail.fr",
+  "password": "$2b$10$MZAXXUN67.qsRBIr.qQK7ObQd7O3Z7Z3TRJMSbYXSlgD6LeY4pbsS",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/96.jpg",
+  "phone": "+33 503769660",
+  "birthDate": "1965-04-11",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2025-02-13T17:14:02.413Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f728a"
+  },
+  "firstName": "Andrée",
+  "lastName": "Bourgeois",
+  "email": "andree_bourgeois16@hotmail.fr",
+  "password": "$2b$10$nGAu/qs/RZWUK2Oju9N4fucWAvcDT6joc57uE1c/z3Ymd249BbKpW",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/14955765",
+  "phone": "0480488677",
+  "birthDate": "1968-11-05",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-04-28T11:42:29.074Z"
+  },
+  "createdAt": {
+    "$date": "2025-04-24T07:41:59.391Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f728b"
+  },
+  "firstName": "Zoé",
+  "lastName": "Picard",
+  "email": "zoe.picard61@gmail.com",
+  "password": "$2b$10$ErT7FlbvhadvJT07cZ62jutWjdsx463Je.qocjhn51.X9Y5yM5DAm",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/33546843",
+  "phone": "0740904035",
+  "birthDate": "1999-04-04",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-06-07T09:39:24.464Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-23T01:58:24.348Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f728c"
+  },
+  "firstName": "Berthe",
+  "lastName": "Roussel",
+  "email": "berthe_roussel@yahoo.fr",
+  "password": "$2b$10$DzkmMy7Xzhqz4IoWmQtbx.VJQ.CGP/Eo.uOfRbtwUqkmzcXXecHsq",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/21003714",
+  "phone": "0492093517",
+  "birthDate": "1995-05-03",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-05-18T01:28:59.345Z"
+  },
+  "createdAt": {
+    "$date": "2025-04-17T10:45:29.474Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f728d"
+  },
+  "firstName": "Apolline",
+  "lastName": "Robin",
+  "email": "apolline.robin@yahoo.fr",
+  "password": "$2b$10$2jcKpllvQ52O6DaIgzXI7O045FfhzQAgwlsxcxxDpcVfxu7rcdQHC",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/50.jpg",
+  "phone": "0415679526",
+  "birthDate": "1970-04-23",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-05-14T20:10:38.834Z"
+  },
+  "createdAt": {
+    "$date": "2025-04-01T10:30:32.277Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f728e"
+  },
+  "firstName": "Élisabeth",
+  "lastName": "Carpentier",
+  "email": "elisabeth.carpentier4@hotmail.fr",
+  "password": "$2b$10$8AAoBlkuzs.DR0a1v5EoT.2fwzny4ESELEycw8TAvPZWcIdz88av.",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/59532757",
+  "phone": "+33 712895037",
+  "birthDate": "1988-05-24",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": false,
+  "lastLogin": {
+    "$date": "2025-01-01T08:59:42.494Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-14T10:29:58.384Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f728f"
+  },
+  "firstName": "Séverine",
+  "lastName": "Joly",
+  "email": "severine_joly3@yahoo.fr",
+  "password": "$2b$10$TkkmCo3xZMlbVlxYSyxejOuivLIhyEfLTNKxQ3VEMZxEL29UCbSZ2",
+  "role": "admin",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/11.jpg",
+  "phone": "0749180530",
+  "birthDate": "2003-11-29",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2025-04-25T10:30:57.261Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7290"
+  },
+  "firstName": "Ernest",
+  "lastName": "Lopez",
+  "email": "ernest_lopez@yahoo.fr",
+  "password": "$2b$10$Xopvo0dRNUeW4yvyp1ZonurpuS5hVNQ8NeSnT721TyFk9RfMAwWUS",
+  "role": "admin",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/37.jpg",
+  "phone": "0496266335",
+  "birthDate": "1984-05-25",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-06-08T14:30:31.274Z"
+  },
+  "createdAt": {
+    "$date": "2025-01-24T12:57:21.093Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7291"
+  },
+  "firstName": "Charlemagne",
+  "lastName": "Pierre",
+  "email": "charlemagne.pierre@gmail.com",
+  "password": "$2b$10$vnXfjKhJbv5dZgMHCUYM6egSPK5lw62khWsJcYpDKJstBLZilXZ3C",
+  "role": "admin",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/91.jpg",
+  "phone": "+33 369065146",
+  "birthDate": "2004-03-18",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-04-17T20:05:39.328Z"
+  },
+  "createdAt": {
+    "$date": "2025-01-10T01:52:59.997Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7292"
+  },
+  "firstName": "Gisèle",
+  "lastName": "Schneider",
+  "email": "gisele_schneider@yahoo.fr",
+  "password": "$2b$10$oExo8TkhYLrn3d7hnaDyaerlmK85YybJ87MqOJtlUjIAiQ6XoTyKG",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/36.jpg",
+  "phone": "+33 404836430",
+  "birthDate": "1961-08-24",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-08-13T16:08:13.285Z"
+  },
+  "createdAt": {
+    "$date": "2025-04-18T09:30:54.828Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7293"
+  },
+  "firstName": "Yves",
+  "lastName": "Aubry",
+  "email": "yves_aubry@yahoo.fr",
+  "password": "$2b$10$tKvpZfv8N6z4PHjADjp.H.ToWQa87LVBNVGdBdDc7pMlSqgG5WlGO",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/16318710",
+  "phone": "0541598861",
+  "birthDate": "1986-04-28",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-06-28T21:32:13.679Z"
+  },
+  "createdAt": {
+    "$date": "2025-06-13T22:01:12.885Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7294"
+  },
+  "firstName": "Azélie",
+  "lastName": "Moulin",
+  "email": "azelie_moulin17@gmail.com",
+  "password": "$2b$10$d8wAubFqmJ6sBtE7qvYspeYfYJmllNFip3.rHzXifVzOCP.X/b0nq",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/91.jpg",
+  "phone": "+33 510317548",
+  "birthDate": "1995-07-28",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-01-11T09:10:52.497Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-10T19:08:19.639Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7295"
+  },
+  "firstName": "Agathon",
+  "lastName": "Denis",
+  "email": "agathon_denis@hotmail.fr",
+  "password": "$2b$10$u8xC33Fi9lKAJZHPoGPEdehSrUbFrF9eGCGAQzljO.y0bAUoXqjxC",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/16036042",
+  "phone": "0630300018",
+  "birthDate": "1986-12-02",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2025-02-25T09:48:55.975Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7296"
+  },
+  "firstName": "Aimée",
+  "lastName": "Roussel",
+  "email": "aimee_roussel72@gmail.com",
+  "password": "$2b$10$1UmV1wq360WO6F8febyo5ezEOOzIb8xkETAx92YWH.l1.65MFQm1a",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/94.jpg",
+  "phone": "+33 483264206",
+  "birthDate": "1971-03-15",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-08-10T15:26:25.925Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-08T00:44:33.697Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7297"
+  },
+  "firstName": "Alice",
+  "lastName": "Denis",
+  "email": "alice_denis40@gmail.com",
+  "password": "$2b$10$IWyHQ88SDHSJ7xrnhtDgQuhuhs/L0H4X2K3Ho9RAyjCtKMfsnh2Hi",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/34.jpg",
+  "phone": "0763526406",
+  "birthDate": "1967-02-26",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2025-01-09T18:34:55.041Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7298"
+  },
+  "firstName": "Mégane",
+  "lastName": "Roussel",
+  "email": "megane.roussel@gmail.com",
+  "password": "$2b$10$O8AvnMM/Q6xA4Hcd53D.bu1hMA1q5RMJDo9NCX0YrjwQy3IUn7O4i",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/male/512/98.jpg",
+  "phone": "0548740640",
+  "birthDate": "1996-11-21",
+  "newsletterSubscribed": false,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": null,
+  "createdAt": {
+    "$date": "2025-06-01T20:36:40.775Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f7299"
+  },
+  "firstName": "Chrétien",
+  "lastName": "Lambert",
+  "email": "chretien_lambert59@hotmail.fr",
+  "password": "$2b$10$u8IhWEF6PUniY8rz2SBQd.0Z481XSBfTcu0Yy/kXcRE/lYI2crpq.",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/94589356",
+  "phone": "+33 790503605",
+  "birthDate": "1977-11-24",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-09-06T13:14:28.386Z"
+  },
+  "createdAt": {
+    "$date": "2025-01-20T06:31:24.036Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f729a"
+  },
+  "firstName": "Alban",
+  "lastName": "Thomas",
+  "email": "alban.thomas@gmail.com",
+  "password": "$2b$10$NkzarGexWRlNRq0ezexwauhLwNfXTUpzJgGcS2z6nBl0tEgYPusZq",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/91250539",
+  "phone": "0205550762",
+  "birthDate": "1980-01-29",
+  "newsletterSubscribed": true,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-06-25T22:48:15.143Z"
+  },
+  "createdAt": {
+    "$date": "2025-01-21T18:36:08.802Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f729b"
+  },
+  "firstName": "Élisabeth",
+  "lastName": "Durand",
+  "email": "elisabeth_durand@gmail.com",
+  "password": "$2b$10$cglPwcZRoscKnkNuwP2gGOJAoxwsjXMMXsp9vYjIohhUbpU.AMvGG",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/63740835",
+  "phone": "0170755602",
+  "birthDate": "1991-07-15",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-03-20T00:43:15.551Z"
+  },
+  "createdAt": {
+    "$date": "2025-02-20T04:26:43.474Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f729c"
+  },
+  "firstName": "Arcade",
+  "lastName": "Leclerc",
+  "email": "arcade_leclerc@yahoo.fr",
+  "password": "$2b$10$bMnrvWbM2.mokZqEDkMok.0sQtucAnVxir/N6vonHQZgom0I5Yx0y",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/26805825",
+  "phone": "0314240408",
+  "birthDate": "1971-12-04",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-02-17T19:46:17.929Z"
+  },
+  "createdAt": {
+    "$date": "2025-03-29T02:22:36.022Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f729d"
+  },
+  "firstName": "Ameline",
+  "lastName": "Rousseau",
+  "email": "ameline_rousseau98@gmail.com",
+  "password": "$2b$10$L/ikzcUE5krc4Hd6Aztyj.cil3cw3oOuKDpFLjogt5aCtJe/63ghS",
+  "role": "user",
+  "profilePhotoUrl": "https://cdn.jsdelivr.net/gh/faker-js/assets-person-portrait/female/512/36.jpg",
+  "phone": "0445898634",
+  "birthDate": "1998-10-07",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2025-04-27T17:08:50.885Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-21T16:41:49.044Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eb6d66434c29db7f729e"
+  },
+  "firstName": "Libère",
+  "lastName": "Royer",
+  "email": "libere.royer1@yahoo.fr",
+  "password": "$2b$10$LAfee71aptCtO8SBC0eQWO1649/edCZIQn1k8UjfDEy3NWT7YaYMa",
+  "role": "user",
+  "profilePhotoUrl": "https://avatars.githubusercontent.com/u/88151671",
+  "phone": "+33 353605688",
+  "birthDate": "1976-08-15",
+  "newsletterSubscribed": true,
+  "smsNotifications": true,
+  "isActive": true,
+  "lastLogin": {
+    "$date": "2024-10-25T13:56:46.238Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-14T20:51:53.302Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6867eea3f991d4d83480e48f"
+  },
+  "firstName": "Loan",
+  "lastName": "Pena",
+  "email": "loanpena77@gmail.com",
+  "password": "$2b$10$PTnzRWGLi3I6vfvQ.3B.VOYkVw72LeMa5AEywYqEykU3nbUs0/l72",
+  "role": "admin",
+  "profilePhotoUrl": "/uploads/profile/profile-6867eea3f991d4d83480e48f-1752158214081-f47da677a428.jpeg",
+  "phone": "0643095225",
+  "birthDate": "2000-01-01",
+  "newsletterSubscribed": false,
+  "smsNotifications": false,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-07-04T15:09:23.375Z"
+  },
+  "__v": 0,
+  "lastLogin": {
+    "$date": "2025-09-20T15:47:15.137Z"
+  }
+}]

@@ -1,0 +1,4738 @@
+[{
+  "_id": {
+    "$oid": "686814138cd76fbe38a54a45"
+  },
+  "user": {
+    "$oid": "6867eea3f991d4d83480e48f"
+  },
+  "name": "Maison Livraison",
+  "firstName": "Loan",
+  "lastName": "Pena",
+  "addressLine1": "33 rue du carrousel",
+  "addressLine2": "",
+  "city": "Ozoir la ferriere",
+  "postalCode": "77330",
+  "country": "France",
+  "phone": "0643095225",
+  "isDefault": true,
+  "type": "shipping",
+  "createdAt": {
+    "$date": "2025-07-04T17:49:07.056Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686814438cd76fbe38a54a4c"
+  },
+  "user": {
+    "$oid": "6867eea3f991d4d83480e48f"
+  },
+  "name": "Entreprise Facturation",
+  "firstName": "Loan",
+  "lastName": "Pena",
+  "addressLine1": "242 rue faubourg saint antoine",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75012",
+  "country": "France",
+  "phone": "0749656549",
+  "isDefault": true,
+  "type": "billing",
+  "createdAt": {
+    "$date": "2025-07-04T17:49:55.918Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5236b"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f723b"
+  },
+  "name": "Adresse principale",
+  "firstName": "Adelin",
+  "lastName": "Royer",
+  "addressLine1": "54 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69007",
+  "country": "France",
+  "phone": "0723220606",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.914Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5236d"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f723b"
+  },
+  "name": "Adresse 2",
+  "firstName": "Adelin",
+  "lastName": "Royer",
+  "addressLine1": "117 Rue de Rivoli",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35100",
+  "country": "France",
+  "phone": "0709693800",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.916Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52370"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f723c"
+  },
+  "name": "Adresse principale",
+  "firstName": "Oriane",
+  "lastName": "Barbier",
+  "addressLine1": "33 Rue Saint-Antoine",
+  "addressLine2": "Apt 22",
+  "city": "Marseille",
+  "postalCode": "13003",
+  "country": "France",
+  "phone": "0629271774",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.918Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52372"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f723c"
+  },
+  "name": "Adresse 2",
+  "firstName": "Oriane",
+  "lastName": "Barbier",
+  "addressLine1": "63 Rue de Rivoli",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59300",
+  "country": "France",
+  "phone": "0614779199",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.919Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52375"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f723d"
+  },
+  "name": "Adresse principale",
+  "firstName": "Aimé",
+  "lastName": "Paris",
+  "addressLine1": "9 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31200",
+  "country": "France",
+  "phone": "0631148662",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.921Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52377"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f723d"
+  },
+  "name": "Adresse 2",
+  "firstName": "Aimé",
+  "lastName": "Paris",
+  "addressLine1": "12 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69006",
+  "country": "France",
+  "phone": "0792452752",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.923Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5237a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f723e"
+  },
+  "name": "Adresse principale",
+  "firstName": "Corentine",
+  "lastName": "Dupuis",
+  "addressLine1": "5 Boulevard Raspail",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59000",
+  "country": "France",
+  "phone": "0699116136",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.924Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5237d"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f723f"
+  },
+  "name": "Adresse principale",
+  "firstName": "Athanase",
+  "lastName": "Masson",
+  "addressLine1": "134 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44200",
+  "country": "France",
+  "phone": "0730289346",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.926Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52380"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7240"
+  },
+  "name": "Adresse principale",
+  "firstName": "Isabelle",
+  "lastName": "Roux",
+  "addressLine1": "144 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "Apt 23",
+  "city": "Toulouse",
+  "postalCode": "31200",
+  "country": "France",
+  "phone": "0726754970",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.927Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52382"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7240"
+  },
+  "name": "Adresse 2",
+  "firstName": "Isabelle",
+  "lastName": "Roux",
+  "addressLine1": "136 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67100",
+  "country": "France",
+  "phone": "0653789898",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.928Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52385"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7241"
+  },
+  "name": "Adresse principale",
+  "firstName": "Esther",
+  "lastName": "Pons",
+  "addressLine1": "41 Avenue Montaigne",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31100",
+  "country": "France",
+  "phone": "0747338568",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.929Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52388"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7242"
+  },
+  "name": "Adresse principale",
+  "firstName": "Thaïs",
+  "lastName": "Lopez",
+  "addressLine1": "144 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Nice",
+  "postalCode": "06000",
+  "country": "France",
+  "phone": "0768548432",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.930Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5238b"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7243"
+  },
+  "name": "Adresse principale",
+  "firstName": "Enguerrand",
+  "lastName": "Thomas",
+  "addressLine1": "96 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31300",
+  "country": "France",
+  "phone": "0732751057",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.932Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5238d"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7243"
+  },
+  "name": "Adresse 2",
+  "firstName": "Enguerrand",
+  "lastName": "Thomas",
+  "addressLine1": "99 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Nice",
+  "postalCode": "06300",
+  "country": "France",
+  "phone": "0763192453",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.932Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52390"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7244"
+  },
+  "name": "Adresse principale",
+  "firstName": "Alcidie",
+  "lastName": "Paul",
+  "addressLine1": "96 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59200",
+  "country": "France",
+  "phone": "0783221882",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.933Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52392"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7244"
+  },
+  "name": "Adresse 2",
+  "firstName": "Alcidie",
+  "lastName": "Paul",
+  "addressLine1": "9 Boulevard Saint-Germain",
+  "addressLine2": "Apt 72",
+  "city": "Rennes",
+  "postalCode": "35100",
+  "country": "France",
+  "phone": "0742151166",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.934Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52395"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7245"
+  },
+  "name": "Adresse principale",
+  "firstName": "Gerbert",
+  "lastName": "Duval",
+  "addressLine1": "111 Avenue Victor Hugo",
+  "addressLine2": "Apt 4",
+  "city": "Marseille",
+  "postalCode": "13001",
+  "country": "France",
+  "phone": "0683772881",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.936Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52397"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7245"
+  },
+  "name": "Adresse 2",
+  "firstName": "Gerbert",
+  "lastName": "Duval",
+  "addressLine1": "142 Avenue Victor Hugo",
+  "addressLine2": "Apt 7",
+  "city": "Marseille",
+  "postalCode": "13002",
+  "country": "France",
+  "phone": "0770288025",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.937Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5239a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7246"
+  },
+  "name": "Adresse principale",
+  "firstName": "Pascale",
+  "lastName": "Joly",
+  "addressLine1": "111 Boulevard Saint-Germain",
+  "addressLine2": "Apt 64",
+  "city": "Lille",
+  "postalCode": "59000",
+  "country": "France",
+  "phone": "0734446715",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.939Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5239c"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7246"
+  },
+  "name": "Adresse 2",
+  "firstName": "Pascale",
+  "lastName": "Joly",
+  "addressLine1": "112 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75002",
+  "country": "France",
+  "phone": "0773709020",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.940Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5239f"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7247"
+  },
+  "name": "Adresse principale",
+  "firstName": "Clotilde",
+  "lastName": "Dupuis",
+  "addressLine1": "108 Rue de Sèvres",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31500",
+  "country": "France",
+  "phone": "0693960912",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.941Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523a2"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7248"
+  },
+  "name": "Adresse principale",
+  "firstName": "Adonis",
+  "lastName": "Denis",
+  "addressLine1": "49 Boulevard Haussmann",
+  "addressLine2": "Apt 17",
+  "city": "Paris",
+  "postalCode": "75008",
+  "country": "France",
+  "phone": "0659313340",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.942Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523a5"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7249"
+  },
+  "name": "Adresse principale",
+  "firstName": "Émérance",
+  "lastName": "Arnaud",
+  "addressLine1": "90 Boulevard Haussmann",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75006",
+  "country": "France",
+  "phone": "0727877309",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.943Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523a7"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7249"
+  },
+  "name": "Adresse 2",
+  "firstName": "Émérance",
+  "lastName": "Arnaud",
+  "addressLine1": "108 Rue de Rennes",
+  "addressLine2": "Apt 77",
+  "city": "Strasbourg",
+  "postalCode": "67100",
+  "country": "France",
+  "phone": "0627346557",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.944Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523aa"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724a"
+  },
+  "name": "Adresse principale",
+  "firstName": "Hugues",
+  "lastName": "Roux",
+  "addressLine1": "29 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13004",
+  "country": "France",
+  "phone": "0613733798",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.945Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523ac"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724a"
+  },
+  "name": "Adresse 2",
+  "firstName": "Hugues",
+  "lastName": "Roux",
+  "addressLine1": "139 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33300",
+  "country": "France",
+  "phone": "0733786729",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.946Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523ae"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724a"
+  },
+  "name": "Adresse 3",
+  "firstName": "Hugues",
+  "lastName": "Roux",
+  "addressLine1": "23 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13002",
+  "country": "France",
+  "phone": "0608910563",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.946Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523b1"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724b"
+  },
+  "name": "Adresse principale",
+  "firstName": "Alphée",
+  "lastName": "Robert",
+  "addressLine1": "129 Rue de Rivoli",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31300",
+  "country": "France",
+  "phone": "0650245174",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.947Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523b3"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724b"
+  },
+  "name": "Adresse 2",
+  "firstName": "Alphée",
+  "lastName": "Robert",
+  "addressLine1": "1 Boulevard Saint-Germain",
+  "addressLine2": "Apt 77",
+  "city": "Lille",
+  "postalCode": "59300",
+  "country": "France",
+  "phone": "0650469088",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.948Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523b5"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724b"
+  },
+  "name": "Adresse 3",
+  "firstName": "Alphée",
+  "lastName": "Robert",
+  "addressLine1": "121 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35200",
+  "country": "France",
+  "phone": "0640270740",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.948Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523b8"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724c"
+  },
+  "name": "Adresse principale",
+  "firstName": "Angoustan",
+  "lastName": "Picard",
+  "addressLine1": "67 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33500",
+  "country": "France",
+  "phone": "0697705489",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.950Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523ba"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724c"
+  },
+  "name": "Adresse 2",
+  "firstName": "Angoustan",
+  "lastName": "Picard",
+  "addressLine1": "42 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33200",
+  "country": "France",
+  "phone": "0682376468",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.951Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523bc"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724c"
+  },
+  "name": "Adresse 3",
+  "firstName": "Angoustan",
+  "lastName": "Picard",
+  "addressLine1": "38 Avenue Montaigne",
+  "addressLine2": "Apt 47",
+  "city": "Marseille",
+  "postalCode": "13004",
+  "country": "France",
+  "phone": "0602260421",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.951Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523bf"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724d"
+  },
+  "name": "Adresse principale",
+  "firstName": "René",
+  "lastName": "Denis",
+  "addressLine1": "89 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75006",
+  "country": "France",
+  "phone": "0626567431",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.952Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523c1"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724d"
+  },
+  "name": "Adresse 2",
+  "firstName": "René",
+  "lastName": "Denis",
+  "addressLine1": "138 Boulevard Haussmann",
+  "addressLine2": "Apt 1",
+  "city": "Nantes",
+  "postalCode": "44000",
+  "country": "France",
+  "phone": "0787487125",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.952Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523c4"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724e"
+  },
+  "name": "Adresse principale",
+  "firstName": "Éleuthère",
+  "lastName": "Remy",
+  "addressLine1": "129 Rue de Rivoli",
+  "addressLine2": "",
+  "city": "Nice",
+  "postalCode": "06300",
+  "country": "France",
+  "phone": "0780626930",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.953Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523c6"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724e"
+  },
+  "name": "Adresse 2",
+  "firstName": "Éleuthère",
+  "lastName": "Remy",
+  "addressLine1": "24 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35000",
+  "country": "France",
+  "phone": "0676079117",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.954Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523c9"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724f"
+  },
+  "name": "Adresse principale",
+  "firstName": "Céline",
+  "lastName": "Roche",
+  "addressLine1": "135 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35000",
+  "country": "France",
+  "phone": "0759241264",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.955Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523cb"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f724f"
+  },
+  "name": "Adresse 2",
+  "firstName": "Céline",
+  "lastName": "Roche",
+  "addressLine1": "18 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59100",
+  "country": "France",
+  "phone": "0645053941",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.955Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523ce"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7250"
+  },
+  "name": "Adresse principale",
+  "firstName": "Gisèle",
+  "lastName": "Lacroix",
+  "addressLine1": "135 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75001",
+  "country": "France",
+  "phone": "0612303135",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.956Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523d0"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7250"
+  },
+  "name": "Adresse 2",
+  "firstName": "Gisèle",
+  "lastName": "Lacroix",
+  "addressLine1": "83 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "Apt 34",
+  "city": "Rennes",
+  "postalCode": "35000",
+  "country": "France",
+  "phone": "0692230022",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.956Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523d3"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7251"
+  },
+  "name": "Adresse principale",
+  "firstName": "Clélie",
+  "lastName": "Blanchard",
+  "addressLine1": "27 Boulevard Saint-Germain",
+  "addressLine2": "Apt 54",
+  "city": "Lille",
+  "postalCode": "59000",
+  "country": "France",
+  "phone": "0773380257",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.957Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523d5"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7251"
+  },
+  "name": "Adresse 2",
+  "firstName": "Clélie",
+  "lastName": "Blanchard",
+  "addressLine1": "129 Rue de Rivoli",
+  "addressLine2": "Apt 91",
+  "city": "Marseille",
+  "postalCode": "13005",
+  "country": "France",
+  "phone": "0690604270",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.958Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523d7"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7251"
+  },
+  "name": "Adresse 3",
+  "firstName": "Clélie",
+  "lastName": "Blanchard",
+  "addressLine1": "69 Avenue des Champs-Élysées",
+  "addressLine2": "Apt 6",
+  "city": "Paris",
+  "postalCode": "75005",
+  "country": "France",
+  "phone": "0654885737",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.958Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523da"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7252"
+  },
+  "name": "Adresse principale",
+  "firstName": "Delphine",
+  "lastName": "Gauthier",
+  "addressLine1": "78 Avenue Montaigne",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13007",
+  "country": "France",
+  "phone": "0767163317",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.959Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523dc"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7252"
+  },
+  "name": "Adresse 2",
+  "firstName": "Delphine",
+  "lastName": "Gauthier",
+  "addressLine1": "10 Avenue Montaigne",
+  "addressLine2": "Apt 73",
+  "city": "Paris",
+  "postalCode": "75002",
+  "country": "France",
+  "phone": "0784784754",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.960Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523df"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7253"
+  },
+  "name": "Adresse principale",
+  "firstName": "Brunehilde",
+  "lastName": "Guillot",
+  "addressLine1": "64 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31000",
+  "country": "France",
+  "phone": "0698049203",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.961Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523e1"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7253"
+  },
+  "name": "Adresse 2",
+  "firstName": "Brunehilde",
+  "lastName": "Guillot",
+  "addressLine1": "105 Rue de Rivoli",
+  "addressLine2": "Apt 68",
+  "city": "Nice",
+  "postalCode": "06000",
+  "country": "France",
+  "phone": "0730852427",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.961Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523e3"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7253"
+  },
+  "name": "Adresse 3",
+  "firstName": "Brunehilde",
+  "lastName": "Guillot",
+  "addressLine1": "28 Avenue Montaigne",
+  "addressLine2": "Apt 96",
+  "city": "Strasbourg",
+  "postalCode": "67000",
+  "country": "France",
+  "phone": "0738684587",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.962Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523e6"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7254"
+  },
+  "name": "Adresse principale",
+  "firstName": "Samuel",
+  "lastName": "Barre",
+  "addressLine1": "14 Boulevard Raspail",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33100",
+  "country": "France",
+  "phone": "0727338469",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.963Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523e9"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7255"
+  },
+  "name": "Adresse principale",
+  "firstName": "Laura",
+  "lastName": "Olivier",
+  "addressLine1": "51 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44100",
+  "country": "France",
+  "phone": "0788466813",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.963Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523eb"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7255"
+  },
+  "name": "Adresse 2",
+  "firstName": "Laura",
+  "lastName": "Olivier",
+  "addressLine1": "149 Boulevard Haussmann",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75010",
+  "country": "France",
+  "phone": "0672819985",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.964Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523ed"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7255"
+  },
+  "name": "Adresse 3",
+  "firstName": "Laura",
+  "lastName": "Olivier",
+  "addressLine1": "27 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33500",
+  "country": "France",
+  "phone": "0698210559",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.964Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523f0"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7256"
+  },
+  "name": "Adresse principale",
+  "firstName": "Mélisande",
+  "lastName": "Clement",
+  "addressLine1": "144 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13004",
+  "country": "France",
+  "phone": "0606473371",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.965Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523f2"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7256"
+  },
+  "name": "Adresse 2",
+  "firstName": "Mélisande",
+  "lastName": "Clement",
+  "addressLine1": "5 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44000",
+  "country": "France",
+  "phone": "0661426453",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.965Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523f5"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7257"
+  },
+  "name": "Adresse principale",
+  "firstName": "Oger",
+  "lastName": "Dupuy",
+  "addressLine1": "111 Boulevard Raspail",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59100",
+  "country": "France",
+  "phone": "0758343419",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.966Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523f7"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7257"
+  },
+  "name": "Adresse 2",
+  "firstName": "Oger",
+  "lastName": "Dupuy",
+  "addressLine1": "26 Rue de Rennes",
+  "addressLine2": "Apt 58",
+  "city": "Strasbourg",
+  "postalCode": "67000",
+  "country": "France",
+  "phone": "0750774453",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.967Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523f9"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7257"
+  },
+  "name": "Adresse 3",
+  "firstName": "Oger",
+  "lastName": "Dupuy",
+  "addressLine1": "70 Rue Saint-Antoine",
+  "addressLine2": "Apt 33",
+  "city": "Rennes",
+  "postalCode": "35100",
+  "country": "France",
+  "phone": "0736645242",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.967Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523fc"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7258"
+  },
+  "name": "Adresse principale",
+  "firstName": "Althée",
+  "lastName": "Picard",
+  "addressLine1": "52 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75007",
+  "country": "France",
+  "phone": "0789577373",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.968Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c523fe"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7258"
+  },
+  "name": "Adresse 2",
+  "firstName": "Althée",
+  "lastName": "Picard",
+  "addressLine1": "106 Avenue des Champs-Élysées",
+  "addressLine2": "Apt 24",
+  "city": "Paris",
+  "postalCode": "75003",
+  "country": "France",
+  "phone": "0675315347",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.968Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52400"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7258"
+  },
+  "name": "Adresse 3",
+  "firstName": "Althée",
+  "lastName": "Picard",
+  "addressLine1": "59 Avenue des Champs-Élysées",
+  "addressLine2": "Apt 47",
+  "city": "Lyon",
+  "postalCode": "69008",
+  "country": "France",
+  "phone": "0637201386",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.969Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52403"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7259"
+  },
+  "name": "Adresse principale",
+  "firstName": "Priscille",
+  "lastName": "Guillot",
+  "addressLine1": "117 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33100",
+  "country": "France",
+  "phone": "0744311608",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.969Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52405"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7259"
+  },
+  "name": "Adresse 2",
+  "firstName": "Priscille",
+  "lastName": "Guillot",
+  "addressLine1": "64 Boulevard Raspail",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59300",
+  "country": "France",
+  "phone": "0746253614",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.970Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52408"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725a"
+  },
+  "name": "Adresse principale",
+  "firstName": "Anaëlle",
+  "lastName": "Vasseur",
+  "addressLine1": "91 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59300",
+  "country": "France",
+  "phone": "0744561729",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.971Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5240a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725a"
+  },
+  "name": "Adresse 2",
+  "firstName": "Anaëlle",
+  "lastName": "Vasseur",
+  "addressLine1": "41 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13007",
+  "country": "France",
+  "phone": "0703981216",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.971Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5240d"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725b"
+  },
+  "name": "Adresse principale",
+  "firstName": "Arnaud",
+  "lastName": "Le gall",
+  "addressLine1": "29 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44000",
+  "country": "France",
+  "phone": "0630690752",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.972Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5240f"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725b"
+  },
+  "name": "Adresse 2",
+  "firstName": "Arnaud",
+  "lastName": "Le gall",
+  "addressLine1": "78 Rue Saint-Antoine",
+  "addressLine2": "Apt 50",
+  "city": "Bordeaux",
+  "postalCode": "33100",
+  "country": "France",
+  "phone": "0763398204",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.972Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52412"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725c"
+  },
+  "name": "Adresse principale",
+  "firstName": "Arthème",
+  "lastName": "Guillaume",
+  "addressLine1": "77 Boulevard Haussmann",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13004",
+  "country": "France",
+  "phone": "0623023401",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.973Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52415"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725d"
+  },
+  "name": "Adresse principale",
+  "firstName": "Quintia",
+  "lastName": "Adam",
+  "addressLine1": "43 Rue de Rennes",
+  "addressLine2": "Apt 28",
+  "city": "Bordeaux",
+  "postalCode": "33500",
+  "country": "France",
+  "phone": "0677802830",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.974Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52417"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725d"
+  },
+  "name": "Adresse 2",
+  "firstName": "Quintia",
+  "lastName": "Adam",
+  "addressLine1": "38 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33000",
+  "country": "France",
+  "phone": "0782281817",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.974Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52419"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725d"
+  },
+  "name": "Adresse 3",
+  "firstName": "Quintia",
+  "lastName": "Adam",
+  "addressLine1": "41 Avenue Montaigne",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75002",
+  "country": "France",
+  "phone": "0662133136",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.975Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5241c"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725e"
+  },
+  "name": "Adresse principale",
+  "firstName": "Maurice",
+  "lastName": "Lacroix",
+  "addressLine1": "10 Boulevard Haussmann",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35000",
+  "country": "France",
+  "phone": "0752156309",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.975Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5241e"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725e"
+  },
+  "name": "Adresse 2",
+  "firstName": "Maurice",
+  "lastName": "Lacroix",
+  "addressLine1": "51 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67200",
+  "country": "France",
+  "phone": "0668882020",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.976Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52420"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725e"
+  },
+  "name": "Adresse 3",
+  "firstName": "Maurice",
+  "lastName": "Lacroix",
+  "addressLine1": "79 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33500",
+  "country": "France",
+  "phone": "0779677735",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.976Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52423"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725f"
+  },
+  "name": "Adresse principale",
+  "firstName": "Valère",
+  "lastName": "Poirier",
+  "addressLine1": "143 Rue de Rivoli",
+  "addressLine2": "Apt 96",
+  "city": "Marseille",
+  "postalCode": "13009",
+  "country": "France",
+  "phone": "0656883450",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.976Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52425"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f725f"
+  },
+  "name": "Adresse 2",
+  "firstName": "Valère",
+  "lastName": "Poirier",
+  "addressLine1": "123 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13006",
+  "country": "France",
+  "phone": "0680618421",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.977Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52428"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7260"
+  },
+  "name": "Adresse principale",
+  "firstName": "Mireille",
+  "lastName": "Benoit",
+  "addressLine1": "14 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Nice",
+  "postalCode": "06200",
+  "country": "France",
+  "phone": "0793546555",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.977Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5242a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7260"
+  },
+  "name": "Adresse 2",
+  "firstName": "Mireille",
+  "lastName": "Benoit",
+  "addressLine1": "45 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44100",
+  "country": "France",
+  "phone": "0724928009",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.978Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5242d"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7261"
+  },
+  "name": "Adresse principale",
+  "firstName": "Astrée",
+  "lastName": "Andre",
+  "addressLine1": "49 Avenue Victor Hugo",
+  "addressLine2": "Apt 69",
+  "city": "Lyon",
+  "postalCode": "69004",
+  "country": "France",
+  "phone": "0771063870",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.978Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5242f"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7261"
+  },
+  "name": "Adresse 2",
+  "firstName": "Astrée",
+  "lastName": "Andre",
+  "addressLine1": "109 Boulevard Haussmann",
+  "addressLine2": "Apt 72",
+  "city": "Rennes",
+  "postalCode": "35100",
+  "country": "France",
+  "phone": "0665965821",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.979Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52431"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7261"
+  },
+  "name": "Adresse 3",
+  "firstName": "Astrée",
+  "lastName": "Andre",
+  "addressLine1": "3 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67100",
+  "country": "France",
+  "phone": "0667287409",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.979Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52434"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7262"
+  },
+  "name": "Adresse principale",
+  "firstName": "Félicie",
+  "lastName": "Brun",
+  "addressLine1": "126 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13008",
+  "country": "France",
+  "phone": "0629503904",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.979Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52437"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7263"
+  },
+  "name": "Adresse principale",
+  "firstName": "David",
+  "lastName": "Paul",
+  "addressLine1": "17 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59300",
+  "country": "France",
+  "phone": "0763253221",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.980Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52439"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7263"
+  },
+  "name": "Adresse 2",
+  "firstName": "David",
+  "lastName": "Paul",
+  "addressLine1": "17 Avenue des Champs-Élysées",
+  "addressLine2": "Apt 68",
+  "city": "Bordeaux",
+  "postalCode": "33100",
+  "country": "France",
+  "phone": "0785321548",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.980Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5243c"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7264"
+  },
+  "name": "Adresse principale",
+  "firstName": "Gaspar",
+  "lastName": "Mercier",
+  "addressLine1": "57 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69009",
+  "country": "France",
+  "phone": "0688430214",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.981Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5243e"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7264"
+  },
+  "name": "Adresse 2",
+  "firstName": "Gaspar",
+  "lastName": "Mercier",
+  "addressLine1": "141 Avenue Montaigne",
+  "addressLine2": "Apt 15",
+  "city": "Bordeaux",
+  "postalCode": "33000",
+  "country": "France",
+  "phone": "0642445967",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.981Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52440"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7264"
+  },
+  "name": "Adresse 3",
+  "firstName": "Gaspar",
+  "lastName": "Mercier",
+  "addressLine1": "108 Boulevard Haussmann",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59100",
+  "country": "France",
+  "phone": "0731234088",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.982Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52443"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7265"
+  },
+  "name": "Adresse principale",
+  "firstName": "Sandra",
+  "lastName": "Charpentier",
+  "addressLine1": "108 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13003",
+  "country": "France",
+  "phone": "0675264511",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.982Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52446"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7266"
+  },
+  "name": "Adresse principale",
+  "firstName": "Arcadie",
+  "lastName": "Menard",
+  "addressLine1": "51 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69008",
+  "country": "France",
+  "phone": "0701525543",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.983Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52448"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7266"
+  },
+  "name": "Adresse 2",
+  "firstName": "Arcadie",
+  "lastName": "Menard",
+  "addressLine1": "47 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31500",
+  "country": "France",
+  "phone": "0649284905",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.983Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5244a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7266"
+  },
+  "name": "Adresse 3",
+  "firstName": "Arcadie",
+  "lastName": "Menard",
+  "addressLine1": "101 Boulevard Saint-Germain",
+  "addressLine2": "Apt 55",
+  "city": "Lyon",
+  "postalCode": "69005",
+  "country": "France",
+  "phone": "0607166631",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.983Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5244d"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7267"
+  },
+  "name": "Adresse principale",
+  "firstName": "Rolande",
+  "lastName": "Poirier",
+  "addressLine1": "96 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59400",
+  "country": "France",
+  "phone": "0692976252",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.984Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52450"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7268"
+  },
+  "name": "Adresse principale",
+  "firstName": "Arthème",
+  "lastName": "Garcia",
+  "addressLine1": "64 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Nice",
+  "postalCode": "06200",
+  "country": "France",
+  "phone": "0760382562",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.985Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52453"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7269"
+  },
+  "name": "Adresse principale",
+  "firstName": "Amarande",
+  "lastName": "Bernard",
+  "addressLine1": "96 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69007",
+  "country": "France",
+  "phone": "0700770823",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.985Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52455"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7269"
+  },
+  "name": "Adresse 2",
+  "firstName": "Amarande",
+  "lastName": "Bernard",
+  "addressLine1": "139 Rue de Rivoli",
+  "addressLine2": "Apt 18",
+  "city": "Paris",
+  "postalCode": "75004",
+  "country": "France",
+  "phone": "0717853693",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.986Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52457"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7269"
+  },
+  "name": "Adresse 3",
+  "firstName": "Amarande",
+  "lastName": "Bernard",
+  "addressLine1": "76 Boulevard Saint-Germain",
+  "addressLine2": "Apt 95",
+  "city": "Rennes",
+  "postalCode": "35700",
+  "country": "France",
+  "phone": "0687261528",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.986Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5245a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726a"
+  },
+  "name": "Adresse principale",
+  "firstName": "Séraphin",
+  "lastName": "Rolland",
+  "addressLine1": "101 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35100",
+  "country": "France",
+  "phone": "0774582711",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.987Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5245c"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726a"
+  },
+  "name": "Adresse 2",
+  "firstName": "Séraphin",
+  "lastName": "Rolland",
+  "addressLine1": "143 Boulevard Raspail",
+  "addressLine2": "Apt 1",
+  "city": "Toulouse",
+  "postalCode": "31400",
+  "country": "France",
+  "phone": "0615264319",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.988Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5245e"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726a"
+  },
+  "name": "Adresse 3",
+  "firstName": "Séraphin",
+  "lastName": "Rolland",
+  "addressLine1": "1 Boulevard Haussmann",
+  "addressLine2": "Apt 94",
+  "city": "Nice",
+  "postalCode": "06300",
+  "country": "France",
+  "phone": "0702100854",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.988Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52461"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726b"
+  },
+  "name": "Adresse principale",
+  "firstName": "Landry",
+  "lastName": "Philippe",
+  "addressLine1": "100 Rue de Rennes",
+  "addressLine2": "Apt 4",
+  "city": "Paris",
+  "postalCode": "75005",
+  "country": "France",
+  "phone": "0789313213",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.989Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52463"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726b"
+  },
+  "name": "Adresse 2",
+  "firstName": "Landry",
+  "lastName": "Philippe",
+  "addressLine1": "112 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33500",
+  "country": "France",
+  "phone": "0665892555",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.989Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52466"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726c"
+  },
+  "name": "Adresse principale",
+  "firstName": "Léna",
+  "lastName": "Fernandez",
+  "addressLine1": "29 Boulevard Raspail",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44300",
+  "country": "France",
+  "phone": "0764621625",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.990Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52468"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726c"
+  },
+  "name": "Adresse 2",
+  "firstName": "Léna",
+  "lastName": "Fernandez",
+  "addressLine1": "72 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Nice",
+  "postalCode": "06200",
+  "country": "France",
+  "phone": "0652477384",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.990Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5246b"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726d"
+  },
+  "name": "Adresse principale",
+  "firstName": "Dorian",
+  "lastName": "Martin",
+  "addressLine1": "31 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59300",
+  "country": "France",
+  "phone": "0753258267",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.991Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5246e"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726e"
+  },
+  "name": "Adresse principale",
+  "firstName": "Léonne",
+  "lastName": "Vasseur",
+  "addressLine1": "39 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44200",
+  "country": "France",
+  "phone": "0619931224",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.991Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52470"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726e"
+  },
+  "name": "Adresse 2",
+  "firstName": "Léonne",
+  "lastName": "Vasseur",
+  "addressLine1": "103 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59300",
+  "country": "France",
+  "phone": "0674047741",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.992Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52472"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726e"
+  },
+  "name": "Adresse 3",
+  "firstName": "Léonne",
+  "lastName": "Vasseur",
+  "addressLine1": "81 Rue de la Paix",
+  "addressLine2": "Apt 37",
+  "city": "Lille",
+  "postalCode": "59300",
+  "country": "France",
+  "phone": "0754420708",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.992Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52475"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f726f"
+  },
+  "name": "Adresse principale",
+  "firstName": "Morgan",
+  "lastName": "Roux",
+  "addressLine1": "64 Boulevard Haussmann",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67100",
+  "country": "France",
+  "phone": "0697608866",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.993Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52478"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7270"
+  },
+  "name": "Adresse principale",
+  "firstName": "Clémence",
+  "lastName": "Gaillard",
+  "addressLine1": "48 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44000",
+  "country": "France",
+  "phone": "0649787463",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.994Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5247a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7270"
+  },
+  "name": "Adresse 2",
+  "firstName": "Clémence",
+  "lastName": "Gaillard",
+  "addressLine1": "118 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69001",
+  "country": "France",
+  "phone": "0677340883",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.994Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5247d"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7271"
+  },
+  "name": "Adresse principale",
+  "firstName": "Pélagie",
+  "lastName": "Pierre",
+  "addressLine1": "34 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67000",
+  "country": "France",
+  "phone": "0669281657",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.995Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5247f"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7271"
+  },
+  "name": "Adresse 2",
+  "firstName": "Pélagie",
+  "lastName": "Pierre",
+  "addressLine1": "9 Avenue Montaigne",
+  "addressLine2": "",
+  "city": "Nice",
+  "postalCode": "06000",
+  "country": "France",
+  "phone": "0667500583",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.995Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52481"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7271"
+  },
+  "name": "Adresse 3",
+  "firstName": "Pélagie",
+  "lastName": "Pierre",
+  "addressLine1": "48 Rue de la Paix",
+  "addressLine2": "Apt 23",
+  "city": "Rennes",
+  "postalCode": "35700",
+  "country": "France",
+  "phone": "0693131159",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.995Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52484"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7272"
+  },
+  "name": "Adresse principale",
+  "firstName": "Arielle",
+  "lastName": "Nguyen",
+  "addressLine1": "67 Rue de Rivoli",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69009",
+  "country": "France",
+  "phone": "0792590758",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.996Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52486"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7272"
+  },
+  "name": "Adresse 2",
+  "firstName": "Arielle",
+  "lastName": "Nguyen",
+  "addressLine1": "132 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69001",
+  "country": "France",
+  "phone": "0791282374",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.996Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52489"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7273"
+  },
+  "name": "Adresse principale",
+  "firstName": "Didier",
+  "lastName": "Fernandez",
+  "addressLine1": "61 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44000",
+  "country": "France",
+  "phone": "0655185250",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.997Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5248c"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7274"
+  },
+  "name": "Adresse principale",
+  "firstName": "Ariste",
+  "lastName": "Jean",
+  "addressLine1": "55 Boulevard Raspail",
+  "addressLine2": "Apt 37",
+  "city": "Strasbourg",
+  "postalCode": "67000",
+  "country": "France",
+  "phone": "0617610337",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.997Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c5248e"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7274"
+  },
+  "name": "Adresse 2",
+  "firstName": "Ariste",
+  "lastName": "Jean",
+  "addressLine1": "38 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33000",
+  "country": "France",
+  "phone": "0797725642",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.998Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52490"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7274"
+  },
+  "name": "Adresse 3",
+  "firstName": "Ariste",
+  "lastName": "Jean",
+  "addressLine1": "73 Avenue Montaigne",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67100",
+  "country": "France",
+  "phone": "0607135852",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.998Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52493"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7275"
+  },
+  "name": "Adresse principale",
+  "firstName": "Avoye",
+  "lastName": "Brun",
+  "addressLine1": "9 Rue de Rennes",
+  "addressLine2": "Apt 5",
+  "city": "Toulouse",
+  "postalCode": "31400",
+  "country": "France",
+  "phone": "0602192265",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.999Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52495"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7275"
+  },
+  "name": "Adresse 2",
+  "firstName": "Avoye",
+  "lastName": "Brun",
+  "addressLine1": "29 Rue de Rennes",
+  "addressLine2": "Apt 97",
+  "city": "Toulouse",
+  "postalCode": "31500",
+  "country": "France",
+  "phone": "0674531145",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.999Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe784dc821415c52497"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7275"
+  },
+  "name": "Adresse 3",
+  "firstName": "Avoye",
+  "lastName": "Brun",
+  "addressLine1": "57 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33300",
+  "country": "France",
+  "phone": "0745105641",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:23.999Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5249a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7276"
+  },
+  "name": "Adresse principale",
+  "firstName": "Thierry",
+  "lastName": "Morel",
+  "addressLine1": "115 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35200",
+  "country": "France",
+  "phone": "0761893545",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5249c"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7276"
+  },
+  "name": "Adresse 2",
+  "firstName": "Thierry",
+  "lastName": "Morel",
+  "addressLine1": "81 Boulevard Haussmann",
+  "addressLine2": "Apt 92",
+  "city": "Nantes",
+  "postalCode": "44300",
+  "country": "France",
+  "phone": "0797624595",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5249f"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7277"
+  },
+  "name": "Adresse principale",
+  "firstName": "Alexandre",
+  "lastName": "Legrand",
+  "addressLine1": "31 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31500",
+  "country": "France",
+  "phone": "0718887585",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.001Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524a1"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7277"
+  },
+  "name": "Adresse 2",
+  "firstName": "Alexandre",
+  "lastName": "Legrand",
+  "addressLine1": "74 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44200",
+  "country": "France",
+  "phone": "0743323285",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.001Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524a3"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7277"
+  },
+  "name": "Adresse 3",
+  "firstName": "Alexandre",
+  "lastName": "Legrand",
+  "addressLine1": "130 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44100",
+  "country": "France",
+  "phone": "0607647188",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524a6"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7278"
+  },
+  "name": "Adresse principale",
+  "firstName": "Ange",
+  "lastName": "Deschamps",
+  "addressLine1": "9 Rue de Sèvres",
+  "addressLine2": "Apt 64",
+  "city": "Strasbourg",
+  "postalCode": "67000",
+  "country": "France",
+  "phone": "0616148097",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.002Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524a9"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7279"
+  },
+  "name": "Adresse principale",
+  "firstName": "Amaryllis",
+  "lastName": "Chevalier",
+  "addressLine1": "99 Rue de la Paix",
+  "addressLine2": "Apt 21",
+  "city": "Toulouse",
+  "postalCode": "31100",
+  "country": "France",
+  "phone": "0779708565",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.003Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524ac"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727a"
+  },
+  "name": "Adresse principale",
+  "firstName": "Alphonse",
+  "lastName": "Lopez",
+  "addressLine1": "41 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31300",
+  "country": "France",
+  "phone": "0652513780",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.004Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524af"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727b"
+  },
+  "name": "Adresse principale",
+  "firstName": "Arcade",
+  "lastName": "Sanchez",
+  "addressLine1": "112 Avenue Montaigne",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33300",
+  "country": "France",
+  "phone": "0715819926",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.004Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524b1"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727b"
+  },
+  "name": "Adresse 2",
+  "firstName": "Arcade",
+  "lastName": "Sanchez",
+  "addressLine1": "36 Avenue Montaigne",
+  "addressLine2": "Apt 58",
+  "city": "Paris",
+  "postalCode": "75010",
+  "country": "France",
+  "phone": "0769077289",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.004Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524b4"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727c"
+  },
+  "name": "Adresse principale",
+  "firstName": "Irina",
+  "lastName": "Michel",
+  "addressLine1": "71 Avenue Montaigne",
+  "addressLine2": "Apt 81",
+  "city": "Lyon",
+  "postalCode": "69001",
+  "country": "France",
+  "phone": "0650184844",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.005Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524b6"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727c"
+  },
+  "name": "Adresse 2",
+  "firstName": "Irina",
+  "lastName": "Michel",
+  "addressLine1": "56 Boulevard Haussmann",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59400",
+  "country": "France",
+  "phone": "0676697659",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.005Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524b8"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727c"
+  },
+  "name": "Adresse 3",
+  "firstName": "Irina",
+  "lastName": "Michel",
+  "addressLine1": "107 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59100",
+  "country": "France",
+  "phone": "0643304264",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.006Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524bb"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727d"
+  },
+  "name": "Adresse principale",
+  "firstName": "Henriette",
+  "lastName": "Pons",
+  "addressLine1": "107 Boulevard Saint-Germain",
+  "addressLine2": "Apt 69",
+  "city": "Nice",
+  "postalCode": "06200",
+  "country": "France",
+  "phone": "0693149228",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.006Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524bd"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727d"
+  },
+  "name": "Adresse 2",
+  "firstName": "Henriette",
+  "lastName": "Pons",
+  "addressLine1": "63 Avenue Victor Hugo",
+  "addressLine2": "Apt 7",
+  "city": "Rennes",
+  "postalCode": "35700",
+  "country": "France",
+  "phone": "0746784242",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.006Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524c0"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727e"
+  },
+  "name": "Adresse principale",
+  "firstName": "Théodore",
+  "lastName": "Roche",
+  "addressLine1": "98 Rue de Rivoli",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44300",
+  "country": "France",
+  "phone": "0742626158",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.007Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524c2"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727e"
+  },
+  "name": "Adresse 2",
+  "firstName": "Théodore",
+  "lastName": "Roche",
+  "addressLine1": "69 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35700",
+  "country": "France",
+  "phone": "0691384409",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.007Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524c5"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f727f"
+  },
+  "name": "Adresse principale",
+  "firstName": "Parfait",
+  "lastName": "Sanchez",
+  "addressLine1": "141 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33100",
+  "country": "France",
+  "phone": "0627182997",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.008Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524c8"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7280"
+  },
+  "name": "Adresse principale",
+  "firstName": "Morgane",
+  "lastName": "Berger",
+  "addressLine1": "113 Rue de Rennes",
+  "addressLine2": "Apt 90",
+  "city": "Bordeaux",
+  "postalCode": "33300",
+  "country": "France",
+  "phone": "0696567004",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.009Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524cb"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7281"
+  },
+  "name": "Adresse principale",
+  "firstName": "Avigaëlle",
+  "lastName": "Mercier",
+  "addressLine1": "35 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33300",
+  "country": "France",
+  "phone": "0768809448",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.010Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524cd"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7281"
+  },
+  "name": "Adresse 2",
+  "firstName": "Avigaëlle",
+  "lastName": "Mercier",
+  "addressLine1": "147 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33000",
+  "country": "France",
+  "phone": "0638472282",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.010Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524cf"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7281"
+  },
+  "name": "Adresse 3",
+  "firstName": "Avigaëlle",
+  "lastName": "Mercier",
+  "addressLine1": "11 Rue de Rivoli",
+  "addressLine2": "Apt 10",
+  "city": "Paris",
+  "postalCode": "75005",
+  "country": "France",
+  "phone": "0692397323",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.011Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524d2"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7282"
+  },
+  "name": "Adresse principale",
+  "firstName": "Armine",
+  "lastName": "Rey",
+  "addressLine1": "13 Avenue Victor Hugo",
+  "addressLine2": "Apt 84",
+  "city": "Paris",
+  "postalCode": "75009",
+  "country": "France",
+  "phone": "0684752541",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.011Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524d5"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7283"
+  },
+  "name": "Adresse principale",
+  "firstName": "Alice",
+  "lastName": "Schneider",
+  "addressLine1": "19 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13006",
+  "country": "France",
+  "phone": "0775093180",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.012Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524d8"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7284"
+  },
+  "name": "Adresse principale",
+  "firstName": "Dorothée",
+  "lastName": "Julien",
+  "addressLine1": "132 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67200",
+  "country": "France",
+  "phone": "0779068371",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.013Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524db"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7285"
+  },
+  "name": "Adresse principale",
+  "firstName": "Axel",
+  "lastName": "Guillaume",
+  "addressLine1": "67 Rue de Rivoli",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69009",
+  "country": "France",
+  "phone": "0639569893",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.014Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524dd"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7285"
+  },
+  "name": "Adresse 2",
+  "firstName": "Axel",
+  "lastName": "Guillaume",
+  "addressLine1": "35 Avenue Montaigne",
+  "addressLine2": "Apt 93",
+  "city": "Nice",
+  "postalCode": "06100",
+  "country": "France",
+  "phone": "0712905936",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.014Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524df"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7285"
+  },
+  "name": "Adresse 3",
+  "firstName": "Axel",
+  "lastName": "Guillaume",
+  "addressLine1": "12 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "Apt 86",
+  "city": "Strasbourg",
+  "postalCode": "67200",
+  "country": "France",
+  "phone": "0775156347",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.014Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524e2"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7286"
+  },
+  "name": "Adresse principale",
+  "firstName": "Jeanne",
+  "lastName": "Garnier",
+  "addressLine1": "19 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59100",
+  "country": "France",
+  "phone": "0714373988",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.015Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524e4"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7286"
+  },
+  "name": "Adresse 2",
+  "firstName": "Jeanne",
+  "lastName": "Garnier",
+  "addressLine1": "148 Rue du Faubourg Saint-Honoré",
+  "addressLine2": "Apt 69",
+  "city": "Paris",
+  "postalCode": "75009",
+  "country": "France",
+  "phone": "0623821788",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.016Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524e6"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7286"
+  },
+  "name": "Adresse 3",
+  "firstName": "Jeanne",
+  "lastName": "Garnier",
+  "addressLine1": "69 Avenue Montaigne",
+  "addressLine2": "Apt 51",
+  "city": "Strasbourg",
+  "postalCode": "67200",
+  "country": "France",
+  "phone": "0618443531",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.016Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524e9"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7287"
+  },
+  "name": "Adresse principale",
+  "firstName": "Virginie",
+  "lastName": "Marie",
+  "addressLine1": "39 Boulevard Raspail",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31400",
+  "country": "France",
+  "phone": "0688596997",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.018Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524eb"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7287"
+  },
+  "name": "Adresse 2",
+  "firstName": "Virginie",
+  "lastName": "Marie",
+  "addressLine1": "18 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35100",
+  "country": "France",
+  "phone": "0696643790",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.018Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524ed"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7287"
+  },
+  "name": "Adresse 3",
+  "firstName": "Virginie",
+  "lastName": "Marie",
+  "addressLine1": "59 Rue de Sèvres",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67100",
+  "country": "France",
+  "phone": "0722900805",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.018Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524f0"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7288"
+  },
+  "name": "Adresse principale",
+  "firstName": "Caroline",
+  "lastName": "Philippe",
+  "addressLine1": "27 Boulevard Saint-Germain",
+  "addressLine2": "Apt 70",
+  "city": "Paris",
+  "postalCode": "75006",
+  "country": "France",
+  "phone": "0751565101",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.019Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524f2"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7288"
+  },
+  "name": "Adresse 2",
+  "firstName": "Caroline",
+  "lastName": "Philippe",
+  "addressLine1": "13 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13007",
+  "country": "France",
+  "phone": "0618822240",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.020Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524f5"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7289"
+  },
+  "name": "Adresse principale",
+  "firstName": "Paule",
+  "lastName": "Garnier",
+  "addressLine1": "126 Boulevard Raspail",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44000",
+  "country": "France",
+  "phone": "0749905377",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.021Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524f8"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728a"
+  },
+  "name": "Adresse principale",
+  "firstName": "Andrée",
+  "lastName": "Bourgeois",
+  "addressLine1": "48 Boulevard Raspail",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31300",
+  "country": "France",
+  "phone": "0707822381",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.021Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524fa"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728a"
+  },
+  "name": "Adresse 2",
+  "firstName": "Andrée",
+  "lastName": "Bourgeois",
+  "addressLine1": "3 Rue de la Paix",
+  "addressLine2": "Apt 27",
+  "city": "Marseille",
+  "postalCode": "13008",
+  "country": "France",
+  "phone": "0635728515",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.022Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c524fd"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728b"
+  },
+  "name": "Adresse principale",
+  "firstName": "Zoé",
+  "lastName": "Picard",
+  "addressLine1": "17 Rue de Sèvres",
+  "addressLine2": "Apt 49",
+  "city": "Marseille",
+  "postalCode": "13004",
+  "country": "France",
+  "phone": "0682471618",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.023Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52500"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728c"
+  },
+  "name": "Adresse principale",
+  "firstName": "Berthe",
+  "lastName": "Roussel",
+  "addressLine1": "100 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Nice",
+  "postalCode": "06100",
+  "country": "France",
+  "phone": "0720016871",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.023Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52502"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728c"
+  },
+  "name": "Adresse 2",
+  "firstName": "Berthe",
+  "lastName": "Roussel",
+  "addressLine1": "108 Rue de Rennes",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33100",
+  "country": "France",
+  "phone": "0609118481",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.024Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52505"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728d"
+  },
+  "name": "Adresse principale",
+  "firstName": "Apolline",
+  "lastName": "Robin",
+  "addressLine1": "1 Boulevard Haussmann",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33000",
+  "country": "France",
+  "phone": "0761241615",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.025Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52507"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728d"
+  },
+  "name": "Adresse 2",
+  "firstName": "Apolline",
+  "lastName": "Robin",
+  "addressLine1": "60 Boulevard Raspail",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13005",
+  "country": "France",
+  "phone": "0653793640",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.025Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5250a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728e"
+  },
+  "name": "Adresse principale",
+  "firstName": "Élisabeth",
+  "lastName": "Carpentier",
+  "addressLine1": "24 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33200",
+  "country": "France",
+  "phone": "0602157361",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.026Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5250c"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728e"
+  },
+  "name": "Adresse 2",
+  "firstName": "Élisabeth",
+  "lastName": "Carpentier",
+  "addressLine1": "3 Boulevard Haussmann",
+  "addressLine2": "Apt 58",
+  "city": "Strasbourg",
+  "postalCode": "67100",
+  "country": "France",
+  "phone": "0682953673",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.026Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5250e"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728e"
+  },
+  "name": "Adresse 3",
+  "firstName": "Élisabeth",
+  "lastName": "Carpentier",
+  "addressLine1": "95 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44100",
+  "country": "France",
+  "phone": "0697011273",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.026Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52511"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728f"
+  },
+  "name": "Adresse principale",
+  "firstName": "Séverine",
+  "lastName": "Joly",
+  "addressLine1": "38 Boulevard Haussmann",
+  "addressLine2": "Apt 82",
+  "city": "Nantes",
+  "postalCode": "44300",
+  "country": "France",
+  "phone": "0659615584",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.027Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52513"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f728f"
+  },
+  "name": "Adresse 2",
+  "firstName": "Séverine",
+  "lastName": "Joly",
+  "addressLine1": "34 Rue de Sèvres",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75007",
+  "country": "France",
+  "phone": "0740588273",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.027Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52516"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7290"
+  },
+  "name": "Adresse principale",
+  "firstName": "Ernest",
+  "lastName": "Lopez",
+  "addressLine1": "1 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35200",
+  "country": "France",
+  "phone": "0742704971",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.028Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52518"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7290"
+  },
+  "name": "Adresse 2",
+  "firstName": "Ernest",
+  "lastName": "Lopez",
+  "addressLine1": "25 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59300",
+  "country": "France",
+  "phone": "0679765684",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.028Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5251b"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7291"
+  },
+  "name": "Adresse principale",
+  "firstName": "Charlemagne",
+  "lastName": "Pierre",
+  "addressLine1": "68 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69005",
+  "country": "France",
+  "phone": "0738186673",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.029Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5251d"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7291"
+  },
+  "name": "Adresse 2",
+  "firstName": "Charlemagne",
+  "lastName": "Pierre",
+  "addressLine1": "17 Avenue Victor Hugo",
+  "addressLine2": "Apt 81",
+  "city": "Nantes",
+  "postalCode": "44200",
+  "country": "France",
+  "phone": "0744598985",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.029Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52520"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7292"
+  },
+  "name": "Adresse principale",
+  "firstName": "Gisèle",
+  "lastName": "Schneider",
+  "addressLine1": "96 Rue de la Paix",
+  "addressLine2": "",
+  "city": "Bordeaux",
+  "postalCode": "33500",
+  "country": "France",
+  "phone": "0687924073",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.031Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52522"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7292"
+  },
+  "name": "Adresse 2",
+  "firstName": "Gisèle",
+  "lastName": "Schneider",
+  "addressLine1": "11 Rue de Rivoli",
+  "addressLine2": "Apt 41",
+  "city": "Lyon",
+  "postalCode": "69007",
+  "country": "France",
+  "phone": "0705427752",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.031Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52525"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7293"
+  },
+  "name": "Adresse principale",
+  "firstName": "Yves",
+  "lastName": "Aubry",
+  "addressLine1": "106 Boulevard Raspail",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67200",
+  "country": "France",
+  "phone": "0619613329",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.032Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52527"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7293"
+  },
+  "name": "Adresse 2",
+  "firstName": "Yves",
+  "lastName": "Aubry",
+  "addressLine1": "27 Rue de Sèvres",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67000",
+  "country": "France",
+  "phone": "0777424437",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.032Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52529"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7293"
+  },
+  "name": "Adresse 3",
+  "firstName": "Yves",
+  "lastName": "Aubry",
+  "addressLine1": "49 Rue de Sèvres",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59100",
+  "country": "France",
+  "phone": "0627979492",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.033Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5252c"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7294"
+  },
+  "name": "Adresse principale",
+  "firstName": "Azélie",
+  "lastName": "Moulin",
+  "addressLine1": "142 Boulevard Raspail",
+  "addressLine2": "Apt 43",
+  "city": "Paris",
+  "postalCode": "75006",
+  "country": "France",
+  "phone": "0692742726",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.033Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5252e"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7294"
+  },
+  "name": "Adresse 2",
+  "firstName": "Azélie",
+  "lastName": "Moulin",
+  "addressLine1": "33 Rue de Rivoli",
+  "addressLine2": "",
+  "city": "Rennes",
+  "postalCode": "35200",
+  "country": "France",
+  "phone": "0605542322",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.034Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52531"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7295"
+  },
+  "name": "Adresse principale",
+  "firstName": "Agathon",
+  "lastName": "Denis",
+  "addressLine1": "46 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Toulouse",
+  "postalCode": "31400",
+  "country": "France",
+  "phone": "0703308119",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.035Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52533"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7295"
+  },
+  "name": "Adresse 2",
+  "firstName": "Agathon",
+  "lastName": "Denis",
+  "addressLine1": "28 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75006",
+  "country": "France",
+  "phone": "0686668646",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.035Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52535"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7295"
+  },
+  "name": "Adresse 3",
+  "firstName": "Agathon",
+  "lastName": "Denis",
+  "addressLine1": "77 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67200",
+  "country": "France",
+  "phone": "0723838786",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.035Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52538"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7296"
+  },
+  "name": "Adresse principale",
+  "firstName": "Aimée",
+  "lastName": "Roussel",
+  "addressLine1": "72 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Strasbourg",
+  "postalCode": "67000",
+  "country": "France",
+  "phone": "0797698022",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.036Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5253a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7296"
+  },
+  "name": "Adresse 2",
+  "firstName": "Aimée",
+  "lastName": "Roussel",
+  "addressLine1": "36 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59300",
+  "country": "France",
+  "phone": "0771640200",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.036Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5253c"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7296"
+  },
+  "name": "Adresse 3",
+  "firstName": "Aimée",
+  "lastName": "Roussel",
+  "addressLine1": "140 Boulevard Haussmann",
+  "addressLine2": "",
+  "city": "Lille",
+  "postalCode": "59000",
+  "country": "France",
+  "phone": "0726894889",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.036Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5253f"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7297"
+  },
+  "name": "Adresse principale",
+  "firstName": "Alice",
+  "lastName": "Denis",
+  "addressLine1": "9 Boulevard Raspail",
+  "addressLine2": "Apt 50",
+  "city": "Lyon",
+  "postalCode": "69002",
+  "country": "France",
+  "phone": "0708501661",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.037Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52541"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7297"
+  },
+  "name": "Adresse 2",
+  "firstName": "Alice",
+  "lastName": "Denis",
+  "addressLine1": "24 Boulevard Haussmann",
+  "addressLine2": "Apt 6",
+  "city": "Lille",
+  "postalCode": "59200",
+  "country": "France",
+  "phone": "0691546827",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.037Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52543"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7297"
+  },
+  "name": "Adresse 3",
+  "firstName": "Alice",
+  "lastName": "Denis",
+  "addressLine1": "136 Boulevard Haussmann",
+  "addressLine2": "",
+  "city": "Lyon",
+  "postalCode": "69003",
+  "country": "France",
+  "phone": "0619647903",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.038Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52546"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7298"
+  },
+  "name": "Adresse principale",
+  "firstName": "Mégane",
+  "lastName": "Roussel",
+  "addressLine1": "128 Boulevard Saint-Germain",
+  "addressLine2": "Apt 92",
+  "city": "Rennes",
+  "postalCode": "35000",
+  "country": "France",
+  "phone": "0787621578",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.038Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52548"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7298"
+  },
+  "name": "Adresse 2",
+  "firstName": "Mégane",
+  "lastName": "Roussel",
+  "addressLine1": "22 Rue de la Paix",
+  "addressLine2": "Apt 42",
+  "city": "Toulouse",
+  "postalCode": "31500",
+  "country": "France",
+  "phone": "0748878253",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.039Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5254b"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f7299"
+  },
+  "name": "Adresse principale",
+  "firstName": "Chrétien",
+  "lastName": "Lambert",
+  "addressLine1": "81 Rue Saint-Antoine",
+  "addressLine2": "Apt 55",
+  "city": "Nantes",
+  "postalCode": "44100",
+  "country": "France",
+  "phone": "0715346083",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.039Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5254e"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f729a"
+  },
+  "name": "Adresse principale",
+  "firstName": "Alban",
+  "lastName": "Thomas",
+  "addressLine1": "106 Avenue des Champs-Élysées",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13007",
+  "country": "France",
+  "phone": "0650921024",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.040Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52550"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f729a"
+  },
+  "name": "Adresse 2",
+  "firstName": "Alban",
+  "lastName": "Thomas",
+  "addressLine1": "17 Rue de Rivoli",
+  "addressLine2": "",
+  "city": "Paris",
+  "postalCode": "75001",
+  "country": "France",
+  "phone": "0696934126",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.040Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52553"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f729b"
+  },
+  "name": "Adresse principale",
+  "firstName": "Élisabeth",
+  "lastName": "Durand",
+  "addressLine1": "134 Avenue Victor Hugo",
+  "addressLine2": "",
+  "city": "Nice",
+  "postalCode": "06300",
+  "country": "France",
+  "phone": "0762396838",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.041Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52555"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f729b"
+  },
+  "name": "Adresse 2",
+  "firstName": "Élisabeth",
+  "lastName": "Durand",
+  "addressLine1": "106 Rue Saint-Antoine",
+  "addressLine2": "",
+  "city": "Marseille",
+  "postalCode": "13009",
+  "country": "France",
+  "phone": "0690018780",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.041Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52558"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f729c"
+  },
+  "name": "Adresse principale",
+  "firstName": "Arcade",
+  "lastName": "Leclerc",
+  "addressLine1": "108 Avenue Victor Hugo",
+  "addressLine2": "Apt 42",
+  "city": "Lyon",
+  "postalCode": "69008",
+  "country": "France",
+  "phone": "0658157931",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.042Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5255a"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f729c"
+  },
+  "name": "Adresse 2",
+  "firstName": "Arcade",
+  "lastName": "Leclerc",
+  "addressLine1": "33 Avenue Victor Hugo",
+  "addressLine2": "Apt 85",
+  "city": "Strasbourg",
+  "postalCode": "67200",
+  "country": "France",
+  "phone": "0779329599",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.042Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c5255d"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f729d"
+  },
+  "name": "Adresse principale",
+  "firstName": "Ameline",
+  "lastName": "Rousseau",
+  "addressLine1": "75 Boulevard Saint-Germain",
+  "addressLine2": "",
+  "city": "Nantes",
+  "postalCode": "44100",
+  "country": "France",
+  "phone": "0670618245",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.043Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52560"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f729e"
+  },
+  "name": "Adresse principale",
+  "firstName": "Libère",
+  "lastName": "Royer",
+  "addressLine1": "110 Avenue Montaigne",
+  "addressLine2": "Apt 92",
+  "city": "Rennes",
+  "postalCode": "35000",
+  "country": "France",
+  "phone": "0753988102",
+  "isDefault": true,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.044Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52562"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f729e"
+  },
+  "name": "Adresse 2",
+  "firstName": "Libère",
+  "lastName": "Royer",
+  "addressLine1": "129 Boulevard Raspail",
+  "addressLine2": "Apt 36",
+  "city": "Toulouse",
+  "postalCode": "31500",
+  "country": "France",
+  "phone": "0662832169",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.044Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68693fe884dc821415c52564"
+  },
+  "user": {
+    "$oid": "6867eb6d66434c29db7f729e"
+  },
+  "name": "Adresse 3",
+  "firstName": "Libère",
+  "lastName": "Royer",
+  "addressLine1": "27 Rue de Sèvres",
+  "addressLine2": "",
+  "city": "Nice",
+  "postalCode": "06000",
+  "country": "France",
+  "phone": "0751796104",
+  "isDefault": false,
+  "type": "both",
+  "createdAt": {
+    "$date": "2025-07-05T15:08:24.045Z"
+  },
+  "__v": 0
+}]

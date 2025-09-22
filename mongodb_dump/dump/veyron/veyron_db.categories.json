@@ -1,0 +1,68 @@
+[{
+  "_id": {
+    "$oid": "6856c43e289eed3f7a954ac7"
+  },
+  "name": "Homme",
+  "slug": "homme",
+  "parent": null,
+  "featured": false,
+  "active": true,
+  "createdAt": {
+    "$date": "2025-06-21T14:39:58.172Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-21T14:39:58.172Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6856c47a289eed3f7a954ace"
+  },
+  "name": "Femme",
+  "slug": "femme",
+  "parent": null,
+  "featured": false,
+  "active": true,
+  "createdAt": {
+    "$date": "2025-06-21T14:40:58.299Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-21T14:40:58.299Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6856c484289eed3f7a954ad2"
+  },
+  "name": "Accessoires",
+  "slug": "accessoires",
+  "parent": null,
+  "featured": false,
+  "active": true,
+  "createdAt": {
+    "$date": "2025-06-21T14:41:08.120Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-21T14:41:08.120Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6856c48e289eed3f7a954ad6"
+  },
+  "name": "Collections",
+  "slug": "collections",
+  "parent": null,
+  "featured": false,
+  "active": true,
+  "createdAt": {
+    "$date": "2025-06-21T14:41:18.401Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-21T14:41:18.401Z"
+  },
+  "__v": 0
+}]
