@@ -10,6 +10,8 @@
     "test:unit": "vitest",
     "test:e2e": "playwright test",
     "build-only": "vite build",
+    "build:preprod": "vite build --mode=preprod",
+    "build:prod": "vite build --mode=production",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/"
