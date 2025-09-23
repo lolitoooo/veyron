@@ -4,6 +4,9 @@ services:
     image: mongo:latest
     volumes:
       - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: veyron
+      MONGO_INITDB_ROOT_PASSWORD: veyronpassword
     restart: always
     networks:
       - veyron-network
