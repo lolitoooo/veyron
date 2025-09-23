@@ -12,4 +12,4 @@ RUN mkdir -p public/uploads public/images
 
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+CMD ["npm", "start"]

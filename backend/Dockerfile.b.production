@@ -4,23 +4,25 @@ WORKDIR /app
 
 COPY package*.json ./
 
-# En production, on installe uniquement les dépendances de production
-RUN npm ci --only=production
+RUN npm install
 
 COPY . .
 
 RUN mkdir -p public/uploads public/images
 
-# Deuxième étape pour réduire la taille de l'image finale
 FROM node:20-alpine
 
 WORKDIR /app
 
-COPY --from=build /app .
+COPY package*.json ./
+
+RUN npm ci --only=production
+
+COPY --from=build /app/public ./public
+COPY --from=build /app/src ./src
+COPY --from=build /app/config ./config
+COPY --from=build /app/server.js ./
 
 EXPOSE 3000
-
-# Utilisation de NODE_ENV=production pour optimiser les performances
-ENV NODE_ENV=production
 
 CMD ["node", "server.js"]
