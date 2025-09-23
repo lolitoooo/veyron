@@ -19,7 +19,19 @@ const ensureDirectoriesExist = require('./utils/ensureDirs');
 ensureDirectoriesExist();
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:8080', 'http://localhost:3000'],
+  origin: [
+    // Domaines de production
+    'https://veyron-paris.fr',
+    'https://www.veyron-paris.fr',
+    'https://api.veyron-paris.fr',
+    // Domaines de préproduction
+    'https://preprod.veyron-paris.fr',
+    'https://api-preprod.veyron-paris.fr',
+    // Domaines de développement
+    'http://localhost:5173',
+    'http://localhost:8080',
+    'http://localhost:3000'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true

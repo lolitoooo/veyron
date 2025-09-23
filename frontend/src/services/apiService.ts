@@ -8,8 +8,10 @@ export function emitServerError(message: string) {
   serverErrorEvent.dispatchEvent(event);
 }
 
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
 const api: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json'
   },
@@ -36,7 +38,7 @@ api.interceptors.response.use(
     
     if (!error.response) {
       console.error('Erreur réseau:', error);
-      emitServerError('Le serveur backend n\'est pas accessible. Vérifiez que le serveur est en cours d\'exécution sur http://localhost:3000/api.');
+      emitServerError(`Le serveur backend n'est pas accessible. Vérifiez que le serveur est en cours d'exécution sur ${baseURL}.`);
     } else if (error.response.status >= 500) {
       console.error('Erreur serveur:', error);
       emitServerError(`Erreur serveur: ${error.response.status} - ${error.response.statusText || 'Erreur interne du serveur'}`);
