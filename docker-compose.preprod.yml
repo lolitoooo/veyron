@@ -1,12 +1,9 @@
 version: '3'
-
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.f.preprod
-    env_file:
-      - ./frontend/.env.preprod
+  mongodb:
+    image: mongodb:latest
+    volumes:
+      - mongodb_data:/data/db
     restart: always
     networks:
       - veyron-network
@@ -23,25 +20,15 @@ services:
     networks:
       - veyron-network
 
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "8080:80"
-    volumes:
-      - ./nginx/veyron-preprod.conf:/etc/nginx/conf.d/default.conf
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.f.preprod
+    env_file:
+      - ./frontend/.env.preprod
+    restart: always
     depends_on:
-      - frontend
       - backend
-    restart: always
-    networks:
-      - veyron-network
-
-  mongodb:
-    container_name: veyron-mongodb-preprod
-    image: mongo:latest
-    volumes:
-      - mongodb_data_preprod:/data/db
-    restart: always
     networks:
       - veyron-network
 
@@ -49,4 +36,4 @@ networks:
   veyron-network:
 
 volumes:
-  mongodb_data_preprod:
+  mongodb_data:
