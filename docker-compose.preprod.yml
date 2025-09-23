@@ -2,42 +2,53 @@ version: '3'
 
 services:
   frontend:
-    container_name: veyron-frontend-preprod
     build:
       context: ./frontend
       dockerfile: Dockerfile.f.preprod
-    ports:
-      - "8001:80"
     env_file:
       - ./frontend/.env.preprod
     restart: always
-    depends_on:
-      - backend
+    networks:
+      - veyron-network
 
   backend:
-    container_name: veyron-backend-preprod
     build:
       context: ./backend
       dockerfile: Dockerfile.b.preprod
-    ports:
-      - "3001:3000"
     env_file:
       - ./backend/.env.preprod
     restart: always
     depends_on:
       - mongodb
+    networks:
+      - veyron-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/veyron-preprod.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - frontend
+      - backend
+    restart: always
+    networks:
+      - veyron-network
 
   mongodb:
     container_name: veyron-mongodb-preprod
     image: mongo:latest
-    ports:
-      - "27018:27017"
     volumes:
       - mongodb_data_preprod:/data/db
     restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
+    networks:
+      - veyron-network
+
+networks:
+  veyron-network:
 
 volumes:
   mongodb_data_preprod:
