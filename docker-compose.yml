@@ -18,20 +18,15 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.b.development
     container_name: veyron-backend
     restart: always
     ports:
       - "3000:3000"
     depends_on:
       - mongodb
-    environment:
-      - NODE_ENV=development
-      - PORT=3000
-      - MONGO_URI=mongodb://admin:password@mongodb:27017/veyron?authSource=admin
-      - JWT_SECRET=veyron_secret_key
     env_file:
-      - ./backend/.env
+      - ./backend/.env.development
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -41,15 +36,15 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.f.development
     container_name: veyron-frontend
     restart: always
     ports:
       - "5173:5173"
     depends_on:
       - backend
-    environment:
-      - VITE_API_URL=http://localhost:3000/api
+    env_file:
+      - ./frontend/.env.development
     volumes:
       - ./frontend:/app
       - /app/node_modules

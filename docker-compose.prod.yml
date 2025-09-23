@@ -5,12 +5,12 @@ services:
     container_name: veyron-frontend-prod
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.f.production
     ports:
-      - "8000:80"
-    environment:
-      - NODE_ENV=production
-      - VITE_API_URL=https://api.veyron-paris.fr
+      - "80:80"
+      - "443:443"
+    env_file:
+      - ./frontend/.env.production
     restart: always
     depends_on:
       - backend
@@ -19,14 +19,11 @@ services:
     container_name: veyron-backend-prod
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.b.production
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=production
-      - MONGODB_URI=mongodb://mongodb:27017/veyron_prod
-      - JWT_SECRET=your_production_jwt_secret
-      - PORT=3000
+    env_file:
+      - ./backend/.env.production
     restart: always
     depends_on:
       - mongodb
@@ -34,11 +31,12 @@ services:
   mongodb:
     container_name: veyron-mongodb-prod
     image: mongo:latest
-    ports:
-      - "27017:27017"
     volumes:
       - mongodb_data_prod:/data/db
     restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
 
 volumes:
   mongodb_data_prod:

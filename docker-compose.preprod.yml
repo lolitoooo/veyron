@@ -5,12 +5,11 @@ services:
     container_name: veyron-frontend-preprod
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.f.preprod
     ports:
       - "8001:80"
-    environment:
-      - NODE_ENV=development
-      - VITE_API_URL=https://api-preprod.veyron-paris.fr
+    env_file:
+      - ./frontend/.env.preprod
     restart: always
     depends_on:
       - backend
@@ -19,14 +18,11 @@ services:
     container_name: veyron-backend-preprod
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.b.preprod
     ports:
       - "3001:3000"
-    environment:
-      - NODE_ENV=development
-      - MONGODB_URI=mongodb://mongodb:27017/veyron_preprod
-      - JWT_SECRET=your_preprod_jwt_secret
-      - PORT=3000
+    env_file:
+      - ./backend/.env.preprod
     restart: always
     depends_on:
       - mongodb
@@ -39,6 +35,9 @@ services:
     volumes:
       - mongodb_data_preprod:/data/db
     restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
 
 volumes:
   mongodb_data_preprod:
