@@ -17,8 +17,15 @@ coverage
 .env.development
 .env.production
 .env.preprod
-.env.local
-.env.*.local
+
+frontend/.env.production
+frontend/.env.preprod
+frontend/.env.development
+
+backend/.env.production
+backend/.env.preprod
+backend/.env.development
+
 
 .DS_Store
 
