@@ -21,6 +21,7 @@
 import { computed, watch, ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
+import api from '@/services/apiService';
 
 const route = useRoute();
 const router = useRouter();
@@ -35,7 +36,7 @@ const getCategoryNameById = async (categoryId: string): Promise<string> => {
   }
   
   try {
-    const response = await axios.get(`http://localhost:3000/api/categories/${categoryId}`);
+    const response = await api.get(`/categories/${categoryId}`);
     const category = response.data;
     
     if (category && category.name) {
@@ -56,7 +57,7 @@ const getProductNameById = async (productId: string): Promise<string> => {
   }
   
   try {
-    const response = await axios.get(`http://localhost:3000/api/products/${productId}`);
+    const response = await api.get(`/products/${productId}`);
     
     let productData;
     

@@ -29,6 +29,7 @@ app.use(cors({
     'https://preprod.veyron-paris.fr',
     'https://api-preprod.veyron-paris.fr',
     // Domaines de développement
+    'http://localhost',
     'http://localhost:5173',
     'http://localhost:8080',
     'http://localhost:3000'

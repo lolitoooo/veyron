@@ -8,7 +8,7 @@ export function emitServerError(message: string) {
   serverErrorEvent.dispatchEvent(event);
 }
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const baseURL = import.meta.env.VITE_API_URL || '/api';
 
 const api: AxiosInstance = axios.create({
   baseURL,
@@ -23,6 +23,7 @@ api.interceptors.request.use(config => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  console.log('API Request:', config.method?.toUpperCase(), config.url);
   return config;
 });
 

@@ -156,6 +156,7 @@ import api from '@/services/apiService';
 import { useCartStore } from '@/stores/cart';
 import { useWishlistStore } from '@/stores/wishlist';
 import { useAuthStore } from '@/stores/auth';
+import { getImageUrl } from '@/utils/imageUrl';
 
 const route = useRoute();
 const cartStore = useCartStore();
@@ -256,18 +257,7 @@ const loadProduct = async () => {
 };
 
 const getFullImageUrl = (imagePath: string): string => {
-  if (!imagePath) return '/placeholder.jpg';
-  
-  if (imagePath.startsWith('http')) {
-    return imagePath;
-  } else {
-    const serverUrl = 'http://localhost:3000';
-    if (imagePath.startsWith('/')) {
-      return `${serverUrl}${imagePath}`;
-    } else {
-      return `${serverUrl}/${imagePath}`;
-    }
-  }
+  return getImageUrl(imagePath);
 };
 
 const productImages = computed(() => {

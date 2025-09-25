@@ -56,7 +56,7 @@ exports.uploadSingleImage = [
       }
       
       const filename = path.basename(req.file.path);
-      const imageUrl = `http://localhost:3000/images/${filename}`;
+      const imageUrl = `/images/${filename}`;
       
       res.status(200).json({
         success: true,
@@ -89,7 +89,7 @@ exports.uploadMultipleImages = [
       const fileData = req.files.map(file => {
         const filename = path.basename(file.path);
         return {
-          url: `http://localhost:3000/images/${filename}`,
+          url: `/images/${filename}`,
           filename: filename
         };
       });

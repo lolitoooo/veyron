@@ -54,6 +54,7 @@
 import { ref, computed, onMounted, defineProps, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/services/apiService';
+import { getImageUrl as getImageUrlUtil } from '@/utils/imageUrl';
 
 const props = defineProps({
   slug: {
@@ -78,7 +79,7 @@ interface Product {
   price: number;
   category: string | { _id: string, name: string, slug?: string };
   images?: Array<{ url: string, alt?: string, isMain?: boolean }>;
-  image?: string; // Champ alternatif pour l'image principale
+  image?: string;
   colors?: Array<{ name: string, code: string, images?: Array<{ url: string, alt?: string, isMain?: boolean }> }>;
   discount?: number;
   discountPrice?: number;
@@ -121,9 +122,9 @@ const getCategoryIdBySlug = async (slug: string): Promise<string | null> => {
     } else if (response.data && Array.isArray(response.data)) {
       categoriesList = response.data;
     } else {
-      console.warn('Format de réponse API catégories inattendu:', response.data);
       return null;
     }
+    
     
     const category = categoriesList.find(cat => 
       cat.slug === slug || 
@@ -163,9 +164,9 @@ const loadProducts = async () => {
     } else if (response.data && Array.isArray(response.data)) {
       products.value = response.data;
     } else {
-      console.warn('Format de réponse API produits inattendu:', response.data);
       products.value = [];
     }
+    
     
   } catch (err: any) {
     console.error('Erreur lors du chargement des produits:', err);
@@ -181,40 +182,15 @@ const getImageUrl = (product: Product): string => {
     const image = mainImage || product.images[0];
     
     if (image && image.url) {
-      if (image.url.startsWith('http')) {
-        return image.url;
-      } else {
-        const serverUrl = 'http://localhost:3000';
-        let fullUrl;
-        if (image.url.startsWith('/')) {
-          fullUrl = `${serverUrl}${image.url}`;
-        } else {
-          fullUrl = `${serverUrl}/${image.url}`;
-        }
-        return fullUrl;
-      }
+      return getImageUrlUtil(image.url);
     }
   }
   
   if (typeof product.image === 'string') {
-    if (product.image.startsWith('http')) {
-      return product.image;
-    } else {
-      const serverUrl = 'http://localhost:3000';
-      let fullUrl;
-      if (product.image.startsWith('/')) {
-        fullUrl = `${serverUrl}${product.image}`;
-      } else {
-        fullUrl = `${serverUrl}/${product.image}`;
-      }
-      return fullUrl;
-    }
+    return getImageUrlUtil(product.image);
   }
-  return '/placeholder.jpg';
-};
-
-const formatPrice = (price: number): string => {
-  return price.toFixed(2).replace('.', ',');
+  
+  return getImageUrlUtil('/placeholder.jpg');
 };
 
 const hasDiscount = (product: Product): boolean => {
@@ -224,6 +200,10 @@ const hasDiscount = (product: Product): boolean => {
 const getDiscountedPrice = (product: Product): number => {
   if (!product.discount || product.discount <= 0) return product.price;
   return product.discountPrice || product.price;
+};
+
+const formatPrice = (price: number): string => {
+  return price.toFixed(2);
 };
 
 const navigateToProduct = (productId: string) => {
