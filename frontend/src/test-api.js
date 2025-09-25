@@ -1,9 +1,22 @@
 import axios from 'axios';
 
+const getServerUrl = () => {
+  if (import.meta.env.VITE_BASE_URL) {
+    return import.meta.env.VITE_BASE_URL;
+  }
+  
+  if (import.meta.env.PROD) {
+    return window.location.origin;
+  }
+  
+  return 'http://localhost:3000';
+};
+
 async function testApi() {
   try {
+    const serverUrl = getServerUrl();
     
-    const baseResponse = await axios.get('http://localhost:3000/');
+    const baseResponse = await axios.get(`${serverUrl}/`);
     console.log('Réponse de la route de base:', baseResponse.data);
     
     const loginData = {
@@ -12,7 +25,7 @@ async function testApi() {
     };
     
     console.log('Test de la route de login...');
-    const loginResponse = await axios.post('http://localhost:3000/api/auth/login', loginData);
+    const loginResponse = await axios.post(`${serverUrl}/api/auth/login`, loginData);
     console.log('Réponse de login:', loginResponse.data);
     
     return 'Tests terminés avec succès';

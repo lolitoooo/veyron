@@ -1,14 +1,23 @@
+import { getServerUrl } from './imageUrl';
+
 export const getApiUrl = (path: string): string => {
-  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
-  return `${baseUrl}${path.startsWith('/') ? path : `/${path}`}`;
+  const apiPath = import.meta.env.VITE_API_URL || '/api';
+  
+  if (apiPath.startsWith('http')) {
+    return `${apiPath}${path.startsWith('/') ? path : `/${path}`}`;
+  }
+  
+  const serverUrl = getServerUrl();
+  return `${serverUrl}${apiPath}${path.startsWith('/') ? path : `/${path}`}`;
 };
 
 export const getFullApiUrl = (path: string): string => {
-  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+  const apiPath = import.meta.env.VITE_API_URL || '/api';
   
-  if (baseUrl.startsWith('/')) {
-    return `${window.location.origin}${baseUrl}${path.startsWith('/') ? path : `/${path}`}`;
+  if (apiPath.startsWith('http')) {
+    return `${apiPath}${path.startsWith('/') ? path : `/${path}`}`;
   }
   
-  return `${baseUrl}${path.startsWith('/') ? path : `/${path}`}`;
+  const serverUrl = getServerUrl();
+  return `${serverUrl}${apiPath}${path.startsWith('/') ? path : `/${path}`}`;
 };
