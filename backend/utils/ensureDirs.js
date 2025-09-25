@@ -5,7 +5,8 @@ function ensureDirectoriesExist() {
   const dirs = [
     path.join(__dirname, '../public'),
     path.join(__dirname, '../public/uploads'),
-    path.join(__dirname, '../public/uploads/products')
+    path.join(__dirname, '../public/uploads/products'),
+    path.join(__dirname, '../public/uploads/profile')
   ];
 
   dirs.forEach(dir => {
