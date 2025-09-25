@@ -1,10 +1,18 @@
 export const getServerUrl = (): string => {
   if (import.meta.env.VITE_BASE_URL) {
-    const baseUrl = import.meta.env.VITE_BASE_URL;
-    if (baseUrl.includes('backend:3000')) {
-      return 'http://localhost:3000';
-    }
-    return baseUrl;
+    return import.meta.env.VITE_BASE_URL;
+  }
+  
+  if (import.meta.env.PROD) {
+    return window.location.origin;
+  }
+  
+  return 'http://localhost:3000';
+};
+
+export const getImageServerUrl = (): string => {
+  if (import.meta.env.VITE_IMAGE_URL) {
+    return import.meta.env.VITE_IMAGE_URL;
   }
   
   if (import.meta.env.PROD) {
@@ -21,7 +29,7 @@ export const getImageUrl = (imagePath: string): string => {
     return imagePath;
   }
   
-  const serverUrl = getServerUrl();
+  const serverUrl = getImageServerUrl();
   
   if (imagePath.startsWith('/')) {
     return `${serverUrl}${imagePath}`;
