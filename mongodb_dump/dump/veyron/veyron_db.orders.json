@@ -33661,7 +33661,7 @@
     {
       "name": "CHEMISE À TEXTURE EN CROCHET",
       "qty": 2,
-      "image": "http://localhost:3000/images/product-1751646909442-75141700.jpg",
+      "image": "/images/product-1751646909442-75141700.jpg",
       "price": 19.99,
       "priceHT": 16.66,
       "variant": {
@@ -33746,7 +33746,7 @@
     {
       "name": "BANDANA À IMPRIMÉ CACHEMIRE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751727442791-253452596.jpg",
+      "image": "/images/product-1751727442791-253452596.jpg",
       "price": 7.99,
       "priceHT": 6.66,
       "variant": {
@@ -33765,7 +33765,7 @@
     {
       "name": "CHEMISE EN JACQUARD BRODÉE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751648158187-940291947.jpg",
+      "image": "/images/product-1751648158187-940291947.jpg",
       "price": 49.95,
       "priceHT": 41.63,
       "variant": {
@@ -33784,7 +33784,7 @@
     {
       "name": "TOP GILET CROCHET",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751649378477-152765737.jpg",
+      "image": "/images/product-1751649378477-152765737.jpg",
       "price": 39.95,
       "priceHT": 33.29,
       "variant": {
@@ -33803,7 +33803,7 @@
     {
       "name": "CHEMISE JACQUARD GÉOMÉTRIQUE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751647828442-417994074.jpg",
+      "image": "/images/product-1751647828442-417994074.jpg",
       "price": 39.95,
       "priceHT": 33.29,
       "variant": {
@@ -33822,7 +33822,7 @@
     {
       "name": "CHEMISE JACQUARD GÉOMÉTRIQUE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751647761306-730962670.jpg",
+      "image": "/images/product-1751647761306-730962670.jpg",
       "price": 39.95,
       "priceHT": 33.29,
       "variant": {
@@ -33907,7 +33907,7 @@
     {
       "name": "CHEMISE JACQUARD GÉOMÉTRIQUE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751647828442-417994074.jpg",
+      "image": "/images/product-1751647828442-417994074.jpg",
       "price": 39.95,
       "priceHT": 33.29,
       "variant": {
@@ -33926,7 +33926,7 @@
     {
       "name": "TOP BANDEAU VOLANTS",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751648384716-993916770.jpg",
+      "image": "/images/product-1751648384716-993916770.jpg",
       "price": 12.99,
       "priceHT": 10.83,
       "variant": {
@@ -33945,7 +33945,7 @@
     {
       "name": "CRAVATE 100 % SOIE À POIS",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751651538043-845293634.jpg",
+      "image": "/images/product-1751651538043-845293634.jpg",
       "price": 49.95,
       "priceHT": 41.63,
       "variant": {
@@ -34030,7 +34030,7 @@
     {
       "name": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751648821803-329082543.jpg",
+      "image": "/images/product-1751648821803-329082543.jpg",
       "price": 15.95,
       "priceHT": 13.29,
       "variant": {
@@ -34049,7 +34049,7 @@
     {
       "name": "CHEMISE À TEXTURE EN CROCHET",
       "qty": 2,
-      "image": "http://localhost:3000/images/product-1751646902214-449065018.jpg",
+      "image": "/images/product-1751646902214-449065018.jpg",
       "price": 19.99,
       "priceHT": 16.66,
       "variant": {
@@ -34068,7 +34068,7 @@
     {
       "name": "CRAVATE 100 % SOIE À POIS",
       "qty": 3,
-      "image": "http://localhost:3000/images/product-1751651521059-640581336.jpg",
+      "image": "/images/product-1751651521059-640581336.jpg",
       "price": 49.95,
       "priceHT": 41.63,
       "variant": {
@@ -34153,7 +34153,7 @@
     {
       "name": "CHEMISE EN JACQUARD BRODÉE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751648173321-674987979.jpg",
+      "image": "/images/product-1751648173321-674987979.jpg",
       "price": 49.95,
       "priceHT": 41.63,
       "variant": {
@@ -34172,7 +34172,7 @@
     {
       "name": "BANDANA À IMPRIMÉ CACHEMIRE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751727451435-130824392.jpg",
+      "image": "/images/product-1751727451435-130824392.jpg",
       "price": 7.99,
       "priceHT": 6.66,
       "variant": {
@@ -34191,7 +34191,7 @@
     {
       "name": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751648821803-329082543.jpg",
+      "image": "/images/product-1751648821803-329082543.jpg",
       "price": 15.95,
       "priceHT": 13.29,
       "variant": {
@@ -34276,7 +34276,7 @@
     {
       "name": "BANDANA À IMPRIMÉ CACHEMIRE",
       "qty": 2,
-      "image": "http://localhost:3000/images/product-1751727442791-253452596.jpg",
+      "image": "/images/product-1751727442791-253452596.jpg",
       "price": 7.99,
       "priceHT": 6.66,
       "variant": {
@@ -34295,7 +34295,7 @@
     {
       "name": "CHEMISE À TEXTURE EN CROCHET",
       "qty": 3,
-      "image": "http://localhost:3000/images/product-1751646902214-449065018.jpg",
+      "image": "/images/product-1751646902214-449065018.jpg",
       "price": 19.99,
       "priceHT": 16.66,
       "variant": {
@@ -34380,7 +34380,7 @@
     {
       "name": "CHEMISE À TEXTURE EN CROCHET",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751646881150-897403176.jpg",
+      "image": "/images/product-1751646881150-897403176.jpg",
       "price": 19.99,
       "priceHT": 16.66,
       "variant": {
@@ -34465,7 +34465,7 @@
     {
       "name": "T-SHIRT CÔTELÉ EFFET DÉLAVÉ À MANCHES LONGUES",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751648808907-536763431.jpg",
+      "image": "/images/product-1751648808907-536763431.jpg",
       "price": 15.95,
       "priceHT": 13.29,
       "variant": {
@@ -34484,7 +34484,7 @@
     {
       "name": "ÉCHARPE LARGE À FRANGES",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751727783072-536411560.jpg",
+      "image": "/images/product-1751727783072-536411560.jpg",
       "price": 29.95,
       "priceHT": 24.96,
       "variant": {
@@ -34569,7 +34569,7 @@
     {
       "name": "BANDANA À IMPRIMÉ CACHEMIRE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751727442791-253452596.jpg",
+      "image": "/images/product-1751727442791-253452596.jpg",
       "price": 7.99,
       "priceHT": 6.66,
       "variant": {
@@ -34640,7 +34640,7 @@
     {
       "name": "BANDANA À IMPRIMÉ CACHEMIRE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751727442791-253452596.jpg",
+      "image": "/images/product-1751727442791-253452596.jpg",
       "price": 7.99,
       "priceHT": 6.66,
       "variant": {
@@ -34659,7 +34659,7 @@
     {
       "name": "CHEMISE EN JACQUARD BRODÉE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751648158187-940291947.jpg",
+      "image": "/images/product-1751648158187-940291947.jpg",
       "price": 49.95,
       "priceHT": 41.63,
       "variant": {
@@ -34729,7 +34729,7 @@
     {
       "name": "BANDANA À IMPRIMÉ CACHEMIRE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751727442791-253452596.jpg",
+      "image": "/images/product-1751727442791-253452596.jpg",
       "price": 7.99,
       "priceHT": 6.66,
       "variant": {
@@ -34799,7 +34799,7 @@
     {
       "name": "BANDANA À IMPRIMÉ CACHEMIRE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751727442791-253452596.jpg",
+      "image": "/images/product-1751727442791-253452596.jpg",
       "price": 7.99,
       "priceHT": 6.66,
       "variant": {
@@ -34869,7 +34869,7 @@
     {
       "name": "BANDANA À IMPRIMÉ CACHEMIRE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751727442791-253452596.jpg",
+      "image": "/images/product-1751727442791-253452596.jpg",
       "price": 7.99,
       "priceHT": 6.66,
       "variant": {
@@ -34951,7 +34951,7 @@
     {
       "name": "CHEMISE JACQUARD GÉOMÉTRIQUE",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751647834673-475008329.jpg",
+      "image": "/images/product-1751647834673-475008329.jpg",
       "price": 39.95,
       "priceHT": 33.29,
       "variant": {
@@ -35033,7 +35033,7 @@
     {
       "name": "CHEMISE À TEXTURE EN CROCHET",
       "qty": 1,
-      "image": "http://localhost:3000/images/product-1751646907411-527442115.jpg",
+      "image": "/images/product-1751646907411-527442115.jpg",
       "price": 19.99,
       "priceHT": 16.66,
       "variant": {

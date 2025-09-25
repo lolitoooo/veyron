@@ -3,6 +3,31 @@ const Order = require('../models/Order');
 const Product = require('../models/Product');
 const invoiceController = require('./invoiceController');
 
+
+const cleanImageUrl = (url) => {
+  if (!url) return '';
+  
+  if (url.startsWith('/images/')) return url;
+  
+  try {
+    if (url.includes('http://') || url.includes('https://')) {
+      const urlObj = new URL(url);
+      return urlObj.pathname;
+    }
+    
+    if (!url.startsWith('/')) {
+      return `/images/${url}`;
+    }
+    
+    return url;
+  } catch (err) {
+    console.error('Erreur lors du nettoyage de l\'URL de l\'image:', err);
+    const parts = url.split('/');
+    const filename = parts[parts.length - 1];
+    return `/images/${filename}`;
+  }
+};
+
 exports.createCheckoutSession = async (req, res) => {
   try {
     const { items, shippingAddress, billingAddress } = req.body;
@@ -34,7 +59,7 @@ exports.createCheckoutSession = async (req, res) => {
       orderItems.push({
         name: item.name,
         qty: item.quantity,
-        image: item.image,
+        image: cleanImageUrl(item.image),
         price: item.price,
         priceHT: priceHT,
         variant: item.variant,

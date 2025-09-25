@@ -6,6 +6,30 @@ const InvoiceService = require('../services/invoiceService');
 const path = require('path');
 const fs = require('fs-extra');
 
+const cleanImageUrl = (url) => {
+  if (!url) return '';
+  
+  if (url.startsWith('/images/')) return url;
+  
+  try {
+    if (url.includes('http://') || url.includes('https://')) {
+      const urlObj = new URL(url);
+      return urlObj.pathname;
+    }
+    
+    if (!url.startsWith('/')) {
+      return `/images/${url}`;
+    }
+    
+    return url;
+  } catch (err) {
+    console.error('Erreur lors du nettoyage de l\'URL de l\'image:', err);
+    const parts = url.split('/');
+    const filename = parts[parts.length - 1];
+    return `/images/${filename}`;
+  }
+};
+
 exports.createOrder = async (req, res) => {
   try {
     const {
@@ -21,8 +45,13 @@ exports.createOrder = async (req, res) => {
     if (!orderItems || orderItems.length === 0) {
       return res.status(400).json({ message: 'Aucun article dans la commande' });
     }
+    
+    const cleanedOrderItems = orderItems.map(item => ({
+      ...item,
+      image: cleanImageUrl(item.image)
+    }));
 
-    for (const item of orderItems) {
+    for (const item of cleanedOrderItems) {
       const product = await Product.findById(item.product);
       
       if (!product) {
@@ -46,7 +75,7 @@ exports.createOrder = async (req, res) => {
 
     const order = new Order({
       user: req.user.id,
-      orderItems,
+      orderItems: cleanedOrderItems,
       shippingAddress,
       billingAddress,
       paymentMethod,
