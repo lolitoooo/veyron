@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
+import { getServerUrl } from './imageUrl';
 
 export const serverErrorEvent = new EventTarget();
 
@@ -8,7 +9,9 @@ export function emitServerError(message: string) {
   serverErrorEvent.dispatchEvent(event);
 }
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const apiPath = import.meta.env.VITE_API_URL || '/api';
+const serverUrl = getServerUrl();
+const baseURL = apiPath.startsWith('http') ? apiPath : `${serverUrl}${apiPath}`;
 
 const api: AxiosInstance = axios.create({
   baseURL,

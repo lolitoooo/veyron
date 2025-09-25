@@ -164,6 +164,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/services/apiService';
 import { useUsersStore } from '@/stores/users';
+import { getImageUrl as getFullImageUrl } from '@/utils/imageUrl';
 
 const router = useRouter();
 const usersStore = useUsersStore();
@@ -482,20 +483,6 @@ onMounted(() => {
   usersStore.fetchUsers();
 });
 
-const getFullImageUrl = (imagePath: string): string => {
-  if (!imagePath) return '/placeholder.jpg';
-  
-  if (imagePath.startsWith('http')) {
-    return imagePath;
-  } else {
-    const serverUrl = 'http://localhost:3000';
-    if (imagePath.startsWith('/')) {
-      return `${serverUrl}${imagePath}`;
-    } else {
-      return `${serverUrl}/${imagePath}`;
-    }
-  }
-};
 </script>
 
 <style scoped>

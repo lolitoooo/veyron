@@ -120,6 +120,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useOrderStore } from '../stores/order';
 import type { Order } from '@/types/order';
+import { getServerUrl } from '@/utils/imageUrl';
 
 const router = useRouter();
 const orderStore = useOrderStore();
@@ -240,7 +241,8 @@ const downloadInvoice = (orderId: string) => {
       return;
     }
     
-    const invoiceUrl = `http://localhost:3000/api/orders/${orderId}/invoice/download?token=${token}`;
+    const serverUrl = getServerUrl();
+    const invoiceUrl = `${serverUrl}/api/orders/${orderId}/invoice/download?token=${token}`;
     
     window.open(invoiceUrl, '_blank');
   } catch (err) {

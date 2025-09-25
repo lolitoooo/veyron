@@ -1,16 +1,5 @@
 import axios from 'axios';
-
-const getServerUrl = () => {
-  if (import.meta.env.VITE_BASE_URL) {
-    return import.meta.env.VITE_BASE_URL;
-  }
-  
-  if (import.meta.env.PROD) {
-    return window.location.origin;
-  }
-  
-  return 'http://localhost:3000';
-};
+import { getServerUrl } from './utils/imageUrl';
 
 async function testApi() {
   try {

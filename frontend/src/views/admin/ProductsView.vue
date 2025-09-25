@@ -147,6 +147,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/services/apiService';
+import { getImageUrl } from '@/utils/imageUrl';
 
 const router = useRouter();
 
@@ -321,20 +322,6 @@ const getStockClass = (stock: number): string => {
   if (stock === 0) return 'stock-out';
   if (stock <= 10) return 'stock-low';
   return 'stock-ok';
-};
-
-const getImageUrl = (imagePath: string): string => {
-  if (imagePath && (imagePath.startsWith('http://') || imagePath.startsWith('https://'))) {
-    return imagePath;
-  }
-  
-  const serverUrl = 'http://localhost:3000';
-  
-  if (imagePath && imagePath.startsWith('/')) {
-    return `${serverUrl}${imagePath}`;
-  }
-  
-  return `${serverUrl}/${imagePath}`;
 };
 
 const editProduct = (productId: string) => {

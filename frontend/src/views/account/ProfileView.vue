@@ -259,6 +259,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import api from '@/services/apiService';
+import { getServerUrl } from '@/utils/imageUrl';
 
 interface ProfileData {
   id: number;
@@ -339,7 +340,8 @@ const getFullPhotoUrl = (relativeUrl: string | undefined): string => {
     return relativeUrl;
   }
   
-  return `http://localhost:3000${relativeUrl}`;
+  const serverUrl = getServerUrl();
+  return `${serverUrl}${relativeUrl}`;
 };
 
 const loadUserProfile = async () => {

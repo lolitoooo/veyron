@@ -347,6 +347,7 @@
 import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/services/apiService';
+import { getImageUrl as baseGetImageUrl } from '@/utils/imageUrl';
 
 interface Image {
   url: string;
@@ -672,20 +673,7 @@ function getImageUrl(imagePath: string | any) {
     }
   }
   
-  if (imagePath.startsWith('blob:') || imagePath.startsWith('http')) {
-    return imagePath;
-  }
-  
-  const serverUrl = 'http://localhost:3000';
-  
-  const cleanPath = imagePath.replace(/\/\//g, '/');
-  
-  const filename = cleanPath.split('/').pop();
-  return `${serverUrl}/images/${filename}`;
-}
-
-function calculateTotalStock(): number {
-  return product.value.variants.reduce((sum, variant) => sum + (variant.stock || 0), 0);
+  return baseGetImageUrl(imagePath);
 }
 
 function convertUrlToRelativePath(url: string | { url: string }): string | { url: string, alt?: string, isMain?: boolean } {

@@ -75,6 +75,7 @@ import { useAuthStore } from '@/stores/auth';
 import { useWishlistStore } from '@/stores/wishlist';
 import { useCartStore } from '@/stores/cart';
 import axios from 'axios';
+import { getImageUrl as getFullImageUrl } from '@/utils/imageUrl';
 
 const authStore = useAuthStore();
 const cartStore = useCartStore();
@@ -151,21 +152,6 @@ const formatPrice = (price) => {
 
 const hasDiscount = (product) => {
   return product && product.discount && product.discount > 0 && product.discountPrice;
-};
-
-const getFullImageUrl = (imagePath: string): string => {
-  if (!imagePath) return '/placeholder.jpg';
-  
-  if (imagePath.startsWith('http')) {
-    return imagePath;
-  } else {
-    const serverUrl = 'http://localhost:3000';
-    if (imagePath.startsWith('/')) {
-      return `${serverUrl}${imagePath}`;
-    } else {
-      return `${serverUrl}/${imagePath}`;
-    }
-  }
 };
 
 const getProductUrl = (product) => {

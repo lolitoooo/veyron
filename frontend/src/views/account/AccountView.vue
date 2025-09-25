@@ -192,6 +192,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useWishlistStore } from '@/stores/wishlist';
 import api from '@/services/apiService';
+import { getServerUrl } from '@/utils/imageUrl';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -302,7 +303,8 @@ const getFullPhotoUrl = (relativeUrl: string | undefined): string => {
     return relativeUrl;
   }
   
-  return `http://localhost:3000${relativeUrl}`;
+  const serverUrl = getServerUrl();
+  return `${serverUrl}${relativeUrl}`;
 };
 </script>
 

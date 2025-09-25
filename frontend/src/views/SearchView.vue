@@ -75,6 +75,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useWishlistStore } from '@/stores/wishlist';
 import { useAuthStore } from '@/stores/auth';
+import { getImageUrl as getFullImageUrl } from '@/utils/imageUrl';
 
 const route = useRoute();
 const router = useRouter();
@@ -152,21 +153,6 @@ const navigateToProduct = (productId: string, product?: any) => {
         router.push(`/category/${categorySlug}/${productId}`);
         return;
       }
-    }
-  }
-};
-
-const getFullImageUrl = (imagePath: string): string => {
-  if (!imagePath) return '/placeholder.jpg';
-  
-  if (imagePath.startsWith('http')) {
-    return imagePath;
-  } else {
-    const serverUrl = 'http://localhost:3000';
-    if (imagePath.startsWith('/')) {
-      return `${serverUrl}${imagePath}`;
-    } else {
-      return `${serverUrl}/${imagePath}`;
     }
   }
 };
