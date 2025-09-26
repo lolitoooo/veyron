@@ -50,12 +50,12 @@
                 <p>{{ shippingAddress.postalCode }} {{ shippingAddress.city }}</p>
                 <p>{{ shippingAddress.country }}</p>
                 <p>{{ shippingAddress.phone }}</p>
-                <button @click="router.push('/account/addresses')" class="btn-secondary btn-sm">Gérer mes adresses</button>
+                <button @click="router.push({ name: 'addresses', query: { redirect: '/checkout' } })" class="btn-secondary btn-sm">Gérer mes adresses</button>
               </div>
               
               <div v-else class="address-form">
                 <p>Veuillez ajouter une adresse de livraison</p>
-                <button @click="router.push('/account/addresses')" class="btn-secondary">Ajouter une adresse</button>
+                <button @click="router.push({ name: 'addresses', query: { redirect: '/checkout' } })" class="btn-secondary">Ajouter une adresse</button>
               </div>
             </div>
             
@@ -102,7 +102,7 @@
                 </div>
                 <div v-else class="address-form">
                   <p>Veuillez ajouter une adresse de facturation</p>
-                  <button @click="router.push('/account/addresses')" class="btn-secondary">Ajouter une adresse</button>
+                  <button @click="router.push({ name: 'addresses', query: { redirect: '/checkout' } })" class="btn-secondary">Ajouter une adresse</button>
                 </div>
               </div>
             </div>
@@ -154,6 +154,9 @@
               <span v-if="isProcessing">Traitement en cours...</span>
               <span v-else>Procéder au paiement</span>
             </button>
+            <p v-if="!hasCompleteShipping && cartItems.length > 0" class="hint-text">
+              <strong>Veuillez sélectionner une adresse de livraison pour procéder au paiement.</strong>
+            </p>
           </div>
         </div>
       </div>
@@ -248,6 +251,15 @@ const billingAddress = computed(() => {
   return billingAddressData.value;
 });
 
+const hasCompleteShipping = computed(() => {
+  if (!selectedShippingAddressId.value) {
+    return false;
+  }
+  
+  const address = shippingAddress.value as any;
+  return !!(address && address.addressLine1 && address.city && address.postalCode);
+});
+
 const subtotal = computed(() => {
   return cartStore.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 });
@@ -261,7 +273,7 @@ const cartItems = computed(() => {
 });
 
 const canProceed = computed(() => {
-  return cartItems.value.length > 0 && shippingAddress.value && !isLoading.value;
+  return cartItems.value.length > 0 && hasCompleteShipping.value && !isLoading.value;
 });
 
 const formatPrice = (price) => {
@@ -308,15 +320,15 @@ const goToCart = () => {
   router.push('/cart');
 };
 async function proceedToPayment() {
-  if (!canProceed.value) return;
-  
-  if (!shippingAddress.value || !shippingAddress.value.addressLine1 || !shippingAddress.value.city || !shippingAddress.value.postalCode) {
-    error.value = 'Veuillez fournir une adresse de livraison complète';
+  if (!canProceed.value) {
+    if (cartItems.value.length > 0 && !hasCompleteShipping.value) {
+      router.push({ name: 'addresses', query: { redirect: '/checkout' } });
+    }
     return;
   }
   
   if (!sameAddress.value && (!billingAddress.value || !billingAddress.value.addressLine1 || !billingAddress.value.city || !billingAddress.value.postalCode)) {
-    error.value = 'Veuillez fournir une adresse de facturation complète';
+    router.push({ name: 'addresses', query: { redirect: '/checkout' } });
     return;
   }
   
@@ -558,5 +570,43 @@ h2 {
 .btn-payment:hover {
   transform: translateY(-2px);
   transition: transform 0.3s ease-in-out;
+}
+
+.btn-payment:disabled {
+  background-color: #cccccc;
+  color: #888888;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-payment:disabled:hover {
+  transform: none;
+}
+
+.alert-warning {
+  background-color: #fff7e6;
+  border: 1px solid #ffe0a3;
+  color: #8a6d3b;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.alert-warning .btn-primary.btn-sm {
+  margin-top: 0.75rem;
+}
+
+.hint-text {
+  margin-top: 0.75rem;
+  color: #8a6d3b;
+  font-size: 0.95rem;
+  text-align: center;
+  background-color: #fff7e6;
+  border: 1px solid #ffe0a3;
+  border-radius: 8px;
+  padding: 0.75rem;
 }
 </style>

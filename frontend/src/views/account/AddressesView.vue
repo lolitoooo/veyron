@@ -81,19 +81,18 @@
           
           <form @submit.prevent="saveAddress">
             <div class="form-group">
-              <label for="addressName">Nom de l'adresse</label>
+              <label for="addressName">Nom de l'adresse <span class="required">*</span></label>
               <input 
                 type="text" 
                 id="addressName" 
-                v-model="currentAddress.name" 
-                placeholder="Ex: Maison, Travail, etc."
+                v-model="currentAddress.name"
                 required
               />
             </div>
             
             <div class="form-row">
               <div class="form-group">
-                <label for="firstName">Prénom</label>
+                <label for="firstName">Prénom <span class="required">*</span></label>
                 <input 
                   type="text" 
                   id="firstName" 
@@ -103,7 +102,7 @@
               </div>
               
               <div class="form-group">
-                <label for="lastName">Nom</label>
+                <label for="lastName">Nom <span class="required">*</span></label>
                 <input 
                   type="text" 
                   id="lastName" 
@@ -114,7 +113,7 @@
             </div>
             
             <div class="form-group">
-              <label for="addressLine1">Adresse</label>
+              <label for="addressLine1">Adresse <span class="required">*</span></label>
               <input 
                 type="text" 
                 id="addressLine1" 
@@ -134,7 +133,7 @@
             
             <div class="form-row">
               <div class="form-group">
-                <label for="postalCode">Code postal</label>
+                <label for="postalCode">Code postal <span class="required">*</span></label>
                 <input 
                   type="text" 
                   id="postalCode" 
@@ -144,7 +143,7 @@
               </div>
               
               <div class="form-group">
-                <label for="city">Ville</label>
+                <label for="city">Ville <span class="required">*</span></label>
                 <input 
                   type="text" 
                   id="city" 
@@ -155,7 +154,7 @@
             </div>
             
             <div class="form-group">
-              <label for="country">Pays</label>
+              <label for="country">Pays <span class="required">*</span></label>
               <input 
                 type="text" 
                 id="country" 
@@ -165,16 +164,17 @@
             </div>
             
             <div class="form-group">
-              <label for="phone">Téléphone</label>
+              <label for="phone">Téléphone <span class="required">*</span></label>
               <input 
                 type="tel" 
                 id="phone" 
                 v-model="currentAddress.phone"
+                required
               />
             </div>
             
             <div class="form-group">
-              <label for="type">Type d'adresse</label>
+              <label for="type">Type d'adresse <span class="required">*</span></label>
               <select id="type" v-model="currentAddress.type">
                 <option value="shipping">Adresse de livraison</option>
                 <option value="billing">Adresse de facturation</option>
@@ -222,8 +222,10 @@
           <p>Êtes-vous sûr de vouloir supprimer cette adresse ?</p>
           
           <div v-if="addressToDelete" class="address-preview">
-            <p><strong>{{ addressToDelete.fullName }}</strong></p>
-            <p>{{ addressToDelete.street }}</p>
+            <p><strong>{{ addressToDelete.name }}</strong></p>
+            <p>{{ addressToDelete.firstName }} {{ addressToDelete.lastName }}</p>
+            <p>{{ addressToDelete.addressLine1 }}</p>
+            <p v-if="addressToDelete.addressLine2">{{ addressToDelete.addressLine2 }}</p>
             <p>{{ addressToDelete.postalCode }} {{ addressToDelete.city }}</p>
             <p>{{ addressToDelete.country }}</p>
           </div>
@@ -291,8 +293,8 @@ const formError = ref('');
 const validAddresses = computed(() => {
   return addresses.value.filter(address => {
     return (address._id || address.id) && 
-           (address.fullName || (address.firstName && address.lastName) || 
-            address.street || address.addressLine1);
+           ((address.firstName && address.lastName) || 
+            address.addressLine1);
   });
 });
 
@@ -376,6 +378,12 @@ const saveAddress = async () => {
     isAddressModalOpen.value = false;
     await loadAddresses();
     
+    const redirectPath = router.currentRoute.value.query.redirect;
+    if (redirectPath && typeof redirectPath === 'string') {
+      router.push(redirectPath);
+      return;
+    }
+    
   } catch (err: any) {
     console.error('Erreur lors de l\'enregistrement de l\'adresse:', err);
     
@@ -394,6 +402,12 @@ const setDefaultAddress = async (address: Address) => {
     const response = await api.put(`/user/addresses/${address._id || address.id}/set-default`, {});
     
     await loadAddresses();
+    
+    const redirectPath = router.currentRoute.value.query.redirect;
+    if (redirectPath && typeof redirectPath === 'string') {
+      router.push(redirectPath);
+      return;
+    }
     
   } catch (err: any) {
     console.error('Erreur lors de la définition de l\'adresse par défaut:', err);
@@ -723,5 +737,10 @@ h1 {
 
 .address-preview p {
   margin: 0.25rem 0;
+}
+
+.required {
+  color: #e74c3c;
+  margin-left: 2px;
 }
 </style>

@@ -214,7 +214,7 @@ exports.deleteAddress = async (req, res) => {
       });
     }
     
-    await address.remove();
+    await Address.deleteOne({ _id: address._id });
     
     res.status(200).json({
       success: true,
