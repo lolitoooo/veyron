@@ -16,6 +16,10 @@ const secureInvoices = async (req, res, next) => {
       return res.status(401).json({ message: 'Accès non autorisé, token manquant' });
     }
 
+    if (!req.query.token && req.originalUrl.indexOf('?') === -1) {
+      res.locals.invoiceUrl = `${req.originalUrl}?token=${token}`;
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
     const orderId = req.params.id;
@@ -27,6 +31,7 @@ const secureInvoices = async (req, res, next) => {
     if (!order) {
       return res.status(404).json({ message: 'Commande non trouvée' });
     }
+    
     if (order.user.toString() !== decoded.id && decoded.role !== 'admin') {
       return res.status(403).json({ message: 'Accès non autorisé à cette facture' });
     }
@@ -34,7 +39,6 @@ const secureInvoices = async (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    console.error('Erreur dans le middleware secureInvoices:', error);
     return res.status(401).json({ message: 'Token invalide ou expiré' });
   }
 };

@@ -34,6 +34,7 @@ router.post('/:id/payment', protect, processPayment);
 router.put('/:id/cancel', protect, cancelOrder);
 router.post('/:id/invoice/generate', protect, invoiceController.generateInvoice);
 router.get('/:id/invoice/download', protect, secureInvoices, invoiceController.downloadInvoice);
+router.get('/:id/invoice/view', protect, secureInvoices, invoiceController.viewInvoice);
 router.put('/:id/status', protect, authorize('admin'), updateOrderStatus);
 
 module.exports = router;

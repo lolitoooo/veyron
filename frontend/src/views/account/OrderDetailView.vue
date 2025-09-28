@@ -1,6 +1,6 @@
 <template>
-  <div class="order-detail-view">
-    <div class="container">
+  <AccountLayout>
+    <div class="order-detail-view">
       <div v-if="errorNotification" class="error-notification">
         <div class="error-notification-content">
           <i class="fas fa-exclamation-circle"></i>
@@ -136,9 +136,14 @@
                   <span>Date:</span>
                   <span>{{ formatDate(order.invoiceDate) }}</span>
                 </div>
-                <button @click="downloadInvoice" class="btn-primary btn-invoice">
-                  Télécharger la facture
-                </button>
+                <div class="invoice-actions">
+                  <button @click="downloadInvoice(true)" class="btn-primary btn-invoice">
+                    Télécharger la facture
+                  </button>
+                  <button @click="downloadInvoice(false)" class="btn-secondary btn-invoice">
+                    Visualiser la facture
+                  </button>
+                </div>
               </div>
             </div>
             
@@ -178,7 +183,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </AccountLayout>
 </template>
 
 <script setup lang="ts">
@@ -186,6 +191,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useOrderStore } from '../../stores/order';
 import type { Order } from '@/types/order';
+import AccountLayout from '@/layouts/AccountLayout.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -274,20 +280,27 @@ const canCancel = computed(() => {
   return ['pending', 'processing'].includes(order.value.status);
 });
 
-const downloadInvoice = async () => {
+const downloadInvoice = async (download = true) => {
   if (!order.value) return;
   
-  try {
-    const invoiceData = await orderStore.generateInvoice(order.value._id);
+  try {    
+    const orderId = order.value._id;
+    const { getServerUrl } = await import('@/utils/imageUrl');
+    const serverUrl = getServerUrl();
     
-    if (invoiceData && invoiceData.invoiceUrl) {
-      window.open(invoiceData.invoiceUrl, '_blank');
-    } else {
-      error.value = 'Impossible de générer la facture';
+    const token = localStorage.getItem('auth_token');
+    
+    const action = download ? 'download' : 'view';
+    const invoiceUrl = `${serverUrl}/api/orders/${orderId}/invoice/${action}?token=${token}`;
+    
+    const newWindow = window.open(invoiceUrl, '_blank');
+    
+    if (!newWindow) {
+      alert(`L'ouverture automatique a été bloquée. Cliquez sur OK pour essayer à nouveau.`);
+      window.open(invoiceUrl, '_blank');
     }
   } catch (err) {
-    console.error('Erreur lors de la génération de la facture:', err);
-    error.value = 'Une erreur est survenue lors de la génération de la facture';
+    error.value = 'Une erreur est survenue lors de l\'accès à la facture';
   }
 };
 
@@ -315,7 +328,6 @@ const cancelOrder = async () => {
       
     }
   } catch (err) {
-    console.error('Erreur lors de l\'annulation de la commande:', err);
     errorNotification.value = 'Une erreur est survenue lors de l\'annulation de la commande';
     showCancelModal.value = false;
     
@@ -337,6 +349,13 @@ const goToOrders = () => {
 </script>
 
 <style scoped>
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .order-detail-view {
   padding: 2rem 0;
   width: 100%;
@@ -346,12 +365,6 @@ const goToOrders = () => {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
-}
-
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   min-height: 300px;
 }
@@ -361,7 +374,7 @@ const goToOrders = () => {
   height: 50px;
   border: 5px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
-  border-top-color: var(--color-primary);
+  border-top-color: #000;
   animation: spin 1s ease-in-out infinite;
   margin-bottom: 1rem;
 }
@@ -561,9 +574,25 @@ const goToOrders = () => {
   margin-bottom: 0.5rem;
 }
 
-.btn-invoice {
+.invoice-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
   margin-top: 1rem;
+}
+
+.btn-invoice {
   width: 100%;
+}
+
+@media (min-width: 576px) {
+  .invoice-actions {
+    flex-direction: row;
+  }
+  
+  .btn-invoice {
+    flex: 1;
+  }
 }
 
 .status-badge {
@@ -609,12 +638,12 @@ const goToOrders = () => {
 }
 
 .btn-primary {
-  background-color: var(--color-primary);
+  background-color: #000;
   color: white;
 }
 
 .btn-primary:hover {
-  background-color: var(--color-primary-dark);
+  background-color: #333;
 }
 
 .btn-secondary {
