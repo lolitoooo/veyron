@@ -1,11 +1,18 @@
 <template>
   <header class="header">
     <div class="header-container">
+      <button class="mobile-menu-toggle" aria-label="Menu" @click="toggleMobileMenu">
+        <i class="material-icons">{{ isMobileMenuOpen ? 'close' : 'menu' }}</i>
+      </button>
+      
       <div class="logo">
-        <router-link to="/">VEYRON</router-link>
+        <router-link to="/" class="logo-link">
+          <img src="@/assets/logos/veyron-monogram-1.svg" alt="VEYRON" class="logo-mobile" />
+          <img src="@/assets/logos/veyron-emblem-1.svg" alt="VEYRON" class="logo-desktop" />
+        </router-link>
       </div>
       
-      <nav class="navigation">
+      <nav class="navigation desktop-nav">
         <ul>
           <li><router-link to="/category/femme">Femme</router-link></li>
           <li><router-link to="/category/homme">Homme</router-link></li>
@@ -24,7 +31,7 @@
             <i class="material-icons">person</i>
             <span class="account-indicator"></span>
           </router-link>
-          <button class="icon-button" aria-label="Déconnexion" @click="handleLogout">
+          <button class="icon-button hide-on-mobile" aria-label="Déconnexion" @click="handleLogout">
             <i class="material-icons">logout</i>
           </button>
         </template>
@@ -41,6 +48,21 @@
           <span v-if="isCartLoading" class="cart-loading"></span>
         </router-link>
       </div>
+    </div>
+    
+    <!-- Menu mobile -->
+    <div class="mobile-menu" :class="{ 'open': isMobileMenuOpen }">
+      <nav class="mobile-nav">
+        <ul>
+          <li><router-link to="/category/femme" @click="closeMobileMenu">Femme</router-link></li>
+          <li><router-link to="/category/homme" @click="closeMobileMenu">Homme</router-link></li>
+          <li><router-link to="/category/accessoires" @click="closeMobileMenu">Accessoires</router-link></li>
+          <li><router-link to="/category/collections" @click="closeMobileMenu">Collections</router-link></li>
+          <li v-if="isAuthenticated"><router-link to="/account" @click="closeMobileMenu">Mon Compte</router-link></li>
+          <li v-if="isAuthenticated"><button class="mobile-logout-btn" @click="handleLogoutMobile">Déconnexion</button></li>
+          <li v-else><router-link to="/login" @click="closeMobileMenu">Connexion</router-link></li>
+        </ul>
+      </nav>
     </div>
     
     <div v-if="isSearchOpen" class="search-panel">
@@ -61,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCartStore } from '@/stores/cart';
 import { useAuthStore } from '@/stores/auth';
@@ -75,6 +97,7 @@ const { success } = useNotification();
 const isSearchOpen = ref(false);
 const searchQuery = ref('');
 const isCartLoading = computed(() => cartStore.isLoading);
+const isMobileMenuOpen = ref(false);
 
 const isAuthenticated = computed(() => {
   const status = authStore.isAuthenticated;
@@ -89,7 +112,32 @@ watch(() => authStore.isAuthenticated, (newValue) => {
 });
 
 onMounted(() => {
+  // Fermer le menu mobile lors du redimensionnement de la fenêtre vers une taille desktop
+  window.addEventListener('resize', handleResize);
 });
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
+  // S'assurer que le défilement du body est rétabli si le composant est démonté
+  document.body.style.overflow = '';
+});
+
+const handleResize = () => {
+  if (window.innerWidth > 768 && isMobileMenuOpen.value) {
+    closeMobileMenu();
+  }
+};
+
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value;
+  // Empêcher le défilement du body quand le menu mobile est ouvert
+  document.body.style.overflow = isMobileMenuOpen.value ? 'hidden' : '';
+};
+
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false;
+  document.body.style.overflow = '';
+};
 
 const toggleSearch = () => {
   isSearchOpen.value = !isSearchOpen.value;
@@ -115,6 +163,11 @@ const handleLogout = async () => {
   success('Déconnexion réussie');
   router.push('/');
 };
+
+const handleLogoutMobile = async () => {
+  await handleLogout();
+  closeMobileMenu();
+};
 </script>
 
 <style scoped>
@@ -137,13 +190,21 @@ const handleLogout = async () => {
   margin: 0 auto;
 }
 
-.logo a {
-  font-size: 1.5rem;
-  font-weight: 300;
-  letter-spacing: 0.5rem;
-  color: #000;
+.logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  font-family: 'Times New Roman', serif;
+}
+
+.logo-desktop {
+  height: 40px;
+  display: block;
+}
+
+.logo-mobile {
+  height: 40px;
+  display: none;
 }
 
 .navigation ul {
@@ -261,6 +322,7 @@ const handleLogout = async () => {
   padding: 1.5rem 2rem;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
   animation: slideDown 0.3s ease forwards;
+  z-index: 1001;
 }
 
 .search-container {
@@ -291,6 +353,72 @@ const handleLogout = async () => {
   font-size: 1.2rem;
 }
 
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 60px);
+  background-color: #fff;
+  z-index: 999;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+.mobile-nav {
+  padding: 2rem;
+}
+
+.mobile-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-nav li {
+  margin-bottom: 1.5rem;
+}
+
+.mobile-nav a {
+  display: block;
+  font-size: 1.2rem;
+  color: #333;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  padding: 0.5rem 0;
+}
+
+.mobile-logout-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-family: var(--font-body);
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -304,15 +432,68 @@ const handleLogout = async () => {
 
 @media (max-width: 768px) {
   .header-container {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
   }
   
-  .navigation {
+  .desktop-nav {
     display: none;
   }
   
-  .logo a {
-    font-size: 1.2rem;
+  .mobile-menu-toggle {
+    display: block;
+    order: 1;
+  }
+  
+  .logo {
+    order: 2;
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .logo-desktop {
+    display: none;
+  }
+  
+  .logo-mobile {
+    display: block;
+    height: 35px;
+    margin: 0 auto;
+  }
+  
+  .header-actions {
+    order: 3;
+    gap: 0.75rem;
+  }
+  
+  .hide-on-mobile {
+    display: none;
+  }
+  
+  .mobile-menu {
+    display: block;
+  }
+  
+  .search-panel {
+    padding: 1rem;
+  }
+  
+  .search-input {
+    font-size: 1rem;
+    padding: 0.75rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .icon-button {
+    padding: 0.3rem;
+  }
+  
+  .logo-mobile {
+    height: 30px;
   }
 }
 </style>

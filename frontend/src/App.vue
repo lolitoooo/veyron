@@ -4,8 +4,6 @@ import { onMounted, ref, watch, onUnmounted } from 'vue'
 import { useAuthStore } from './stores/auth'
 import { useCartStore } from './stores/cart'
 import ServerErrorAlert from './components/ServerErrorAlert.vue'
-import TheHeader from './components/TheHeader.vue'
-import Breadcrumb from './components/Breadcrumb.vue'
 import api, { serverErrorEvent } from './services/apiService'
 
 const authStore = useAuthStore()
@@ -90,13 +88,7 @@ async function retryConnection() {
     @retry="retryConnection"
     @dismiss="serverError = false"
   />
-  <TheHeader />
-  <div class="app-container">
-    <Breadcrumb class="breadcrumb-container" />
-    <div class="content-wrapper">
-      <RouterView />
-    </div>
-  </div>
+  <RouterView />
 </template>
 
 <style>
@@ -146,28 +138,5 @@ button {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
-}
-
-.content-wrapper {
-  margin-top: 0;
-  padding: 0 1rem;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.app-container {
-  margin-top: 60px;
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 1rem;
-}
-
-.breadcrumb-container {
-  margin-bottom: 0.25rem;
-  position: relative;
-  z-index: 10;
-  pointer-events: auto;
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
-  <div class="addresses-view">
-    <div class="container">
-      <h1>Mes adresses</h1>
+  <AccountLayout>
+    <div class="addresses-view">
       
       <div class="addresses-content">
         <div v-if="loading" class="loading-indicator">
@@ -250,7 +249,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </AccountLayout>
 </template>
 
 <script setup lang="ts">
@@ -258,6 +257,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/services/apiService';
 import { useAuthStore } from '@/stores/auth';
+import AccountLayout from '@/layouts/AccountLayout.vue';
 
 interface Address {
   _id?: string;

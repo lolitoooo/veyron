@@ -96,6 +96,8 @@
             class="wishlist-button" 
             @click="toggleWishlist"
             :class="{ 'active': isInWishlist }"
+            :aria-pressed="isInWishlist"
+            aria-label="Ajouter aux favoris"
           >
             <span class="material-icons">
               {{ isInWishlist ? 'favorite' : 'favorite_border' }}
@@ -314,7 +316,19 @@ const getDiscountedPrice = (product: Product): number => {
   return parseFloat((product.price * discountFactor).toFixed(2));
 };
 const setCurrentImage = (index: number) => {
-  currentImageIndex.value = index;
+  if (productImages.value.length === 0) return;
+  const max = productImages.value.length - 1;
+  currentImageIndex.value = Math.min(Math.max(index, 0), max);
+};
+
+const nextImage = () => {
+  if (productImages.value.length === 0) return;
+  currentImageIndex.value = (currentImageIndex.value + 1) % productImages.value.length;
+};
+
+const prevImage = () => {
+  if (productImages.value.length === 0) return;
+  currentImageIndex.value = (currentImageIndex.value - 1 + productImages.value.length) % productImages.value.length;
 };
 
 const selectColor = (color: ProductColor) => {
@@ -529,6 +543,7 @@ onMounted(() => {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  overflow-x: hidden;
 }
 
 .loading {
@@ -572,6 +587,7 @@ onMounted(() => {
 }
 
 .main-image {
+  position: relative;
   width: 100%;
   height: 600px;
   background-color: var(--color-bg);
@@ -589,6 +605,12 @@ onMounted(() => {
   gap: 10px;
   overflow-x: auto;
   padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.thumbnail {
+  scroll-snap-align: start;
 }
 
 .thumbnail {
@@ -716,29 +738,44 @@ onMounted(() => {
   margin-top: 30px;
 }
 
+@media (max-width: 768px) {
+  .product-actions {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 20px;
+    margin: 0 -20px;
+    z-index: 5;
+    width: 100%;
+  }
+}
+
 .add-to-cart-button {
   flex: 1;
-  padding: 12px 20px;
-  background-color: #333;
+  padding: 14px 22px;
+  background-color: #111;
   color: white;
   border: none;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.12rem;
 }
+.add-to-cart-button:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .wishlist-button {
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: white;
   border: 1px solid #ddd;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
+.wishlist-button:hover { border-color: #bbb; }
 
 .wishlist-button.active {
   background-color: #f8e0e0;
@@ -779,13 +816,38 @@ onMounted(() => {
   line-height: 1.6;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .product-detail {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
-  
+
   .main-image {
-    height: 400px;
+    height: 480px;
   }
+
+  .product-name {
+    font-size: 1.4rem;
+  }
+
+  .discounted-price, .product-price { font-size: 1.3rem; }
+}
+
+@media (max-width: 768px) {
+  .main-image {
+    height: 420px;
+  }
+
+  .thumbnail { width: 70px; height: 70px; }
+
+  .color-swatch { width: 34px; height: 34px; }
+
+  .size-button { padding: 10px 14px; font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .main-image { height: 360px; }
+  .product-name { font-size: 1.25rem; }
+  .discounted-price, .product-price { font-size: 1.15rem; }
 }
 </style>

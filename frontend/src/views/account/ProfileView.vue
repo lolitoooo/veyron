@@ -1,7 +1,6 @@
 <template>
-  <div class="profile-view">
-    <div class="container">
-      <h1>Mon profil</h1>
+  <AccountLayout>
+    <div class="profile-view">
       
       <div class="profile-content">
         <div v-if="loading" class="loading-indicator">
@@ -251,7 +250,7 @@
         </form>
       </div>
     </div>
-  </div>
+  </AccountLayout>
 </template>
 
 <script setup lang="ts">
@@ -260,6 +259,7 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import api from '@/services/apiService';
 import { getServerUrl } from '@/utils/imageUrl';
+import AccountLayout from '@/layouts/AccountLayout.vue';
 
 interface ProfileData {
   id: number;
@@ -629,21 +629,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.profile-view {
-  padding: 2rem 0;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-h1 {
-  margin-bottom: 2rem;
-  font-size: 2rem;
-  color: #333;
-}
 
 .profile-content {
   background-color: #fff;

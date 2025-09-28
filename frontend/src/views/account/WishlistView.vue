@@ -1,9 +1,10 @@
 <template>
-  <div class="wishlist-page">
-    <div class="page-header">
-      <h1>Mes favoris</h1>
-      <p>Gérez vos produits favoris</p>
-    </div>
+  <AccountLayout>
+    <div class="wishlist-page">
+      <div class="page-header">
+        <h2>Mes favoris</h2>
+        <p>Gérez vos produits favoris</p>
+      </div>
 
     <div class="wishlist-content">
       <div v-if="loading" class="loading-spinner">
@@ -66,7 +67,8 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
+  </AccountLayout>
 </template>
 
 <script setup lang="ts">
@@ -76,6 +78,7 @@ import { useWishlistStore } from '@/stores/wishlist';
 import { useCartStore } from '@/stores/cart';
 import axios from 'axios';
 import { getImageUrl as getFullImageUrl } from '@/utils/imageUrl';
+import AccountLayout from '@/layouts/AccountLayout.vue';
 
 const authStore = useAuthStore();
 const cartStore = useCartStore();

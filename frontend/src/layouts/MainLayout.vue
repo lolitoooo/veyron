@@ -1,17 +1,23 @@
 <template>
   <div class="main-layout">
     <TheHeader />
-    <main class="content">
+    <main class="content" :class="{ 'home-content': isHomePage }">
+      <Breadcrumb v-if="!isHomePage" class="breadcrumb-container" />
       <RouterView />
     </main>
-    <TheFooter />
+    <TheFooter v-if="!isHomePage" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router';
+import { RouterView, useRoute } from 'vue-router';
+import { computed } from 'vue';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
+import Breadcrumb from '@/components/Breadcrumb.vue';
+
+const route = useRoute();
+const isHomePage = computed(() => route.path === '/');
 </script>
 
 <style scoped>
@@ -29,5 +35,32 @@ import TheFooter from '@/components/TheFooter.vue';
   padding-top: 80px;
   width: 100%;
   max-width: 100%;
+}
+
+.home-content {
+  padding-top: 0;
+}
+
+.breadcrumb-container {
+  margin-bottom: 0.25rem;
+  position: relative;
+  z-index: 10;
+  padding: 0 1rem;
+}
+
+@media (max-width: 800px) {
+  .content {
+    padding-top: 50px;
+  }
+  
+  .home-content {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding-top: 45px;
+  }
 }
 </style>
