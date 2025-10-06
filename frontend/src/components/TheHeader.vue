@@ -112,13 +112,11 @@ watch(() => authStore.isAuthenticated, (newValue) => {
 });
 
 onMounted(() => {
-  // Fermer le menu mobile lors du redimensionnement de la fenêtre vers une taille desktop
   window.addEventListener('resize', handleResize);
 });
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
-  // S'assurer que le défilement du body est rétabli si le composant est démonté
   document.body.style.overflow = '';
 });
 
@@ -130,7 +128,6 @@ const handleResize = () => {
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
-  // Empêcher le défilement du body quand le menu mobile est ouvert
   document.body.style.overflow = isMobileMenuOpen.value ? 'hidden' : '';
 };
 
@@ -223,6 +220,7 @@ const handleLogoutMobile = async () => {
   letter-spacing: 0.1rem;
   position: relative;
   transition: color 0.3s ease;
+  padding: 0;
 }
 
 .navigation a::after {
@@ -238,6 +236,7 @@ const handleLogoutMobile = async () => {
 
 .navigation a:hover {
   color: #000;
+  background-color: transparent;
 }
 
 .navigation a:hover::after,
@@ -272,8 +271,8 @@ const handleLogoutMobile = async () => {
 
 .account-indicator {
   position: absolute;
-  top: -2px;
-  right: -2px;
+  top: 0px;
+  right: 6px;
   width: 8px;
   height: 8px;
   background-color: #4CAF50;

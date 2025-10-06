@@ -7,10 +7,10 @@
       <template v-for="(crumb, index) in breadcrumbs" :key="index">
         <li class="separator">/</li>
         <li>
-          <router-link v-if="index < breadcrumbs.length - 1" :to="crumb.path">
-            {{ crumb.name }}
+          <router-link v-if="index < breadcrumbs.length - 1" :to="crumb.to">
+            {{ crumb.label }}
           </router-link>
-          <span v-else class="current">{{ crumb.name }}</span>
+          <span v-else class="current">{{ crumb.label }}</span>
         </li>
       </template>
     </ol>
@@ -18,17 +18,35 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, ref, onMounted } from 'vue';
+import { computed, ref, watch, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import axios from 'axios';
 import api from '@/services/apiService';
 
 const route = useRoute();
 const router = useRouter();
-
 const categoryNames = ref<Record<string, string>>({});
 const productNames = ref<Record<string, string>>({});
-const breadcrumbItems = ref<Array<{name: string, path: string}>>([]);
+
+const breadcrumbItems = ref<Array<{label: string, to: string}>>([]);
+
+const routeNameMap: Record<string, string> = {
+  'account': 'Mon Compte',
+  'wishlist': 'Favoris',
+  'orders': 'Commandes',
+  'profile': 'Profil',
+  'addresses': 'Adresses',
+  'cart': 'Panier',
+  'checkout': 'Paiement',
+  'product': 'Produit',
+  'category': 'Catégorie',
+  'search': 'Recherche',
+  'about': 'À propos',
+  'contact': 'Contact',
+  'terms': 'Conditions Générales',
+  'privacy': 'Politique de Confidentialité',
+  'shipping': 'Livraison',
+  'return-policy': 'Politique de Retour'
+};
 
 const getCategoryNameById = async (categoryId: string): Promise<string> => {
   if (categoryNames.value[categoryId]) {
@@ -51,7 +69,6 @@ const getCategoryNameById = async (categoryId: string): Promise<string> => {
 };
 
 const getProductNameById = async (productId: string): Promise<string> => {
-  
   if (productNames.value[productId]) {
     return productNames.value[productId];
   }
@@ -80,61 +97,47 @@ const getProductNameById = async (productId: string): Promise<string> => {
   return 'Produit';
 };
 
-const routeNameMap = {
-  'home': 'Accueil',
-  'account': 'Mon Compte',
-  'wishlist': 'Favoris',
-  'orders': 'Commandes',
-  'profile': 'Profil',
-  'addresses': 'Adresses',
-  'cart': 'Panier',
-  'checkout': 'Paiement',
-  'product': 'Produit',
-  'category': 'Catégorie',
-  'search': 'Recherche',
-  'about': 'À propos',
-  'contact': 'Contact',
-  'terms': 'Conditions Générales',
-  'privacy': 'Politique de Confidentialité',
-  'shipping': 'Livraison',
-  'return-policy': 'Politique de Retour'
-};
-
-const generateBreadcrumbItems = async () => {
+const getRoutePath = (segments: any[]): string => {
+  let path = '';
   
-  const result = [];
-  const pathSegments = route.path.split('/').filter(segment => segment);
+  for (const segment of segments) {
+    if (segment.path.startsWith('/')) {
+      path = segment.path;
+    } else {
+      path += '/' + segment.path;
+    }
+  }
   
-  let currentPath = '';
-  
-  const isProductInCategory = pathSegments.length >= 3 && 
-                            pathSegments[0] === 'category' && 
-                            /^[0-9a-f]{24}$/i.test(pathSegments[pathSegments.length - 1]);
-    
-  result.push({
-    name: 'Accueil',
-    path: '/'
+  Object.entries(route.params).forEach(([key, value]) => {
+    path = path.replace(`:${key}`, value as string);
   });
   
-  if (isProductInCategory) {
-    const categorySlug = pathSegments[1];
-    const productId = pathSegments[2];
-        
+  return path;
+};
+
+const generateBreadcrumbs = async () => {
+  const result: Array<{label: string, to: string}> = [];
+  const matchedRoutes = route.matched;
+  
+  if (route.path.includes('/category/') && route.params.id) {
+    const categorySlug = route.params.slug as string;
+    const productId = route.params.id as string;
+    
     result.push({
-      name: categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1),
-      path: `/category/${categorySlug}`
+      label: 'Catégories',
+      to: '/category'
     });
     
-    try {
+    result.push({
+      label: categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1),
+      to: `/category/${categorySlug}`
+    });
+    
+    if (/^[0-9a-f]{24}$/i.test(productId)) {
       const productName = await getProductNameById(productId);
       result.push({
-        name: productName,
-        path: `/category/${categorySlug}/${productId}`
-      });
-    } catch (error) {
-      result.push({
-        name: 'Produit',
-        path: `/category/${categorySlug}/${productId}`
+        label: productName,
+        to: route.path
       });
     }
     
@@ -142,65 +145,146 @@ const generateBreadcrumbItems = async () => {
     return;
   }
   
-  for (let i = 0; i < pathSegments.length; i++) {
-    const segment = pathSegments[i];
-    currentPath += `/${segment}`;
+  if (route.path.includes('/account/orders/') && route.params.id) {
+    const orderId = route.params.id as string;
     
-    const matchedRoute = router.resolve(currentPath).matched[0];
-    if (!matchedRoute) continue;
+    result.push({
+      label: 'Mon compte',
+      to: '/account'
+    });
     
-    const routeName = matchedRoute.name?.toString() || '';
+    result.push({
+      label: 'Mes commandes',
+      to: '/account/orders'
+    });
     
-    let name = '';
+    result.push({
+      label: 'Détail de commande',
+      to: route.path
+    });
     
-    if (routeName === 'product' && route.params.id) {
-      const productId = route.params.id.toString();
-      if (/^[0-9a-f]{24}$/i.test(productId)) {
-        try {
-          name = await getProductNameById(productId);
-        } catch (error) {
-          name = 'Produit';
-        }
-      } else {
-        name = 'Produit';
-      }
+    breadcrumbItems.value = result;
+    return;
+  }
+  
+  if (route.path === '/category/homme' || route.path === '/category/femme' || route.path === '/category/accessoires') {
+    const categorySlug = route.path.split('/').pop() || '';
+    
+    result.push({
+      label: 'Catégories',
+      to: '/category'
+    });
+    
+    result.push({
+      label: categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1),
+      to: route.path
+    });
+    
+    breadcrumbItems.value = result;
+    return;
+  }
+  
+  if (route.path.startsWith('/admin')) {
+    result.push({
+      label: 'Administration',
+      to: '/admin'
+    });
+    
+    if (route.path.includes('/admin/orders/') && route.params.id) {
+      result.push({
+        label: 'Gestion des commandes',
+        to: '/admin/orders'
+      });
+    }
+    
+    if ((route.path.includes('/admin/users/') && route.params.id) && 
+        (route.path.includes('/detail') || route.path.includes('/edit') || route.path.includes('/delete'))) {
+      result.push({
+        label: 'Gestion des utilisateurs',
+        to: '/admin/users'
+      });
+    }
+    
+    if (route.path.includes('/admin/products/') && route.params.id && route.path.includes('/edit')) {
+      result.push({
+        label: 'Gestion des produits',
+        to: '/admin/products'
+      });
+    }
+    
+    if (route.path === '/admin/products/create') {
+      result.push({
+        label: 'Gestion des produits',
+        to: '/admin/products'
+      });
+    }
+    
+    if (route.path === '/admin/users/create') {
+      result.push({
+        label: 'Gestion des utilisateurs',
+        to: '/admin/users'
+      });
+    }
+  }
+  
+  let currentPath = '';
+  
+  for (let i = 1; i < matchedRoutes.length; i++) {
+    const routeItem = matchedRoutes[i];
+    const routeName = routeItem.name?.toString() || '';
+    
+    if (!routeName || routeName === 'MainLayout') {
+      continue;
+    }
+    
+    let label = '';
+    
+    if (routeItem.meta && routeItem.meta.breadcrumb) {
+      label = routeItem.meta.breadcrumb as string;
+    } 
+    else if (routeNameMap[routeName]) {
+      label = routeNameMap[routeName];
     } 
     else if (routeName === 'category' && route.params.slug) {
-      if (/^[0-9a-f]{24}$/i.test(route.params.slug.toString())) {
-        try {
-          name = await getCategoryNameById(route.params.slug.toString());
-        } catch (error) {
-          name = 'Catégorie';
-        }
+      const slug = route.params.slug as string;
+      if (/^[0-9a-f]{24}$/i.test(slug)) {
+        label = await getCategoryNameById(slug);
       } else {
-        name = route.params.slug.toString().charAt(0).toUpperCase() + route.params.slug.toString().slice(1);
+        label = slug.charAt(0).toUpperCase() + slug.slice(1);
       }
     } 
     else {
-      name = routeNameMap[routeName] || segment.charAt(0).toUpperCase() + segment.slice(1);
+      label = routeName || routeItem.path.split('/').pop() || '';
+      label = label.charAt(0).toUpperCase() + label.slice(1);
     }
     
-    result.push({
-      name,
-      path: currentPath
-    });
+    const path = getRoutePath(matchedRoutes.slice(0, i + 1));
+    
+    if (result.findIndex(item => item.to === path) === -1) {
+      result.push({
+        label,
+        to: path
+      });
+    }
   }
   
   breadcrumbItems.value = result;
 };
 
-watch(
-  () => route.fullPath,
-  () => generateBreadcrumbItems(),
-  { immediate: true }
-);
-
 const breadcrumbs = computed(() => {
   return breadcrumbItems.value;
 });
 
-onMounted(() => {
-  generateBreadcrumbItems();
+watch(
+  () => route.fullPath,
+  async () => {
+    await generateBreadcrumbs();
+  },
+  { immediate: true }
+);
+
+onMounted(async () => {
+  await generateBreadcrumbs();
 });
 </script>
 

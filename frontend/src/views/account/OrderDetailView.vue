@@ -89,12 +89,16 @@
               
               <div class="summary-totals">
                 <div class="summary-row">
-                  <span>Sous-total TTC:</span>
+                  <span>Sous-total HT:</span>
                   <span>{{ formatPrice(order.totalPrice - order.taxPrice - order.shippingPrice) }}</span>
                 </div>
                 <div class="summary-row">
                   <span>TVA (20%):</span>
                   <span>{{ formatPrice(order.taxPrice) }}</span>
+                </div>
+                <div class="summary-row">
+                  <span>Sous-total TTC:</span>
+                  <span>{{ formatPrice(order.totalPrice - order.shippingPrice) }}</span>
                 </div>
                 <div class="summary-row">
                   <span>Frais de livraison:</span>
