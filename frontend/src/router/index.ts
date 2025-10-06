@@ -136,6 +136,42 @@ const router = createRouter({
           component: () => import('@/views/legal/LegalView.vue'),
           meta: { title: 'Mentions légales | VEYRON' }
         },
+        {
+          path: 'sustainability',
+          name: 'sustainability',
+          component: () => import('@/views/legal/SustainabilityView.vue'),
+          meta: { title: 'Développement durable | VEYRON' }
+        },
+        {
+          path: 'careers',
+          name: 'careers',
+          component: () => import('@/views/legal/CareersView.vue'),
+          meta: { title: 'Carrières | VEYRON' }
+        },
+        {
+          path: 'faq',
+          name: 'faq',
+          component: () => import('@/views/legal/FaqView.vue'),
+          meta: { title: 'FAQ | VEYRON' }
+        },
+        {
+          path: 'returns',
+          name: 'returns',
+          component: () => import('@/views/legal/ReturnPolicyView.vue'),
+          meta: { title: 'Retours et échanges | VEYRON' }
+        },
+        {
+          path: 'shipping',
+          name: 'shipping',
+          component: () => import('@/views/legal/ShippingView.vue'),
+          meta: { title: 'Livraison | VEYRON' }
+        },
+        {
+          path: 'cookies',
+          name: 'cookies',
+          component: () => import('@/views/legal/CookiesView.vue'),
+          meta: { title: 'Politique des cookies | VEYRON' }
+        },
       ]
     },
     {

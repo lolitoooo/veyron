@@ -93,7 +93,7 @@
               <td>#{{ order._id ? order._id.toString().substring(0, 8) : (order.id ? order.id.toString().substring(0, 8) : 'N/A') }}</td>
               <td>{{ order.user && order.user.firstName ? `${order.user.firstName} ${order.user.lastName || ''}` : 'Client inconnu' }}</td>
               <td>{{ order.createdAt ? formatDate(order.createdAt) : 'N/A' }}</td>
-              <td>{{ order.totalAmount !== undefined ? formatPrice(order.totalAmount) : formatPrice(0) }}</td>
+              <td>{{ order.totalPrice !== undefined ? formatPrice(order.totalPrice) : formatPrice(0) }}</td>
               <td>
                 <span v-if="order.status" :class="'status-badge status-' + order.status.toLowerCase()">
                   {{ getOrderStatusLabel(order.status) }}

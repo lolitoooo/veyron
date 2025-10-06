@@ -174,10 +174,11 @@ const toggleSection = (section: string) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
+  cursor: default;
 }
 
 .toggle-icon {
+  display: none;
   transition: transform 0.3s ease;
 }
 
@@ -193,6 +194,14 @@ const toggleSection = (section: string) => {
 @media (max-width: 768px) {
   .footer {
     padding: 2rem 1.5rem 1.5rem;
+  }
+  
+  .section-header {
+    cursor: pointer;
+  }
+  
+  .toggle-icon {
+    display: block;
   }
   
   .footer-container {

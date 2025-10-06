@@ -5,7 +5,7 @@
       <Breadcrumb v-if="!isHomePage" class="breadcrumb-container" />
       <RouterView />
     </main>
-    <TheFooter v-if="!isHomePage" />
+    <TheFooter />
   </div>
 </template>
 

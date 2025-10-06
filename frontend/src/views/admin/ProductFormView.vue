@@ -51,6 +51,7 @@
               min="0" 
               required 
               placeholder="0.00"
+              @input="calculateFromBasePrice"
             />
           </div>
           
@@ -64,6 +65,20 @@
               min="0" 
               max="100" 
               placeholder="0.00"
+              @input="calculateFromDiscount"
+            />
+          </div>
+          
+          <div class="form-group">
+            <label for="finalPrice">Prix après remise (€)</label>
+            <input 
+              type="number" 
+              id="finalPrice" 
+              v-model.number="finalPrice" 
+              step="0.01"
+              min="0" 
+              placeholder="0.00"
+              @input="calculateFromFinalPrice"
             />
           </div>
         </div>
@@ -395,6 +410,7 @@ const productId = computed(() => route.params.id as string | undefined);
 const isEditMode = computed(() => !!productId.value);
 const categories = ref<string[]>([]);
 const uploadError = ref<string | null>(null);
+const finalPrice = ref(0);
 
 const availableSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', 'Unique'];
 
@@ -408,7 +424,7 @@ const product = ref<Product>({
   stock: 0,
   images: [],
   active: true,
-  sizes: ['Unique'],
+  sizes: [],
   colors: [],
   variants: []
 });
@@ -451,6 +467,40 @@ watch(productVariants, (newVariants) => {
   }
 }, { deep: true });
 
+function calculateFromBasePrice() {
+  if (product.value.price >= 0 && product.value.discount >= 0) {
+    const discount = Math.min(100, Math.max(0, product.value.discount));
+    const discountFactor = (100 - discount) / 100;
+    finalPrice.value = parseFloat((product.value.price * discountFactor).toFixed(2));
+  }
+}
+
+function calculateFromFinalPrice() {
+  if (product.value.price > 0 && finalPrice.value >= 0) {
+    if (finalPrice.value >= product.value.price) {
+      product.value.discount = 0;
+      finalPrice.value = product.value.price;
+    } else {
+      const discountPercent = ((product.value.price - finalPrice.value) / product.value.price) * 100;
+      product.value.discount = parseFloat(discountPercent.toFixed(2));
+    }
+  }
+}
+
+function calculateFromDiscount() {
+  calculateFromBasePrice();
+}
+
+function calculateTotalStock() {
+  if (!product.value.variants || product.value.variants.length === 0) {
+    return product.value.stock || 0;
+  }
+  
+  return product.value.variants.reduce((total, variant) => {
+    return total + (variant.stock || 0);
+  }, 0);
+}
+
 onMounted(async () => {
   await fetchCategories();
   
@@ -459,6 +509,8 @@ onMounted(async () => {
   } else {
     addColor();
   }
+  
+  calculateFromBasePrice();
 });
 
 async function fetchCategories() {
@@ -491,6 +543,12 @@ async function fetchProduct() {
       colors: productData.colors || [],
       variants: productData.variants || []
     };
+    
+    if (product.value.discountPrice) {
+      finalPrice.value = product.value.discountPrice;
+    } else {
+      calculateFromBasePrice();
+    }
     
     if (product.value.colors.length === 0) {
       addColor();
@@ -765,10 +823,7 @@ async function saveProduct() {
     }
     
     if (productCopy.discount && productCopy.discount > 0) {
-      const discount = Math.min(100, Math.max(0, productCopy.discount)); // S'assurer que la remise est entre 0 et 100
-      const discountFactor = (100 - discount) / 100;
-      const discountPrice = parseFloat((productCopy.price * discountFactor).toFixed(2));
-      productCopy.discountPrice = discountPrice;
+      productCopy.discountPrice = finalPrice.value;
     } else {
       productCopy.discountPrice = undefined;
     }
