@@ -145,4 +145,3 @@ npm run build
 ## Licence
 
 Ce projet est développé dans le cadre d'un cours à l'ESGI.
-
