@@ -1,6 +1,7 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+const PromoCode = require('../models/PromoCode');
 const invoiceController = require('./invoiceController');
 
 
@@ -30,7 +31,7 @@ const cleanImageUrl = (url) => {
 
 exports.createCheckoutSession = async (req, res) => {
   try {
-    const { items, shippingAddress, billingAddress } = req.body;
+    const { items, shippingAddress, billingAddress, promoCode } = req.body;
     
     if (!items || items.length === 0) {
       return res.status(400).json({ message: 'Aucun article dans le panier' });
@@ -85,8 +86,56 @@ exports.createCheckoutSession = async (req, res) => {
     }
 
     const subtotal = orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const subtotalHT = orderItems.reduce((sum, item) => sum + (item.priceHT * item.qty), 0);
     const shippingPrice = subtotal > 50 ? 0 : 5.95;
-    const totalPrice = subtotal + shippingPrice;
+    
+    let promoCodeData = null;
+    let discountAmount = 0;
+    let discountPercentage = 0;
+    
+    if (promoCode && promoCode.code) {
+      try {
+        const promoCodeDoc = await PromoCode.findOne({ code: promoCode.code.toUpperCase() });
+        
+        if (promoCodeDoc && promoCodeDoc.isValid()) {
+          if (subtotal >= promoCodeDoc.minOrderValue) {
+            if (promoCodeDoc.discountType === 'percentage') {
+              discountPercentage = promoCodeDoc.discountValue;
+              discountAmount = parseFloat((subtotal * (discountPercentage / 100)).toFixed(2));
+              
+              if (promoCodeDoc.maxDiscountAmount && discountAmount > promoCodeDoc.maxDiscountAmount) {
+                discountAmount = parseFloat(promoCodeDoc.maxDiscountAmount.toFixed(2));
+              }
+            } else if (promoCodeDoc.discountType === 'fixed') {
+              discountAmount = parseFloat(promoCodeDoc.discountValue.toFixed(2));
+              discountPercentage = parseFloat(((discountAmount / subtotal) * 100).toFixed(2));
+              
+              if (discountAmount > subtotal) {
+                discountAmount = subtotal;
+                discountPercentage = 100;
+              }
+            }
+            
+            promoCodeData = {
+              code: promoCodeDoc.code,
+              title: promoCodeDoc.title,
+              discountType: promoCodeDoc.discountType,
+              discountValue: promoCodeDoc.discountValue,
+              discountAmount: discountAmount,
+              promoCodeId: promoCodeDoc._id
+            };
+            
+            promoCodeDoc.currentUses += 1;
+            await promoCodeDoc.save();
+          }
+        }
+      } catch (promoError) {
+        console.error('Erreur lors du traitement du code promo:', promoError);
+      }
+    }
+    
+    const discountedSubtotal = parseFloat((subtotal - discountAmount).toFixed(2));
+    const totalPrice = parseFloat((discountedSubtotal + shippingPrice).toFixed(2));
 
     const order = new Order({
       user: req.user.id,
@@ -95,7 +144,12 @@ exports.createCheckoutSession = async (req, res) => {
       billingAddress: billingAddress || shippingAddress,
       paymentMethod: 'stripe',
       shippingPrice,
-      taxPrice: parseFloat((subtotal - (subtotal / 1.2)).toFixed(2)),
+      taxPrice: parseFloat((subtotal - subtotalHT).toFixed(2)),
+      subtotalHT: parseFloat(subtotalHT.toFixed(2)),
+      subtotalTTC: parseFloat(subtotal.toFixed(2)),
+      discountAmount,
+      discountPercentage,
+      promoCode: promoCodeData,
       totalPrice,
       status: 'pending'
     });
@@ -103,6 +157,25 @@ exports.createCheckoutSession = async (req, res) => {
     order.generateInvoiceNumber();
     const savedOrder = await order.save();
 
+    let discountOptions = {};
+    
+    if (discountAmount > 0) {
+      const discountNote = `Réduction${promoCodeData ? ` (${promoCodeData.code})` : ''}: ${discountAmount.toFixed(2)} €`;
+      
+      const coupon = await stripe.coupons.create({
+        amount_off: Math.round(discountAmount * 100),
+        currency: 'eur',
+        name: promoCodeData ? promoCodeData.title : 'Réduction appliquée',
+        duration: 'once'
+      });
+      
+      discountOptions = {
+        discounts: [{
+          coupon: coupon.id,
+        }]
+      };
+    }
+    
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
@@ -111,10 +184,13 @@ exports.createCheckoutSession = async (req, res) => {
       client_reference_id: savedOrder._id.toString(),
       metadata: {
         orderId: savedOrder._id.toString(),
-        userId: req.user.id
+        userId: req.user.id,
+        ...(promoCodeData && { promoCode: promoCodeData.code }),
+        ...(discountAmount > 0 && { discountAmount: discountAmount.toString() }),
       },
       success_url: `${process.env.FRONTEND_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.FRONTEND_URL}/payment-failed?session_id={CHECKOUT_SESSION_ID}`,
+      ...discountOptions,
       shipping_options: [
         {
           shipping_rate_data: {

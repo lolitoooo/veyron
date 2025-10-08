@@ -23,20 +23,6 @@ const router = createRouter({
           meta: { title: 'Nos Collections | VEYRON', breadcrumb: 'Collections' }
         },
         {
-          path: 'category/:slug',
-          name: 'category',
-          component: () => import('@/views/CategoryView.vue'),
-          props: true,
-          meta: { title: 'Catégorie | VEYRON', breadcrumb: 'Catégorie' }
-        },
-        {
-          path: 'category/:slug/:id',
-          name: 'product-in-category',
-          component: () => import('@/views/ProductDetailView.vue'),
-          props: true,
-          meta: { title: 'Produit | VEYRON', breadcrumb: 'Produit' }
-        },
-        {
           path: 'category/homme',
           name: 'category-men',
           component: () => import('@/views/CategoryView.vue'),
@@ -65,7 +51,21 @@ const router = createRouter({
           meta: { title: 'Collections | VEYRON', breadcrumb: 'Collections' }
         },
         {
-          path: 'product/:id',
+          path: 'category/:slug',
+          name: 'category',
+          component: () => import('@/views/CategoryView.vue'),
+          props: true,
+          meta: { title: 'Catégorie | VEYRON', breadcrumb: 'Catégorie' }
+        },
+        {
+          path: 'category/:slug/:productSlug',
+          name: 'product-in-category',
+          component: () => import('@/views/ProductDetailView.vue'),
+          props: true,
+          meta: { title: 'Produit | VEYRON', breadcrumb: 'Produit' }
+        },
+        {
+          path: 'product/:productSlug',
           name: 'product',
           component: () => import('@/views/ProductDetailView.vue'),
           meta: { title: 'Produit | VEYRON', breadcrumb: 'Produit' }
@@ -311,6 +311,12 @@ const router = createRouter({
           name: 'admin-statistics',
           component: () => import('@/views/admin/StatisticsView.vue'),
           meta: { title: 'Statistiques avancées | Admin VEYRON', breadcrumb: 'Statistiques avancées' }
+        },
+        {
+          path: 'promo-codes',
+          name: 'admin-promo-codes',
+          component: () => import('@/views/admin/PromoCodesView.vue'),
+          meta: { title: 'Gestion des codes promo | Admin VEYRON', breadcrumb: 'Codes promo' }
         },
         {
           path: 'users/:id/delete',

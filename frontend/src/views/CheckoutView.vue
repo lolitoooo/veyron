@@ -126,14 +126,36 @@
                 </div>
               </div>
               
+              <div v-if="cartStore.promoCode" class="promo-code-section">
+                <h3>Code promo appliqué</h3>
+                <div class="promo-code-success">
+                  <p><strong>{{ cartStore.promoCode.title }}</strong> ({{ cartStore.promoCode.code }})</p>
+                  <p v-if="cartStore.promoCode.discountType === 'percentage'">
+                    {{ cartStore.promoCode.discountValue }}% de réduction
+                  </p>
+                  <p v-else>
+                    {{ formatPrice(cartStore.promoCode.discountValue) }} de réduction
+                  </p>
+                  <p>Vous économisez {{ formatPrice(cartStore.discountAmount) }}</p>
+                </div>
+              </div>
+              
               <div class="summary-totals">
+                <div class="summary-row">
+                  <span>Sous-total HT:</span>
+                  <span>{{ formatPrice(subtotalHT) }}</span>
+                </div>
+                <div class="summary-row">
+                  <span>TVA (20%):</span>
+                  <span>{{ formatPrice(subtotal - subtotalHT) }}</span>
+                </div>
                 <div class="summary-row">
                   <span>Sous-total TTC:</span>
                   <span>{{ formatPrice(subtotal) }}</span>
                 </div>
-                <div class="summary-row">
-                  <span>TVA (20%):</span>
-                  <span>{{ formatPrice(subtotal - (subtotal / 1.2)) }}</span>
+                <div v-if="cartStore.promoCode" class="summary-row discount">
+                  <span>Réduction:</span>
+                  <span>-{{ formatPrice(cartStore.discountAmount) }}</span>
                 </div>
                 <div class="summary-row">
                   <span>Frais de livraison:</span>
@@ -141,7 +163,10 @@
                 </div>
                 <div class="summary-row total">
                   <span>Total:</span>
-                  <span>{{ formatPrice(subtotal + shippingCost) }}</span>
+                  <span>{{ formatPrice(totalWithDiscount) }}</span>
+                </div>
+                <div v-if="cartStore.promoCode" class="summary-savings">
+                  <p>Vous économisez {{ formatPrice(cartStore.discountAmount) }} !</p>
                 </div>
               </div>
             </div>
@@ -167,9 +192,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCartStore } from '../stores/cart';
-import { useOrderStore } from '../stores/order';
-import { useAuthStore } from '../stores/auth';
+import { useAuthStore } from '@/stores/auth';
+import { useCartStore } from '@/stores/cart';
+import { useOrderStore } from '@/stores/order';
 import api from '@/services/apiService';
 
 const router = useRouter();
@@ -187,6 +212,9 @@ const shippingAddress = ref(null);
 const billingAddressData = ref(null);
 const selectedShippingAddressId = ref('');
 const selectedBillingAddressId = ref('');
+
+// Utilisation du montant de réduction du panier
+const discountAmount = computed(() => cartStore.discountAmount || 0);
 
 async function fetchUserAddresses() {
   if (!authStore.isAuthenticated) return;
@@ -261,11 +289,19 @@ const hasCompleteShipping = computed(() => {
 });
 
 const subtotal = computed(() => {
-  return cartStore.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  return cartItems.value.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+});
+
+const subtotalHT = computed(() => {
+  return parseFloat((subtotal.value / 1.2).toFixed(2));
 });
 
 const shippingCost = computed(() => {
-  return subtotal.value > 50 ? 0 : 5.95;
+  return subtotal.value >= 50 ? 0 : 5.95;
+});
+
+const totalWithDiscount = computed(() => {
+  return subtotal.value - discountAmount.value + shippingCost.value;
 });
 
 const cartItems = computed(() => {
@@ -332,27 +368,49 @@ async function proceedToPayment() {
     return;
   }
   
-  isLoading.value = true;
+  isProcessing.value = true;
   error.value = null;
   
   try {
-    const session = await orderStore.createCheckoutSession(
-      cartItems.value,
-      shippingAddress.value,
-      billingAddress.value
-    );
+    // Pas besoin de vérifier le code promo, on utilise celui du panier
     
-    if (session && session.url) {
-      window.location.href = session.url;
+    const orderData = {
+      items: cartItems.value.map(item => ({
+        productId: item.productId,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        image: item.image,
+        variant: item.variant,
+        variantId: item.variantId
+      })),
+      shippingAddress: shippingAddress.value,
+      billingAddress: sameAddress.value ? shippingAddress.value : billingAddressData.value,
+      ...(cartStore.promoCode && {
+        promoCode: {
+          code: cartStore.promoCode.code,
+          title: cartStore.promoCode.title,
+          discountType: cartStore.promoCode.discountType,
+          discountValue: cartStore.promoCode.discountValue,
+          promoCodeId: cartStore.promoCode.promoCodeId,
+          discountAmount: cartStore.discountAmount
+        }
+      })
+    };
+    
+    const response = await api.post('/stripe/create-checkout-session', orderData);
+    
+    if (response.data && response.data.url) {
+      window.location.href = response.data.url;
     } else {
-      error.value = 'Erreur lors de la création de la session de paiement';
+      throw new Error('Erreur lors de la création de la session de paiement');
     }
   } catch (err) {
-    error.value = err.message || 'Erreur lors du traitement du paiement';
-  } finally {
-    isLoading.value = false;
+    console.error('Erreur lors du paiement:', err);
+    error.value = err.response?.data?.message || 'Erreur lors du traitement du paiement';
+    isProcessing.value = false;
   }
-};
+}
 </script>
 
 <style scoped>
@@ -528,17 +586,84 @@ h2 {
 }
 
 .summary-row.total {
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #ddd;
+}
+
+.summary-row.discount {
+  color: #d32f2f;
+}
+
+.summary-savings {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #2e7d32;
+  font-weight: 500;
+  text-align: right;
+}
+
+.promo-code-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.promo-code-section h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.promo-code-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.promo-code-form input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.promo-code-form button {
+  white-space: nowrap;
+}
+
+.btn-remove {
+  background-color: #f5f5f5;
+  color: #d32f2f;
+  border-color: #ffcdd2;
+}
+
+.btn-remove:hover {
+  background-color: #ffebee;
+}
+
+.promo-code-error {
+  margin-top: 0.5rem;
+  color: #d32f2f;
+  font-size: 0.9rem;
+}
+
+.promo-code-success {
+  margin-top: 0.5rem;
+  color: #2e7d32;
+  font-size: 0.9rem;
+  background-color: #e8f5e9;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.promo-code-success p {
+  margin: 0;
 }
 
 .btn-primary {
   background-color: var(--color-primary);
   color: white;
-  border: none;
   border-radius: 4px;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;

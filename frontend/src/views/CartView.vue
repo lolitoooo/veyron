@@ -48,9 +48,7 @@
               <div class="product-details">
                 <h3>{{ item.name }}</h3>
                 <div class="product-options">
-                  <span class="option-color" :style="{ backgroundColor: item.variant.colorCode, width: '20px', height: '20px', borderRadius: '50%', display: 'inline-block', marginRight: '5px' }">
-                    <!-- {{ item.variant.color }} -->
-                  </span>
+                  <span class="option-color" :style="{ backgroundColor: item.variant.colorCode, width: '20px', height: '20px', borderRadius: '50%', display: 'inline-block', marginRight: '5px' }"></span>
                   <span class="option-size">{{ item.variant.size }}</span>
                 </div>
               </div>
@@ -96,18 +94,33 @@
           <h2>Récapitulatif</h2>
           
           <div class="summary-row">
-            <span>Sous-total</span>
-            <span>{{ formatPrice(cartStore.total) }}</span>
+            <span>Sous-total:</span>
+            <span>{{ formatPrice(cartStore.subtotal) }}</span>
+          </div>
+          
+          <div v-if="cartStore.promoCode" class="summary-row discount">
+            <span>Réduction ({{ cartStore.promoCode.code }}):</span>
+            <span>-{{ formatPrice(cartStore.discountAmount) }}</span>
           </div>
           
           <div class="summary-row">
-            <span>Livraison</span>
+            <span>Frais de livraison:</span>
             <span>{{ formatPrice(shippingCost) }}</span>
           </div>
           
           <div class="summary-row total">
-            <span>Total</span>
+            <span>Total:</span>
             <span>{{ formatPrice(cartStore.total + shippingCost) }}</span>
+          </div>
+          
+          <div v-if="cartStore.promoCode" class="promo-code-applied">
+            <div class="promo-badge">
+              <span class="material-icons">local_offer</span>
+              <span>{{ cartStore.promoCode.title }}</span>
+            </div>
+            <button @click="removePromoCode" class="btn-remove-promo">
+              <span class="material-icons">close</span>
+            </button>
           </div>
           
           <div class="promo-code">
@@ -134,8 +147,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useCartStore } from '../stores/cart';
+import api from '@/services/apiService';
 
+const router = useRouter();
 const cartStore = useCartStore();
 const promoCode = ref('');
 const shippingCost = ref(0);
@@ -146,6 +162,23 @@ const notification = ref({
   type: 'success',
   timeout: null as NodeJS.Timeout | null
 });
+
+const showNotification = (message: string, type: 'success' | 'error' | 'warning' = 'success') => {
+  if (notification.value.timeout) {
+    clearTimeout(notification.value.timeout);
+  }
+  
+  notification.value = {
+    show: true,
+    message,
+    type,
+    timeout: null
+  };
+  
+  notification.value.timeout = setTimeout(() => {
+    notification.value.show = false;
+  }, 3000);
+};
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
@@ -186,11 +219,52 @@ const removeItem = (productId, variantId) => {
   cartStore.removeFromCart(productId, variantId);
 };
 
-const applyPromoCode = () => {
-  if (promoCode.value) {
-    alert(`Code promo "${promoCode.value}" appliqué`);
-    promoCode.value = '';
+const applyPromoCode = async () => {
+  if (!promoCode.value) {
+    showNotification('Veuillez entrer un code promo', 'error');
+    return;
   }
+  
+  try {
+    const response = await api.post('/promo-codes/verify', {
+      code: promoCode.value,
+      orderTotal: cartStore.subtotal
+    });
+    
+    if (response.data && response.data.success) {
+      const { promoCode: promoDetails, discount } = response.data.data;
+      
+      cartStore.setPromoCode({
+        code: promoCode.value,
+        title: promoDetails.title,
+        discountType: promoDetails.discountType,
+        discountValue: promoDetails.discountValue,
+        discountAmount: discount,
+        promoCodeId: promoDetails._id
+      });
+      
+      showNotification(`Code promo "${promoCode.value}" appliqué : ${formatPrice(discount)} de réduction`, 'success');
+      promoCode.value = '';
+    } else {
+      showNotification('Code promo invalide', 'error');
+    }
+  } catch (err) {
+    console.error('Erreur lors de la vérification du code promo:', err);
+    showNotification(err.response?.data?.message || 'Erreur lors de la vérification du code promo', 'error');
+  }
+};
+
+const removePromoCode = () => {
+  cartStore.removePromoCode();
+  showNotification('Code promo retiré', 'success');
+};
+
+const goToCheckout = () => {
+  if (cartStore.items.length === 0) {
+    showNotification('Votre panier est vide', 'error');
+    return;
+  }
+  router.push('/checkout');
 };
 
 const calculateShippingCost = () => {
@@ -443,37 +517,102 @@ h1 {
 .promo-code input {
   flex: 1;
   padding: 0.75rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid #ddd;
   border-right: none;
+  border-radius: 4px 0 0 4px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.promo-code input:focus {
+  border-color: #000;
 }
 
 .btn-apply {
-  padding: 0 1rem;
-  background: #000;
+  background-color: #000;
   color: #fff;
   border: none;
+  padding: 0 1rem;
+  border-radius: 0 4px 4px 0;
   cursor: pointer;
-}
-
-.btn-checkout, .btn-continue-shopping {
-  display: block;
-  width: 100%;
-  padding: 1rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  text-decoration: none;
   font-family: var(--font-body);
+  font-weight: 500;
 }
 
 .btn-checkout {
+  display: block;
+  width: 100%;
   background: #000;
   color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-family: var(--font-body);
+}
+
+.promo-code-applied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f5f5f5;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.promo-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.promo-badge .material-icons {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+}
+
+.btn-remove-promo {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.btn-remove-promo:hover {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.summary-row.discount {
+  color: #2e7d32;
+  font-weight: 500;
 }
 
 .btn-continue-shopping {
+  display: block;
+  width: 100%;
   background: transparent;
   border: 1px solid #000;
   color: #000;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--font-body);
 }
 
 .btn-retry {

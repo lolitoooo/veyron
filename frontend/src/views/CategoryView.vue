@@ -22,7 +22,7 @@
         v-for="product in products" 
         :key="product._id" 
         class="product-card"
-        @click="navigateToProduct(product._id)"
+        @click="navigateToProduct(product)"
       >
         <div class="product-image">
           <img :src="getImageUrl(product)" :alt="product.name" />
@@ -83,6 +83,7 @@ interface Product {
   colors?: Array<{ name: string, code: string, images?: Array<{ url: string, alt?: string, isMain?: boolean }> }>;
   discount?: number;
   discountPrice?: number;
+  slug?: string; // Ajout du champ slug
 }
 
 const products = ref<Product[]>([]);
@@ -206,8 +207,40 @@ const formatPrice = (price: number): string => {
   return price.toFixed(2);
 };
 
-const navigateToProduct = (productId: string) => {
-  router.push(`/category/${categorySlug.value}/${productId}`);
+const navigateToProduct = (product: Product) => {
+  try {
+    const productSlug = generateProductSlug(product);
+    router.push(`/category/${categorySlug.value}/${productSlug}`);
+  } catch (err) {
+    console.error('Erreur lors de la navigation vers le produit:', err);
+    router.push(`/category/${categorySlug.value}/${product._id}`);
+  }
+};
+
+const generateProductSlug = (product: Product): string => {
+  if (!product._id) {
+    console.error('Produit sans ID valide:', product);
+    return '';
+  }
+  
+  if (product.slug) {
+    if (product.slug.includes(product._id)) {
+      return product.slug;
+    }
+    return `${product.slug}-${product._id}`;
+  }
+  let slug = '';
+  if (product.name) {
+    slug = product.name
+      .toLowerCase()
+      .replace(/[\s\W-]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  } else {
+    slug = 'produit';
+  }
+  
+  return `${slug}-${product._id}`;
 };
 
 watch(categorySlug, (newSlug, oldSlug) => {

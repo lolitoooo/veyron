@@ -9,9 +9,25 @@ export const useCartStore = defineStore('cart', () => {
   const items = ref<CartItem[]>([]);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
+  const promoCode = ref<{
+    code: string;
+    title: string;
+    discountType: string;
+    discountValue: number;
+    discountAmount: number;
+    promoCodeId: string;
+  } | null>(null);
+
+  const subtotal = computed(() => {
+    return items.value.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  });
+
+  const discountAmount = computed(() => {
+    return promoCode.value ? promoCode.value.discountAmount : 0;
+  });
 
   const total = computed(() => {
-    return items.value.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    return subtotal.value - discountAmount.value;
   });
 
   const itemCount = computed(() => {
@@ -263,16 +279,53 @@ export const useCartStore = defineStore('cart', () => {
 
   initCart();
 
+  function setPromoCode(code: {
+    code: string;
+    title: string;
+    discountType: string;
+    discountValue: number;
+    discountAmount: number;
+    promoCodeId: string;
+  }) {
+    promoCode.value = code;
+    
+    localStorage.setItem('veyron_promo_code', JSON.stringify(code));
+  }
+  
+  function removePromoCode() {
+    promoCode.value = null;
+    localStorage.removeItem('veyron_promo_code');
+  }
+  
+  function loadSavedPromoCode() {
+    const savedPromoCode = localStorage.getItem('veyron_promo_code');
+    if (savedPromoCode) {
+      try {
+        promoCode.value = JSON.parse(savedPromoCode);
+      } catch (e) {
+        console.error('Erreur lors du chargement du code promo:', e);
+        localStorage.removeItem('veyron_promo_code');
+      }
+    }
+  }
+  
+  loadSavedPromoCode();
+
   return {
     items,
     isLoading,
     error,
+    subtotal,
     total,
+    discountAmount,
+    promoCode,
     itemCount,
     addToCart,
     updateQuantity,
     removeFromCart,
     clearCart,
-    initCart
+    initCart,
+    setPromoCode,
+    removePromoCode
   };
 });

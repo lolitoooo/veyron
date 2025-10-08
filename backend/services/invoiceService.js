@@ -101,21 +101,49 @@ class InvoiceService {
     doc.moveTo(50, y).lineTo(550, y).stroke();
     y += 10;
     
-    doc.text('Sous-total:', 350, y);
-    doc.text(`${(order.totalPrice - order.taxPrice - order.shippingPrice).toFixed(2)} €`, amountX, y);
+    const subtotalHT = order.subtotalHT || (order.totalPrice - order.taxPrice - order.shippingPrice);
+    doc.text('Sous-total HT:', 350, y);
+    doc.text(`${subtotalHT.toFixed(2)} €`, amountX, y);
     y += 20;
+    
+    doc.text('TVA (20%):', 350, y);
+    doc.text(`${order.taxPrice.toFixed(2)} €`, amountX, y);
+    y += 20;
+    
+    const subtotalTTC = order.subtotalTTC || (subtotalHT + order.taxPrice);
+    doc.text('Sous-total TTC:', 350, y);
+    doc.text(`${subtotalTTC.toFixed(2)} €`, amountX, y);
+    y += 20;
+    
+    if (order.promoCode && order.promoCode.code) {
+      const discountAmount = order.discountAmount || 0;
+      
+      doc.fillColor('red');
+      if (order.promoCode.discountType === 'percentage') {
+        doc.text(`Réduction (${order.promoCode.discountValue}%)`, 350, y);
+      } else {
+        doc.text(`Réduction (${order.promoCode.code})`, 350, y);
+      }
+      doc.text(`-${discountAmount.toFixed(2)} €`, amountX, y);
+      doc.fillColor('black');
+      y += 20;
+    }
     
     doc.text('Frais de livraison:', 350, y);
     doc.text(`${order.shippingPrice.toFixed(2)} €`, amountX, y);
     y += 20;
     
-    doc.text('TVA:', 350, y);
-    doc.text(`${order.taxPrice.toFixed(2)} €`, amountX, y);
-    y += 20;
-    
     doc.font('Helvetica-Bold');
-    doc.text('Total:', 350, y);
+    doc.text('Total TTC:', 350, y);
     doc.text(`${order.totalPrice.toFixed(2)} €`, amountX, y);
+    
+    if (order.promoCode && order.promoCode.code && order.discountAmount > 0) {
+      y += 30;
+      doc.font('Helvetica');
+      doc.fillColor('green');
+      doc.text(`Vous avez économisé ${order.discountAmount.toFixed(2)} € grâce au code promo ${order.promoCode.code}`, 50, y, { align: 'center' });
+      doc.fillColor('black');
+    }
     
     doc.fontSize(10);
     doc.text('Merci pour votre commande!', 50, 700, { align: 'center' });

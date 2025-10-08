@@ -66,6 +66,15 @@
           <p>Statistiques avancées</p>
         </div>
       </router-link>
+      
+      <router-link to="/admin/promo-codes" class="stat-card">
+        <div class="stat-icon">
+          <span class="material-icons">local_offer</span>
+        </div>
+        <div class="stat-content">
+          <p>Codes promo</p>
+        </div>
+      </router-link>
 
 
     </div>

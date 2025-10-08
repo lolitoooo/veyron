@@ -296,6 +296,13 @@ onMounted(async () => {
   margin-bottom: -3rem;
   position: relative;
   z-index: 10;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .breadcrumb {
+    display: none;
+  }
 }
 
 .breadcrumb ol {

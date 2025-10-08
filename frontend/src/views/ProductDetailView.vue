@@ -191,6 +191,7 @@ interface Product {
   image?: string;
   colors?: ProductColor[];
   sizes?: string[];
+  slug?: string;
 }
 const product = ref<Product | null>(null);
 const isLoading = ref(true);
@@ -221,14 +222,37 @@ const closeNotification = () => {
 };
 
 const loadProduct = async () => {
-  const productId = route.params.id;
-  if (!productId) {
-    error.value = 'ID du produit manquant';
-    isLoading.value = false;
-    return;
-  }
+  isLoading.value = true;
+  error.value = '';
   
   try {
+    const productSlug = route.params.productSlug;
+    if (!productSlug) {
+      throw new Error('Identifiant du produit manquant');
+    }
+    
+    let productId = '';
+    
+    const mongoIdRegex = /([0-9a-f]{24})/i;
+    const match = productSlug.match(mongoIdRegex);
+    
+    if (match && match[1]) {
+      productId = match[1];
+      console.log(`ID MongoDB valide trouvé dans le slug: ${productId}`);
+    } else {
+      const slugParts = productSlug.split('-');
+      const lastPart = slugParts[slugParts.length - 1];
+      
+      if (lastPart && /^[0-9a-f]{24}$/i.test(lastPart)) {
+        productId = lastPart;
+        console.log(`ID MongoDB valide trouvé à la fin du slug: ${productId}`);
+      } else {
+        throw new Error(`Impossible de trouver un ID MongoDB valide dans le slug: ${productSlug}`);
+      }
+    }
+    
+    console.log(`Appel API avec ID: ${productId}`);
+    
     const response = await api.get(`/products/${productId}`);
     
     if (response.data && response.data.data) {
@@ -253,6 +277,26 @@ const loadProduct = async () => {
   } catch (err: any) {
     console.error('Erreur lors du chargement du produit:', err);
     error.value = err.response?.data?.message || 'Erreur lors du chargement du produit';
+    
+    if (err.response) {
+      console.log('Statut de la réponse:', err.response.status);
+      console.log('Données de la réponse:', err.response.data);
+    }
+    
+    const rawId = route.params.productSlug;
+    if (rawId && typeof rawId === 'string' && rawId.length > 0) {
+      try {
+        console.log('Tentative de récupération avec l\'ID brut:', rawId);
+        const fallbackResponse = await api.get(`/products/${rawId}`);
+        
+        if (fallbackResponse.data && fallbackResponse.data.data) {
+          product.value = fallbackResponse.data.data;
+          error.value = '';
+        }
+      } catch (fallbackErr) {
+        console.error('Erreur lors de la tentative de récupération avec l\'ID brut:', fallbackErr);
+      }
+    }
   } finally {
     isLoading.value = false;
   }

@@ -121,35 +121,81 @@ const OrderSchema = new mongoose.Schema({
   refundedAt: {
     type: Date
   },
-  couponCode: {
-    type: String
+  promoCode: {
+    code: { type: String },
+    title: { type: String },
+    discountType: { 
+      type: String,
+      enum: ['percentage', 'fixed']
+    },
+    discountValue: { type: Number },
+    discountAmount: { type: Number, default: 0 },
+    promoCodeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'PromoCode'
+    }
   },
-  couponDiscount: {
+  subtotalHT: {
     type: Number,
     default: 0
+  },
+  subtotalTTC: {
+    type: Number,
+    default: 0
+  },
+  discountAmount: {
+    type: Number,
+    default: 0
+  },
+  discountPercentage: {
+    type: Number
   }
 }, {
   timestamps: true
 });
 
 OrderSchema.methods.calculateTotalPrice = function() {
-  const itemsPrice = this.orderItems.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
-  );
-  
   const itemsPriceHT = this.orderItems.reduce(
     (acc, item) => acc + item.priceHT * item.qty,
     0
   );
+  this.subtotalHT = parseFloat(itemsPriceHT.toFixed(2));
   
-  this.taxPrice = itemsPrice - itemsPriceHT;
+  const itemsPriceTTC = this.orderItems.reduce(
+    (acc, item) => acc + item.price * item.qty,
+    0
+  );
+  this.subtotalTTC = parseFloat(itemsPriceTTC.toFixed(2));
   
-  const discountedPrice = this.couponDiscount 
-    ? itemsPrice - this.couponDiscount 
-    : itemsPrice;
+  this.taxPrice = parseFloat((this.subtotalTTC - this.subtotalHT).toFixed(2));
   
-  this.totalPrice = discountedPrice + this.shippingPrice;
+  if (this.promoCode && this.promoCode.code) {
+    if (this.promoCode.discountType === 'percentage') {
+      this.discountPercentage = this.promoCode.discountValue;
+      this.discountAmount = parseFloat((this.subtotalTTC * (this.discountPercentage / 100)).toFixed(2));
+      
+      if (this.promoCode.maxDiscountAmount && this.discountAmount > this.promoCode.maxDiscountAmount) {
+        this.discountAmount = parseFloat(this.promoCode.maxDiscountAmount.toFixed(2));
+      }
+    } else if (this.promoCode.discountType === 'fixed') {
+      this.discountAmount = parseFloat(this.promoCode.discountValue.toFixed(2));
+      this.discountPercentage = parseFloat(((this.discountAmount / this.subtotalTTC) * 100).toFixed(2));
+      
+      if (this.discountAmount > this.subtotalTTC) {
+        this.discountAmount = this.subtotalTTC;
+        this.discountPercentage = 100;
+      }
+    }
+    
+    this.promoCode.discountAmount = this.discountAmount;
+  } else {
+    this.discountAmount = 0;
+    this.discountPercentage = 0;
+  }
+  
+  const discountedPrice = parseFloat((this.subtotalTTC - this.discountAmount).toFixed(2));
+  
+  this.totalPrice = parseFloat((discountedPrice + this.shippingPrice).toFixed(2));
   
   return this.totalPrice;
 };

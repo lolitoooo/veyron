@@ -87,24 +87,47 @@
           </div>
         </div>
         
+        <div class="info-card" v-if="order.promoCode && order.promoCode.code">
+          <h3>Code promo appliqué</h3>
+          <div class="info-content promo-code-info">
+            <div class="promo-code-badge">
+              {{ order.promoCode.code }}
+            </div>
+            <p><strong>{{ order.promoCode.title || 'Code promo' }}</strong></p>
+            <p v-if="order.promoCode.discountType === 'percentage'">
+              Réduction de {{ order.promoCode.discountValue }}%
+            </p>
+            <p v-else>
+              Réduction de {{ formatPrice(order.promoCode.discountValue) }}
+            </p>
+            <p v-if="order.discountAmount">
+              <strong>Montant économisé:</strong> {{ formatPrice(order.discountAmount) }}
+            </p>
+          </div>
+        </div>
+        
         <div class="info-card">
           <h3>Résumé</h3>
           <div class="info-content summary">
             <div class="summary-row">
               <span>Sous-total HT:</span>
-              <span>{{ formatPrice(order.itemsPrice) }}</span>
+              <span>{{ formatPrice(order.subtotalHT || order.itemsPrice) }}</span>
+            </div>
+            <div class="summary-row">
+              <span>TVA (20%):</span>
+              <span>{{ formatPrice(order.taxPrice) }}</span>
+            </div>
+            <div class="summary-row">
+              <span>Sous-total TTC:</span>
+              <span>{{ formatPrice(order.subtotalTTC || (order.itemsPrice + order.taxPrice)) }}</span>
+            </div>
+            <div v-if="order.promoCode && order.discountAmount > 0" class="summary-row discount">
+              <span>Réduction ({{ order.promoCode.code }}):</span>
+              <span>-{{ formatPrice(order.discountAmount) }}</span>
             </div>
             <div class="summary-row">
               <span>Frais de livraison:</span>
               <span>{{ formatPrice(order.shippingPrice) }}</span>
-            </div>
-            <div v-if="order.taxPrice > 0" class="summary-row">
-              <span>TVA (20%):</span>
-              <span>{{ formatPrice(order.taxPrice) }}</span>
-            </div>
-            <div v-if="order.discountPrice > 0" class="summary-row discount">
-              <span>Remise:</span>
-              <span>-{{ formatPrice(order.discountPrice) }}</span>
             </div>
             <div class="summary-row total">
               <span>Total TTC:</span>
@@ -114,7 +137,7 @@
         </div>
       </div>
       
-      <!-- <div class="order-items">
+      <div class="order-items">
         <h3>Articles commandés</h3>
         <div class="items-table-container">
           <table class="items-table">
@@ -131,10 +154,10 @@
                 <td>
                   <div class="product-cell">
                     <div class="product-image">
-                      <img :src="item.product?.images?.[0] || 'https://via.placeholder.com/50'" :alt="item.product?.name" />
+                      <img :src="item.image" :alt="item.name" />
                     </div>
                     <div class="product-info">
-                      <div class="product-name">{{ item.product?.name }}</div>
+                      <div class="product-name">{{ item.name }}</div>
                       <div class="product-id" v-if="item.variant">
                         <span v-if="item.variant.size">Taille: {{ item.variant.size }}</span>
                         <span v-if="item.variant.color">, Couleur: {{ item.variant.color }}</span>
@@ -143,13 +166,13 @@
                   </div>
                 </td>
                 <td>{{ formatPrice(item.price) }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>{{ formatPrice(item.price * item.quantity) }}</td>
+                <td>{{ item.qty }}</td>
+                <td>{{ formatPrice(item.price * item.qty) }}</td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
   
@@ -419,7 +442,28 @@ const goBack = () => {
 }
 
 .summary-row.discount {
-  color: #d32f2f;
+  color: #e53935;
+}
+
+.promo-code-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.promo-code-badge {
+  background-color: #f5f5f5;
+  color: #333;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  border: 1px dashed #ccc;
+  letter-spacing: 1px;
+}
+
+.promo-code-info p {
+  margin: 0.25rem 0;
 }
 
 .summary-row.total {
@@ -464,17 +508,23 @@ const goBack = () => {
 }
 
 .product-image {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 4px;
   overflow: hidden;
   flex-shrink: 0;
+  border: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  max-width: 100%;
 }
 
 .product-info {
