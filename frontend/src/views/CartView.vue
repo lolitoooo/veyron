@@ -184,7 +184,7 @@ const formatPrice = (price) => {
   return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
 };
 
-const updateQuantity = (productId, variantId, quantity) => {
+const updateQuantity = async (productId, variantId, quantity) => {
   if (quantity < 1) {
     quantity = 1;
   }
@@ -195,21 +195,31 @@ const updateQuantity = (productId, variantId, quantity) => {
   
   if (!item) return;
   
-  if (quantity > item.quantity && item.stockDisponible !== undefined) {
-    if (quantity > item.stockDisponible) {
-      notification.value = {
-        show: true,
-        message: `Désolé, il ne reste que ${item.stockDisponible} article(s) en stock`,
-        type: 'warning',
-        timeout: null
-      };
+  try {
+    const parts = variantId.split('-');
+    const size = parts[1];
+    const color = parts.slice(2).join('-');
+    
+    const response = await api.get(`/products/${productId}`);
+    
+    if (response.data && response.data.success) {
+      const product = response.data.data;
       
-      quantity = item.stockDisponible;
+      const variant = product.variants?.find((v: { size: string; color: string; stock: number }) => 
+        v.size === size && v.color === color
+      );
       
-      notification.value.timeout = setTimeout(() => {
-        notification.value.show = false;
-      }, 3000);
+      if (variant) {
+        const stockDisponible = variant.stock;
+        
+        if (quantity > stockDisponible) {
+          showNotification(`Désolé, il ne reste que ${stockDisponible} article(s) en stock pour cette variante`, 'warning');
+          quantity = stockDisponible;
+        }
+      }
     }
+  } catch (err) {
+    console.error('Erreur lors de la vérification du stock:', err);
   }
   
   cartStore.updateQuantity(productId, variantId, quantity);

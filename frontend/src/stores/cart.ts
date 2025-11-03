@@ -1,12 +1,16 @@
 import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
 import type { Cart, CartItem } from '@/types/cart';
+
+interface CartItemWithStock extends CartItem {
+  stockVariant?: number;
+}
 import { useAuthStore } from './auth';
 import api from '@/services/apiService';
 
 export const useCartStore = defineStore('cart', () => {
   const authStore = useAuthStore();
-  const items = ref<CartItem[]>([]);
+  const items = ref<CartItemWithStock[]>([]);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
   const promoCode = ref<{
@@ -77,16 +81,53 @@ export const useCartStore = defineStore('cart', () => {
     error.value = null;
     
     try {
-      const existingItem = items.value.find(cartItem => 
-        cartItem.productId === item.productId && 
-        cartItem.variant.size === item.variant.size && 
-        cartItem.variant.color === item.variant.color
-      );
+      const productResponse = await api.get(`/products/${item.productId}`);
       
-      if (existingItem) {
-        existingItem.quantity += item.quantity;
+      if (productResponse.data && productResponse.data.success) {
+        const product = productResponse.data.data;
+        
+        const variant = product.variants?.find((v: { size: string; color: string; stock: number }) => 
+          v.size === item.variant.size && v.color === item.variant.color
+        );
+        
+        if (!variant) {
+          throw new Error('Variante non disponible');
+        }
+        
+        const stockDisponible = variant.stock;
+        
+        const existingItem = items.value.find(cartItem => 
+          cartItem.productId === item.productId && 
+          cartItem.variant.size === item.variant.size && 
+          cartItem.variant.color === item.variant.color
+        );
+        
+        let totalQuantity = item.quantity;
+        if (existingItem) {
+          totalQuantity += existingItem.quantity;
+        }
+        
+        if (totalQuantity > stockDisponible) {
+          const availableToAdd = stockDisponible - (existingItem?.quantity || 0);
+          
+          if (availableToAdd <= 0) {
+            throw new Error(`Désolé, vous avez déjà la quantité maximale disponible dans votre panier`);
+          }
+          
+          item.quantity = availableToAdd;
+          throw new Error(`Désolé, il ne reste que ${availableToAdd} article(s) disponible(s) pour cette variante`);
+        }
+        
+        if (existingItem) {
+          existingItem.quantity += item.quantity;
+        } else {
+          items.value.push({
+            ...item,
+            stockVariant: stockDisponible
+          });
+        }
       } else {
-        items.value.push(item);
+        throw new Error('Impossible de vérifier le stock disponible');
       }
       
       if (await ensureUserAuthenticated()) {
