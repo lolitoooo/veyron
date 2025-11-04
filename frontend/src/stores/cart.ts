@@ -176,6 +176,10 @@ export const useCartStore = defineStore('cart', () => {
     if (index !== -1) {
       items.value.splice(index, 1);
       
+      if (items.value.length === 0) {
+        removePromoCode();
+      }
+      
       if (await ensureUserAuthenticated()) {
         try {
           await saveCartToServer();
@@ -190,6 +194,8 @@ export const useCartStore = defineStore('cart', () => {
 
   async function clearCart() {
     items.value = [];
+    
+    removePromoCode();
     
     if (await ensureUserAuthenticated()) {
       try {

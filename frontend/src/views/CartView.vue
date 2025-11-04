@@ -11,9 +11,9 @@
         <div class="modal-content" @click.stop>
           <div class="modal-header">
             <h3>Code promo non valide</h3>
-            <button @click="closePromoWarningModal" class="btn-close-modal">
+            <!-- <button @click="closePromoWarningModal" class="btn-close-modal">
               <span class="material-icons">close</span>
-            </button>
+            </button> -->
           </div>
           <div class="modal-body">
             <p>Le montant de votre panier est passé en dessous du minimum requis pour le code promo "{{ promoWarningData.promoCode }}".</p>
