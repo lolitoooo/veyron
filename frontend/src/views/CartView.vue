@@ -7,6 +7,31 @@
         {{ notification.message }}
       </div>
       
+      <div v-if="showPromoWarningModal" class="modal-overlay" @click="closePromoWarningModal">
+        <div class="modal-content" @click.stop>
+          <div class="modal-header">
+            <h3>Code promo non valide</h3>
+            <button @click="closePromoWarningModal" class="btn-close-modal">
+              <span class="material-icons">close</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Le montant de votre panier est passé en dessous du minimum requis pour le code promo "{{ promoWarningData.promoCode }}".</p>
+            <p><strong>Montant actuel:</strong> {{ formatPrice(cartStore.subtotal) }}</p>
+            <p><strong>Montant minimum requis:</strong> {{ formatPrice(promoWarningData.minAmount) }}</p>
+            <p>Que souhaitez-vous faire ?</p>
+          </div>
+          <div class="modal-actions">
+            <button @click="cancelRemoval" class="btn-cancel">
+              Annuler la modification
+            </button>
+            <button @click="confirmRemoval" class="btn-confirm">
+              Retirer le code promo
+            </button>
+          </div>
+        </div>
+      </div>
+      
       <div v-if="cartStore.isLoading" class="loading">
         <div class="spinner"></div>
         <p>Chargement de votre panier...</p>
@@ -163,7 +188,15 @@ const notification = ref({
   timeout: null as NodeJS.Timeout | null
 });
 
-const showNotification = (message: string, type: 'success' | 'error' | 'warning' = 'success') => {
+const showPromoWarningModal = ref(false);
+const promoWarningData = ref({
+  promoCode: '',
+  minAmount: 0,
+  pendingAction: null as (() => void) | null,
+  cancelAction: null as (() => void) | null
+});
+
+const showNotification = (message: string, type: 'success' | 'error' | 'warning' | 'info' = 'success') => {
   if (notification.value.timeout) {
     clearTimeout(notification.value.timeout);
   }
@@ -184,6 +217,70 @@ const formatPrice = (price) => {
   return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
 };
 
+const checkPromoCodeEligibility = async (pendingAction: () => void, cancelAction: () => void) => {
+  if (!cartStore.promoCode) {
+    pendingAction();
+    return true;
+  }
+  
+  try {
+    const response = await api.post('/promo-codes/verify', {
+      code: cartStore.promoCode.code,
+      orderTotal: cartStore.subtotal
+    });
+    
+    if (!response.data || !response.data.success) {
+      promoWarningData.value = {
+        promoCode: cartStore.promoCode.code,
+        minAmount: response.data?.minOrderValue || 0,
+        pendingAction,
+        cancelAction
+      };
+      showPromoWarningModal.value = true;
+      return false;
+    }
+    
+    pendingAction();
+    return true;
+  } catch (err) {
+    console.error('Erreur lors de la vérification du code promo:', err);
+    if (err.response?.status === 400) {
+      promoWarningData.value = {
+        promoCode: cartStore.promoCode.code,
+        minAmount: err.response?.data?.minOrderValue || 0,
+        pendingAction,
+        cancelAction
+      };
+      showPromoWarningModal.value = true;
+      return false;
+    }
+    
+    pendingAction();
+    return true;
+  }
+};
+
+const closePromoWarningModal = () => {
+  showPromoWarningModal.value = false;
+};
+
+const confirmRemoval = () => {
+  cartStore.removePromoCode();
+  if (promoWarningData.value.pendingAction) {
+    promoWarningData.value.pendingAction();
+  }
+  showNotification('Code promo retiré', 'warning');
+  closePromoWarningModal();
+};
+
+const cancelRemoval = () => {
+  if (promoWarningData.value.cancelAction) {
+    promoWarningData.value.cancelAction();
+  }
+  showNotification('Modification annulée', 'info');
+  closePromoWarningModal();
+};
+
 const updateQuantity = async (productId, variantId, quantity) => {
   if (quantity < 1) {
     quantity = 1;
@@ -194,6 +291,8 @@ const updateQuantity = async (productId, variantId, quantity) => {
   );
   
   if (!item) return;
+  
+  const oldQuantity = item.quantity;
   
   try {
     const parts = variantId.split('-');
@@ -223,10 +322,35 @@ const updateQuantity = async (productId, variantId, quantity) => {
   }
   
   cartStore.updateQuantity(productId, variantId, quantity);
+  
+  const pendingAction = () => {
+  }
+  
+  const cancelAction = () => {
+    cartStore.updateQuantity(productId, variantId, oldQuantity);
+  };
+  
+  await checkPromoCodeEligibility(pendingAction, cancelAction);
 };
 
-const removeItem = (productId, variantId) => {
+const removeItem = async (productId, variantId) => {
+  const item = cartStore.items.find(item => 
+    item.productId === productId && item.variantId === variantId
+  );
+  
+  if (!item) return;
+  
+  const itemCopy = { ...item };
+  
   cartStore.removeFromCart(productId, variantId);
+  const pendingAction = () => {
+  };
+  
+  const cancelAction = () => {
+    cartStore.addToCart(itemCopy);
+  };
+  
+  await checkPromoCodeEligibility(pendingAction, cancelAction);
 };
 
 const applyPromoCode = async () => {
@@ -638,13 +762,11 @@ h1 {
   position: fixed;
   top: 20px;
   right: 20px;
-  padding: 15px 20px;
+  padding: 1rem 1.5rem;
   border-radius: 4px;
-  color: white;
-  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   z-index: 1000;
-  animation: fadeIn 0.3s ease-in-out;
-  max-width: 400px;
+  animation: slideIn 0.3s ease-out;
 }
 
 .notification-success {
@@ -657,6 +779,111 @@ h1 {
 
 .notification-warning {
   background-color: #ff9800;
+}
+
+.notification-info {
+  background-color: #2196f3;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.btn-close-modal {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.btn-close-modal:hover {
+  color: #000;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-body p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.modal-body p:last-child {
+  margin-bottom: 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-top: 1px solid #eee;
+  justify-content: flex-end;
+}
+
+.btn-cancel, .btn-confirm {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.btn-cancel:hover {
+  background-color: #e0e0e0;
+}
+
+.btn-confirm {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.btn-confirm:hover {
+  background-color: #b71c1c;
 }
 
 @keyframes fadeIn {
