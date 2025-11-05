@@ -7,7 +7,7 @@
         {{ notification.message }}
       </div>
       
-      <div v-if="showPromoWarningModal" class="modal-overlay" @click="closePromoWarningModal">
+      <div v-if="showPromoWarningModal" class="modal-overlay">
         <div class="modal-content" @click.stop>
           <div class="modal-header">
             <h3>Code promo non valide</h3>
