@@ -2,6 +2,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const PromoCode = require('../models/PromoCode');
+const ShippingConfig = require('../models/ShippingConfig');
 const invoiceController = require('./invoiceController');
 
 
@@ -87,7 +88,23 @@ exports.createCheckoutSession = async (req, res) => {
 
     const subtotal = orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
     const subtotalHT = orderItems.reduce((sum, item) => sum + (item.priceHT * item.qty), 0);
-    const shippingPrice = subtotal > 50 ? 0 : 5.95;
+    
+    // Récupérer la configuration de livraison dynamique
+    const shippingConfig = await ShippingConfig.findOne({ 
+      name: shippingMethod || 'home_delivery', 
+      enabled: true 
+    });
+    
+    if (!shippingConfig) {
+      return res.status(400).json({ 
+        message: 'Méthode de livraison non disponible' 
+      });
+    }
+    
+    // Calculer les frais de livraison selon la configuration
+    const shippingPrice = subtotal >= shippingConfig.freeShippingThreshold 
+      ? 0 
+      : shippingConfig.price;
     
     let promoCodeData = null;
     let discountAmount = 0;

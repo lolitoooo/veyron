@@ -134,12 +134,17 @@
               <span class="material-icons">local_shipping</span>
               Gratuit
             </span>
-            <span v-else>{{ formatPrice(cartStore.shippingCost) }}</span>
+            <span v-else class="shipping-info-text">Calculés au checkout</span>
           </div>
           
-          <div v-if="!cartStore.isFreeShipping && cartStore.remainingForFreeShipping > 0" class="free-shipping-info">
-            <span class="material-icons">info</span>
-            Plus que {{ formatPrice(cartStore.remainingForFreeShipping) }} pour la livraison gratuite !
+          <div v-if="!cartStore.isFreeShipping && cartStore.remainingForFreeShipping > 0" class="free-shipping-banner">
+            <div class="banner-content">
+              <span class="material-icons">local_shipping</span>
+              <div class="banner-text">
+                <span class="banner-title">Livraison gratuite dès 70€</span>
+                <span class="banner-subtitle">Plus que {{ formatPrice(cartStore.remainingForFreeShipping) }} pour en profiter</span>
+              </div>
+            </div>
           </div>
           
           <div class="summary-row total">
@@ -681,6 +686,48 @@ h1 {
 
 .free-shipping-info .material-icons {
   font-size: 1.2rem;
+}
+
+.free-shipping-banner {
+  padding: 1rem;
+  background-color: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.free-shipping-banner .banner-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.free-shipping-banner .material-icons {
+  font-size: 1.5rem;
+  color: #000;
+}
+
+.free-shipping-banner .banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.free-shipping-banner .banner-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #000;
+}
+
+.free-shipping-banner .banner-subtitle {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.shipping-info-text {
+  color: #666;
+  font-size: 0.9rem;
 }
 
 .promo-code {
