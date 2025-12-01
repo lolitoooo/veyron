@@ -1,0 +1,317 @@
+.shipping-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.shipping-method-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+.shipping-method-card:hover {
+  border-color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shipping-method-card.selected {
+  border-color: #1a1a1a;
+  background-color: #f9f9f9;
+}
+
+.method-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.radio-button {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #1a1a1a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.radio-checked {
+  width: 12px;
+  height: 12px;
+  background-color: #1a1a1a;
+  border-radius: 50%;
+}
+
+.method-info {
+  flex: 1;
+}
+
+.method-info h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #1a1a1a;
+}
+
+.method-description {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.5;
+}
+
+.method-delivery {
+  color: #888;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.method-price {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.free-badge {
+  color: #2e7d32;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Section Point Relais */
+.relay-point-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.relay-search h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: #1a1a1a;
+}
+
+.search-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.search-input input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.search-input input:focus {
+  outline: none;
+  border-color: #1a1a1a;
+}
+
+.btn-search {
+  background-color: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.btn-search:hover {
+  background-color: #000;
+}
+
+.btn-search .material-icons {
+  font-size: 1.25rem;
+}
+
+.loading-relay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.spinner-small {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1a1a1a;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.relay-points-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.relay-point-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #fff;
+}
+
+.relay-point-item:hover {
+  border-color: #1a1a1a;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.relay-point-item.selected {
+  border-color: #2e7d32;
+  background-color: #f1f8f4;
+}
+
+.relay-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.relay-icon .material-icons {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+}
+
+.relay-info {
+  flex: 1;
+}
+
+.relay-info h5 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: #1a1a1a;
+}
+
+.relay-info p {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0.125rem 0;
+}
+
+.relay-distance {
+  color: #2e7d32 !important;
+  font-weight: 500;
+}
+
+.relay-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.relay-check .material-icons {
+  font-size: 1.5rem;
+  color: #2e7d32;
+}
+
+.no-relay-points {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+/* Banner livraison gratuite */
+.free-shipping-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background-color: #e8f5e9;
+  border-radius: 6px;
+  color: #2e7d32;
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.free-shipping-banner .material-icons {
+  font-size: 1.5rem;
+}
+
+.free-shipping-banner p {
+  margin: 0;
+}
+
+.relay-selected {
+  background-color: #f1f8f4;
+  border: 2px solid #2e7d32;
+}
+
+.relay-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.relay-header .material-icons {
+  font-size: 1.5rem;
+  color: #2e7d32;
+}
+
+.relay-header strong {
+  font-size: 1.1rem;
+  color: #1a1a1a;
+}
+
+.relay-distance-info {
+  color: #2e7d32 !important;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .method-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .method-price {
+    align-self: flex-start;
+  }
+  
+  .relay-points-list {
+    max-height: 300px;
+  }
+}

@@ -60,12 +60,20 @@
               <div class="address-section">
                 <h2>Adresse de livraison</h2>
                 <div class="address-card">
-                  <p><strong>{{ order.shippingAddress.firstName }} {{ order.shippingAddress.lastName }}</strong></p>
-                  <p>{{ order.shippingAddress.addressLine1 }}</p>
-                  <p v-if="order.shippingAddress.addressLine2">{{ order.shippingAddress.addressLine2 }}</p>
-                  <p>{{ order.shippingAddress.postalCode }} {{ order.shippingAddress.city }}</p>
-                  <p>{{ order.shippingAddress.country }}</p>
-                  <p>{{ order.shippingAddress.phone }}</p>
+                  <div v-if="order.shippingMethod === 'relay_point' && order.relayPoint">
+                    <p><strong>Point Relais - {{ order.relayPoint.carrier }}</strong></p>
+                    <p><strong>{{ order.relayPoint.name }}</strong></p>
+                    <p>{{ order.relayPoint.address }}</p>
+                    <p>{{ order.relayPoint.postalCode }} {{ order.relayPoint.city }}</p>
+                  </div>
+                  <div v-else>
+                    <p><strong>{{ order.shippingAddress.firstName }} {{ order.shippingAddress.lastName }}</strong></p>
+                    <p>{{ order.shippingAddress.addressLine1 }}</p>
+                    <p v-if="order.shippingAddress.addressLine2">{{ order.shippingAddress.addressLine2 }}</p>
+                    <p>{{ order.shippingAddress.postalCode }} {{ order.shippingAddress.city }}</p>
+                    <p>{{ order.shippingAddress.country }}</p>
+                    <p>{{ order.shippingAddress.phone }}</p>
+                  </div>
                 </div>
               </div>
               

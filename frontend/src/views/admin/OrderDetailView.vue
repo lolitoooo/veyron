@@ -60,18 +60,32 @@
         <div class="info-card">
           <h3>Adresse de livraison</h3>
           <div class="info-content">
-            <p>{{ order.shippingAddress?.address }}</p>
-            <p>{{ order.shippingAddress?.postalCode }} {{ order.shippingAddress?.city }}</p>
-            <p>{{ order.shippingAddress?.country }}</p>
+            <div v-if="order.shippingMethod === 'relay_point' && order.relayPoint">
+              <p><strong>Point Relais - {{ order.relayPoint.carrier }}</strong></p>
+              <p><strong>{{ order.relayPoint.name }}</strong></p>
+              <p>{{ order.relayPoint.address }}</p>
+              <p>{{ order.relayPoint.postalCode }} {{ order.relayPoint.city }}</p>
+            </div>
+            <div v-else>
+              <p><strong>{{ order.shippingAddress?.firstName }} {{ order.shippingAddress?.lastName }}</strong></p>
+              <p>{{ order.shippingAddress?.addressLine1 }}</p>
+              <p v-if="order.shippingAddress?.addressLine2">{{ order.shippingAddress?.addressLine2 }}</p>
+              <p>{{ order.shippingAddress?.postalCode }} {{ order.shippingAddress?.city }}</p>
+              <p>{{ order.shippingAddress?.country }}</p>
+              <p v-if="order.shippingAddress?.phone">{{ order.shippingAddress?.phone }}</p>
+            </div>
           </div>
         </div>
         
         <div class="info-card">
           <h3>Adresse de facturation</h3>
           <div class="info-content">
-            <p>{{ order.billingAddress?.address }}</p>
+            <p><strong>{{ order.billingAddress?.firstName }} {{ order.billingAddress?.lastName }}</strong></p>
+            <p>{{ order.billingAddress?.addressLine1 }}</p>
+            <p v-if="order.billingAddress?.addressLine2">{{ order.billingAddress?.addressLine2 }}</p>
             <p>{{ order.billingAddress?.postalCode }} {{ order.billingAddress?.city }}</p>
             <p>{{ order.billingAddress?.country }}</p>
+            <p v-if="order.billingAddress?.phone">{{ order.billingAddress?.phone }}</p>
           </div>
         </div>
         

@@ -76,6 +76,14 @@
         </div>
       </router-link>
 
+      <router-link to="/admin/shipping" class="stat-card">
+        <div class="stat-icon">
+          <span class="material-icons">local_shipping</span>
+        </div>
+        <div class="stat-content">
+          <p>Configuration livraison</p>
+        </div>
+      </router-link>
 
     </div>
 

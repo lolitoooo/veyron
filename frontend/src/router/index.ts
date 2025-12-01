@@ -319,6 +319,12 @@ const router = createRouter({
           meta: { title: 'Gestion des codes promo | Admin VEYRON', breadcrumb: 'Codes promo' }
         },
         {
+          path: 'shipping',
+          name: 'admin-shipping',
+          component: () => import('@/views/admin/ShippingConfigView.vue'),
+          meta: { title: 'Configuration de livraison | Admin VEYRON', breadcrumb: 'Livraison' }
+        },
+        {
           path: 'users/:id/delete',
           name: 'admin-user-delete',
           component: () => import('@/views/admin/UserFormView.vue'),

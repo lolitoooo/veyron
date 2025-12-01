@@ -75,6 +75,19 @@ const OrderSchema = new mongoose.Schema({
     required: true,
     default: 0.0
   },
+  shippingMethod: {
+    type: String,
+    enum: ['home_delivery', 'relay_point'],
+    default: 'home_delivery'
+  },
+  relayPoint: {
+    id: { type: String },
+    carrier: { type: String },
+    name: { type: String },
+    address: { type: String },
+    postalCode: { type: String },
+    city: { type: String }
+  },
   totalPrice: {
     type: Number,
     required: true,

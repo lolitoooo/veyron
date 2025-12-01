@@ -31,7 +31,7 @@ const cleanImageUrl = (url) => {
 
 exports.createCheckoutSession = async (req, res) => {
   try {
-    const { items, shippingAddress, billingAddress, promoCode } = req.body;
+    const { items, shippingAddress, billingAddress, promoCode, shippingMethod, relayPoint } = req.body;
     
     if (!items || items.length === 0) {
       return res.status(400).json({ message: 'Aucun article dans le panier' });
@@ -143,6 +143,17 @@ exports.createCheckoutSession = async (req, res) => {
       shippingAddress,
       billingAddress: billingAddress || shippingAddress,
       paymentMethod: 'stripe',
+      shippingMethod: shippingMethod || 'home_delivery',
+      ...(shippingMethod === 'relay_point' && relayPoint && {
+        relayPoint: {
+          id: relayPoint.id,
+          carrier: relayPoint.carrier || 'Point Relais',
+          name: relayPoint.name,
+          address: relayPoint.address,
+          postalCode: relayPoint.postalCode,
+          city: relayPoint.city
+        }
+      }),
       shippingPrice,
       taxPrice: parseFloat((subtotal - subtotalHT).toFixed(2)),
       subtotalHT: parseFloat(subtotalHT.toFixed(2)),
@@ -155,6 +166,14 @@ exports.createCheckoutSession = async (req, res) => {
     });
 
     order.generateInvoiceNumber();
+    
+    // Log pour vérifier les données de la commande
+    console.log('Création de commande:', {
+      shippingMethod: order.shippingMethod,
+      relayPoint: order.relayPoint,
+      shippingAddress: order.shippingAddress
+    });
+    
     const savedOrder = await order.save();
 
     let discountOptions = {};
@@ -185,6 +204,12 @@ exports.createCheckoutSession = async (req, res) => {
       metadata: {
         orderId: savedOrder._id.toString(),
         userId: req.user.id,
+        shippingMethod: shippingMethod || 'home_delivery',
+        ...(shippingMethod === 'relay_point' && relayPoint && {
+          relayPointId: relayPoint.id,
+          relayPointName: relayPoint.name,
+          relayPointAddress: `${relayPoint.address}, ${relayPoint.postalCode} ${relayPoint.city}`
+        }),
         ...(promoCodeData && { promoCode: promoCodeData.code }),
         ...(discountAmount > 0 && { discountAmount: discountAmount.toString() }),
       },
@@ -199,7 +224,9 @@ exports.createCheckoutSession = async (req, res) => {
               amount: Math.round(shippingPrice * 100),
               currency: 'eur',
             },
-            display_name: shippingPrice > 0 ? 'Livraison standard' : 'Livraison gratuite',
+            display_name: shippingMethod === 'relay_point' && relayPoint 
+              ? `Point Relais - ${relayPoint.name}` 
+              : (shippingPrice > 0 ? 'Livraison standard' : 'Livraison gratuite'),
             delivery_estimate: {
               minimum: {
                 unit: 'business_day',

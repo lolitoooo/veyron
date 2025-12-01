@@ -18,7 +18,7 @@ const api: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  timeout: 10000
+  timeout: 20000 // Augmenté à 20 secondes pour les requêtes lentes (ex: points relais)
 });
 
 api.interceptors.request.use(config => {

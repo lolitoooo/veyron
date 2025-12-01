@@ -22,6 +22,11 @@ export const useCartStore = defineStore('cart', () => {
     promoCodeId: string;
   } | null>(null);
 
+  const shippingMethod = ref<'home_delivery' | 'relay_point'>('home_delivery');
+  const shippingCost = ref(0);
+  const shippingConfigs = ref<any[]>([]);
+  const freeShippingThreshold = ref(70);
+
   const subtotal = computed(() => {
     return items.value.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   });
@@ -30,8 +35,17 @@ export const useCartStore = defineStore('cart', () => {
     return promoCode.value ? promoCode.value.discountAmount : 0;
   });
 
+  const isFreeShipping = computed(() => {
+    return subtotal.value >= freeShippingThreshold.value;
+  });
+
+  const remainingForFreeShipping = computed(() => {
+    return Math.max(0, freeShippingThreshold.value - subtotal.value);
+  });
+
   const total = computed(() => {
-    return subtotal.value - discountAmount.value;
+    const finalShippingCost = isFreeShipping.value ? 0 : shippingCost.value;
+    return subtotal.value - discountAmount.value + finalShippingCost;
   });
 
   const itemCount = computed(() => {
@@ -358,6 +372,66 @@ export const useCartStore = defineStore('cart', () => {
   
   loadSavedPromoCode();
 
+  // Charger les configurations de livraison
+  async function loadShippingConfigs() {
+    try {
+      const response = await api.get('/shipping');
+      if (response.data && response.data.success) {
+        shippingConfigs.value = response.data.data;
+        // Mettre à jour les frais de livraison avec la méthode actuelle
+        await updateShippingCost();
+      }
+    } catch (err) {
+      console.error('Erreur lors du chargement des configurations de livraison:', err);
+    }
+  }
+
+  // Mettre à jour les frais de livraison
+  async function updateShippingCost() {
+    try {
+      const response = await api.post('/shipping/calculate', {
+        shippingMethod: shippingMethod.value,
+        cartTotal: subtotal.value
+      });
+      
+      if (response.data && response.data.success) {
+        shippingCost.value = response.data.data.shippingCost;
+        freeShippingThreshold.value = response.data.data.freeShippingThreshold;
+      }
+    } catch (err) {
+      console.error('Erreur lors du calcul des frais de livraison:', err);
+      // Valeurs par défaut en cas d'erreur
+      const config = shippingConfigs.value.find(c => c.name === shippingMethod.value);
+      if (config) {
+        shippingCost.value = subtotal.value >= config.freeShippingThreshold ? 0 : config.price;
+        freeShippingThreshold.value = config.freeShippingThreshold;
+      }
+    }
+  }
+
+  // Changer le mode de livraison
+  function setShippingMethod(method: 'home_delivery' | 'relay_point') {
+    shippingMethod.value = method;
+    localStorage.setItem('veyron_shipping_method', method);
+    updateShippingCost();
+  }
+
+  // Charger le mode de livraison sauvegardé
+  function loadSavedShippingMethod() {
+    const saved = localStorage.getItem('veyron_shipping_method');
+    if (saved && (saved === 'home_delivery' || saved === 'relay_point')) {
+      shippingMethod.value = saved;
+    }
+  }
+
+  loadSavedShippingMethod();
+  loadShippingConfigs();
+
+  // Recalculer les frais de livraison quand le sous-total change
+  watch(subtotal, () => {
+    updateShippingCost();
+  });
+
   return {
     items,
     isLoading,
@@ -367,12 +441,21 @@ export const useCartStore = defineStore('cart', () => {
     discountAmount,
     promoCode,
     itemCount,
+    shippingMethod,
+    shippingCost,
+    shippingConfigs,
+    freeShippingThreshold,
+    isFreeShipping,
+    remainingForFreeShipping,
     addToCart,
     updateQuantity,
     removeFromCart,
     clearCart,
     initCart,
     setPromoCode,
-    removePromoCode
+    removePromoCode,
+    setShippingMethod,
+    updateShippingCost,
+    loadShippingConfigs
   };
 });

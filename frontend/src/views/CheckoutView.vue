@@ -19,7 +19,93 @@
         
         <div class="checkout-grid">
           <div class="checkout-details">
+
             <div class="section">
+            <h2>Mode de livraison</h2>
+            
+            <div class="shipping-methods">
+              <div 
+                v-for="config in cartStore.shippingConfigs" 
+                :key="config._id"
+                :class="['shipping-method-card', { selected: cartStore.shippingMethod === config.name }]"
+                @click="selectShippingMethod(config.name)"
+              >
+                <div class="method-header">
+                  <div class="radio-button">
+                    <div v-if="cartStore.shippingMethod === config.name" class="radio-checked"></div>
+                  </div>
+                  <div class="method-info">
+                    <h3>{{ config.displayName }}</h3>
+                    <p class="method-description">{{ config.description }}</p>
+                    <p class="method-delivery">Livraison en {{ config.estimatedDays.min }}-{{ config.estimatedDays.max }} jours</p>
+                  </div>
+                  <div class="method-price">
+                    <span v-if="cartStore.isFreeShipping" class="free-badge">Gratuit</span>
+                    <span v-else class="price">{{ formatPrice(config.price) }}</span>
+                  </div>
+                </div>
+                
+                <!-- Section Point Relais -->
+                <div v-if="config.name === 'relay_point' && cartStore.shippingMethod === 'relay_point'" class="relay-point-section">
+                  <div class="relay-search">
+                    <h4>Sélectionner un point relais</h4>
+                    <div class="search-input">
+                      <input 
+                        v-model="relaySearchQuery"
+                        type="text" 
+                        placeholder="Code postal (5 chiffres)"
+                        maxlength="5"
+                        @input="handleRelaySearchInput"
+                        @keyup.enter="searchRelayPoints"
+                      />
+                      <button @click="searchRelayPoints" class="btn-search">
+                        <span class="material-icons">search</span>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div v-if="isLoadingRelayPoints" class="loading-relay">
+                    <div class="spinner-small"></div>
+                    <p>Recherche des points relais...</p>
+                  </div>
+                  
+                  <div v-else-if="relayPoints.length > 0" class="relay-points-list">
+                    <div 
+                      v-for="point in relayPoints" 
+                      :key="point.id"
+                      :class="['relay-point-item', { selected: selectedRelayPoint?.id === point.id }]"
+                      @click="selectRelayPoint(point)"
+                    >
+                      <div class="relay-icon">
+                        <span class="material-icons">store</span>
+                      </div>
+                      <div class="relay-info">
+                        <h5>{{ point.name }}</h5>
+                        <p>{{ point.address }}</p>
+                        <p>{{ point.postalCode }} {{ point.city }}</p>
+                        <p class="relay-distance">{{ point.distance }} km</p>
+                      </div>
+                      <div v-if="selectedRelayPoint?.id === point.id" class="relay-check">
+                        <span class="material-icons">check_circle</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div v-else-if="relaySearchQuery" class="no-relay-points">
+                    <p>Aucun point relais trouvé pour cette recherche</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <div v-if="!cartStore.isFreeShipping && cartStore.remainingForFreeShipping > 0" class="free-shipping-banner">
+              <span class="material-icons">local_shipping</span>
+              <p>Plus que {{ formatPrice(cartStore.remainingForFreeShipping) }} pour bénéficier de la livraison gratuite !</p>
+            </div>
+          </div>
+            
+            <!-- Adresse de livraison uniquement pour livraison à domicile -->
+            <div v-if="cartStore.shippingMethod === 'home_delivery'" class="section">
               <h2>Adresse de livraison</h2>
               
               <div v-if="userAddresses.length > 0" class="address-selector">
@@ -56,6 +142,20 @@
               <div v-else class="address-form">
                 <p>Veuillez ajouter une adresse de livraison</p>
                 <button @click="router.push({ name: 'addresses', query: { redirect: '/checkout' } })" class="btn-secondary">Ajouter une adresse</button>
+              </div>
+            </div>
+            
+            <!-- Affichage du point relais sélectionné -->
+            <div v-else-if="cartStore.shippingMethod === 'relay_point' && selectedRelayPoint" class="section">
+              <h2>Point relais sélectionné</h2>
+              <div class="address-card relay-selected">
+                <div class="relay-header">
+                  <span class="material-icons">store</span>
+                  <strong>{{ selectedRelayPoint.name }}</strong>
+                </div>
+                <p>{{ selectedRelayPoint.address }}</p>
+                <p>{{ selectedRelayPoint.postalCode }} {{ selectedRelayPoint.city }}</p>
+                <p class="relay-distance-info">À {{ selectedRelayPoint.distance }} km</p>
               </div>
             </div>
             
@@ -213,7 +313,11 @@ const billingAddressData = ref(null);
 const selectedShippingAddressId = ref('');
 const selectedBillingAddressId = ref('');
 
-// Utilisation du montant de réduction du panier
+const relaySearchQuery = ref('');
+const relayPoints = ref([]);
+const selectedRelayPoint = ref(null);
+const isLoadingRelayPoints = ref(false);
+
 const discountAmount = computed(() => cartStore.discountAmount || 0);
 
 async function fetchUserAddresses() {
@@ -297,7 +401,7 @@ const subtotalHT = computed(() => {
 });
 
 const shippingCost = computed(() => {
-  return subtotal.value >= 50 ? 0 : 5.95;
+  return cartStore.isFreeShipping ? 0 : cartStore.shippingCost;
 });
 
 const totalWithDiscount = computed(() => {
@@ -315,6 +419,86 @@ const canProceed = computed(() => {
 const formatPrice = (price) => {
   return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
 };
+
+function selectShippingMethod(method: 'home_delivery' | 'relay_point') {
+  cartStore.setShippingMethod(method);
+  
+  if (method === 'home_delivery') {
+    selectedRelayPoint.value = null;
+    relayPoints.value = [];
+    relaySearchQuery.value = '';
+  } else if (method === 'relay_point') {
+    // Ne pas pré-remplir automatiquement, laisser l'utilisateur saisir
+    // Si vous voulez suggérer le code postal, décommentez les lignes ci-dessous:
+    // if (shippingAddress.value && !relaySearchQuery.value) {
+    //   relaySearchQuery.value = shippingAddress.value.postalCode || '';
+    // }
+  }
+}
+
+function handleRelaySearchInput() {
+  // Déclencher automatiquement la recherche uniquement si 5 chiffres sont saisis
+  if (relaySearchQuery.value && relaySearchQuery.value.length === 5 && /^\d{5}$/.test(relaySearchQuery.value)) {
+    searchRelayPoints();
+  }
+}
+
+async function searchRelayPoints() {
+  // Valider que c'est un code postal à 5 chiffres
+  if (!relaySearchQuery.value || !/^\d{5}$/.test(relaySearchQuery.value)) {
+    relayPoints.value = [];
+    return;
+  }
+  
+  isLoadingRelayPoints.value = true;
+  
+  try {
+    const response = await api.get('/shipping/relay-points/search', {
+      params: {
+        postalCode: relaySearchQuery.value,
+        country: 'FR',
+        limit: 10
+      }
+    });
+    
+    if (response.data && response.data.success) {
+      relayPoints.value = response.data.data.map(point => ({
+        id: point.id,
+        carrier: point.carrier,
+        name: point.name,
+        address: point.address,
+        postalCode: point.postalCode,
+        city: point.city,
+        distance: point.distance,
+        openingHours: point.openingHours
+      }));
+    } else {
+      relayPoints.value = [];
+    }
+  } catch (err) {
+    console.error('Erreur lors de la recherche des points relais:', err);
+    relayPoints.value = [];
+  } finally {
+    isLoadingRelayPoints.value = false;
+  }
+}
+
+function selectRelayPoint(point: any) {
+  selectedRelayPoint.value = point;
+  localStorage.setItem('veyron_selected_relay_point', JSON.stringify(point));
+}
+
+function loadSavedRelayPoint() {
+  const saved = localStorage.getItem('veyron_selected_relay_point');
+  if (saved) {
+    try {
+      selectedRelayPoint.value = JSON.parse(saved);
+    } catch (e) {
+      console.error('Erreur lors du chargement du point relais:', e);
+    }
+  }
+}
+
 onMounted(async () => {
   if (!authStore.isAuthenticated) {
     error.value = 'Vous devez être connecté pour accéder à la page de paiement';
@@ -339,6 +523,10 @@ onMounted(async () => {
     }
     
     await fetchUserAddresses();
+    
+    if (cartStore.shippingMethod === 'relay_point') {
+      loadSavedRelayPoint();
+    }
     
     if (cartStore.items.length === 0) {
       error.value = 'Votre panier est vide';
@@ -372,7 +560,11 @@ async function proceedToPayment() {
   error.value = null;
   
   try {
-    // Pas besoin de vérifier le code promo, on utilise celui du panier
+    if (cartStore.shippingMethod === 'relay_point' && !selectedRelayPoint.value) {
+      error.value = 'Veuillez sélectionner un point relais';
+      isProcessing.value = false;
+      return;
+    }
     
     const orderData = {
       items: cartItems.value.map(item => ({
@@ -386,6 +578,18 @@ async function proceedToPayment() {
       })),
       shippingAddress: shippingAddress.value,
       billingAddress: sameAddress.value ? shippingAddress.value : billingAddressData.value,
+      shippingMethod: cartStore.shippingMethod,
+      shippingCost: shippingCost.value,
+      ...(cartStore.shippingMethod === 'relay_point' && selectedRelayPoint.value && {
+        relayPoint: {
+          id: selectedRelayPoint.value.id,
+          carrier: selectedRelayPoint.value.carrier,
+          name: selectedRelayPoint.value.name,
+          address: selectedRelayPoint.value.address,
+          postalCode: selectedRelayPoint.value.postalCode,
+          city: selectedRelayPoint.value.city
+        }
+      }),
       ...(cartStore.promoCode && {
         promoCode: {
           code: cartStore.promoCode.code,
@@ -414,6 +618,7 @@ async function proceedToPayment() {
 </script>
 
 <style scoped>
+@import '@/styles/shipping-checkout.css';
 .checkout-view {
   padding: 2rem 0;
   width: 100%;

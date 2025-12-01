@@ -128,14 +128,23 @@
             <span>-{{ formatPrice(cartStore.discountAmount) }}</span>
           </div>
           
-          <div class="summary-row">
+          <div class="summary-row shipping">
             <span>Frais de livraison:</span>
-            <span>{{ formatPrice(shippingCost) }}</span>
+            <span v-if="cartStore.isFreeShipping" class="free-shipping">
+              <span class="material-icons">local_shipping</span>
+              Gratuit
+            </span>
+            <span v-else>{{ formatPrice(cartStore.shippingCost) }}</span>
+          </div>
+          
+          <div v-if="!cartStore.isFreeShipping && cartStore.remainingForFreeShipping > 0" class="free-shipping-info">
+            <span class="material-icons">info</span>
+            Plus que {{ formatPrice(cartStore.remainingForFreeShipping) }} pour la livraison gratuite !
           </div>
           
           <div class="summary-row total">
             <span>Total:</span>
-            <span>{{ formatPrice(cartStore.total + shippingCost) }}</span>
+            <span>{{ formatPrice(cartStore.total) }}</span>
           </div>
           
           <div v-if="cartStore.promoCode" class="promo-code-applied">
@@ -179,7 +188,6 @@ import api from '@/services/apiService';
 const router = useRouter();
 const cartStore = useCartStore();
 const promoCode = ref('');
-const shippingCost = ref(0);
 
 const notification = ref({
   show: false,
@@ -638,9 +646,41 @@ h1 {
 }
 
 .summary-row.total {
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1.2rem;
   border-bottom: none;
+}
+
+.summary-row.shipping {
+  color: #666;
+}
+
+.free-shipping {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.free-shipping .material-icons {
+  font-size: 1.2rem;
+}
+
+.free-shipping-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: #e8f5e9;
+  border-radius: 4px;
+  color: #2e7d32;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.free-shipping-info .material-icons {
+  font-size: 1.2rem;
 }
 
 .promo-code {
