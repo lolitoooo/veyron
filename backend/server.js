@@ -37,6 +37,7 @@ app.use(cors({
     'capacitor://localhost',
     'ionic://localhost',
     'http://localhost',
+    'http://localhost',
     // Permettre les requêtes depuis l'IP locale pour les tests mobiles
     /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/,
     /^http:\/\/192\.168\.\d+\.\d+:\d+$/
