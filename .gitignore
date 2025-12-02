@@ -21,6 +21,7 @@ coverage
 frontend/.env.production
 frontend/.env.preprod
 frontend/.env.development
+frontend/.env.mobile
 
 backend/.env.production
 backend/.env.preprod
@@ -50,3 +51,8 @@ playwright-report/
 
 /backend/logs/*
 !/backend/logs/.gitkeep
+
+# Capacitor
+frontend/ios/
+frontend/android/
+frontend/.capacitor/

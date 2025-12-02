@@ -32,7 +32,14 @@ app.use(cors({
     'http://localhost',
     'http://localhost:5173',
     'http://localhost:8080',
-    'http://localhost:3000'
+    'http://localhost:3000',
+    // Application mobile Capacitor
+    'capacitor://localhost',
+    'ionic://localhost',
+    'http://localhost',
+    // Permettre les requêtes depuis l'IP locale pour les tests mobiles
+    /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/,
+    /^http:\/\/192\.168\.\d+\.\d+:\d+$/
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
