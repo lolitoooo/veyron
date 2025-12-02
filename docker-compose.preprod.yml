@@ -19,6 +19,9 @@ services:
       - ./backend/.env.preprod
     ports:
       - "3000:3000"
+    volumes:
+      - backend_images:/app/public/images
+      - backend_uploads:/app/public/uploads
     restart: always
     depends_on:
       - mongodb
@@ -44,3 +47,5 @@ networks:
 
 volumes:
   mongodb_data:
+  backend_images:
+  backend_uploads:

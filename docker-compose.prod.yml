@@ -22,6 +22,9 @@ services:
       dockerfile: Dockerfile.b.production
     ports:
       - "3000:3000"
+    volumes:
+      - backend_images_prod:/app/public/images
+      - backend_uploads_prod:/app/public/uploads
     env_file:
       - ./backend/.env.production
     restart: always
@@ -40,3 +43,5 @@ services:
 
 volumes:
   mongodb_data_prod:
+  backend_images_prod:
+  backend_uploads_prod:

@@ -44,7 +44,7 @@
               <div class="order-items">
                 <div v-for="item in order.orderItems" :key="item.variantId" class="order-item">
                   <div class="item-image">
-                    <img :src="item.image" :alt="item.name">
+                    <img :src="getImageUrl(item.image)" :alt="item.name">
                   </div>
                   <div class="item-details">
                     <h3>{{ item.name }}</h3>
@@ -204,6 +204,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useOrderStore } from '../../stores/order';
 import type { Order } from '@/types/order';
 import AccountLayout from '@/layouts/AccountLayout.vue';
+import { getImageUrl } from '@/utils/imageUrl';
 
 const route = useRoute();
 const router = useRouter();

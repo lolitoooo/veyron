@@ -48,7 +48,7 @@
                 <p><strong>{{ order.orderItems.length }} article(s)</strong></p>
                 <div class="order-items-images">
                   <div v-for="(item, index) in order.orderItems.slice(0, 3)" :key="index" class="item-image">
-                    <img :src="item.image" :alt="item.name">
+                    <img :src="getImageUrl(item.image)" :alt="item.name">
                   </div>
                   <div v-if="order.orderItems.length > 3" class="item-image more">
                     +{{ order.orderItems.length - 3 }}
@@ -120,6 +120,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useOrderStore } from '../stores/order';
 import { getFullApiUrl } from '@/utils/apiUrl';
+import { getImageUrl } from '@/utils/imageUrl';
 import type { Order } from '@/types/order';
 
 const router = useRouter();
