@@ -431,7 +431,9 @@ const handleLogoutMobile = async () => {
 
 @media (max-width: 768px) {
   .header-container {
-    padding: 0.75rem 1rem;
+    padding: 1rem;
+    min-height: 60px;
+    gap: 0.5rem;
   }
   
   .desktop-nav {
@@ -439,14 +441,26 @@ const handleLogoutMobile = async () => {
   }
   
   .mobile-menu-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     order: 1;
+    flex-shrink: 0;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .mobile-menu-toggle .material-icons {
+    font-size: 24px;
   }
   
   .logo {
     order: 2;
     flex-grow: 1;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .logo-desktop {
@@ -456,12 +470,29 @@ const handleLogoutMobile = async () => {
   .logo-mobile {
     display: block;
     height: 35px;
-    margin: 0 auto;
+    max-width: 100%;
+    object-fit: contain;
   }
   
   .header-actions {
     order: 3;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon-button {
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon-button .material-icons {
+    font-size: 22px;
   }
   
   .hide-on-mobile {
@@ -480,19 +511,70 @@ const handleLogoutMobile = async () => {
     font-size: 1rem;
     padding: 0.75rem 0;
   }
+  
+  .cart-count {
+    font-size: 0.65rem;
+    width: 16px;
+    height: 16px;
+    top: -3px;
+    right: -3px;
+  }
 }
 
 @media (max-width: 480px) {
   .header-container {
-    padding: 0.5rem 0.75rem;
+    padding: 0.75rem;
+    min-height: 56px;
+  }
+  
+  .mobile-menu-toggle {
+    min-width: 40px;
+    min-height: 40px;
   }
   
   .icon-button {
-    padding: 0.3rem;
+    padding: 0.4rem;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  
+  .icon-button .material-icons {
+    font-size: 20px;
   }
   
   .logo-mobile {
-    height: 30px;
+    height: 28px;
+  }
+  
+  .header-actions {
+    gap: 0.25rem;
+  }
+  
+  .cart-count {
+    font-size: 0.6rem;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .header-container {
+    padding: 0.5rem;
+  }
+  
+  .mobile-menu-toggle,
+  .icon-button {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 0.3rem;
+  }
+  
+  .icon-button .material-icons {
+    font-size: 18px;
+  }
+  
+  .logo-mobile {
+    height: 24px;
   }
 }
 </style>
