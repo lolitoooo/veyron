@@ -176,6 +176,8 @@ const handleLogoutMobile = async () => {
   background-color: rgba(255, 255, 255, 0.95);
   z-index: 1000;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  /* Support pour les encoches iPhone (safe area) */
+  padding-top: env(safe-area-inset-top);
 }
 
 .header-container {
@@ -365,15 +367,19 @@ const handleLogoutMobile = async () => {
 .mobile-menu {
   display: none;
   position: fixed;
-  top: 60px;
+  top: calc(60px + env(safe-area-inset-top));
   left: 0;
   width: 100%;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 60px - env(safe-area-inset-top));
   background-color: #fff;
   z-index: 999;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   overflow-y: auto;
+  /* Padding pour les bords de l'iPhone */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .mobile-menu.open {

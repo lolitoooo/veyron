@@ -32,13 +32,13 @@ const isHomePage = computed(() => route.path === '/');
 
 .content {
   flex: 1;
-  padding-top: 80px;
+  padding-top: calc(80px + env(safe-area-inset-top));
   width: 100%;
   max-width: 100%;
 }
 
 .home-content {
-  padding-top: 0;
+  padding-top: env(safe-area-inset-top);
 }
 
 .breadcrumb-container {
@@ -50,17 +50,17 @@ const isHomePage = computed(() => route.path === '/');
 
 @media (max-width: 800px) {
   .content {
-    padding-top: 50px;
+    padding-top: calc(60px + env(safe-area-inset-top));
   }
   
   .home-content {
-    padding-top: 0;
+    padding-top: env(safe-area-inset-top);
   }
 }
 
 @media (max-width: 480px) {
   .content {
-    padding-top: 45px;
+    padding-top: calc(56px + env(safe-area-inset-top));
   }
 }
 </style>
