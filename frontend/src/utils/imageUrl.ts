@@ -1,4 +1,8 @@
 export const getServerUrl = (): string => {
+  if (window.location.protocol === 'capacitor:') {
+    return import.meta.env.VITE_BASE_URL || 'https://preprod.veyron-paris.fr';
+  }
+  
   if (import.meta.env.VITE_BASE_URL) {
     return import.meta.env.VITE_BASE_URL;
   }
@@ -11,6 +15,10 @@ export const getServerUrl = (): string => {
 };
 
 export const getImageServerUrl = (): string => {
+  if (window.location.protocol === 'capacitor:') {
+    return import.meta.env.VITE_IMAGE_URL || 'https://preprod.veyron-paris.fr';
+  }
+  
   if (import.meta.env.VITE_IMAGE_URL) {
     return import.meta.env.VITE_IMAGE_URL;
   }
