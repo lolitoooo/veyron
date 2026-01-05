@@ -6,6 +6,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.f.production
+    image: veyron-frontend-prod
     ports:
       - "8091:80"
     env_file:
@@ -13,14 +14,17 @@ services:
     restart: always
     depends_on:
       - backend
+    networks:
+      - veyron-prod-network
 
   backend:
     container_name: veyron-backend-prod
     build:
       context: ./backend
       dockerfile: Dockerfile.b.production
+    image: veyron-backend-prod
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
       - backend_images_prod:/app/public/images
       - backend_uploads_prod:/app/public/uploads
@@ -29,6 +33,8 @@ services:
     restart: always
     depends_on:
       - mongodb
+    networks:
+      - veyron-prod-network
 
   mongodb:
     container_name: veyron-mongodb-prod
@@ -39,6 +45,11 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
+    networks:
+      - veyron-prod-network
+
+networks:
+  veyron-prod-network:
 
 volumes:
   mongodb_data_prod:
