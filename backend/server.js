@@ -19,29 +19,31 @@ app.use(express.static('public'));
 const ensureDirectoriesExist = require('./utils/ensureDirs');
 ensureDirectoriesExist();
 
+const allowedOrigins = process.env.CORS_ORIGIN 
+  ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
+  : [
+      'https://veyron-paris.fr',
+      'https://www.veyron-paris.fr',
+      'https://api.veyron-paris.fr',
+      'https://preprod.veyron-paris.fr',
+      'https://api-preprod.veyron-paris.fr',
+      'http://localhost',
+      'http://localhost:5173',
+      'http://localhost:8080',
+      'http://localhost:3000',
+      'capacitor://localhost',
+      'ionic://localhost',
+      'https://localhost'
+    ];
+
+// Ajouter les regex pour les IPs locales
+const regexOrigins = [
+  /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/,
+  /^http:\/\/192\.168\.\d+\.\d+:\d+$/
+];
+
 app.use(cors({
-  origin: [
-    // Domaines de production
-    'https://veyron-paris.fr',
-    'https://www.veyron-paris.fr',
-    'https://api.veyron-paris.fr',
-    // Domaines de préproduction
-    'https://preprod.veyron-paris.fr',
-    'https://api-preprod.veyron-paris.fr',
-    // Domaines de développement
-    'http://localhost',
-    'http://localhost:5173',
-    'http://localhost:8080',
-    'http://localhost:3000',
-    // Application mobile Capacitor
-    'capacitor://localhost',
-    'ionic://localhost',
-    'http://localhost',
-    'https://localhost',
-    // Permettre les requêtes depuis l'IP locale pour les tests mobiles
-    /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/,
-    /^http:\/\/192\.168\.\d+\.\d+:\d+$/
-  ],
+  origin: [...allowedOrigins, ...regexOrigins],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
