@@ -37,8 +37,8 @@ services:
       - mongodb_data_prod:/data/db
     restart: always
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=veyron
-      - MONGO_INITDB_ROOT_PASSWORD=veyronpassword
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
 
 volumes:
   mongodb_data_prod:
