@@ -7,8 +7,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.f.production
     ports:
-      - "80:80"
-      - "443:443"
+      - "8091:80"
     env_file:
       - ./frontend/.env.production
     restart: always
