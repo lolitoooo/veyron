@@ -622,12 +622,20 @@ async function proceedToPayment() {
 .checkout-view {
   padding: 2rem 0;
   width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.checkout-view * {
+  box-sizing: border-box;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -696,8 +704,122 @@ h2 {
 }
 
 @media (max-width: 768px) {
+  .checkout-view {
+    padding: 1rem 0;
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 0 0.75rem;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
   .checkout-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .section {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .address-selector select {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+
+  .address-card {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .item-image {
+    width: 100%;
+    max-width: 100%;
+    height: 200px;
+    margin-right: 0;
+  }
+
+  .item-image img {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .item-details h3 {
+    font-size: 1rem;
+  }
+
+  .item-details p {
+    font-size: 0.85rem;
+  }
+
+  .summary-row {
+    font-size: 0.9rem;
+  }
+
+  .summary-row.total {
+    font-size: 1rem;
+  }
+
+  .btn-payment {
+    padding: 0.875rem;
+    font-size: 1rem;
+  }
+
+  .btn-secondary {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .hint-text {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  .promo-code-form {
+    flex-direction: column;
+  }
+
+  .promo-code-form button {
+    width: 100%;
+  }
+
+  .checkout-grid,
+  .checkout-details,
+  .checkout-summary,
+  .section {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .address-selector select {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .cart-items,
+  .cart-item {
+    max-width: 100%;
+    overflow-x: hidden;
   }
 }
 

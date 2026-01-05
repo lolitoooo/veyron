@@ -113,12 +113,6 @@ const router = createRouter({
           meta: { title: 'À propos | VEYRON', breadcrumb: 'À propos' }
         },
         {
-          path: 'debug',
-          name: 'debug',
-          component: () => import('@/views/DebugView.vue'),
-          meta: { title: 'Debug | VEYRON' }
-        },
-        {
           path: 'contact',
           name: 'contact',
           component: () => import('@/views/ContactView.vue'),
