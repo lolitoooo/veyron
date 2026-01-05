@@ -1,6 +1,7 @@
 version: '3'
 services:
   mongodb:
+    container_name: veyron-mongodb-preprod
     image: mongo:latest
     volumes:
       - mongodb_data:/data/db
@@ -12,9 +13,11 @@ services:
       - veyron-network
 
   backend:
+    container_name: veyron-backend-preprod
     build:
       context: ./backend
       dockerfile: Dockerfile.b.preprod
+    image: veyron-backend-preprod
     env_file:
       - ./backend/.env.preprod
     ports:
@@ -29,9 +32,11 @@ services:
       - veyron-network
 
   frontend:
+    container_name: veyron-frontend-preprod
     build:
       context: ./frontend
       dockerfile: Dockerfile.f.preprod
+    image: veyron-frontend-preprod
     env_file:
       - ./frontend/.env.preprod
     ports:
