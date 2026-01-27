@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const crypto = require('crypto');
+const { sendEmail } = require('../services/emailService');
+const { welcomeEmailTemplate, resetPasswordEmailTemplate } = require('../templates/emailTemplates');
 
 exports.register = async (req, res) => {
   try {
@@ -41,6 +43,16 @@ exports.register = async (req, res) => {
       email: email.toLowerCase(),
       password
     });
+
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: 'Bienvenue sur Veyron Paris',
+        html: welcomeEmailTemplate(user.firstName)
+      });
+    } catch (emailError) {
+      console.error('Erreur lors de l\'envoi de l\'email de bienvenue:', emailError);
+    }
 
     sendTokenResponse(user, 201, res);
   } catch (err) {
@@ -129,6 +141,27 @@ exports.forgotPassword = async (req, res) => {
     
     await user.save({ validateBeforeSave: false });
     
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: 'Réinitialisation de votre mot de passe - Veyron Paris',
+        html: resetPasswordEmailTemplate(user.firstName, resetUrl)
+      });
+    } catch (emailError) {
+      console.error('Erreur lors de l\'envoi de l\'email de réinitialisation:', emailError);
+      
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+      await user.save({ validateBeforeSave: false });
+      
+      return res.status(500).json({ 
+        success: false,
+        message: 'Erreur lors de l\'envoi de l\'email de réinitialisation' 
+      });
+    }
+    
     res.status(200).json({ 
       success: true, 
       message: 'Si cet email existe dans notre base de données, un lien de réinitialisation sera envoyé',
@@ -145,6 +178,60 @@ exports.forgotPassword = async (req, res) => {
     res.status(500).json({ 
       success: false,
       message: 'Erreur lors de l\'envoi de l\'email de réinitialisation' 
+    });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+    const resetToken = req.params.token;
+    
+    if (!password) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'Veuillez fournir un nouveau mot de passe' 
+      });
+    }
+    
+    if (password.length < 6) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'Le mot de passe doit contenir au moins 6 caractères' 
+      });
+    }
+    
+    const resetPasswordToken = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+    
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() }
+    });
+    
+    if (!user) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'Token invalide ou expiré' 
+      });
+    }
+    
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+    
+    res.status(200).json({ 
+      success: true,
+      message: 'Mot de passe réinitialisé avec succès' 
+    });
+  } catch (err) {
+    console.error('Erreur lors de la réinitialisation du mot de passe:', err);
+    res.status(500).json({ 
+      success: false,
+      message: 'Erreur lors de la réinitialisation du mot de passe' 
     });
   }
 };

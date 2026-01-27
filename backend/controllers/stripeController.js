@@ -4,6 +4,9 @@ const Product = require('../models/Product');
 const PromoCode = require('../models/PromoCode');
 const ShippingConfig = require('../models/ShippingConfig');
 const invoiceController = require('./invoiceController');
+const { sendEmail } = require('../services/emailService');
+const { orderConfirmationEmailTemplate } = require('../templates/emailTemplates');
+const User = require('../models/User');
 
 
 const cleanImageUrl = (url) => {
@@ -318,6 +321,19 @@ exports.getCheckoutSession = async (req, res) => {
         }
         
         await order.save();
+        
+        try {
+          const user = await User.findById(order.user);
+          if (user) {
+            await sendEmail({
+              to: user.email,
+              subject: `Confirmation de commande #${order.invoiceNumber || order._id} - Veyron Paris`,
+              html: orderConfirmationEmailTemplate(order, user)
+            });
+          }
+        } catch (emailError) {
+          console.error('Erreur lors de l\'envoi de l\'email de confirmation:', emailError);
+        }
       }
     } 
     else if (session.payment_status === 'paid' && !order.isPaid) {
@@ -346,6 +362,19 @@ exports.getCheckoutSession = async (req, res) => {
       }
       
       await order.save();
+      
+      try {
+        const user = await User.findById(order.user);
+        if (user) {
+          await sendEmail({
+            to: user.email,
+            subject: `Confirmation de commande #${order.invoiceNumber || order._id} - Veyron Paris`,
+            html: orderConfirmationEmailTemplate(order, user)
+          });
+        }
+      } catch (emailError) {
+        console.error('Erreur lors de l\'envoi de l\'email de confirmation:', emailError);
+      }
     }
     
     res.status(200).json({
@@ -406,6 +435,19 @@ exports.webhook = async (req, res) => {
         }
         
         await order.save();
+        
+        try {
+          const user = await User.findById(order.user);
+          if (user) {
+            await sendEmail({
+              to: user.email,
+              subject: `Confirmation de commande #${order.invoiceNumber || order._id} - Veyron Paris`,
+              html: orderConfirmationEmailTemplate(order, user)
+            });
+          }
+        } catch (emailError) {
+          console.error('Erreur lors de l\'envoi de l\'email de confirmation via webhook:', emailError);
+        }
       }
       break;
       

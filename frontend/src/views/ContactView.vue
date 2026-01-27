@@ -139,6 +139,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
+import api from '@/services/apiService';
 
 const form = reactive({
   name: '',
@@ -155,25 +156,38 @@ const error = ref('');
 const submitForm = async () => {
   loading.value = true;
   error.value = '';
+  success.value = false;
   
   try {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const response = await api.post('/contact', {
+      name: form.name,
+      email: form.email,
+      subject: form.subject,
+      message: form.message
+    });
     
-    form.name = '';
-    form.email = '';
-    form.subject = '';
-    form.message = '';
-    form.privacy = false;
+    if (response.data.success) {
+      form.name = '';
+      form.email = '';
+      form.subject = '';
+      form.message = '';
+      form.privacy = false;
+      
+      success.value = true;
+      
+      setTimeout(() => {
+        success.value = false;
+      }, 5000);
+    }
     
-    success.value = true;
+  } catch (err: any) {
+    console.error('Erreur lors de l\'envoi du message:', err);
     
-    setTimeout(() => {
-      success.value = false;
-    }, 5000);
-    
-  } catch (err) {
-    error.value = "Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.";
-    console.error(err);
+    if (err.response && err.response.data && err.response.data.message) {
+      error.value = err.response.data.message;
+    } else {
+      error.value = "Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.";
+    }
   } finally {
     loading.value = false;
   }

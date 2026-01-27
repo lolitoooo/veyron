@@ -193,6 +193,12 @@ const router = createRouter({
       meta: { title: 'Mot de passe oublié | VEYRON', guest: true }
     },
     {
+      path: '/reset-password/:token',
+      name: 'reset-password',
+      component: () => import('@/views/ResetPasswordView.vue'),
+      meta: { title: 'Réinitialiser le mot de passe | VEYRON', guest: true }
+    },
+    {
       path: '/account',
       component: MainLayout,
       meta: { requiresAuth: true },
