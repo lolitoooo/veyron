@@ -236,6 +236,58 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
+exports.activateAccount = async (req, res) => {
+  try {
+    const { password } = req.body;
+    const activationToken = req.params.token;
+
+    if (!password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Veuillez fournir un mot de passe'
+      });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'Le mot de passe doit contenir au moins 6 caractères'
+      });
+    }
+
+    const activationTokenHash = crypto
+      .createHash('sha256')
+      .update(activationToken)
+      .digest('hex');
+
+    const user = await User.findOne({
+      activationToken: activationTokenHash,
+      activationExpire: { $gt: Date.now() }
+    }).select('+password');
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Lien d\'activation invalide ou expiré'
+      });
+    }
+
+    user.password = password;
+    user.isActive = true;
+    user.activationToken = undefined;
+    user.activationExpire = undefined;
+    await user.save();
+
+    sendTokenResponse(user, 200, res);
+  } catch (err) {
+    console.error('Erreur lors de l\'activation du compte:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de l\'activation du compte'
+    });
+  }
+};
+
 const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
 

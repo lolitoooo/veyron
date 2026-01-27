@@ -272,10 +272,41 @@ const contactNotificationEmailTemplate = (name, email, subject, message) => {
   return getBaseTemplate(content);
 };
 
+const activateAccountEmailTemplate = (firstName, activationUrl) => {
+  const content = `
+    <h2 style="color: #333333; font-size: 24px; margin-bottom: 20px;">
+      Activez votre compte
+    </h2>
+    <p style="color: #666666; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+      Bonjour ${firstName},
+    </p>
+    <p style="color: #666666; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+      Merci pour votre commande ! Pour retrouver facilement vos commandes et suivre leur statut, vous pouvez activer votre compte en définissant un mot de passe.
+    </p>
+    <div style="text-align: center; margin: 30px 0;">
+      <a href="${activationUrl}"
+         style="background-color: #000000; color: #ffffff; padding: 15px 40px; text-decoration: none; border-radius: 5px; display: inline-block; font-size: 16px;">
+        Définir mon mot de passe
+      </a>
+    </div>
+    <p style="color: #999999; font-size: 14px; line-height: 1.6; margin-top: 30px;">
+      Ce lien est valable pendant 24 heures.
+    </p>
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin-top: 20px;">
+      <p style="color: #666666; font-size: 12px; margin: 0; word-break: break-all;">
+        Si le bouton ne fonctionne pas, copiez ce lien : <br>
+        <a href="${activationUrl}" style="color: #666666;">${activationUrl}</a>
+      </p>
+    </div>
+  `;
+  return getBaseTemplate(content);
+};
+
 module.exports = {
   welcomeEmailTemplate,
   resetPasswordEmailTemplate,
   orderConfirmationEmailTemplate,
   contactConfirmationEmailTemplate,
-  contactNotificationEmailTemplate
+  contactNotificationEmailTemplate,
+  activateAccountEmailTemplate
 };

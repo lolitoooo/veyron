@@ -1,11 +1,12 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const crypto = require('crypto');
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const PromoCode = require('../models/PromoCode');
 const ShippingConfig = require('../models/ShippingConfig');
 const invoiceController = require('./invoiceController');
 const { sendEmail } = require('../services/emailService');
-const { orderConfirmationEmailTemplate } = require('../templates/emailTemplates');
+const { orderConfirmationEmailTemplate, activateAccountEmailTemplate } = require('../templates/emailTemplates');
 const User = require('../models/User');
 
 
@@ -277,6 +278,255 @@ exports.createCheckoutSession = async (req, res) => {
   }
 };
 
+exports.createCheckoutSessionGuest = async (req, res) => {
+  try {
+    const { items, shippingAddress, billingAddress, promoCode, shippingMethod, relayPoint, email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email requis' });
+    }
+
+    const emailLower = String(email).toLowerCase().trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailLower)) {
+      return res.status(400).json({ message: 'Format d\'email invalide' });
+    }
+
+    const existingUser = await User.findOne({ email: emailLower });
+    if (existingUser) {
+      return res.status(400).json({
+        message: 'Cet email possède déjà un compte. Veuillez vous connecter pour finaliser votre commande.'
+      });
+    }
+
+    if (!items || items.length === 0) {
+      return res.status(400).json({ message: 'Aucun article dans le panier' });
+    }
+
+    const lineItems = [];
+    const orderItems = [];
+
+    for (const item of items) {
+      const product = await Product.findById(item.productId);
+
+      if (!product) {
+        return res.status(404).json({
+          message: `Produit non trouvé: ${item.productId}`
+        });
+      }
+
+      if (product.countInStock < item.quantity) {
+        return res.status(400).json({
+          message: `Stock insuffisant pour ${product.name}`
+        });
+      }
+
+      const priceHT = parseFloat((item.price / 1.2).toFixed(2));
+
+      orderItems.push({
+        name: item.name,
+        qty: item.quantity,
+        image: cleanImageUrl(item.image),
+        price: item.price,
+        priceHT: priceHT,
+        variant: item.variant,
+        variantId: item.variantId,
+        product: item.productId
+      });
+
+      lineItems.push({
+        price_data: {
+          currency: 'eur',
+          product_data: {
+            name: `VEYRON - ${item.name} - ${item.variant.size} - ${item.variant.color}`,
+            images: [],
+            metadata: {
+              productId: item.productId,
+              variantId: item.variantId
+            }
+          },
+          unit_amount: Math.round(item.price * 100),
+        },
+        quantity: item.quantity,
+      });
+    }
+
+    const subtotal = orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const subtotalHT = orderItems.reduce((sum, item) => sum + (item.priceHT * item.qty), 0);
+
+    const shippingConfig = await ShippingConfig.findOne({
+      name: shippingMethod || 'home_delivery',
+      enabled: true
+    });
+
+    if (!shippingConfig) {
+      return res.status(400).json({
+        message: 'Méthode de livraison non disponible'
+      });
+    }
+
+    const shippingPrice = subtotal >= shippingConfig.freeShippingThreshold
+      ? 0
+      : shippingConfig.price;
+
+    let promoCodeData = null;
+    let discountAmount = 0;
+    let discountPercentage = 0;
+
+    if (promoCode && promoCode.code) {
+      try {
+        const promoCodeDoc = await PromoCode.findOne({ code: promoCode.code.toUpperCase() });
+
+        if (promoCodeDoc && promoCodeDoc.isValid()) {
+          if (subtotal >= promoCodeDoc.minOrderValue) {
+            if (promoCodeDoc.discountType === 'percentage') {
+              discountPercentage = promoCodeDoc.discountValue;
+              discountAmount = parseFloat((subtotal * (discountPercentage / 100)).toFixed(2));
+
+              if (promoCodeDoc.maxDiscountAmount && discountAmount > promoCodeDoc.maxDiscountAmount) {
+                discountAmount = parseFloat(promoCodeDoc.maxDiscountAmount.toFixed(2));
+              }
+            } else if (promoCodeDoc.discountType === 'fixed') {
+              discountAmount = parseFloat(promoCodeDoc.discountValue.toFixed(2));
+              discountPercentage = parseFloat(((discountAmount / subtotal) * 100).toFixed(2));
+
+              if (discountAmount > subtotal) {
+                discountAmount = subtotal;
+                discountPercentage = 100;
+              }
+            }
+
+            promoCodeData = {
+              code: promoCodeDoc.code,
+              title: promoCodeDoc.title,
+              discountType: promoCodeDoc.discountType,
+              discountValue: promoCodeDoc.discountValue,
+              discountAmount: discountAmount,
+              promoCodeId: promoCodeDoc._id
+            };
+
+            promoCodeDoc.currentUses += 1;
+            await promoCodeDoc.save();
+          }
+        }
+      } catch (promoError) {
+        console.error('Erreur lors du traitement du code promo:', promoError);
+      }
+    }
+
+    const discountedSubtotal = parseFloat((subtotal - discountAmount).toFixed(2));
+    const totalPrice = parseFloat((discountedSubtotal + shippingPrice).toFixed(2));
+
+    const order = new Order({
+      guestEmail: emailLower,
+      orderItems,
+      shippingAddress,
+      billingAddress: billingAddress || shippingAddress,
+      paymentMethod: 'stripe',
+      shippingMethod: shippingMethod || 'home_delivery',
+      ...(shippingMethod === 'relay_point' && relayPoint && {
+        relayPoint: {
+          id: relayPoint.id,
+          carrier: relayPoint.carrier || 'Point Relais',
+          name: relayPoint.name,
+          address: relayPoint.address,
+          postalCode: relayPoint.postalCode,
+          city: relayPoint.city
+        }
+      }),
+      shippingPrice,
+      taxPrice: parseFloat((subtotal - subtotalHT).toFixed(2)),
+      subtotalHT: parseFloat(subtotalHT.toFixed(2)),
+      subtotalTTC: parseFloat(subtotal.toFixed(2)),
+      discountAmount,
+      discountPercentage,
+      promoCode: promoCodeData,
+      totalPrice,
+      status: 'pending'
+    });
+
+    order.generateInvoiceNumber();
+    const savedOrder = await order.save();
+
+    let discountOptions = {};
+
+    if (discountAmount > 0) {
+      const coupon = await stripe.coupons.create({
+        amount_off: Math.round(discountAmount * 100),
+        currency: 'eur',
+        name: promoCodeData ? promoCodeData.title : 'Réduction appliquée',
+        duration: 'once'
+      });
+
+      discountOptions = {
+        discounts: [{
+          coupon: coupon.id,
+        }]
+      };
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      line_items: lineItems,
+      customer_email: emailLower,
+      client_reference_id: savedOrder._id.toString(),
+      metadata: {
+        orderId: savedOrder._id.toString(),
+        guestEmail: emailLower,
+        shippingMethod: shippingMethod || 'home_delivery',
+        ...(shippingMethod === 'relay_point' && relayPoint && {
+          relayPointId: relayPoint.id,
+          relayPointName: relayPoint.name,
+          relayPointAddress: `${relayPoint.address}, ${relayPoint.postalCode} ${relayPoint.city}`
+        }),
+        ...(promoCodeData && { promoCode: promoCodeData.code }),
+        ...(discountAmount > 0 && { discountAmount: discountAmount.toString() }),
+      },
+      success_url: `${process.env.FRONTEND_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND_URL}/payment-failed?session_id={CHECKOUT_SESSION_ID}`,
+      ...discountOptions,
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: 'fixed_amount',
+            fixed_amount: {
+              amount: Math.round(shippingPrice * 100),
+              currency: 'eur',
+            },
+            display_name: shippingMethod === 'relay_point' && relayPoint
+              ? `Point Relais - ${relayPoint.name}`
+              : (shippingPrice > 0 ? 'Livraison standard' : 'Livraison gratuite'),
+            delivery_estimate: {
+              minimum: {
+                unit: 'business_day',
+                value: 3,
+              },
+              maximum: {
+                unit: 'business_day',
+                value: 5,
+              },
+            }
+          }
+        }
+      ]
+    });
+
+    savedOrder.stripeSessionId = session.id;
+    await savedOrder.save();
+
+    res.status(200).json({
+      success: true,
+      sessionId: session.id,
+      url: session.url,
+      orderId: savedOrder._id
+    });
+  } catch (err) {
+    console.error('Erreur Stripe (guest):', err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
 exports.getCheckoutSession = async (req, res) => {
   try {
     const { sessionId } = req.params;
@@ -303,7 +553,7 @@ exports.getCheckoutSession = async (req, res) => {
           id: session.id,
           status: 'paid',
           update_time: new Date().toISOString(),
-          email_address: req.user.email,
+          email_address: order.guestEmail || session.customer_details?.email,
           payment_intent: session.payment_intent || 'dev_mode_no_intent'
         };
         
@@ -388,6 +638,42 @@ exports.getCheckoutSession = async (req, res) => {
   }
 };
 
+exports.getCheckoutSessionPublic = async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    if (!session) {
+      return res.status(404).json({ message: 'Session de paiement non trouvée' });
+    }
+
+    const order = await Order.findOne({ stripeSessionId: sessionId });
+    if (!order) {
+      return res.status(404).json({ message: 'Commande non trouvée' });
+    }
+
+    res.status(200).json({
+      success: true,
+      session: {
+        id: session.id,
+        payment_status: session.payment_status,
+        status: session.status,
+        customer_email: session.customer_details?.email || session.customer_email
+      },
+      order: {
+        id: order._id,
+        invoiceNumber: order.invoiceNumber,
+        isPaid: order.isPaid,
+        status: order.status,
+        totalPrice: order.totalPrice
+      }
+    });
+  } catch (err) {
+    console.error('Erreur Stripe (public session):', err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
 exports.webhook = async (req, res) => {
   if (process.env.NODE_ENV === 'development' && !process.env.STRIPE_WEBHOOK_SECRET) {
     return res.status(200).json({ received: true, mode: 'development' });
@@ -401,9 +687,14 @@ exports.webhook = async (req, res) => {
     return res.status(400).send('Configuration du webhook manquante');
   }
 
+  if (!sig) {
+    console.error('Header stripe-signature manquant');
+    return res.status(400).send('Webhook Error: Missing stripe-signature header');
+  }
+
   try {
     event = stripe.webhooks.constructEvent(
-      req.rawBody, 
+      req.body,
       sig, 
       process.env.STRIPE_WEBHOOK_SECRET
     );
@@ -437,13 +728,96 @@ exports.webhook = async (req, res) => {
         await order.save();
         
         try {
-          const user = await User.findById(order.user);
-          if (user) {
+          const recipientEmail = order.user
+            ? (await User.findById(order.user))?.email
+            : (order.guestEmail || session.customer_details?.email);
+
+          console.log('[Stripe webhook] checkout.session.completed', {
+            sessionId: session.id,
+            orderId: order._id?.toString?.() || order._id,
+            orderUser: order.user ? order.user.toString?.() || order.user : null,
+            orderGuestEmail: order.guestEmail || null,
+            sessionCustomerEmail: session.customer_details?.email || null,
+            recipientEmail: recipientEmail || null
+          });
+
+          const templateUser = order.user
+            ? await User.findById(order.user)
+            : { firstName: order.shippingAddress?.firstName || 'Bonjour' };
+
+          if (recipientEmail && templateUser) {
+            console.log('[Stripe webhook] Envoi email confirmation commande ->', recipientEmail);
             await sendEmail({
-              to: user.email,
+              to: recipientEmail,
               subject: `Confirmation de commande #${order.invoiceNumber || order._id} - Veyron Paris`,
-              html: orderConfirmationEmailTemplate(order, user)
+              html: orderConfirmationEmailTemplate(order, templateUser)
             });
+          }
+
+          if (!order.user) {
+            const activationEmail = order.guestEmail || session.customer_details?.email;
+
+            console.log('[Stripe webhook] Activation email candidate ->', activationEmail || null);
+
+            if (activationEmail) {
+              const existingUser = await User.findOne({ email: activationEmail.toLowerCase().trim() });
+
+              console.log('[Stripe webhook] existingUser for activationEmail ->', existingUser ? existingUser._id?.toString?.() || existingUser._id : null);
+
+              if (!existingUser) {
+                const generatedPassword = crypto.randomBytes(16).toString('hex');
+                const newUser = new User({
+                  firstName: order.shippingAddress?.firstName || 'Client',
+                  lastName: order.shippingAddress?.lastName || 'Veyron',
+                  email: activationEmail.toLowerCase().trim(),
+                  password: generatedPassword,
+                  isActive: false
+                });
+
+                const token = newUser.getActivationToken();
+                await newUser.save();
+
+                order.user = newUser._id;
+                await order.save();
+
+                const activationUrl = `${process.env.FRONTEND_URL}/activate-account/${token}`;
+
+                console.log('[Stripe webhook] Envoi email activation compte ->', newUser.email);
+                await sendEmail({
+                  to: newUser.email,
+                  subject: 'Activez votre compte - Veyron Paris',
+                  html: activateAccountEmailTemplate(newUser.firstName, activationUrl)
+                });
+              } else {
+                if (!order.user) {
+                  order.user = existingUser._id;
+                  await order.save();
+                }
+
+                if (existingUser.isActive === false) {
+                  const now = Date.now();
+                  const tokenExpired = !existingUser.activationExpire || existingUser.activationExpire.getTime() < now;
+                  const tokenMissing = !existingUser.activationToken;
+
+                  const token = (tokenMissing || tokenExpired)
+                    ? existingUser.getActivationToken()
+                    : undefined;
+
+                  if (token) {
+                    await existingUser.save();
+                  }
+
+                  const activationUrl = `${process.env.FRONTEND_URL}/activate-account/${token || ''}`;
+
+                  console.log('[Stripe webhook] Re-envoi email activation compte ->', existingUser.email);
+                  await sendEmail({
+                    to: existingUser.email,
+                    subject: 'Activez votre compte - Veyron Paris',
+                    html: activateAccountEmailTemplate(existingUser.firstName, activationUrl)
+                  });
+                }
+              }
+            }
           }
         } catch (emailError) {
           console.error('Erreur lors de l\'envoi de l\'email de confirmation via webhook:', emailError);

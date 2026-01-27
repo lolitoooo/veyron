@@ -35,12 +35,14 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useCartStore } from '../stores/cart';
 import { useNotification } from '../composables/useNotification';
+import { useAuthStore } from '@/stores/auth';
 import api from '@/services/apiService';
 
 const route = useRoute();
 const router = useRouter();
 const cartStore = useCartStore();
-const { showNotification } = useNotification();
+const { success, warning, error: notifyError, info } = useNotification();
+const authStore = useAuthStore();
 
 const isLoading = ref(true);
 const orderNumber = ref('');
@@ -61,13 +63,15 @@ const formatPrice = (price: number): string => {
 };
 async function getOrderDetails(sessionId: string) {
   try {
-    const response = await api.get(`/stripe/checkout-session/${sessionId}`);
+    const response = authStore.isAuthenticated
+      ? await api.get(`/stripe/checkout-session/${sessionId}`)
+      : await api.get(`/stripe/checkout-session-public/${sessionId}`);
     
     if (response.data && response.data.success) {
       const { order } = response.data;
-      orderNumber.value = order.invoiceNumber || order._id;
-      orderDate.value = new Date(order.createdAt);
-      orderTotal.value = order.totalPrice;
+      orderNumber.value = order.invoiceNumber || order._id || order.id;
+      orderDate.value = order.createdAt ? new Date(order.createdAt) : null;
+      orderTotal.value = typeof order.totalPrice === 'number' ? order.totalPrice : 0;
       return true;
     }
     return false;
@@ -81,18 +85,12 @@ async function clearCartAfterPayment() {
   try {
     await cartStore.clearCart();
     
-    showNotification({
-      type: 'success',
-      message: 'Votre panier a été vidé après le paiement réussi'
-    });
+    success('Votre panier a été vidé après le paiement réussi');
     
     return true;
   } catch (error) {
     console.error('Erreur lors de la vidange du panier:', error);
-    showNotification({
-      type: 'warning',
-      message: 'Impossible de vider votre panier, veuillez rafraîchir la page'
-    });
+    warning('Impossible de vider votre panier, veuillez rafraîchir la page');
     return false;
   }
 }
@@ -107,31 +105,19 @@ onMounted(async () => {
       if (orderDetailsSuccess) {
         await clearCartAfterPayment();
         
-        showNotification({
-          type: 'success',
-          message: 'Votre commande a été traitée avec succès !'
-        });
+        success('Votre commande a été traitée avec succès !');
       } else {
-        showNotification({
-          type: 'warning',
-          message: 'Impossible de récupérer les détails de votre commande.'
-        });
+        warning('Impossible de récupérer les détails de votre commande.');
       }
     } catch (error) {
       console.error('Erreur lors du traitement de la page de succès:', error);
-      showNotification({
-        type: 'error',
-        message: 'Une erreur est survenue lors du traitement de votre paiement.'
-      });
+      notifyError('Une erreur est survenue lors du traitement de votre paiement.');
     } finally {
       isLoading.value = false;
     }
   } else {
     isLoading.value = false;
-    showNotification({
-      type: 'info',
-      message: 'Aucune information de session disponible.'
-    });
+    info('Aucune information de session disponible.');
     
     setTimeout(() => {
       router.push('/');

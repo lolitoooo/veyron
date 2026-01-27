@@ -3,8 +3,16 @@ const mongoose = require('mongoose');
 const OrderSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    required: false,
     ref: 'User'
+  },
+  guestEmail: {
+    type: String,
+    lowercase: true,
+    trim: true,
+    required: function () {
+      return !this.user;
+    }
   },
   orderItems: [
     {

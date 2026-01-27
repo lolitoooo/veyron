@@ -79,11 +79,14 @@ import { useRoute, useRouter } from 'vue-router';
 import { useOrderStore } from '../stores/order';
 import { useCartStore } from '../stores/cart';
 import type { Order } from '@/types/order';
+import { useAuthStore } from '@/stores/auth';
+import api from '@/services/apiService';
 
 const route = useRoute();
 const router = useRouter();
 const orderStore = useOrderStore();
 const cartStore = useCartStore();
+const authStore = useAuthStore();
 
 const isLoading = ref(true);
 const error = ref<string | null>(null);
@@ -101,7 +104,9 @@ onMounted(async () => {
   }
   
   try {
-    const result = await orderStore.getCheckoutSession(sessionId);
+    const result = authStore.isAuthenticated
+      ? await orderStore.getCheckoutSession(sessionId)
+      : await api.get(`/stripe/checkout-session-public/${sessionId}`).then(r => r.data);
     
     if (result && result.status === 'complete') {
       paymentSuccess.value = true;
@@ -109,6 +114,16 @@ onMounted(async () => {
       orderNumber.value = result.order._id;
       
       cartStore.$reset();
+    } else if (result && result.success && result.session && (result.session.status === 'complete' || result.session.payment_status === 'paid')) {
+      paymentSuccess.value = true;
+      order.value = {
+        _id: result.order.id,
+        totalPrice: result.order.totalPrice,
+        status: result.order.status,
+        createdAt: new Date().toISOString()
+      } as any;
+      orderNumber.value = result.order.invoiceNumber || result.order.id;
+      cartStore.clearCart();
     } else {
       paymentSuccess.value = false;
     }

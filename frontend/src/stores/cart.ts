@@ -52,6 +52,29 @@ export const useCartStore = defineStore('cart', () => {
     return items.value.reduce((count, item) => count + item.quantity, 0);
   });
 
+  function saveCartToLocalStorage() {
+    try {
+      localStorage.setItem('veyron_cart_items', JSON.stringify(items.value));
+    } catch (err) {
+      console.error('Erreur lors de la sauvegarde du panier en localStorage:', err);
+    }
+  }
+
+  function loadCartFromLocalStorage() {
+    try {
+      const saved = localStorage.getItem('veyron_cart_items');
+      if (!saved) return;
+
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        items.value = parsed;
+      }
+    } catch (err) {
+      console.error('Erreur lors du chargement du panier depuis localStorage:', err);
+      localStorage.removeItem('veyron_cart_items');
+    }
+  }
+
   async function ensureUserAuthenticated() {
     if (!authStore.isAuthenticated) {
       return false;
@@ -146,6 +169,8 @@ export const useCartStore = defineStore('cart', () => {
       
       if (await ensureUserAuthenticated()) {
         await saveCartToServer();
+      } else {
+        saveCartToLocalStorage();
       }
       
       return true;
@@ -177,6 +202,8 @@ export const useCartStore = defineStore('cart', () => {
           console.error('Erreur lors de la mise à jour de la quantité:', err);
           error.value = 'Erreur lors de la mise à jour de la quantité';
         }
+      } else {
+        saveCartToLocalStorage();
       }
     }
   }
@@ -202,6 +229,12 @@ export const useCartStore = defineStore('cart', () => {
           console.error('Erreur lors de la suppression de l\'article:', err);
           error.value = 'Erreur lors de la suppression de l\'article';
         }
+      } else {
+        if (items.value.length === 0) {
+          localStorage.removeItem('veyron_cart_items');
+        } else {
+          saveCartToLocalStorage();
+        }
       }
     }
   }
@@ -218,6 +251,8 @@ export const useCartStore = defineStore('cart', () => {
         console.error('Erreur lors du vidage du panier sur le serveur:', err);
         error.value = 'Erreur lors du vidage du panier';
       }
+    } else {
+      localStorage.removeItem('veyron_cart_items');
     }
     
     return true;
@@ -313,12 +348,16 @@ export const useCartStore = defineStore('cart', () => {
       if (authStore.isAuthenticated) {
         await fetchCartFromServer();
       } else {
-        items.value = [];
+        loadCartFromLocalStorage();
       }
       
     } catch (err) {
       console.error('Erreur lors de l\'initialisation du panier:', err);
-      items.value = [];
+      if (authStore.isAuthenticated) {
+        items.value = [];
+      } else {
+        loadCartFromLocalStorage();
+      }
     } finally {
       isLoading.value = false;
     }
@@ -328,7 +367,7 @@ export const useCartStore = defineStore('cart', () => {
     if (isAuthenticated) {
       await fetchCartFromServer();
     } else {
-      items.value = [];
+      loadCartFromLocalStorage();
     }
   });
   
@@ -337,6 +376,16 @@ export const useCartStore = defineStore('cart', () => {
       await fetchCartFromServer();
     }
   });
+
+  watch(items, () => {
+    if (!authStore.isAuthenticated) {
+      if (items.value.length === 0) {
+        localStorage.removeItem('veyron_cart_items');
+      } else {
+        saveCartToLocalStorage();
+      }
+    }
+  }, { deep: true });
 
   initCart();
 
@@ -372,13 +421,11 @@ export const useCartStore = defineStore('cart', () => {
   
   loadSavedPromoCode();
 
-  // Charger les configurations de livraison
   async function loadShippingConfigs() {
     try {
       const response = await api.get('/shipping');
       if (response.data && response.data.success) {
         shippingConfigs.value = response.data.data;
-        // Mettre à jour les frais de livraison avec la méthode actuelle
         await updateShippingCost();
       }
     } catch (err) {
@@ -386,7 +433,6 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
-  // Mettre à jour les frais de livraison
   async function updateShippingCost() {
     try {
       const response = await api.post('/shipping/calculate', {
@@ -400,7 +446,6 @@ export const useCartStore = defineStore('cart', () => {
       }
     } catch (err) {
       console.error('Erreur lors du calcul des frais de livraison:', err);
-      // Valeurs par défaut en cas d'erreur
       const config = shippingConfigs.value.find(c => c.name === shippingMethod.value);
       if (config) {
         shippingCost.value = subtotal.value >= config.freeShippingThreshold ? 0 : config.price;
@@ -409,14 +454,12 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
-  // Changer le mode de livraison
   function setShippingMethod(method: 'home_delivery' | 'relay_point') {
     shippingMethod.value = method;
     localStorage.setItem('veyron_shipping_method', method);
     updateShippingCost();
   }
 
-  // Charger le mode de livraison sauvegardé
   function loadSavedShippingMethod() {
     const saved = localStorage.getItem('veyron_shipping_method');
     if (saved && (saved === 'home_delivery' || saved === 'relay_point')) {
@@ -427,7 +470,6 @@ export const useCartStore = defineStore('cart', () => {
   loadSavedShippingMethod();
   loadShippingConfigs();
 
-  // Recalculer les frais de livraison quand le sous-total change
   watch(subtotal, () => {
     updateShippingCost();
   });

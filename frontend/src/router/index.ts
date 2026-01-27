@@ -74,31 +74,31 @@ const router = createRouter({
           path: 'cart',
           name: 'cart',
           component: () => import('@/views/CartView.vue'),
-          meta: { title: 'Panier | VEYRON', requiresAuth: true }
+          meta: { title: 'Panier | VEYRON' }
         },
         {
           path: 'checkout',
           name: 'checkout',
           component: () => import('@/views/CheckoutView.vue'),
-          meta: { title: 'Paiement | VEYRON', requiresAuth: true }
+          meta: { title: 'Paiement | VEYRON' }
         },
         {
           path: 'payment-result',
           name: 'payment-result',
           component: () => import('@/views/PaymentResultView.vue'),
-          meta: { title: 'Résultat du paiement | VEYRON', requiresAuth: true }
+          meta: { title: 'Résultat du paiement | VEYRON' }
         },
         {
           path: 'payment-success',
           name: 'payment-success',
           component: () => import('@/views/PaymentSuccessView.vue'),
-          meta: { title: 'Paiement réussi | VEYRON', requiresAuth: true }
+          meta: { title: 'Paiement réussi | VEYRON' }
         },
         {
           path: 'payment-failed',
           name: 'payment-failed',
           component: () => import('@/views/PaymentFailedView.vue'),
-          meta: { title: 'Paiement échoué | VEYRON', requiresAuth: true }
+          meta: { title: 'Paiement échoué | VEYRON' }
         },
         {
           path: 'search',
@@ -197,6 +197,12 @@ const router = createRouter({
       name: 'reset-password',
       component: () => import('@/views/ResetPasswordView.vue'),
       meta: { title: 'Réinitialiser le mot de passe | VEYRON', guest: true }
+    },
+    {
+      path: '/activate-account/:token',
+      name: 'activate-account',
+      component: () => import('@/views/ActivateAccountView.vue'),
+      meta: { title: 'Activer mon compte | VEYRON', guest: true }
     },
     {
       path: '/account',

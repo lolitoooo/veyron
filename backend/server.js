@@ -10,9 +10,11 @@ connectDB();
 
 const app = express();
 
-app.use(express.json());
-
+// IMPORTANT: Stripe webhook a besoin du body brut pour vérifier la signature.
+// Ce middleware doit être défini AVANT express.json().
 app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
+
+app.use(express.json());
 
 app.use(express.static('public'));
 

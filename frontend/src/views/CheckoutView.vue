@@ -16,6 +16,27 @@
       
       <div v-else>
         <h1>Finalisation de votre commande</h1>
+
+        <div v-if="!authStore.isAuthenticated" class="section">
+          <h2>Informations de contact</h2>
+          <div class="address-form">
+            <div class="form-group">
+              <label for="guest-email">Email</label>
+              <input
+                id="guest-email"
+                v-model="guestEmail"
+                type="email"
+                placeholder="ex: jean.dupont@gmail.com"
+                required
+              />
+            </div>
+            <p class="hint-text">
+              <strong>
+                Si cet email possède déjà un compte, vous devrez vous connecter avant de payer.
+              </strong>
+            </p>
+          </div>
+        </div>
         
         <div class="checkout-grid">
           <div class="checkout-details">
@@ -108,7 +129,7 @@
             <div v-if="cartStore.shippingMethod === 'home_delivery'" class="section">
               <h2>Adresse de livraison</h2>
               
-              <div v-if="userAddresses.length > 0" class="address-selector">
+              <div v-if="authStore.isAuthenticated && userAddresses.length > 0" class="address-selector">
                 <label for="shipping-address">Choisir une adresse de livraison:</label>
                 <select 
                   id="shipping-address" 
@@ -128,7 +149,7 @@
                 </select>
               </div>
               
-              <div v-if="shippingAddress" class="address-card">
+              <div v-if="authStore.isAuthenticated && shippingAddress" class="address-card">
                 <p><strong>{{ shippingAddress.name }}</strong></p>
                 <p>{{ shippingAddress.firstName }} {{ shippingAddress.lastName }}</p>
                 <p>{{ shippingAddress.addressLine1 }}</p>
@@ -139,9 +160,50 @@
                 <button @click="router.push({ name: 'addresses', query: { redirect: '/checkout' } })" class="btn-secondary btn-sm">Gérer mes adresses</button>
               </div>
               
-              <div v-else class="address-form">
+              <div v-else-if="authStore.isAuthenticated" class="address-form">
                 <p>Veuillez ajouter une adresse de livraison</p>
                 <button @click="router.push({ name: 'addresses', query: { redirect: '/checkout' } })" class="btn-secondary">Ajouter une adresse</button>
+              </div>
+
+              <div v-else class="address-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="guest-firstName">Prénom</label>
+                    <input id="guest-firstName" v-model="guestShippingAddress.firstName" type="text" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="guest-lastName">Nom</label>
+                    <input id="guest-lastName" v-model="guestShippingAddress.lastName" type="text" required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="guest-addressLine1">Adresse</label>
+                  <input id="guest-addressLine1" v-model="guestShippingAddress.addressLine1" type="text" required />
+                </div>
+                <div class="form-group">
+                  <label for="guest-addressLine2">Complément d'adresse</label>
+                  <input id="guest-addressLine2" v-model="guestShippingAddress.addressLine2" type="text" />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="guest-postalCode">Code postal</label>
+                    <input id="guest-postalCode" v-model="guestShippingAddress.postalCode" type="text" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="guest-city">Ville</label>
+                    <input id="guest-city" v-model="guestShippingAddress.city" type="text" required />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="guest-country">Pays</label>
+                    <input id="guest-country" v-model="guestShippingAddress.country" type="text" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="guest-phone">Téléphone</label>
+                    <input id="guest-phone" v-model="guestShippingAddress.phone" type="text" required />
+                  </div>
+                </div>
               </div>
             </div>
             
@@ -307,6 +369,18 @@ const isProcessing = ref(false);
 const error = ref<string | null>(null);
 const sameAddress = ref(true);
 
+const guestEmail = ref('');
+const guestShippingAddress = ref<any>({
+  firstName: '',
+  lastName: '',
+  addressLine1: '',
+  addressLine2: '',
+  city: '',
+  postalCode: '',
+  country: 'France',
+  phone: ''
+});
+
 const userAddresses = ref([]);
 const shippingAddress = ref(null);
 const billingAddressData = ref(null);
@@ -384,12 +458,17 @@ const billingAddress = computed(() => {
 });
 
 const hasCompleteShipping = computed(() => {
-  if (!selectedShippingAddressId.value) {
-    return false;
+  if (authStore.isAuthenticated) {
+    if (!selectedShippingAddressId.value) {
+      return false;
+    }
+    
+    const address = shippingAddress.value as any;
+    return !!(address && address.addressLine1 && address.city && address.postalCode);
   }
-  
-  const address = shippingAddress.value as any;
-  return !!(address && address.addressLine1 && address.city && address.postalCode);
+
+  const address = guestShippingAddress.value as any;
+  return !!(address && address.firstName && address.lastName && address.addressLine1 && address.city && address.postalCode && address.country && address.phone);
 });
 
 const subtotal = computed(() => {
@@ -413,7 +492,15 @@ const cartItems = computed(() => {
 });
 
 const canProceed = computed(() => {
-  return cartItems.value.length > 0 && hasCompleteShipping.value && !isLoading.value;
+  const hasCart = cartItems.value.length > 0;
+
+  if (authStore.isAuthenticated) {
+    return hasCart && hasCompleteShipping.value && !isLoading.value;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const hasValidGuestEmail = emailRegex.test(String(guestEmail.value).toLowerCase().trim());
+  return hasCart && hasCompleteShipping.value && hasValidGuestEmail && !isLoading.value;
 });
 
 const formatPrice = (price) => {
@@ -500,18 +587,11 @@ function loadSavedRelayPoint() {
 }
 
 onMounted(async () => {
-  if (!authStore.isAuthenticated) {
-    error.value = 'Vous devez être connecté pour accéder à la page de paiement';
-    router.push('/login?redirect=/checkout');
-    return;
-  }
-  
   isLoading.value = true;
   error.value = null;
   
   try {
-    
-    if (!authStore.user) {
+    if (authStore.isAuthenticated && !authStore.user) {
       await authStore.loadUser();
     }
     
@@ -522,7 +602,9 @@ onMounted(async () => {
       await cartStore.initCart();
     }
     
-    await fetchUserAddresses();
+    if (authStore.isAuthenticated) {
+      await fetchUserAddresses();
+    }
     
     if (cartStore.shippingMethod === 'relay_point') {
       loadSavedRelayPoint();
@@ -545,15 +627,14 @@ const goToCart = () => {
 };
 async function proceedToPayment() {
   if (!canProceed.value) {
-    if (cartItems.value.length > 0 && !hasCompleteShipping.value) {
-      router.push({ name: 'addresses', query: { redirect: '/checkout' } });
-    }
     return;
   }
   
-  if (!sameAddress.value && (!billingAddress.value || !billingAddress.value.addressLine1 || !billingAddress.value.city || !billingAddress.value.postalCode)) {
-    router.push({ name: 'addresses', query: { redirect: '/checkout' } });
-    return;
+  if (authStore.isAuthenticated) {
+    if (!sameAddress.value && (!billingAddress.value || !billingAddress.value.addressLine1 || !billingAddress.value.city || !billingAddress.value.postalCode)) {
+      router.push({ name: 'addresses', query: { redirect: '/checkout' } });
+      return;
+    }
   }
   
   isProcessing.value = true;
@@ -576,8 +657,10 @@ async function proceedToPayment() {
         variant: item.variant,
         variantId: item.variantId
       })),
-      shippingAddress: shippingAddress.value,
-      billingAddress: sameAddress.value ? shippingAddress.value : billingAddressData.value,
+      shippingAddress: authStore.isAuthenticated ? shippingAddress.value : guestShippingAddress.value,
+      billingAddress: authStore.isAuthenticated
+        ? (sameAddress.value ? shippingAddress.value : billingAddressData.value)
+        : guestShippingAddress.value,
       shippingMethod: cartStore.shippingMethod,
       shippingCost: shippingCost.value,
       ...(cartStore.shippingMethod === 'relay_point' && selectedRelayPoint.value && {
@@ -601,8 +684,10 @@ async function proceedToPayment() {
         }
       })
     };
-    
-    const response = await api.post('/stripe/create-checkout-session', orderData);
+
+    const response = authStore.isAuthenticated
+      ? await api.post('/stripe/create-checkout-session', orderData)
+      : await api.post('/stripe/create-checkout-session-guest', { ...orderData, email: guestEmail.value });
     
     if (response.data && response.data.url) {
       window.location.href = response.data.url;
@@ -625,6 +710,57 @@ async function proceedToPayment() {
   overflow-x: hidden;
   box-sizing: border-box;
 }
+
+ .address-form {
+   display: flex;
+   flex-direction: column;
+   gap: 1rem;
+ }
+
+ .form-row {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 1rem;
+ }
+
+ .form-group {
+   display: flex;
+   flex-direction: column;
+ }
+
+ .form-group label {
+   display: block;
+   margin-bottom: 0.5rem;
+   font-size: 0.9rem;
+   color: #555;
+ }
+
+ .form-group input,
+ .form-group select,
+ .form-group textarea {
+   width: 100%;
+   padding: 0.8rem;
+   border: 1px solid #ddd;
+   background-color: #f9f9f9;
+   font-size: 1rem;
+   transition: border-color 0.3s, box-shadow 0.3s;
+   border-radius: 4px;
+ }
+
+ .form-group input:focus,
+ .form-group select:focus,
+ .form-group textarea:focus {
+   outline: none;
+   border-color: #999;
+   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+ }
+
+ .hint-text {
+   margin: 0;
+   color: #666;
+   font-size: 0.9rem;
+   line-height: 1.4;
+ }
 
 .checkout-view * {
   box-sizing: border-box;
@@ -707,6 +843,10 @@ h2 {
   .checkout-view {
     padding: 1rem 0;
     overflow-x: hidden;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
   }
 
   .container {
