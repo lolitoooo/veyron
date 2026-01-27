@@ -245,6 +245,12 @@ const router = createRouter({
           component: () => import('@/views/account/WishlistView.vue'),
           meta: { title: 'Mes favoris | VEYRON', breadcrumb: 'Mes favoris' }
         },
+        {
+          path: 'loyalty',
+          name: 'loyalty',
+          component: () => import('@/views/account/LoyaltyView.vue'),
+          meta: { title: 'Ma Fidélité | VEYRON', breadcrumb: 'Ma Fidélité' }
+        },
       ]
     },
     {
@@ -335,6 +341,12 @@ const router = createRouter({
           name: 'admin-shipping',
           component: () => import('@/views/admin/ShippingConfigView.vue'),
           meta: { title: 'Configuration de livraison | Admin VEYRON', breadcrumb: 'Livraison' }
+        },
+        {
+          path: 'loyalty-config',
+          name: 'admin-loyalty-config',
+          component: () => import('@/views/admin/LoyaltyConfigView.vue'),
+          meta: { title: 'Configuration Fidélité | Admin VEYRON', breadcrumb: 'Fidélité' }
         },
         {
           path: 'users/:id/delete',

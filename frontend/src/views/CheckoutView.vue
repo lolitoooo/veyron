@@ -302,6 +302,49 @@
                 </div>
               </div>
               
+              <div v-if="authStore.isAuthenticated && cashbackAvailable > 0" class="cashback-section">
+                <div class="cashback-header">
+                  <h3>💰 Ma Cagnotte</h3>
+                  <label class="cashback-toggle">
+                    <input type="checkbox" v-model="useCashback" @change="loadCashbackInfo" />
+                    <span class="toggle-label">Utiliser ma cagnotte</span>
+                  </label>
+                </div>
+                <div class="cashback-info-box">
+                  <div class="cashback-balance">
+                    <span>Cagnotte disponible :</span>
+                    <strong>{{ formatPrice(cashbackAvailable) }}</strong>
+                  </div>
+                  <div v-if="useCashback && cashbackToUse > 0" class="cashback-usage">
+                    <i class="material-icons">check_circle</i>
+                    <span>{{ formatPrice(cashbackToUse) }} seront utilisés sur cette commande</span>
+                  </div>
+                  <div v-else-if="!useCashback" class="cashback-disabled">
+                    <i class="material-icons">savings</i>
+                    <span>Votre cagnotte sera conservée pour une prochaine commande</span>
+                  </div>
+                  <p class="cashback-note">
+                    <i class="material-icons">info</i>
+                    <span v-if="useCashback">Maximum 30% du panier peut être payé avec la cagnotte</span>
+                    <span v-else>Vous gagnerez du cashback supplémentaire sur cet achat</span>
+                  </p>
+                </div>
+              </div>
+              
+              <div v-else-if="authStore.isAuthenticated && cashbackAvailable === 0" class="cashback-section">
+                <h3>💰 Ma Cagnotte</h3>
+                <div class="cashback-info-box">
+                  <div class="cashback-empty">
+                    <i class="material-icons">info</i>
+                    <span>Vous gagnerez du cashback sur cet achat !</span>
+                  </div>
+                  <p class="cashback-note">
+                    <i class="material-icons">info</i>
+                    <span>Gagnez du cashback sur vos achats</span>
+                  </p>
+                </div>
+              </div>
+              
               <div class="summary-totals">
                 <div class="summary-row">
                   <span>Sous-total HT:</span>
@@ -319,6 +362,10 @@
                   <span>Réduction:</span>
                   <span>-{{ formatPrice(cartStore.discountAmount) }}</span>
                 </div>
+                <div v-if="authStore.isAuthenticated && cashbackToUse > 0" class="summary-row cashback">
+                  <span>Cashback utilisé:</span>
+                  <span>-{{ formatPrice(cashbackToUse) }}</span>
+                </div>
                 <div class="summary-row">
                   <span>Frais de livraison:</span>
                   <span>{{ formatPrice(shippingCost) }}</span>
@@ -327,8 +374,14 @@
                   <span>Total:</span>
                   <span>{{ formatPrice(totalWithDiscount) }}</span>
                 </div>
-                <div v-if="cartStore.promoCode" class="summary-savings">
-                  <p>Vous économisez {{ formatPrice(cartStore.discountAmount) }} !</p>
+                <div v-if="cartStore.promoCode || cashbackToUse > 0" class="summary-savings">
+                  <p v-if="cartStore.promoCode">Vous économisez {{ formatPrice(cartStore.discountAmount) }} !</p>
+                  <p v-if="authStore.isAuthenticated && cashbackToUse > 0" class="cashback-info">
+                    💰 {{ formatPrice(cashbackToUse) }} de cashback appliqué automatiquement
+                  </p>
+                  <p v-if="authStore.isAuthenticated && cashbackAvailable > cashbackToUse" class="cashback-remaining">
+                    Cagnotte restante : {{ formatPrice(cashbackAvailable - cashbackToUse) }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -391,6 +444,10 @@ const relaySearchQuery = ref('');
 const relayPoints = ref([]);
 const selectedRelayPoint = ref(null);
 const isLoadingRelayPoints = ref(false);
+
+const cashbackAvailable = ref(0);
+const cashbackToUse = ref(0);
+const useCashback = ref(true);
 
 const discountAmount = computed(() => cartStore.discountAmount || 0);
 
@@ -484,7 +541,7 @@ const shippingCost = computed(() => {
 });
 
 const totalWithDiscount = computed(() => {
-  return subtotal.value - discountAmount.value + shippingCost.value;
+  return subtotal.value - discountAmount.value - cashbackToUse.value + shippingCost.value;
 });
 
 const cartItems = computed(() => {
@@ -575,6 +632,49 @@ function selectRelayPoint(point: any) {
   localStorage.setItem('veyron_selected_relay_point', JSON.stringify(point));
 }
 
+async function loadCashbackInfo() {
+  if (!authStore.isAuthenticated || !authStore.user) {
+    cashbackAvailable.value = 0;
+    cashbackToUse.value = 0;
+    return;
+  }
+
+  try {
+    const balanceResponse = await api.get('/loyalty/balance');
+    if (balanceResponse.data && balanceResponse.data.success) {
+      cashbackAvailable.value = balanceResponse.data.data.cashbackBalance || 0;
+    }
+
+    if (useCashback.value) {
+      const subtotalAfterPromo = subtotal.value - discountAmount.value;
+      if (subtotalAfterPromo > 0 && cashbackAvailable.value > 0) {
+        const previewResponse = await api.post('/loyalty/preview-cashback', {
+          orderItemsTotal: subtotalAfterPromo
+        });
+        
+        if (previewResponse.data && previewResponse.data.success) {
+          cashbackToUse.value = previewResponse.data.data.maxCashbackUsable || 0;
+        }
+      } else {
+        cashbackToUse.value = 0;
+      }
+    } else {
+      cashbackToUse.value = 0;
+    }
+  } catch (err: any) {
+    console.error('Erreur lors du chargement du cashback:', err);
+    if (err.response?.status === 404 || err.response?.status === 401) {
+      cashbackAvailable.value = 0;
+      cashbackToUse.value = 0;
+    }
+  }
+}
+
+function toggleCashback() {
+  useCashback.value = !useCashback.value;
+  loadCashbackInfo();
+}
+
 function loadSavedRelayPoint() {
   const saved = localStorage.getItem('veyron_selected_relay_point');
   if (saved) {
@@ -604,6 +704,7 @@ onMounted(async () => {
     
     if (authStore.isAuthenticated) {
       await fetchUserAddresses();
+      await loadCashbackInfo();
     }
     
     if (cartStore.shippingMethod === 'relay_point') {
@@ -682,7 +783,8 @@ async function proceedToPayment() {
           promoCodeId: cartStore.promoCode.promoCodeId,
           discountAmount: cartStore.discountAmount
         }
-      })
+      }),
+      useCashback: useCashback.value
     };
 
     const response = authStore.isAuthenticated
@@ -1064,12 +1166,31 @@ h2 {
   color: #d32f2f;
 }
 
+.summary-row.cashback {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
 .summary-savings {
   margin-top: 0.5rem;
   font-size: 0.9rem;
   color: #2e7d32;
   font-weight: 500;
   text-align: right;
+}
+
+.summary-savings p {
+  margin: 0.25rem 0;
+}
+
+.cashback-info {
+  color: #2e7d32;
+}
+
+.cashback-remaining {
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 400;
 }
 
 .promo-code-section {
@@ -1081,6 +1202,130 @@ h2 {
 .promo-code-section h3 {
   font-size: 1rem;
   margin-bottom: 0.75rem;
+}
+
+.cashback-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.cashback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.cashback-section h3 {
+  font-size: 1rem;
+  margin: 0;
+  color: #2e7d32;
+}
+
+.cashback-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.cashback-toggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.toggle-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.cashback-info-box {
+  background-color: #f1f8f4;
+  border: 1px solid #c8e6c9;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.cashback-balance {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.cashback-balance strong {
+  color: #2e7d32;
+  font-size: 1.25rem;
+}
+
+.cashback-usage {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: #fff;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.cashback-usage i {
+  font-size: 1.25rem;
+  color: #2e7d32;
+}
+
+.cashback-empty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: #fff;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.cashback-empty i {
+  font-size: 1.25rem;
+  color: #1976d2;
+}
+
+.cashback-disabled {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: #fff;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.cashback-disabled i {
+  font-size: 1.25rem;
+  color: #666;
+}
+
+.cashback-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+}
+
+.cashback-note i {
+  font-size: 1rem;
+  color: #666;
 }
 
 .promo-code-form {

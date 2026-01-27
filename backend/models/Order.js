@@ -169,7 +169,12 @@ const OrderSchema = new mongoose.Schema({
     default: 0
   },
   discountPercentage: {
-    type: Number
+    type: Number,
+    default: 0
+  },
+  cashbackUsed: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamps: true

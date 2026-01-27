@@ -68,6 +68,7 @@ app.use('/api/wishlist', require('./routes/wishlist'));
 app.use('/api/promo-codes', require('./routes/promoCode'));
 app.use('/api/shipping', require('./routes/shipping'));
 app.use('/api/contact', require('./routes/contact'));
+app.use('/api/loyalty', require('./routes/loyalty'));
 
 app.use('/uploads', express.static('public/uploads'));
 app.use('/images', express.static('public/images'));

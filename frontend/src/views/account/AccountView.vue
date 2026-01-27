@@ -41,6 +41,17 @@
             <p>Articles favoris</p>
           </div>
         </div>
+        
+        <div class="summary-card loyalty-card" @click="goToLoyalty">
+          <div class="card-icon loyalty-icon">
+            <img :src="getBadgeImage(loyaltyRank)" :alt="`Badge ${loyaltyRank}`" class="badge-image" />
+          </div>
+          <div class="card-content">
+            <h3>{{ loyaltyRank }}</h3>
+            <p>Rang de fidélité</p>
+            <small v-if="loyaltyCashback > 0">{{ formatPrice(loyaltyCashback) }} disponible</small>
+          </div>
+        </div>
       </template>
     </div>
     
@@ -141,16 +152,20 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useWishlistStore } from '@/stores/wishlist';
 import api from '@/services/apiService';
 import AccountLayout from '@/layouts/AccountLayout.vue';
 
+const router = useRouter();
 const authStore = useAuthStore();
 const wishlistStore = useWishlistStore();
 
 const orders = ref(null);
 const loading = ref(false);
+const loyaltyRank = ref('Bronze');
+const loyaltyCashback = ref(0);
 
 const pendingOrdersCount = computed(() => {
   if (!orders.value) return 0;
@@ -212,11 +227,33 @@ const loadOrders = async () => {
   }
 };
 
+const loadLoyaltyData = async () => {
+  try {
+    const response = await api.get('/loyalty/balance');
+    if (response.data && response.data.success) {
+      loyaltyRank.value = response.data.data.rank || 'Bronze';
+      loyaltyCashback.value = response.data.data.cashbackBalance || 0;
+    }
+  } catch (error) {
+    console.error('Erreur lors du chargement des données de fidélité:', error);
+  }
+};
+
+const goToLoyalty = () => {
+  router.push({ name: 'loyalty' });
+};
+
+const getBadgeImage = (rank: string): string => {
+  const rankLower = rank.toLowerCase();
+  return `/images/badges/${rankLower}.png`;
+};
+
 onMounted(async () => {
   try {
     if (authStore.user) {      
       await loadOrders();
       await wishlistStore.fetchWishlist();
+      await loadLoyaltyData();
     }
   } catch (error) {
     console.error('Erreur lors du chargement des données:', error);
@@ -278,6 +315,38 @@ onMounted(async () => {
 .card-content p {
   color: #6c757d;
   margin: 0;
+}
+
+.card-content small {
+  display: block;
+  color: #2e7d32;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.loyalty-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.loyalty-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.loyalty-icon {
+  background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+}
+
+.loyalty-icon i {
+  color: #7b1fa2;
+}
+
+.badge-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 5px;
 }
 
 .recent-orders {

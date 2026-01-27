@@ -27,6 +27,10 @@
           <i class="material-icons">favorite</i>
           <span>Mes favoris</span>
         </router-link>
+        <router-link :to="{ name: 'loyalty' }" class="nav-item" active-class="active" @click="closeMobileMenu">
+          <i class="material-icons">loyalty</i>
+          <span>Mon loyalty</span>
+        </router-link>
         <a href="#" class="nav-item" @click.prevent="logout">
           <i class="material-icons">logout</i>
           <span>Déconnexion</span>

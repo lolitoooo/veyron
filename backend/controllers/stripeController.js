@@ -36,7 +36,7 @@ const cleanImageUrl = (url) => {
 
 exports.createCheckoutSession = async (req, res) => {
   try {
-    const { items, shippingAddress, billingAddress, promoCode, shippingMethod, relayPoint } = req.body;
+    const { items, shippingAddress, billingAddress, promoCode, shippingMethod, relayPoint, useCashback } = req.body;
     
     if (!items || items.length === 0) {
       return res.status(400).json({ message: 'Aucun article dans le panier' });
@@ -155,7 +155,25 @@ exports.createCheckoutSession = async (req, res) => {
       }
     }
     
-    const discountedSubtotal = parseFloat((subtotal - discountAmount).toFixed(2));
+    let cashbackUsed = 0;
+    if (useCashback !== false) {
+      try {
+        const loyaltyService = require('../services/loyaltyService');
+        const subtotalAfterPromo = subtotal - discountAmount;
+        const maxCashback = await loyaltyService.calculateMaxCashbackUsage(req.user.id, subtotalAfterPromo);
+        cashbackUsed = maxCashback;
+        
+        if (cashbackUsed > 0) {
+          console.log(`[Checkout] Cashback appliqué: ${cashbackUsed}€ pour user ${req.user.id}`);
+        }
+      } catch (cashbackError) {
+        console.error('[Checkout] Erreur calcul cashback:', cashbackError);
+      }
+    } else {
+      console.log(`[Checkout] Cashback désactivé par l'utilisateur`);
+    }
+    
+    const discountedSubtotal = parseFloat((subtotal - discountAmount - cashbackUsed).toFixed(2));
     const totalPrice = parseFloat((discountedSubtotal + shippingPrice).toFixed(2));
 
     const order = new Order({
@@ -181,6 +199,7 @@ exports.createCheckoutSession = async (req, res) => {
       subtotalTTC: parseFloat(subtotal.toFixed(2)),
       discountAmount,
       discountPercentage,
+      cashbackUsed,
       promoCode: promoCodeData,
       totalPrice,
       status: 'pending'
@@ -199,13 +218,22 @@ exports.createCheckoutSession = async (req, res) => {
 
     let discountOptions = {};
     
-    if (discountAmount > 0) {
-      const discountNote = `Réduction${promoCodeData ? ` (${promoCodeData.code})` : ''}: ${discountAmount.toFixed(2)} €`;
+    const totalDiscount = discountAmount + cashbackUsed;
+    
+    if (totalDiscount > 0) {
+      let discountName = '';
+      if (discountAmount > 0 && cashbackUsed > 0) {
+        discountName = `Réduction (${promoCodeData?.code || 'Promo'}) + Cashback`;
+      } else if (discountAmount > 0) {
+        discountName = promoCodeData ? promoCodeData.title : 'Réduction appliquée';
+      } else if (cashbackUsed > 0) {
+        discountName = 'Cashback fidélité';
+      }
       
       const coupon = await stripe.coupons.create({
-        amount_off: Math.round(discountAmount * 100),
+        amount_off: Math.round(totalDiscount * 100),
         currency: 'eur',
-        name: promoCodeData ? promoCodeData.title : 'Réduction appliquée',
+        name: discountName,
         duration: 'once'
       });
       
@@ -726,6 +754,30 @@ exports.webhook = async (req, res) => {
         }
         
         await order.save();
+        
+        if (order.user) {
+          try {
+            const loyaltyService = require('../services/loyaltyService');
+            const orderItemsTotal = order.orderItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            await loyaltyService.creditCashbackAndXp(
+              order.user,
+              orderItemsTotal,
+              order._id,
+              session.id
+            );
+            
+            if (order.cashbackUsed && order.cashbackUsed > 0) {
+              await loyaltyService.spendCashback(
+                order.user,
+                order.cashbackUsed,
+                order._id,
+                session.id
+              );
+            }
+          } catch (loyaltyError) {
+            console.error('[Stripe webhook] Erreur lors du crédit cashback/XP:', loyaltyError);
+          }
+        }
         
         try {
           const recipientEmail = order.user
