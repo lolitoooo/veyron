@@ -121,12 +121,22 @@
         
         <div class="cookie-manager">
           <h3>Gérer mes préférences de cookies</h3>
-          <button class="cookie-btn">Gérer mes cookies</button>
+          <button @click="openCookieSettings" class="cookie-btn">Gérer mes cookies</button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useCookieStore } from '@/stores/cookies'
+
+const cookieStore = useCookieStore()
+
+const openCookieSettings = () => {
+  cookieStore.openSettings()
+}
+</script>
 
 <style scoped>
 .cookies-view {

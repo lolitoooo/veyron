@@ -125,6 +125,12 @@ const router = createRouter({
           meta: { title: 'Conditions générales | VEYRON', breadcrumb: 'Conditions générales' }
         },
         {
+          path: 'cgu',
+          name: 'cgu',
+          component: () => import('@/views/legal/CGUView.vue'),
+          meta: { title: 'Conditions générales d\'utilisation | VEYRON', breadcrumb: 'CGU' }
+        },
+        {
           path: 'privacy',
           name: 'privacy',
           component: () => import('@/views/legal/PrivacyView.vue'),

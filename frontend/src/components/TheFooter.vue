@@ -46,6 +46,7 @@
         </div>
         <ul :class="{ 'expanded': openSections.legal }">
           <li><router-link to="/terms">Conditions générales</router-link></li>
+          <li><router-link to="/cgu">CGU</router-link></li>
           <li><router-link to="/privacy">Politique de confidentialité</router-link></li>
           <li><router-link to="/cookies">Politique des cookies</router-link></li>
           <li><router-link to="/legal">Mentions légales</router-link></li>
@@ -54,7 +55,13 @@
     </div>
     
     <div class="footer-bottom">
-      <p>&copy; {{ currentYear }} VEYRON. Tous droits réservés.</p>
+      <div class="footer-bottom-left">
+        <p>&copy; {{ currentYear }} VEYRON. Tous droits réservés.</p>
+        <button @click="openCookieSettings" class="cookie-settings-link">
+          <i class="material-icons">cookie</i>
+          Gérer mes cookies
+        </button>
+      </div>
       <div class="social-icons desktop-social">
         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -67,8 +74,11 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue';
+import { useCookieStore } from '@/stores/cookies';
 
 const currentYear = new Date().getFullYear();
+const cookieStore = useCookieStore();
+
 const openSections = reactive({
   about: false,
   service: false,
@@ -77,6 +87,10 @@ const openSections = reactive({
 
 const toggleSection = (section: string) => {
   openSections[section] = !openSections[section];
+};
+
+const openCookieSettings = () => {
+  cookieStore.openSettings();
 };
 </script>
 
@@ -154,6 +168,40 @@ const toggleSection = (section: string) => {
   align-items: center;
   font-size: 0.8rem;
   color: #666;
+}
+
+.footer-bottom-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.footer-bottom-left p {
+  margin: 0;
+}
+
+.cookie-settings-link {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  transition: color 0.3s ease;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.cookie-settings-link:hover {
+  color: #000;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.cookie-settings-link i {
+  font-size: 16px;
 }
 
 .social-icons {
@@ -234,6 +282,11 @@ const toggleSection = (section: string) => {
     gap: 1rem;
     padding-top: 1.5rem;
     text-align: center;
+  }
+
+  .footer-bottom-left {
+    flex-direction: column;
+    gap: 0.75rem;
   }
   
   .desktop-social {

@@ -16,7 +16,14 @@ app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
 
 app.use(express.json());
 
-app.use(express.static('public'));
+const cacheOptions = {
+  maxAge: '365d',
+  etag: true,
+  lastModified: true,
+  immutable: true
+};
+
+app.use(express.static('public', cacheOptions));
 
 const ensureDirectoriesExist = require('./utils/ensureDirs');
 ensureDirectoriesExist();
@@ -70,8 +77,8 @@ app.use('/api/shipping', require('./routes/shipping'));
 app.use('/api/contact', require('./routes/contact'));
 app.use('/api/loyalty', require('./routes/loyalty'));
 
-app.use('/uploads', express.static('public/uploads'));
-app.use('/images', express.static('public/images'));
+app.use('/uploads', express.static('public/uploads', cacheOptions));
+app.use('/images', express.static('public/images', cacheOptions));
 
 app.get('/', (req, res) => {
   res.send('API VEYRON en ligne');

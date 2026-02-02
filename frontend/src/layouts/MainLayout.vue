@@ -6,6 +6,8 @@
       <RouterView />
     </main>
     <TheFooter />
+    <CookieBanner />
+    <CookieSettings />
   </div>
 </template>
 
@@ -15,6 +17,8 @@ import { computed } from 'vue';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
 import Breadcrumb from '@/components/Breadcrumb.vue';
+import CookieBanner from '@/components/CookieBanner.vue';
+import CookieSettings from '@/components/CookieSettings.vue';
 
 const route = useRoute();
 const isHomePage = computed(() => route.path === '/');
