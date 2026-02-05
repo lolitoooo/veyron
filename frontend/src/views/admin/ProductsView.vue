@@ -84,16 +84,16 @@
               <span :class="getStockClass(product.stock)">{{ product.stock }}</span>
             </td>
             <td>
-              <span :class="['status-badge', product.active ? 'status-active' : 'status-inactive']">
-                {{ product.active ? 'Actif' : 'Inactif' }}
+              <span :class="['status-badge', product.isActive ? 'status-active' : 'status-inactive']">
+                {{ product.isActive ? 'Actif' : 'Inactif' }}
               </span>
             </td>
             <td class="actions">
               <button class="btn-icon" @click="editProduct(product._id)" title="Modifier">
                 <span class="material-icons">edit</span>
               </button>
-              <button class="btn-icon" @click="toggleProductStatus(product)" :title="product.active ? 'Désactiver' : 'Activer'">
-                <span class="material-icons">{{ product.active ? 'visibility_off' : 'visibility' }}</span>
+              <button class="btn-icon" @click="toggleProductStatus(product)" :title="product.isActive ? 'Archiver' : 'Activer'">
+                <span class="material-icons">{{ product.isActive ? 'visibility' : 'visibility_off' }}</span>
               </button>
               <button class="btn-icon delete" @click="confirmDelete(product)" title="Supprimer">
                 <span class="material-icons">delete</span>
@@ -158,7 +158,7 @@ interface Product {
   price: number;
   category: string;
   stock: number;
-  active: boolean;
+  isActive: boolean;
   discount: number;
   images: Array<{ url: string, alt?: string, isMain?: boolean }>;
   createdAt: string;
@@ -280,7 +280,7 @@ const fetchProducts = async () => {
   error.value = '';
   
   try {
-    const response = await api.get('/products');
+    const response = await api.get('/products?showAll=true');
     
     if (response.data && Array.isArray(response.data)) {
       products.value = response.data;
@@ -330,9 +330,9 @@ const editProduct = (productId: string) => {
 
 const toggleProductStatus = async (product: Product) => {
   try {
-    await api.put(`/products/${product._id}`, { isActive: !product.active });
+    await api.put(`/products/${product._id}`, { isActive: !product.isActive });
     
-    product.active = !product.active;
+    product.isActive = !product.isActive;
     
   } catch (err: any) {
     console.error('Erreur lors de la modification du statut:', err);

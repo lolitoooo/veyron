@@ -9,13 +9,20 @@ exports.searchProducts = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Veuillez fournir un terme de recherche' });
     }
     
-    const products = await Product.find({
+    const searchQuery = {
       $or: [
         { name: { $regex: q, $options: 'i' } },
         { description: { $regex: q, $options: 'i' } },
         { 'variants.name': { $regex: q, $options: 'i' } }
       ]
-    }).populate('category', 'name');
+    };
+    
+    const isAdmin = req.user && req.user.role === 'admin';
+    if (!isAdmin) {
+      searchQuery.isActive = true;
+    }
+    
+    const products = await Product.find(searchQuery).populate('category', 'name');
     
     res.json({ success: true, products });
   } catch (err) {
@@ -31,8 +38,12 @@ exports.getProducts = async (req, res) => {
     const startIndex = (page - 1) * limit;
     
     const queryObj = { ...req.query };
-    const excludedFields = ['page', 'limit', 'sort', 'fields', 'q'];
+    const excludedFields = ['page', 'limit', 'sort', 'fields', 'q', 'showAll'];
     excludedFields.forEach(field => delete queryObj[field]);
+    
+    if (req.query.showAll !== 'true') {
+      queryObj.isActive = true;
+    }
     
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
