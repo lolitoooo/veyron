@@ -140,8 +140,7 @@ const handleLogin = async () => {
 }
 
 .auth-form-container {
-  width: 100%;
-  max-width: 500px;
+  width: 500px;
   background-color: #fff;
   padding: 3rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
@@ -236,10 +235,19 @@ input:focus {
 .remember-me {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
-.remember-me input {
-  margin-right: 0.5rem;
+.remember-me input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  cursor: pointer;
+}
+
+.remember-me label {
+  margin: 0;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
 
 .forgot-password {
