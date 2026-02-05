@@ -104,7 +104,7 @@
           <h2>14. Contact</h2>
           <p>Pour toute question relative aux présentes CGV ou à une commande, le Client peut contacter notre service client :</p>
           <ul>
-            <li>Par email : service-client@veyron.com</li>
+            <li>Par email : contact@veyron-paris.com</li>
             <li>Par téléphone : +33 (0)1 23 45 67 89</li>
             <li>Par courrier : VEYRON - Service Client, 123 Avenue de la Mode, 75008 Paris, France</li>
           </ul>

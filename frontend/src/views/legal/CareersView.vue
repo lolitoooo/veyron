@@ -116,13 +116,13 @@
             </div>
           </div>
           
-          <p class="spontaneous">Vous ne trouvez pas le poste qui vous correspond ? Envoyez-nous une candidature spontanée à <strong>careers@veyron.com</strong></p>
+          <p class="spontaneous">Vous ne trouvez pas le poste qui vous correspond ? Envoyez-nous une candidature spontanée à <strong>contact@veyron-paris.com</strong></p>
         </section>
         
         <section class="internships">
           <h2>Stages et Alternances</h2>
           <p>Nous proposons régulièrement des opportunités de stage et d'alternance dans tous nos départements. Ces expériences sont une excellente porte d'entrée pour rejoindre notre équipe.</p>
-          <p>Pour postuler, envoyez votre CV et lettre de motivation à <strong>internships@veyron.com</strong></p>
+          <p>Pour postuler, envoyez votre CV et lettre de motivation à <strong>contact@veyron-paris.com</strong></p>
         </section>
         
         <section class="process">
@@ -141,7 +141,7 @@
         <section class="contact">
           <h2>Contact</h2>
           <p>Pour toute question concernant nos opportunités de carrière, n'hésitez pas à nous contacter :</p>
-          <p><strong>Email :</strong> careers@veyron.com</p>
+          <p><strong>Email :</strong> contact@veyron-paris.com</p>
           <p><strong>Téléphone :</strong> +33 (0)1 23 45 67 89</p>
           <p><strong>Adresse :</strong> VEYRON - Service RH, 123 Avenue de la Mode, 75008 Paris, France</p>
         </section>

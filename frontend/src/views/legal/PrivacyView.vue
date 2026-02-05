@@ -110,7 +110,7 @@
           <h2>11. Contact</h2>
           <p>Si vous avez des questions concernant cette politique de confidentialité ou si vous souhaitez exercer vos droits, veuillez nous contacter :</p>
           <ul>
-            <li>Par email : privacy@veyron.com</li>
+            <li>Par email : contact@veyron-paris.com</li>
             <li>Par courrier : VEYRON - Service Protection des Données, 123 Avenue de la Mode, 75008 Paris, France</li>
           </ul>
           <p>Vous avez également le droit d'introduire une réclamation auprès de l'autorité de protection des données compétente si vous estimez que le traitement de vos données personnelles constitue une violation des lois applicables.</p>

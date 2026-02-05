@@ -125,7 +125,7 @@
           <h2>10. Questions et assistance</h2>
           <p>Pour toute question concernant la livraison de votre commande, notre service client est à votre disposition :</p>
           <ul>
-            <li>Par email : service-client@veyron.com</li>
+            <li>Par email : contact@veyron-paris.com</li>
             <li>Par téléphone : +33 (0)1 23 45 67 89 (du lundi au vendredi, de 9h à 18h)</li>
             <li>Via le formulaire de contact sur notre site</li>
           </ul>

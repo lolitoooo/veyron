@@ -8,7 +8,7 @@
           <h2>Nos coordonnées</h2>
           
           <div class="info-item">
-            <i class="fas fa-map-marker-alt"></i>
+            <i class="material-icons">location_on</i>
             <div>
               <h3>Adresse</h3>
               <p>123 Avenue de la Mode<br>75008 Paris, France</p>
@@ -16,7 +16,7 @@
           </div>
           
           <div class="info-item">
-            <i class="fas fa-phone"></i>
+            <i class="material-icons">phone</i>
             <div>
               <h3>Téléphone</h3>
               <p>+33 (0)1 23 45 67 89</p>
@@ -24,15 +24,15 @@
           </div>
           
           <div class="info-item">
-            <i class="fas fa-envelope"></i>
+            <i class="material-icons">email</i>
             <div>
               <h3>Email</h3>
-              <p>contact@veyron.com</p>
+              <p>contact@veyron-paris.com</p>
             </div>
           </div>
           
           <div class="info-item">
-            <i class="fas fa-clock"></i>
+            <i class="material-icons">schedule</i>
             <div>
               <h3>Horaires d'ouverture</h3>
               <p>Lundi - Vendredi: 10h - 19h<br>Samedi: 10h - 18h<br>Dimanche: Fermé</p>
@@ -129,17 +129,17 @@
       
       <div class="map-container">
         <h2>Nous trouver</h2>
-        <div class="map">
-          <img src="https://via.placeholder.com/1200x400?text=Google+Maps" alt="Carte" />
-        </div>
+        <div id="map" class="map"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import api from '@/services/apiService';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const form = reactive({
   name: '',
@@ -192,6 +192,29 @@ const submitForm = async () => {
     loading.value = false;
   }
 };
+
+onMounted(() => {
+  const tourMontparnasse = [48.8422, 2.3219];
+  
+  const map = L.map('map').setView(tourMontparnasse, 15);
+  
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19
+  }).addTo(map);
+  
+  const customIcon = L.divIcon({
+    className: 'custom-marker',
+    html: '<div class="marker-pin"></div>',
+    iconSize: [30, 42],
+    iconAnchor: [15, 42]
+  });
+  
+  L.marker(tourMontparnasse, { icon: customIcon })
+    .addTo(map)
+    .bindPopup('<strong>VEYRON</strong>')
+    .openPopup();
+});
 </script>
 
 <style scoped>
@@ -357,13 +380,45 @@ textarea {
   width: 100%;
   height: 400px;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.map img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+:deep(.custom-marker) {
+  background: transparent;
+  border: none;
+}
+
+:deep(.marker-pin) {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  background: #000;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+}
+
+:deep(.marker-pin::after) {
+  content: '';
+  width: 14px;
+  height: 14px;
+  margin: 8px 0 0 8px;
+  background: #fff;
+  position: absolute;
+  border-radius: 50%;
+}
+
+:deep(.leaflet-popup-content-wrapper) {
+  border-radius: 4px;
+  font-family: var(--font-body);
+}
+
+:deep(.leaflet-popup-content) {
+  margin: 10px 15px;
+  line-height: 1.4;
 }
 
 @media (max-width: 768px) {

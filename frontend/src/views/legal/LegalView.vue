@@ -18,7 +18,7 @@
             <p>RCS Paris B 123 456 789</p>
             <p>N° TVA intracommunautaire : FR 12 345 678 901</p>
             <p>Téléphone : +33 (0)1 23 45 67 89</p>
-            <p>Email : contact@veyron.com</p>
+            <p>Email : contact@veyron-paris.com</p>
           </div>
           
           <p>Directeur de la publication : Jean Dupont, Président</p>
@@ -45,7 +45,7 @@
         <section>
           <h2>4. Liens hypertextes</h2>
           <p><strong>4.1 Liens vers le site www.veyron.com</strong></p>
-          <p>La création de liens hypertextes vers le site www.veyron.com est soumise à l'accord préalable de VEYRON SAS. Pour toute demande, veuillez contacter : webmaster@veyron.com.</p>
+          <p>La création de liens hypertextes vers le site www.veyron.com est soumise à l'accord préalable de VEYRON SAS. Pour toute demande, veuillez contacter : contact@veyron-paris.com.</p>
           
           <p><strong>4.2 Liens depuis le site www.veyron.com</strong></p>
           <p>Le site www.veyron.com peut contenir des liens hypertextes vers d'autres sites Internet. VEYRON SAS ne saurait être tenue pour responsable du contenu de ces sites et des éventuels dommages ou préjudices pouvant résulter de leur consultation.</p>
@@ -77,7 +77,7 @@
           <h2>9. Contact</h2>
           <p>Pour toute question concernant le site www.veyron.com, vous pouvez nous contacter :</p>
           <ul>
-            <li>Par email : contact@veyron.com</li>
+            <li>Par email : contact@veyron-paris.com</li>
             <li>Par téléphone : +33 (0)1 23 45 67 89 (du lundi au vendredi, de 9h à 18h)</li>
             <li>Par courrier : VEYRON SAS, Service Client, 123 Avenue de la Mode, 75008 Paris, France</li>
           </ul>

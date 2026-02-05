@@ -101,7 +101,7 @@
           <h2>7. Cookies et données personnelles</h2>
           <p>Certains cookies peuvent traiter des données personnelles. Dans ce cas, ces traitements sont effectués conformément à notre politique de confidentialité, que vous pouvez consulter <router-link to="/privacy">ici</router-link>.</p>
           <p>Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'opposition, de limitation, de portabilité et d'effacement des données vous concernant.</p>
-          <p>Pour exercer ces droits ou pour toute question sur le traitement de vos données, vous pouvez nous contacter à l'adresse suivante : privacy@veyron.com.</p>
+          <p>Pour exercer ces droits ou pour toute question sur le traitement de vos données, vous pouvez nous contacter à l'adresse suivante : contact@veyron-paris.com.</p>
         </section>
         
         <section>
@@ -114,7 +114,7 @@
           <h2>9. Contact</h2>
           <p>Si vous avez des questions concernant notre utilisation des cookies, n'hésitez pas à nous contacter :</p>
           <ul>
-            <li>Par email : privacy@veyron.com</li>
+            <li>Par email : contact@veyron-paris.com</li>
             <li>Par courrier : VEYRON - Service Protection des Données, 123 Avenue de la Mode, 75008 Paris, France</li>
           </ul>
         </section>

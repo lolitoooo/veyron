@@ -60,7 +60,7 @@
           <div class="contact-options">
             <div class="contact-option">
               <h3>Par Email</h3>
-              <p>contact@veyron.com</p>
+              <p>contact@veyron-paris.com</p>
               <p>Réponse sous 24h ouvrées</p>
             </div>
             <div class="contact-option">
@@ -109,7 +109,7 @@ const questions = [
     id: 2,
     category: 'orders',
     question: 'Puis-je modifier ma commande après l\'avoir passée ?',
-    answer: 'Vous pouvez modifier votre commande uniquement si elle n\'a pas encore été préparée pour expédition. Pour ce faire, contactez notre service client dès que possible par téléphone au +33 (0)1 23 45 67 89 ou par email à contact@veyron.com en précisant votre numéro de commande et les modifications souhaitées.'
+    answer: 'Vous pouvez modifier votre commande uniquement si elle n\'a pas encore été préparée pour expédition. Pour ce faire, contactez notre service client dès que possible par téléphone au +33 (0)1 23 45 67 89 ou par email à contact@veyron-paris.com en précisant votre numéro de commande et les modifications souhaitées.'
   },
   {
     id: 3,

@@ -101,7 +101,7 @@
             <li>Privilégiez la qualité à la quantité</li>
             <li>Prenez soin de vos vêtements pour prolonger leur durée de vie</li>
             <li>Participez à notre programme de recyclage</li>
-            <li>Partagez vos idées et suggestions à sustainability@veyron.com</li>
+            <li>Partagez vos idées et suggestions à contact@veyron-paris.com</li>
           </ul>
           <p>Ensemble, nous pouvons créer une mode plus responsable et respectueuse de notre planète.</p>
         </section>

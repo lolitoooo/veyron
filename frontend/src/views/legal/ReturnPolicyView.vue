@@ -5,126 +5,83 @@
       
       <div class="legal-content">
         <div class="last-updated">
-          <p>Dernière mise à jour : 20 juin 2025</p>
+          <p>Dernière mise à jour : 5 février 2026</p>
         </div>
+
+        <p>Merci d'avoir effectué vos achats chez Veyron Paris.</p>
+        <p>Si, pour une raison quelconque, vous n'êtes pas entièrement satisfait d'un achat, nous vous invitons à consulter notre politique de remboursement et de retour.</p>
+        <p>Les conditions suivantes s'appliquent à tous les produits que vous avez achetés chez nous.</p>
         
         <section>
-          <h2>1. Droit de rétractation</h2>
-          <p>Conformément à la législation en vigueur, vous disposez d'un délai de quatorze (14) jours calendaires à compter de la réception de votre commande pour exercer votre droit de rétractation sans avoir à justifier de motifs ni à payer de pénalités.</p>
-          <p>Ce délai expire quatorze jours après le jour où vous-même, ou un tiers autre que le transporteur et désigné par vous, prend physiquement possession du dernier bien de votre commande.</p>
-        </section>
-        
-        <section>
-          <h2>2. Exceptions au droit de rétractation</h2>
-          <p>Conformément à l'article L.221-28 du Code de la consommation, le droit de rétractation ne peut être exercé pour :</p>
+          <h2>Interprétation et Définitions</h2>
+          <h3>Interprétation</h3>
+          <p>Les mots dont la lettre initiale est en majuscule ont des significations définies dans les conditions suivantes. Les définitions suivantes ont la même signification, qu'elles apparaissent au singulier ou au pluriel.</p>
+          
+          <h3>Définitions</h3>
+          <p>Aux fins de cette Politique de Retour et de Remboursement :</p>
           <ul>
-            <li>Les produits personnalisés ou confectionnés selon vos spécifications</li>
-            <li>Les produits descellés après livraison et qui ne peuvent être renvoyés pour des raisons d'hygiène ou de protection de la santé (ex : sous-vêtements, maillots de bain)</li>
-            <li>Les produits qui, après avoir été livrés, ont été mélangés de manière indissociable avec d'autres articles</li>
+            <li><strong>Application</strong> désigne le programme logiciel fourni par la Société et téléchargé par vous sur tout appareil électronique, nommé Veyron Paris</li>
+            <li><strong>Société</strong> (désignée par "la Société", "Nous", "Notre" ou "Nos" dans cette Politique) fait référence à Veyron Paris</li>
+            <li><strong>Produits</strong> désignent les articles proposés à la vente sur le Service</li>
+            <li><strong>Commandes</strong> désignent une demande de votre part pour acheter des Produits chez Nous</li>
+            <li><strong>Service</strong> fait référence à l'Application ou au Site Web ou aux deux</li>
+            <li><strong>Site Web</strong> fait référence à Veyron Paris, accessible depuis https://veyron-paris.fr</li>
+            <li><strong>Vous</strong> désigne la personne accédant ou utilisant le Service, ou la société, ou toute autre entité juridique au nom de laquelle cette personne accède ou utilise le Service, selon le cas</li>
           </ul>
         </section>
         
         <section>
-          <h2>3. Comment exercer votre droit de rétractation</h2>
-          <p>Pour exercer votre droit de rétractation, vous devez nous notifier votre décision par une déclaration dénuée d'ambiguïté. Vous pouvez utiliser :</p>
-          
-          <h3>3.1 Votre espace client</h3>
-          <p>La méthode la plus simple est de vous connecter à votre compte client sur notre site et de suivre la procédure de retour dans la section "Mes commandes".</p>
-          
-          <h3>3.2 Formulaire de rétractation</h3>
-          <p>Vous pouvez utiliser le formulaire de rétractation disponible <a href="#" class="text-link">ici</a> et nous l'envoyer par email à retours@veyron.com ou par courrier à l'adresse suivante :</p>
+          <h2>Vos Droits d'Annulation de Commande</h2>
+          <p>Vous avez le droit d'annuler votre Commande dans un délai de 14 jours sans avoir à donner de raison.</p>
+          <p>La date limite pour annuler une Commande est de 14 jours à compter de la date à laquelle vous avez reçu les Produits ou à laquelle un tiers que vous avez désigné, qui n'est pas le transporteur, prend possession du produit livré.</p>
+          <p>Afin d'exercer votre droit d'annulation, vous devez nous informer de votre décision au moyen d'une déclaration claire. Vous pouvez nous informer de votre décision par :</p>
+          <ul>
+            <li>Par email : contact@veyron-paris.fr</li>
+            <li>En visitant cette page sur notre site web : https://veyron-paris.fr/contact</li>
+          </ul>
+          <p>Nous vous rembourserons au plus tard 14 jours à compter du jour où nous recevons les Produits retournés. Nous utiliserons le même moyen de paiement que celui que vous avez utilisé pour la Commande, et vous n'encourrez aucun frais pour ce remboursement.</p>
+        </section>
+        
+        <section>
+          <h2>Conditions de Retour</h2>
+          <p>Pour que les Produits soient éligibles à un retour, veuillez vous assurer que :</p>
+          <ul>
+            <li>Les Produits ont été achetés au cours des 14 derniers jours</li>
+            <li>Les Produits sont dans leur emballage d'origine</li>
+          </ul>
+          <p>Les Produits suivants ne peuvent pas être retournés :</p>
+          <ul>
+            <li>La fourniture de Produits fabriqués selon vos spécifications ou clairement personnalisés</li>
+            <li>La fourniture de Produits qui, de par leur nature, ne peuvent être retournés, se détériorent rapidement ou dont la date d'expiration est dépassée</li>
+            <li>La fourniture de Produits qui ne peuvent être retournés pour des raisons de protection de la santé ou d'hygiène et qui ont été descellés après la livraison</li>
+            <li>La fourniture de Produits qui, après livraison, de par leur nature, sont mélangés de manière indissociable avec d'autres articles</li>
+          </ul>
+          <p>Nous pouvons refuser les retours qui ne répondent pas aux conditions ci-dessus, dans la mesure permise par la loi applicable.</p>
+          <p>Seuls les Produits à prix régulier peuvent être remboursés. Malheureusement, les Produits en solde ne peuvent pas être remboursés. Cette exclusion peut ne pas s'appliquer à vous si elle n'est pas autorisée par la loi applicable.</p>
+        </section>
+        
+        <section>
+          <h2>Retour des Produits</h2>
+          <p>Vous êtes responsable du coût et du risque du retour des Produits.</p>
+          <p>Vous devez envoyer les Produits à l'adresse suivante :</p>
           <p class="address">
-            VEYRON - Service Retours<br>
-            123 Avenue de la Mode<br>
-            75008 Paris, France
+            1 rue de veyron
           </p>
-          
-          <h3>3.3 Déclaration libre</h3>
-          <p>Vous pouvez également nous faire part de votre décision de vous rétracter par une déclaration écrite libre envoyée par email ou courrier aux coordonnées mentionnées ci-dessus.</p>
+          <p>Nous ne pouvons être tenus responsables des Produits endommagés ou perdus lors du retour. Par conséquent, nous recommandons un service de courrier assuré et traçable. Nous ne pouvons pas émettre de remboursement sans réception effective des Produits ou preuve de réception du retour.</p>
         </section>
         
         <section>
-          <h2>4. Conditions de retour</h2>
-          <p>Pour être acceptés, les produits retournés doivent remplir les conditions suivantes :</p>
+          <h2>Cadeaux</h2>
+          <p>Si les Produits ont été marqués comme cadeau lors de l'achat puis expédiés directement à vous, vous recevrez un crédit cadeau pour la valeur de votre retour. Une fois le produit retourné reçu, un chèque cadeau vous sera envoyé.</p>
+          <p>Si les Produits n'ont pas été marqués comme cadeau lors de l'achat, ou si le donateur a fait expédier la Commande à lui-même pour vous la donner plus tard, nous enverrons le remboursement au donateur.</p>
+        </section>
+        
+        <section>
+          <h2>Nous Contacter</h2>
+          <p>Si vous avez des questions concernant notre Politique de Retour et de Remboursement, veuillez nous contacter :</p>
           <ul>
-            <li>Être retournés dans leur état d'origine, non portés (sauf essayage), non lavés, non endommagés</li>
-            <li>Être accompagnés de toutes les étiquettes d'origine</li>
-            <li>Être dans leur emballage d'origine ou un emballage adapté à leur protection</li>
-            <li>Être accompagnés de tous les accessoires, notices et documentation</li>
-            <li>Être accompagnés du formulaire de retour dûment complété ou d'une copie de la facture</li>
-          </ul>
-          <p>Tout produit retourné ne respectant pas ces conditions pourra être refusé et renvoyé à l'expéditeur à ses frais.</p>
-        </section>
-        
-        <section>
-          <h2>5. Délai de retour</h2>
-          <p>Après nous avoir notifié votre décision de vous rétracter, vous disposez d'un délai de quatorze (14) jours supplémentaires pour nous retourner les produits.</p>
-          <p>La date limite est respectée si vous expédiez les produits avant l'expiration du délai de quatorze jours (le cachet de la poste faisant foi).</p>
-        </section>
-        
-        <section>
-          <h2>6. Modalités de retour</h2>
-          <p>Vous avez plusieurs options pour nous retourner vos produits :</p>
-          
-          <h3>6.1 Retour via notre transporteur partenaire</h3>
-          <p>Vous pouvez utiliser notre service de retour prépayé en imprimant l'étiquette de retour disponible dans votre espace client ou fournie par notre service client. Les frais de retour seront déduits de votre remboursement (montant indiqué lors de la procédure de retour).</p>
-          
-          <h3>6.2 Retour par vos propres moyens</h3>
-          <p>Vous pouvez également retourner les produits par le transporteur de votre choix, à vos frais et sous votre responsabilité, à l'adresse suivante :</p>
-          <p class="address">
-            VEYRON - Service Retours<br>
-            123 Avenue de la Mode<br>
-            75008 Paris, France
-          </p>
-          <p>Nous vous recommandons d'utiliser un service de livraison avec suivi et assurance, car vous êtes responsable des produits jusqu'à ce qu'ils nous parviennent.</p>
-        </section>
-        
-        <section>
-          <h2>7. Remboursement</h2>
-          <p>Nous vous rembourserons tous les paiements reçus de votre part, y compris les frais de livraison standard (à l'exception des frais supplémentaires découlant du fait que vous avez choisi un mode de livraison autre que le mode de livraison standard le moins coûteux que nous proposons).</p>
-          
-          <h3>7.1 Délai de remboursement</h3>
-          <p>Le remboursement sera effectué dans les quatorze (14) jours suivant :</p>
-          <ul>
-            <li>La date à laquelle nous recevons les biens, ou</li>
-            <li>La date à laquelle vous fournissez une preuve d'expédition des biens, la première de ces dates étant retenue</li>
-          </ul>
-          <p>Nous pouvons différer le remboursement jusqu'à ce que nous ayons reçu les biens et vérifié leur état.</p>
-          
-          <h3>7.2 Mode de remboursement</h3>
-          <p>Le remboursement sera effectué en utilisant le même moyen de paiement que celui que vous avez utilisé pour la transaction initiale, sauf si vous avez expressément convenu d'un moyen différent.</p>
-          <p>Pour les achats effectués par carte bancaire, le remboursement sera crédité sur le compte bancaire associé à la carte utilisée pour le paiement.</p>
-          <p>Pour les achats effectués par d'autres moyens de paiement, notre service client vous contactera pour convenir des modalités de remboursement.</p>
-        </section>
-        
-        <section>
-          <h2>8. Échange</h2>
-          <p>Si vous souhaitez échanger un produit contre un autre (taille, couleur, modèle), nous vous recommandons de :</p>
-          <ol>
-            <li>Retourner le produit initial en suivant la procédure de retour standard</li>
-            <li>Passer une nouvelle commande pour le produit souhaité</li>
-          </ol>
-          <p>Cette méthode est plus rapide que de demander un échange direct, qui nécessiterait d'attendre que nous recevions votre retour avant de pouvoir expédier le nouveau produit.</p>
-        </section>
-        
-        <section>
-          <h2>9. Produits défectueux ou non conformes</h2>
-          <p>Si vous constatez un défaut ou une non-conformité sur un produit reçu :</p>
-          <ol>
-            <li>Contactez notre service client dans les plus brefs délais en précisant la nature du problème et en joignant si possible des photos</li>
-            <li>Notre équipe vous indiquera la marche à suivre pour le retour du produit</li>
-            <li>Après vérification du défaut ou de la non-conformité, nous procéderons, selon votre choix, à un remboursement intégral (produit + frais de livraison) ou à un échange</li>
-          </ol>
-          <p>Les frais de retour pour les produits défectueux ou non conformes sont à notre charge.</p>
-        </section>
-        
-        <section>
-          <h2>10. Questions et assistance</h2>
-          <p>Pour toute question concernant notre politique de retour ou pour obtenir de l'aide pour un retour, notre service client est à votre disposition :</p>
-          <ul>
-            <li>Par email : retours@veyron.com</li>
-            <li>Par téléphone : +33 (0)1 23 45 67 89 (du lundi au vendredi, de 9h à 18h)</li>
-            <li>Via le formulaire de contact sur notre site</li>
+            <li>Par email : contact@veyron-paris.fr</li>
+            <li>En visitant cette page sur notre site web : https://veyron-paris.fr/contact</li>
           </ul>
         </section>
       </div>
