@@ -1,0 +1,33 @@
+[{
+  "_id": {
+    "$oid": "690caaeedd3923c19f223b84"
+  },
+  "name": "home_delivery",
+  "displayName": "Livraison à domicile",
+  "price": 4.95,
+  "freeShippingThreshold": 80,
+  "enabled": true,
+  "estimatedDays": {
+    "min": 2,
+    "max": 4
+  },
+  "description": "Livraison directement à votre domicile par notre transporteur partenaire",
+  "updatedAt": {
+    "$date": "2025-12-01T13:59:02.034Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "690caaf7dd3923c19f223b86"
+  },
+  "name": "relay_point",
+  "displayName": "Point relais",
+  "price": 3.95,
+  "freeShippingThreshold": 70,
+  "enabled": true,
+  "estimatedDays": {
+    "min": 2,
+    "max": 5
+  },
+  "description": "Retrait dans un point relais Mondial Relay près de chez vous"
+}]

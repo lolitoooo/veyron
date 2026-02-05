@@ -52,10 +52,24 @@ const regexOrigins = [
 ];
 
 app.use(cors({
-  origin: [...allowedOrigins, ...regexOrigins],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    
+    const isAllowedOrigin = allowedOrigins.includes(origin);
+    
+    const isAllowedRegex = regexOrigins.some(regex => regex.test(origin));
+    
+    if (isAllowedOrigin || isAllowedRegex) {
+      callback(null, true);
+    } else {
+      console.log(`CORS: Origine non autorisée: ${origin}`);
+      callback(null, false);
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 204
 }));
 
 app.use((req, res, next) => {
