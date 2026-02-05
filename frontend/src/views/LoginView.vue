@@ -141,7 +141,7 @@ const handleLogin = async () => {
 
 .auth-form-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   background-color: #fff;
   padding: 3rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);

@@ -13,6 +13,7 @@ const {
   setDefaultAddress,
   getUserCount,
   getAllUsers,
+  createUser,
   updateUser,
   deleteUser
 } = require('../controllers/userController');
@@ -36,6 +37,7 @@ router.put('/addresses/:id/set-default', protect, setDefaultAddress);
 
 router.get('/count', protect, authorize('admin'), getUserCount);
 router.get('/all', protect, authorize('admin'), getAllUsers);
+router.post('/', protect, authorize('admin'), createUser);
 
 router.put('/:id', protect, authorize('admin'), updateUser);
 router.delete('/:id', protect, authorize('admin'), deleteUser);

@@ -282,6 +282,61 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+exports.createUser = async (req, res) => {
+  try {
+    const { 
+      firstName, 
+      lastName, 
+      email, 
+      password,
+      role, 
+      birthDate, 
+      newsletterSubscribed, 
+      phone, 
+      smsNotifications 
+    } = req.body;
+    
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'Veuillez fournir tous les champs obligatoires (firstName, lastName, email, password)' 
+      });
+    }
+    
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'Cet email est déjà utilisé' 
+      });
+    }
+    
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password,
+      role: role || 'user',
+      birthDate,
+      newsletterSubscribed,
+      phone,
+      smsNotifications
+    });
+    
+    const createdUser = await User.findById(user._id).select('-password');
+    
+    res.status(201).json({
+      success: true,
+      data: createdUser
+    });
+  } catch (err) {
+    res.status(500).json({ 
+      success: false,
+      message: err.message 
+    });
+  }
+};
+
 exports.updateUser = async (req, res) => {
   try {
     const { 
