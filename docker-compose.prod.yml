@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile.f.production
     image: veyron-frontend-prod
     ports:
-      - "8091:80"
+      - "127.0.0.1:8091:80"
     env_file:
       - ./frontend/.env.production
     restart: always
@@ -24,7 +24,7 @@ services:
       dockerfile: Dockerfile.b.production
     image: veyron-backend-prod
     ports:
-      - "3001:3000"
+      - "127.0.0.1:3001:3000"
     volumes:
       - backend_images_prod:/app/public/images
       - backend_uploads_prod:/app/public/uploads
