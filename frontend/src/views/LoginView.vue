@@ -119,7 +119,7 @@ const handleLogin = async () => {
       success('Connexion réussie');
       await router.push({ path: '/account' });
     } else {
-      error.value = 'Identifiants invalides. Veuillez vérifier votre email et mot de passe.';
+      error.value = authStore.error || 'Identifiants invalides. Veuillez vérifier votre email et mot de passe.';
     }
   } catch (err: any) {
     error.value = err.response?.data?.message || 'Une erreur est survenue lors de la connexion';

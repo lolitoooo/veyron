@@ -302,11 +302,48 @@ const activateAccountEmailTemplate = (firstName, activationUrl) => {
   return getBaseTemplate(content);
 };
 
+const passwordExpiryReminderEmailTemplate = (firstName, resetUrl) => {
+  const content = `
+    <h2 style="color: #333333; font-size: 24px; margin-bottom: 20px;">
+      Mise à jour de votre mot de passe requise
+    </h2>
+    <p style="color: #666666; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+      Bonjour ${firstName},
+    </p>
+    <p style="color: #666666; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+      Pour des raisons de sécurité, nous vous recommandons de changer votre mot de passe tous les 60 jours.
+    </p>
+    <p style="color: #666666; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+      Votre mot de passe n'a pas été modifié depuis plus de 60 jours. Cliquez sur le bouton ci-dessous pour le réinitialiser :
+    </p>
+    <div style="text-align: center; margin: 30px 0;">
+      <a href="${resetUrl}" 
+         style="background-color: #000000; color: #ffffff; padding: 15px 40px; text-decoration: none; border-radius: 5px; display: inline-block; font-size: 16px;">
+        Réinitialiser mon mot de passe
+      </a>
+    </div>
+    <p style="color: #999999; font-size: 14px; line-height: 1.6; margin-top: 30px;">
+      Ce lien est valable pendant 10 minutes.
+    </p>
+    <p style="color: #999999; font-size: 14px; line-height: 1.6;">
+      Si vous avez récemment changé votre mot de passe, vous pouvez ignorer cet email.
+    </p>
+    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin-top: 20px;">
+      <p style="color: #666666; font-size: 12px; margin: 0; word-break: break-all;">
+        Si le bouton ne fonctionne pas, copiez ce lien : <br>
+        <a href="${resetUrl}" style="color: #666666;">${resetUrl}</a>
+      </p>
+    </div>
+  `;
+  return getBaseTemplate(content);
+};
+
 module.exports = {
   welcomeEmailTemplate,
   resetPasswordEmailTemplate,
   orderConfirmationEmailTemplate,
   contactConfirmationEmailTemplate,
   contactNotificationEmailTemplate,
-  activateAccountEmailTemplate
+  activateAccountEmailTemplate,
+  passwordExpiryReminderEmailTemplate
 };

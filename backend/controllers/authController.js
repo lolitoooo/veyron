@@ -22,10 +22,22 @@ exports.register = async (req, res) => {
       });
     }
 
-    if (password.length < 6) {
+    if (password.length < 12) {
       return res.status(400).json({ 
         success: false,
-        message: 'Le mot de passe doit contenir au moins 6 caractères' 
+        message: 'Le mot de passe doit contenir au moins 12 caractères' 
+      });
+    }
+
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSymbol) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un symbole' 
       });
     }
 
@@ -75,7 +87,7 @@ exports.login = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+    const user = await User.findOne({ email: email.toLowerCase() }).select('+password +loginAttempts +lockUntil');
     if (!user) {
       return res.status(401).json({ 
         success: false,
@@ -83,11 +95,31 @@ exports.login = async (req, res) => {
       });
     }
 
+    if (user.isLocked) {
+      const remainingTime = Math.ceil((user.lockUntil - Date.now()) / 1000 / 60);
+      return res.status(423).json({ 
+        success: false,
+        message: `Votre compte a été bloqué suite à 3 tentatives de connexion échouées. Veuillez attendre ${remainingTime} minute(s) avant de réessayer.` 
+      });
+    }
+
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
+      await user.incLoginAttempts();
+      
+      const updatedUser = await User.findById(user._id).select('+loginAttempts +lockUntil');
+      
+      if (updatedUser.isLocked) {
+        return res.status(423).json({ 
+          success: false,
+          message: 'Votre compte a été bloqué suite à 3 tentatives de connexion échouées. Veuillez attendre 5 minutes avant de réessayer.' 
+        });
+      }
+      
+      const attemptsLeft = 3 - updatedUser.loginAttempts;
       return res.status(401).json({ 
         success: false,
-        message: 'Identifiants invalides' 
+        message: `Identifiants invalides. ${attemptsLeft} tentative(s) restante(s)` 
       });
     }
 
@@ -96,6 +128,10 @@ exports.login = async (req, res) => {
         success: false,
         message: 'Ce compte a été désactivé' 
       });
+    }
+
+    if (user.loginAttempts > 0) {
+      await user.resetLoginAttempts();
     }
 
     user.lastLogin = Date.now();
@@ -194,10 +230,22 @@ exports.resetPassword = async (req, res) => {
       });
     }
     
-    if (password.length < 6) {
+    if (password.length < 12) {
       return res.status(400).json({ 
         success: false,
-        message: 'Le mot de passe doit contenir au moins 6 caractères' 
+        message: 'Le mot de passe doit contenir au moins 12 caractères' 
+      });
+    }
+
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSymbol) {
+      return res.status(400).json({ 
+        success: false,
+        message: 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un symbole' 
       });
     }
     
@@ -248,10 +296,22 @@ exports.activateAccount = async (req, res) => {
       });
     }
 
-    if (password.length < 6) {
+    if (password.length < 12) {
       return res.status(400).json({
         success: false,
-        message: 'Le mot de passe doit contenir au moins 6 caractères'
+        message: 'Le mot de passe doit contenir au moins 12 caractères'
+      });
+    }
+
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSymbol) {
+      return res.status(400).json({
+        success: false,
+        message: 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un symbole'
       });
     }
 

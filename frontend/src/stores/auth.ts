@@ -109,6 +109,8 @@ export const useAuthStore = defineStore('auth', () => {
       console.error('Erreur lors de la connexion:', err);
       if (!err.response) {
         error.value = 'Le serveur n\'est pas accessible. Veuillez vérifier que le backend est en cours d\'exécution.';
+      } else if (err.response && err.response.data && err.response.data.message) {
+        error.value = err.response.data.message;
       } else if (err.response && err.response.status === 401) {
         error.value = 'Identifiants invalides';
       } else {
