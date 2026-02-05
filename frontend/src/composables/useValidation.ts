@@ -16,7 +16,7 @@ export function useValidation() {
     return '';
   };
   
-  const validatePassword = (password: string, minLength = 8): string => {
+  const validatePassword = (password: string, minLength = 12): string => {
     if (!password) {
       return 'Le mot de passe est requis';
     }
@@ -27,9 +27,10 @@ export function useValidation() {
     const hasUpperCase = /[A-Z]/.test(password);
     const hasLowerCase = /[a-z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
+    const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
     
-    if (!hasUpperCase || !hasLowerCase || !hasNumber) {
-      return 'Le mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre';
+    if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSymbol) {
+      return 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un symbole';
     }
     
     return '';

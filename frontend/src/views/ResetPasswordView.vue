@@ -14,10 +14,11 @@
               type="password" 
               id="password" 
               v-model="password" 
-              placeholder="Minimum 6 caractères"
+              placeholder="Minimum 12 caractères"
               required
               autocomplete="new-password"
             />
+            <PasswordStrengthIndicator :strength="passwordStrength" />
             <p v-if="errors.password" class="error-message">{{ errors.password }}</p>
           </div>
           
@@ -66,6 +67,8 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/services/apiService';
+import { usePasswordStrength } from '@/composables/usePasswordStrength';
+import PasswordStrengthIndicator from '@/components/PasswordStrengthIndicator.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -77,6 +80,8 @@ const successMessage = ref('');
 const errorMessage = ref('');
 const errors = ref<Record<string, string>>({});
 const token = ref('');
+
+const { strength: passwordStrength } = usePasswordStrength(password);
 
 onMounted(() => {
   token.value = route.params.token as string;
@@ -94,8 +99,18 @@ const validateForm = (): boolean => {
     return false;
   }
   
-  if (password.value.length < 6) {
-    errors.value.password = 'Le mot de passe doit contenir au moins 6 caractères';
+  if (password.value.length < 12) {
+    errors.value.password = 'Le mot de passe doit contenir au moins 12 caractères';
+    return false;
+  }
+  
+  const hasUpperCase = /[A-Z]/.test(password.value);
+  const hasLowerCase = /[a-z]/.test(password.value);
+  const hasNumber = /[0-9]/.test(password.value);
+  const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password.value);
+  
+  if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSymbol) {
+    errors.value.password = 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un symbole';
     return false;
   }
   

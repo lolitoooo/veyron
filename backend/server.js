@@ -4,9 +4,11 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
 const path = require('path');
+const { startPasswordExpiryJob } = require('./jobs/passwordExpiryJob');
 
 dotenv.config({ path: path.resolve(__dirname, `.env.${process.env.NODE_ENV || 'development'}`) });
 connectDB();
+startPasswordExpiryJob();
 
 const app = express();
 

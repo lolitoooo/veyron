@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Veuillez ajouter un mot de passe'],
-    minlength: [6, 'Le mot de passe doit contenir au moins 6 caractères'],
+    minlength: [12, 'Le mot de passe doit contenir au moins 12 caractères'],
     select: false
   },
   role: {
@@ -67,6 +67,17 @@ const UserSchema = new mongoose.Schema({
   activationExpire: Date,
   resetPasswordToken: String,
   resetPasswordExpire: Date,
+  loginAttempts: {
+    type: Number,
+    default: 0
+  },
+  lockUntil: {
+    type: Date
+  },
+  lastPasswordChange: {
+    type: Date,
+    default: Date.now
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -79,6 +90,7 @@ UserSchema.pre('save', async function(next) {
   }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+  this.lastPasswordChange = Date.now();
   next();
 });
 
@@ -123,6 +135,36 @@ UserSchema.methods.getActivationToken = function() {
   this.activationExpire = Date.now() + 24 * 60 * 60 * 1000;
 
   return activationToken;
+};
+
+UserSchema.virtual('isLocked').get(function() {
+  return !!(this.lockUntil && this.lockUntil > Date.now());
+});
+
+UserSchema.methods.incLoginAttempts = function() {
+  if (this.lockUntil && this.lockUntil < Date.now()) {
+    return this.updateOne({
+      $set: { loginAttempts: 1 },
+      $unset: { lockUntil: 1 }
+    });
+  }
+
+  const updates = { $inc: { loginAttempts: 1 } };
+  const maxAttempts = 3;
+  const lockTime = 5 * 60 * 1000;
+
+  if (this.loginAttempts + 1 >= maxAttempts && !this.isLocked) {
+    updates.$set = { lockUntil: Date.now() + lockTime };
+  }
+
+  return this.updateOne(updates);
+};
+
+UserSchema.methods.resetLoginAttempts = function() {
+  return this.updateOne({
+    $set: { loginAttempts: 0 },
+    $unset: { lockUntil: 1 }
+  });
 };
 
 module.exports = mongoose.model('User', UserSchema);

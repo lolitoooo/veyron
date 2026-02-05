@@ -64,8 +64,9 @@
               <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
             </button>
           </div>
+          <PasswordStrengthIndicator :strength="passwordStrength" />
           <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
-          <p class="password-hint">Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.</p>
+          <p class="password-hint">Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un symbole.</p>
         </div>
         
         <div class="form-group">
@@ -123,6 +124,8 @@ import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useValidation } from '@/composables/useValidation';
 import { useNotification } from '@/composables/useNotification';
+import { usePasswordStrength } from '@/composables/usePasswordStrength';
+import PasswordStrengthIndicator from '@/components/PasswordStrengthIndicator.vue';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -139,6 +142,8 @@ const showPassword = ref(false);
 const showConfirmPassword = ref(false);
 const isLoading = ref(false);
 const error = ref('');
+
+const { strength: passwordStrength } = usePasswordStrength(password);
 
 const firstNameError = ref('');
 const lastNameError = ref('');

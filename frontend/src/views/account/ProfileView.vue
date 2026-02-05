@@ -205,9 +205,10 @@
               v-model="passwordData.newPassword" 
               required
               :disabled="changingPassword"
-              minlength="8"
+              minlength="12"
             />
-            <small>Le mot de passe doit contenir au moins 8 caractères.</small>
+            <PasswordStrengthIndicator :strength="newPasswordStrength" />
+            <small>Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un symbole.</small>
           </div>
           
           <div class="form-group">
@@ -260,6 +261,8 @@ import { useAuthStore } from '@/stores/auth';
 import api from '@/services/apiService';
 import { getServerUrl } from '@/utils/imageUrl';
 import AccountLayout from '@/layouts/AccountLayout.vue';
+import { usePasswordStrength } from '@/composables/usePasswordStrength';
+import PasswordStrengthIndicator from '@/components/PasswordStrengthIndicator.vue';
 
 interface ProfileData {
   id: number;
@@ -296,6 +299,9 @@ const passwordData = ref<PasswordData>({
   newPassword: '',
   confirmPassword: ''
 });
+
+const newPasswordRef = computed(() => passwordData.value.newPassword);
+const { strength: newPasswordStrength } = usePasswordStrength(newPasswordRef);
 
 const passwordFormValid = computed(() => {
   return (
