@@ -27,8 +27,38 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Veuillez ajouter un mot de passe'],
+    required: function() {
+      return this.authMethod === 'email';
+    },
     minlength: [12, 'Le mot de passe doit contenir au moins 12 caractères'],
+    select: false
+  },
+  authMethod: {
+    type: String,
+    enum: ['email', 'google', 'magic-link'],
+    default: 'email'
+  },
+  oauthProvider: {
+    type: String,
+    enum: ['google', null],
+    default: null
+  },
+  oauthId: {
+    type: String,
+    default: null
+  },
+  magicLinkToken: String,
+  magicLinkExpire: Date,
+  twoFactorEnabled: {
+    type: Boolean,
+    default: false
+  },
+  twoFactorSecret: {
+    type: String,
+    select: false
+  },
+  twoFactorBackupCodes: {
+    type: [String],
     select: false
   },
   role: {
@@ -135,6 +165,27 @@ UserSchema.methods.getActivationToken = function() {
   this.activationExpire = Date.now() + 24 * 60 * 60 * 1000;
 
   return activationToken;
+};
+
+UserSchema.methods.getMagicLinkToken = function() {
+  const magicToken = crypto.randomBytes(32).toString('hex');
+
+  this.magicLinkToken = crypto
+    .createHash('sha256')
+    .update(magicToken)
+    .digest('hex');
+
+  this.magicLinkExpire = Date.now() + 15 * 60 * 1000; // 15 minutes
+
+  return magicToken;
+};
+
+UserSchema.methods.generateBackupCodes = function() {
+  const codes = [];
+  for (let i = 0; i < 10; i++) {
+    codes.push(crypto.randomBytes(4).toString('hex').toUpperCase());
+  }
+  return codes;
 };
 
 UserSchema.virtual('isLocked').get(function() {

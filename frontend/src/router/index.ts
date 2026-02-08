@@ -263,7 +263,31 @@ const router = createRouter({
           component: () => import('@/views/account/LoyaltyView.vue'),
           meta: { title: 'Ma Fidélité | VEYRON', breadcrumb: 'Ma Fidélité' }
         },
+        {
+          path: 'security',
+          name: 'security',
+          component: () => import('@/views/account/TwoFactorView.vue'),
+          meta: { title: 'Sécurité | VEYRON', breadcrumb: 'Sécurité' }
+        },
       ]
+    },
+    {
+      path: '/auth/2fa',
+      name: '2fa-validate',
+      component: () => import('@/views/auth/TwoFactorValidateView.vue'),
+      meta: { title: 'Authentification à deux facteurs | VEYRON' }
+    },
+    {
+      path: '/auth/callback',
+      name: 'oauth-callback',
+      component: () => import('@/views/auth/OAuthCallbackView.vue'),
+      meta: { title: 'Connexion en cours | VEYRON' }
+    },
+    {
+      path: '/auth/magic-link/verify',
+      name: 'magic-link-verify',
+      component: () => import('@/views/auth/MagicLinkVerifyView.vue'),
+      meta: { title: 'Vérification du lien magique | VEYRON' }
     },
     {
       path: '/admin',

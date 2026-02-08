@@ -68,6 +68,51 @@
         </button>
       </form>
       
+      <div class="auth-divider">
+        <span>OU</span>
+      </div>
+      
+      <div class="auth-alternatives">
+        <button 
+          type="button" 
+          class="auth-alt-button google-button" 
+          @click="loginWithGoogle"
+          :disabled="isLoading"
+        >
+          <i class="fab fa-google"></i>
+          Continuer avec Google
+        </button>
+        
+        <button 
+          type="button" 
+          class="auth-alt-button magic-link-button" 
+          @click="showMagicLinkForm = !showMagicLinkForm"
+          :disabled="isLoading"
+        >
+          <i class="material-icons">link</i>
+          Connexion par lien magique
+        </button>
+        
+        <div v-if="showMagicLinkForm" class="magic-link-form">
+          <input 
+            type="email" 
+            v-model="magicLinkEmail" 
+            placeholder="Votre email"
+            class="magic-link-input"
+          />
+          <button 
+            type="button" 
+            class="auth-button" 
+            @click="sendMagicLink"
+            :disabled="isSendingMagicLink"
+          >
+            <span v-if="isSendingMagicLink">Envoi en cours...</span>
+            <span v-else>Envoyer le lien</span>
+          </button>
+          <p v-if="magicLinkSent" class="success-message">Lien envoyé ! Vérifiez votre email.</p>
+        </div>
+      </div>
+      
       <div class="auth-footer">
         <p>Vous n'avez pas de compte ?</p>
         <router-link to="/register" class="auth-link">
@@ -98,6 +143,12 @@ const isLoading = ref(false);
 const error = ref('');
 const emailError = ref('');
 const passwordError = ref('');
+
+// Magic Link
+const showMagicLinkForm = ref(false);
+const magicLinkEmail = ref('');
+const isSendingMagicLink = ref(false);
+const magicLinkSent = ref(false);
 
 const validateForm = (): boolean => {
   let isValid = true;
@@ -130,6 +181,51 @@ const handleLogin = async () => {
     error.value = err.response?.data?.message || 'Une erreur est survenue lors de la connexion';
   } finally {
     isLoading.value = false;
+  }
+};
+
+const loginWithGoogle = () => {
+  const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+  window.location.href = `${backendUrl}/auth/google`;
+};
+
+const sendMagicLink = async () => {
+  if (!magicLinkEmail.value) {
+    notifyError('Veuillez entrer votre email');
+    return;
+  }
+
+  const emailValidation = validateEmail(magicLinkEmail.value);
+  if (emailValidation) {
+    notifyError(emailValidation);
+    return;
+  }
+
+  isSendingMagicLink.value = true;
+  magicLinkSent.value = false;
+
+  try {
+    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+    const response = await fetch(`${backendUrl}/auth/magic-link/send`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: magicLinkEmail.value })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      magicLinkSent.value = true;
+      success('Lien magique envoyé ! Vérifiez votre email.');
+    } else {
+      notifyError(data.message || 'Erreur lors de l\'envoi du lien');
+    }
+  } catch (err) {
+    notifyError('Erreur lors de l\'envoi du lien magique');
+  } finally {
+    isSendingMagicLink.value = false;
   }
 };
 </script>
@@ -286,22 +382,106 @@ input:focus {
   cursor: not-allowed;
 }
 
+.auth-divider {
+  margin: 2rem 0;
+  text-align: center;
+  position: relative;
+}
+
+.auth-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.auth-divider span {
+  position: relative;
+  background-color: #fff;
+  padding: 0 1rem;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.auth-alternatives {
+  margin-bottom: 2rem;
+}
+
+.auth-alt-button {
+  width: 100%;
+  padding: 0.9rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-weight: 500;
+}
+
+.auth-alt-button:hover:not(:disabled) {
+  background-color: #f8f8f8;
+  border-color: #999;
+}
+
+.auth-alt-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.google-button {
+  color: #4285f4;
+  border-color: #4285f4;
+}
+
+.google-button:hover:not(:disabled) {
+  background-color: #4285f4;
+  color: #fff;
+}
+
+.magic-link-button {
+  color: #111;
+}
+
+.magic-link-form {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+}
+
+.magic-link-input {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  color: #28a745;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
 .auth-footer {
   margin-top: 2rem;
   text-align: center;
-  font-size: 0.9rem;
-  color: #777;
+  color: #666;
 }
 
 .auth-link {
   color: #111;
-  text-decoration: none;
+  text-decoration: underline;
   font-weight: 500;
-  transition: color 0.3s;
 }
 
 .auth-link:hover {
-  color: #000;
-  text-decoration: underline;
+  color: #555;
 }
 </style>

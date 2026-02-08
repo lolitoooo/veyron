@@ -134,6 +134,16 @@ exports.login = async (req, res) => {
       await user.resetLoginAttempts();
     }
 
+    const userWith2FA = await User.findById(user._id).select('twoFactorEnabled');
+    if (userWith2FA.twoFactorEnabled) {
+      return res.status(200).json({
+        success: true,
+        requires2FA: true,
+        userId: user._id,
+        message: 'Veuillez entrer votre code d\'authentification à deux facteurs'
+      });
+    }
+
     user.lastLogin = Date.now();
     await user.save({ validateBeforeSave: false });
 
@@ -376,4 +386,19 @@ const sendTokenResponse = (user, statusCode, res) => {
         lastLogin: user.lastLogin
       }
     });
+};
+
+exports.logout = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      message: 'Déconnexion réussie'
+    });
+  } catch (err) {
+    console.error('Erreur lors de la déconnexion:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la déconnexion'
+    });
+  }
 };

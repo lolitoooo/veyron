@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
 const path = require('path');
+const passport = require('passport');
 const { startPasswordExpiryJob } = require('./jobs/passwordExpiryJob');
 
 dotenv.config({ path: path.resolve(__dirname, `.env.${process.env.NODE_ENV || 'development'}`) });
@@ -11,6 +12,12 @@ connectDB();
 startPasswordExpiryJob();
 
 const app = express();
+
+// Initialiser Passport pour OAuth
+app.use(passport.initialize());
+
+// Charger la configuration OAuth (doit être après l'initialisation de passport)
+require('./controllers/oauthController');
 
 // IMPORTANT: Stripe webhook a besoin du body brut pour vérifier la signature.
 // Ce middleware doit être défini AVANT express.json().
@@ -79,6 +86,9 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth/2fa', require('./routes/twoFactor'));
+app.use('/api/auth/magic-link', require('./routes/magicLink'));
+app.use('/api/auth', require('./routes/oauth'));
 app.use('/api/user', require('./routes/user'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/orders', require('./routes/orders'));

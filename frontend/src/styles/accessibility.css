@@ -115,9 +115,9 @@ button,
 }
 
 button:hover:not(:disabled),
-.btn:hover:not(:disabled) {
+/* .btn:hover:not(:disabled) {
   transform: translateY(-1px);
-}
+} */
 
 button:active:not(:disabled),
 .btn:active:not(:disabled) {
