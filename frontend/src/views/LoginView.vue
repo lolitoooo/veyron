@@ -124,16 +124,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useValidation } from '@/composables/useValidation';
 import { useNotification } from '@/composables/useNotification';
+import { useAnalytics } from '@/composables/useAnalytics';
 
 const router = useRouter();
 const authStore = useAuthStore();
 const { validateEmail, validateRequired } = useValidation();
 const { success, error: notifyError } = useNotification();
+const { trackLogin } = useAnalytics();
 
 const email = ref('');
 const password = ref('');
@@ -172,6 +174,7 @@ const handleLogin = async () => {
     const loginSuccess = await authStore.login(email.value, password.value);
     
     if (loginSuccess) {
+      trackLogin('email');
       success('Connexion réussie');
       await router.push({ path: '/account' });
     } else {

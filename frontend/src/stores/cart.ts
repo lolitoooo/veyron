@@ -7,9 +7,11 @@ interface CartItemWithStock extends CartItem {
 }
 import { useAuthStore } from './auth';
 import api from '@/services/apiService';
+import { useAnalytics } from '@/composables/useAnalytics';
 
 export const useCartStore = defineStore('cart', () => {
   const authStore = useAuthStore();
+  const { trackAddToCart, trackRemoveFromCart } = useAnalytics();
   const items = ref<CartItemWithStock[]>([]);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
@@ -173,6 +175,8 @@ export const useCartStore = defineStore('cart', () => {
         saveCartToLocalStorage();
       }
       
+      trackAddToCart(item.productId, item.name, item.price, item.quantity);
+      
       return true;
     } catch (err: any) {
       console.error('Erreur dans addToCart:', err);
@@ -215,6 +219,9 @@ export const useCartStore = defineStore('cart', () => {
     );
     
     if (index !== -1) {
+      const removedItem = items.value[index];
+      trackRemoveFromCart(removedItem.productId, removedItem.name);
+      
       items.value.splice(index, 1);
       
       if (items.value.length === 0) {

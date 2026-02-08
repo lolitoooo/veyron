@@ -27,11 +27,13 @@ import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useNotification } from '@/composables/useNotification';
+import { useAnalytics } from '@/composables/useAnalytics';
 
 const router = useRouter();
 const route = useRoute();
 const authStore = useAuthStore();
 const { success, error: notifyError } = useNotification();
+const analytics = useAnalytics();
 
 const isLoading = ref(true);
 const error = ref('');
@@ -72,6 +74,7 @@ onMounted(async () => {
         authStore.user = data.user;
         authStore.token = data.token;
         
+        analytics.trackLogin('magic_link');
         success('Connexion réussie');
         router.push('/account');
       }

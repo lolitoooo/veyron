@@ -141,8 +141,8 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
-import { useValidation } from '@/composables/useValidation';
 import { useNotification } from '@/composables/useNotification';
+import { useAnalytics } from '@/composables/useAnalytics';
 import { usePasswordStrength } from '@/composables/usePasswordStrength';
 import PasswordStrengthIndicator from '@/components/PasswordStrengthIndicator.vue';
 
@@ -150,6 +150,7 @@ const router = useRouter();
 const authStore = useAuthStore();
 const { validateEmail, validateRequired, validatePassword, validateMinLength } = useValidation();
 const { success, error: notifyError } = useNotification();
+const { trackSignup } = useAnalytics();
 
 const firstName = ref('');
 const lastName = ref('');
@@ -218,6 +219,7 @@ const handleRegister = async () => {
     });
     
     if (registerSuccess) {
+      trackSignup('email');
       success('Compte créé avec succès');
       router.push('/account');
     } else {
