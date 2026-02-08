@@ -116,11 +116,11 @@
               <span v-else>Envoyer</span>
             </button>
             
-            <div v-if="success" class="success-message">
+            <div v-if="success" class="success-message" role="alert" aria-live="polite">
               Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.
             </div>
             
-            <div v-if="error" class="error-message">
+            <div v-if="error" class="error-message" role="alert" aria-live="polite">
               {{ error }}
             </div>
           </form>

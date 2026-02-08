@@ -188,7 +188,7 @@ const questions = [
 const filteredQuestions = computed(() => {
   let result = questions;
   
-  if (activeCategory !== 'all') {
+  if (activeCategory.value !== 'all') {
     result = result.filter(q => q.category === activeCategory.value);
   }
   

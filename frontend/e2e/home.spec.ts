@@ -31,7 +31,7 @@ test.describe('Page d\'accueil', () => {
     const acceptButton = page.getByRole('button', { name: /accepter/i })
     if (await acceptButton.isVisible({ timeout: 2000 })) {
       await acceptButton.click()
-      await expect(page.locator('.cookie-banner')).not.toBeVisible()
+      await expect(page.locator('.cookie-banner')).toBeHidden()
     }
   })
 

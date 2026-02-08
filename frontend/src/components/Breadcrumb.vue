@@ -227,7 +227,7 @@ const generateBreadcrumbs = async () => {
     }
   }
   
-  let currentPath = '';
+  const currentPath = '';
   
   for (let i = 1; i < matchedRoutes.length; i++) {
     const routeItem = matchedRoutes[i];

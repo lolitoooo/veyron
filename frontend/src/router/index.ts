@@ -178,6 +178,12 @@ const router = createRouter({
           component: () => import('@/views/legal/CookiesView.vue'),
           meta: { title: 'Politique des cookies | VEYRON', breadcrumb: 'Politique des cookies' }
         },
+        {
+          path: 'accessibility',
+          name: 'accessibility',
+          component: () => import('@/views/legal/AccessibilityView.vue'),
+          meta: { title: 'Déclaration d\'accessibilité | VEYRON', breadcrumb: 'Accessibilité' }
+        },
       ]
     },
     {
@@ -409,6 +415,15 @@ router.beforeEach(async (to, from, next) => {
   }
   
   next()
+})
+
+// Accessibilité : Gérer le focus après changement de route (SPA)
+router.afterEach(() => {
+  // Déplacer le focus sur le contenu principal pour les lecteurs d'écran
+  const mainContent = document.getElementById('main-content')
+  if (mainContent) {
+    mainContent.focus()
+  }
 })
 
 export default router

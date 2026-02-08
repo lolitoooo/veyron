@@ -15,11 +15,16 @@
       
       <!-- Sections pliables pour mobile -->
       <div class="footer-section collapsible-section">
-        <div class="section-header" @click="toggleSection('about')">
+        <button 
+          class="section-header" 
+          @click="toggleSection('about')"
+          :aria-expanded="openSections.about"
+          aria-controls="footer-about"
+        >
           <h4>À propos</h4>
-          <i class="material-icons toggle-icon" :class="{ 'rotated': openSections.about }">expand_more</i>
-        </div>
-        <ul :class="{ 'expanded': openSections.about }">
+          <i class="material-icons toggle-icon" :class="{ 'rotated': openSections.about }" aria-hidden="true">expand_more</i>
+        </button>
+        <ul id="footer-about" :class="{ 'expanded': openSections.about }">
           <li><router-link to="/about">Notre histoire</router-link></li>
           <li><router-link to="/sustainability">Développement durable</router-link></li>
           <li><router-link to="/careers">Carrières</router-link></li>
@@ -27,11 +32,16 @@
       </div>
       
       <div class="footer-section collapsible-section">
-        <div class="section-header" @click="toggleSection('service')">
+        <button 
+          class="section-header" 
+          @click="toggleSection('service')"
+          :aria-expanded="openSections.service"
+          aria-controls="footer-service"
+        >
           <h4>Service client</h4>
-          <i class="material-icons toggle-icon" :class="{ 'rotated': openSections.service }">expand_more</i>
-        </div>
-        <ul :class="{ 'expanded': openSections.service }">
+          <i class="material-icons toggle-icon" :class="{ 'rotated': openSections.service }" aria-hidden="true">expand_more</i>
+        </button>
+        <ul id="footer-service" :class="{ 'expanded': openSections.service }">
           <li><router-link to="/contact">Contact</router-link></li>
           <li><router-link to="/faq">FAQ</router-link></li>
           <li><router-link to="/returns">Retours et échanges</router-link></li>
@@ -40,16 +50,22 @@
       </div>
       
       <div class="footer-section collapsible-section">
-        <div class="section-header" @click="toggleSection('legal')">
+        <button 
+          class="section-header" 
+          @click="toggleSection('legal')"
+          :aria-expanded="openSections.legal"
+          aria-controls="footer-legal"
+        >
           <h4>Informations légales</h4>
-          <i class="material-icons toggle-icon" :class="{ 'rotated': openSections.legal }">expand_more</i>
-        </div>
-        <ul :class="{ 'expanded': openSections.legal }">
+          <i class="material-icons toggle-icon" :class="{ 'rotated': openSections.legal }" aria-hidden="true">expand_more</i>
+        </button>
+        <ul id="footer-legal" :class="{ 'expanded': openSections.legal }">
           <li><router-link to="/terms">Conditions générales</router-link></li>
           <li><router-link to="/cgu">CGU</router-link></li>
           <li><router-link to="/privacy">Politique de confidentialité</router-link></li>
           <li><router-link to="/cookies">Politique des cookies</router-link></li>
           <li><router-link to="/legal">Mentions légales</router-link></li>
+          <li><router-link to="/accessibility">Accessibilité</router-link></li>
         </ul>
       </div>
     </div>
@@ -223,6 +239,12 @@ const openCookieSettings = () => {
   justify-content: space-between;
   align-items: center;
   cursor: default;
+  background: none;
+  border: none;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  font-family: inherit;
 }
 
 .toggle-icon {

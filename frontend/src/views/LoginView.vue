@@ -3,8 +3,8 @@
     <div class="auth-form-container">
       <h1 class="auth-title">Connexion</h1>
       
-      <div v-if="error" class="auth-error">
-        <i class="material-icons">error</i>
+      <div v-if="error" class="auth-error" role="alert" aria-live="polite">
+        <i class="material-icons" aria-hidden="true">error</i>
         {{ error }}
       </div>
       
@@ -17,8 +17,10 @@
             v-model="email" 
             required 
             :class="{ 'input-error': emailError }"
+            :aria-invalid="!!emailError"
+            :aria-describedby="emailError ? 'email-error' : undefined"
           />
-          <p v-if="emailError" class="error-message">{{ emailError }}</p>
+          <p v-if="emailError" id="email-error" class="error-message" role="alert">{{ emailError }}</p>
         </div>
         
         <div class="form-group">
@@ -30,16 +32,19 @@
               v-model="password" 
               required
               :class="{ 'input-error': passwordError }"
+              :aria-invalid="!!passwordError"
+              :aria-describedby="passwordError ? 'password-error' : undefined"
             />
             <button 
               type="button" 
               class="toggle-password" 
               @click="showPassword = !showPassword"
+              :aria-label="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
             >
-              <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+              <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" aria-hidden="true"></i>
             </button>
           </div>
-          <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
+          <p v-if="passwordError" id="password-error" class="error-message" role="alert">{{ passwordError }}</p>
         </div>
         
         <div class="form-actions">

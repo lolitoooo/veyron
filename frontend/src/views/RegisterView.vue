@@ -3,7 +3,7 @@
     <div class="auth-form-container">
       <h1 class="auth-title">Créer un compte</h1>
       
-      <div v-if="error" class="auth-error">
+      <div v-if="error" class="auth-error" role="alert" aria-live="polite">
         {{ error }}
       </div>
       
@@ -17,8 +17,10 @@
               v-model="firstName" 
               required 
               :class="{ 'input-error': firstNameError }"
+              :aria-invalid="!!firstNameError"
+              :aria-describedby="firstNameError ? 'firstName-error' : undefined"
             />
-            <p v-if="firstNameError" class="error-message">{{ firstNameError }}</p>
+            <p v-if="firstNameError" id="firstName-error" class="error-message" role="alert">{{ firstNameError }}</p>
           </div>
           
           <div class="form-group">
@@ -29,8 +31,10 @@
               v-model="lastName" 
               required 
               :class="{ 'input-error': lastNameError }"
+              :aria-invalid="!!lastNameError"
+              :aria-describedby="lastNameError ? 'lastName-error' : undefined"
             />
-            <p v-if="lastNameError" class="error-message">{{ lastNameError }}</p>
+            <p v-if="lastNameError" id="lastName-error" class="error-message" role="alert">{{ lastNameError }}</p>
           </div>
         </div>
         
@@ -42,8 +46,10 @@
             v-model="email" 
             required 
             :class="{ 'input-error': emailError }"
+            :aria-invalid="!!emailError"
+            :aria-describedby="emailError ? 'email-error' : undefined"
           />
-          <p v-if="emailError" class="error-message">{{ emailError }}</p>
+          <p v-if="emailError" id="email-error" class="error-message" role="alert">{{ emailError }}</p>
         </div>
         
         <div class="form-group">
@@ -55,18 +61,21 @@
               v-model="password" 
               required
               :class="{ 'input-error': passwordError }"
+              :aria-invalid="!!passwordError"
+              aria-describedby="password-hint password-error"
             />
             <button 
               type="button" 
               class="toggle-password" 
               @click="showPassword = !showPassword"
+              :aria-label="showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
             >
-              <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+              <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" aria-hidden="true"></i>
             </button>
           </div>
           <PasswordStrengthIndicator :strength="passwordStrength" />
-          <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
-          <p class="password-hint">Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un symbole.</p>
+          <p v-if="passwordError" id="password-error" class="error-message" role="alert">{{ passwordError }}</p>
+          <p id="password-hint" class="password-hint">Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un symbole.</p>
         </div>
         
         <div class="form-group">
@@ -78,24 +87,34 @@
               v-model="confirmPassword" 
               required
               :class="{ 'input-error': confirmPasswordError }"
+              :aria-invalid="!!confirmPasswordError"
+              :aria-describedby="confirmPasswordError ? 'confirmPassword-error' : undefined"
             />
             <button 
               type="button" 
               class="toggle-password" 
               @click="showConfirmPassword = !showConfirmPassword"
+              :aria-label="showConfirmPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
             >
-              <i :class="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+              <i :class="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" aria-hidden="true"></i>
             </button>
           </div>
-          <p v-if="confirmPasswordError" class="error-message">{{ confirmPasswordError }}</p>
+          <p v-if="confirmPasswordError" id="confirmPassword-error" class="error-message" role="alert">{{ confirmPasswordError }}</p>
         </div>
         
         <div class="form-group terms">
-          <input type="checkbox" id="terms" v-model="acceptTerms" required />
+          <input 
+            type="checkbox" 
+            id="terms" 
+            v-model="acceptTerms" 
+            required 
+            :aria-invalid="!!termsError"
+            :aria-describedby="termsError ? 'terms-error' : undefined"
+          />
           <label for="terms">
             J'accepte les <router-link to="/terms" class="terms-link">conditions générales</router-link> et la <router-link to="/privacy" class="terms-link">politique de confidentialité</router-link>
           </label>
-          <p v-if="termsError" class="error-message">{{ termsError }}</p>
+          <p v-if="termsError" id="terms-error" class="error-message" role="alert">{{ termsError }}</p>
         </div>
         
         <button 

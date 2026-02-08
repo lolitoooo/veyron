@@ -1,7 +1,7 @@
 <template>
   <div class="main-layout">
     <TheHeader />
-    <main class="content" :class="{ 'home-content': isHomePage }">
+    <main id="main-content" class="content" :class="{ 'home-content': isHomePage }" tabindex="-1">
       <Breadcrumb v-if="!isHomePage" class="breadcrumb-container" />
       <RouterView />
     </main>
@@ -39,6 +39,10 @@ const isHomePage = computed(() => route.path === '/');
   padding-top: calc(80px + env(safe-area-inset-top));
   width: 100%;
   max-width: 100%;
+}
+
+.content:focus {
+  outline: none;
 }
 
 .home-content {

@@ -6,7 +6,7 @@
     </div>
     
     <div class="categories-grid">
-      <div class="category-card" @click="navigateToCategory('homme')">
+      <router-link to="/category/homme" class="category-card">
         <div class="category-image">
           <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Collection Homme" />
           <div class="category-overlay">
@@ -15,9 +15,9 @@
             <span class="explore-button">Explorer</span>
           </div>
         </div>
-      </div>
+      </router-link>
       
-      <div class="category-card" @click="navigateToCategory('femme')">
+      <router-link to="/category/femme" class="category-card">
         <div class="category-image">
           <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Collection Femme" />
           <div class="category-overlay">
@@ -26,9 +26,9 @@
             <span class="explore-button">Explorer</span>
           </div>
         </div>
-      </div>
+      </router-link>
       
-      <div class="category-card" @click="navigateToCategory('accessoires')">
+      <router-link to="/category/accessoires" class="category-card">
         <div class="category-image">
           <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Accessoires" />
           <div class="category-overlay">
@@ -37,9 +37,9 @@
             <span class="explore-button">Explorer</span>
           </div>
         </div>
-      </div>
+      </router-link>
       
-      <div class="category-card" @click="navigateToCategory('collections')">
+      <router-link to="/category/collections" class="category-card">
         <div class="category-image">
           <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Collections Exclusives" />
           <div class="category-overlay">
@@ -48,20 +48,10 @@
             <span class="explore-button">Explorer</span>
           </div>
         </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-
-const navigateToCategory = (slug: string) => {
-  router.push(`/category/${slug}`);
-};
-</script>
 
 <style scoped>
 .categories-page {
@@ -99,11 +89,14 @@ const navigateToCategory = (slug: string) => {
 
 .category-card {
   position: relative;
-  cursor: pointer;
   overflow: hidden;
-  border-radius: 4px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  display: block;
+  color: inherit;
 }
 
 .category-card:hover {
