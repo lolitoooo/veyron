@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Design VEYRON</title>
+    <link rel="stylesheet" href="src/styles/design-system.css">
+    <style>
+        body {
+            padding: 40px;
+            background: var(--color-off-white);
+        }
+        
+        .test-section {
+            margin-bottom: 60px;
+            padding: 40px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .test-section h2 {
+            margin-bottom: 30px;
+            color: var(--color-primary);
+            border-bottom: 1px solid var(--color-secondary);
+            padding-bottom: 10px;
+        }
+        
+        .logo-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo-variant {
+            padding: 20px;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 4px;
+        }
+        
+        .logo-variant.dark {
+            background: var(--color-primary);
+        }
+        
+        .monogram-preview {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .color-swatch {
+            text-align: center;
+        }
+        
+        .color-box {
+            width: 100%;
+            height: 100px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border: 1px solid var(--color-gray-300);
+        }
+        
+        .color-name {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .color-value {
+            font-size: 11px;
+            color: var(--color-gray-500);
+            font-family: monospace;
+        }
+        
+        .typography-sample {
+            margin-bottom: 30px;
+        }
+        
+        .bg-with-monogram {
+            position: relative;
+            padding: 60px;
+            background: var(--color-off-white);
+            overflow: hidden;
+        }
+        
+        .bg-with-monogram::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('src/assets/monogramme-clean.svg');
+            background-repeat: repeat-y;
+            background-size: 150px auto;
+            background-position: left center;
+            opacity: 0.06;
+            pointer-events: none;
+        }
+        
+        .bg-with-monogram > * {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 60px;">VEYRON - Test Design System</h1>
+        
+        <!-- Test Logo -->
+        <div class="test-section">
+            <h2>Logo</h2>
+            <div class="logo-container">
+                <div class="logo-variant">
+                    <p style="margin-bottom: 10px; font-size: 12px; color: var(--color-gray-500);">Sur fond clair</p>
+                    <img src="src/assets/logo-veyron.svg" alt="Logo VEYRON" style="height: 80px;">
+                </div>
+                <div class="logo-variant dark">
+                    <p style="margin-bottom: 10px; font-size: 12px; color: white;">Sur fond foncé</p>
+                    <img src="src/assets/logo-veyron.svg" alt="Logo VEYRON" style="height: 80px; filter: invert(1);">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Test Monogramme -->
+        <div class="test-section">
+            <h2>Monogramme décoratif</h2>
+            <div class="monogram-preview">
+                <img src="src/assets/monogramme.svg" alt="Monogramme" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <p style="margin-top: 20px; color: var(--color-gray-500); font-size: 14px;">
+                Ce monogramme sera utilisé en arrière-plan sur les côtés des pages, avec une opacité très faible (0.06) pour créer une texture élégante et subtile.
+            </p>
+        </div>
+        
+        <!-- Test Background avec Monogramme -->
+        <div class="test-section">
+            <h2>Background avec Monogramme</h2>
+            <div class="bg-with-monogram">
+                <h3>Exemple de contenu avec monogramme en arrière-plan</h3>
+                <p>Le monogramme apparaît en filigrane subtil derrière le contenu, créant une texture élégante sans perturber la lisibilité.</p>
+                <p>L'opacité est réglée à 0.05 pour un effet très discret et raffiné.</p>
+            </div>
+        </div>
+        
+        <!-- Palette de couleurs -->
+        <div class="test-section">
+            <h2>Palette de couleurs</h2>
+            <div class="color-palette">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: var(--color-primary);"></div>
+                    <div class="color-name">Primary</div>
+                    <div class="color-value">#1a1a1a</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: var(--color-secondary);"></div>
+                    <div class="color-name">Secondary</div>
+                    <div class="color-value">#c9a961</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: var(--color-accent);"></div>
+                    <div class="color-name">Accent</div>
+                    <div class="color-value">#8b7355</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: var(--color-off-white); border: 2px solid var(--color-gray-300);"></div>
+                    <div class="color-name">Off White</div>
+                    <div class="color-value">#fafaf8</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: var(--color-cream); border: 2px solid var(--color-gray-300);"></div>
+                    <div class="color-name">Cream</div>
+                    <div class="color-value">#f5f3ef</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Typographie -->
+        <div class="test-section">
+            <h2>Typographie</h2>
+            
+            <div class="typography-sample">
+                <h1>Heading 1 - Cormorant Garamond</h1>
+                <h2>Heading 2 - Élégance et raffinement</h2>
+                <h3>Heading 3 - Design minimaliste</h3>
+                <h4>Heading 4 - Artisanat de luxe</h4>
+                <p style="font-family: var(--font-secondary);">
+                    Texte courant en Montserrat. Une police sans-serif moderne et lisible, 
+                    parfaite pour les paragraphes et le contenu informatif. Elle apporte 
+                    une touche contemporaine tout en restant élégante.
+                </p>
+                <p style="font-family: var(--font-primary); font-size: var(--text-lg);">
+                    Citation en Cormorant Garamond. Cette police serif apporte une touche 
+                    d'élégance classique et de sophistication, idéale pour les titres et 
+                    les éléments mis en avant.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Boutons -->
+        <div class="test-section">
+            <h2>Éléments UI</h2>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <button style="
+                    padding: 12px 32px;
+                    background: var(--color-primary);
+                    color: white;
+                    border: none;
+                    font-family: var(--font-secondary);
+                    font-size: var(--text-sm);
+                    letter-spacing: 0.1em;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    transition: var(--transition-base);
+                ">Bouton Primary</button>
+                
+                <button style="
+                    padding: 12px 32px;
+                    background: transparent;
+                    color: var(--color-primary);
+                    border: 1px solid var(--color-primary);
+                    font-family: var(--font-secondary);
+                    font-size: var(--text-sm);
+                    letter-spacing: 0.1em;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    transition: var(--transition-base);
+                ">Bouton Outline</button>
+                
+                <button style="
+                    padding: 12px 32px;
+                    background: var(--color-secondary);
+                    color: var(--color-primary);
+                    border: none;
+                    font-family: var(--font-secondary);
+                    font-size: var(--text-sm);
+                    letter-spacing: 0.1em;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    transition: var(--transition-base);
+                ">Bouton Secondary</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

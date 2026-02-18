@@ -1,5 +1,6 @@
 import './assets/main.css'
 import './styles/accessibility.css'
+import './styles/design-system.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

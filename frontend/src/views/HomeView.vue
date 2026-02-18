@@ -59,7 +59,7 @@ const stopAutoSlide = () => {
 </script>
 
 <template>
-  <main class="home">
+  <main class="home bg-monogram bg-monogram-right">
     <div class="hero desktop-hero">
       <h1 class="brand-name">VEYRON</h1>
       <p class="tagline">L'élégance parisienne</p>

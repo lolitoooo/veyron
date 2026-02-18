@@ -761,23 +761,23 @@ onUnmounted(() => {
 
 .filter-button {
   padding: 0.5rem 1.5rem;
-  border: 1px solid #007bff;
+  border: 1px solid #c9a961;
   background-color: #fff;
-  color: #007bff;
+  color: #c9a961;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .filter-button:hover {
-  background-color: #007bff;
+  background-color: #c9a961;
   color: #fff;
 }
 
 .filter-button.active {
-  background-color: #007bff;
+  background-color: #c9a961;
   color: #fff;
-  border-color: #0056b3;
+  border-color: #8b7355;
 }
 
 .category-content {
@@ -887,7 +887,7 @@ onUnmounted(() => {
 .price-range-selected {
   position: absolute;
   height: 100%;
-  background-color: #007bff;
+  background-color: #c9a961;
   border-radius: 2px;
 }
 
@@ -898,7 +898,7 @@ onUnmounted(() => {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: #007bff;
+  background-color: #c9a961;
   border: 2px solid #fff;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
@@ -960,7 +960,7 @@ onUnmounted(() => {
 .see-more button {
   background: none;
   border: none;
-  color: #007bff;
+  color: #c9a961;
   font-size: 0.9rem;
   cursor: pointer;
   padding: 0;
