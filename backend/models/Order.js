@@ -124,12 +124,47 @@ const OrderSchema = new mongoose.Schema({
   carrier: {
     type: String
   },
+  shippingLabelUrl: {
+    type: String
+  },
+  shippingLabelPath: {
+    type: String
+  },
+  shippingLabelGeneratedAt: {
+    type: Date
+  },
   notes: {
     type: String
   },
+  returnStatus: {
+    type: String,
+    enum: ['none', 'requested', 'label_generated', 'in_transit', 'received', 'completed'],
+    default: 'none'
+  },
+  returnReason: {
+    type: String
+  },
+  returnRequestedAt: {
+    type: Date
+  },
+  returnTrackingNumber: {
+    type: String
+  },
+  returnLabelUrl: {
+    type: String
+  },
+  returnLabelPath: {
+    type: String
+  },
+  returnLabelGeneratedAt: {
+    type: Date
+  },
+  returnReceivedAt: {
+    type: Date
+  },
   refundStatus: {
     type: String,
-    enum: ['none', 'requested', 'partial', 'full'],
+    enum: ['none', 'pending', 'processing', 'partial', 'full', 'failed'],
     default: 'none'
   },
   refundAmount: {
@@ -141,6 +176,9 @@ const OrderSchema = new mongoose.Schema({
   },
   refundedAt: {
     type: Date
+  },
+  stripeRefundId: {
+    type: String
   },
   promoCode: {
     code: { type: String },

@@ -98,6 +98,7 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/cart', require('./routes/cart'));
 app.use('/api/stripe', require('./routes/stripe'));
 app.use('/api/wishlist', require('./routes/wishlist'));
+app.use('/api/shipping-labels', require('./routes/shipping-labels'));
 app.use('/api/promo-codes', require('./routes/promoCode'));
 app.use('/api/shipping', require('./routes/shipping'));
 app.use('/api/contact', require('./routes/contact'));

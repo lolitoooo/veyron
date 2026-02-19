@@ -151,6 +151,87 @@
         </div>
       </div>
       
+      <div class="shipping-section" v-if="order.isPaid">
+        <h3>Gestion de la livraison</h3>
+        <div class="shipping-cards">
+          <div class="shipping-card">
+            <h4>Étiquette d'envoi</h4>
+            <div v-if="order.shippingLabelUrl">
+              <p class="success-text">✓ Étiquette générée le {{ formatDate(order.shippingLabelGeneratedAt) }}</p>
+              <p><strong>N° de suivi:</strong> {{ order.trackingNumber }}</p>
+              <p><strong>Transporteur:</strong> {{ order.carrier }}</p>
+              <button class="btn btn-secondary" @click="downloadLabel(order.shippingLabelUrl)">
+                Télécharger l'étiquette
+              </button>
+            </div>
+            <div v-else>
+              <p>Aucune étiquette générée</p>
+              <button 
+                class="btn btn-primary" 
+                @click="generateShippingLabel"
+                :disabled="generatingLabel"
+              >
+                {{ generatingLabel ? 'Génération...' : 'Générer l\'étiquette d\'envoi' }}
+              </button>
+            </div>
+          </div>
+
+          <div class="shipping-card" v-if="order.returnStatus !== 'none'">
+            <h4>Retour produit</h4>
+            <p><strong>Statut:</strong> <span :class="['status-badge', `status-${order.returnStatus}`]">{{ getReturnStatusLabel(order.returnStatus) }}</span></p>
+            <p v-if="order.returnReason"><strong>Raison:</strong> {{ order.returnReason }}</p>
+            <p v-if="order.returnRequestedAt"><strong>Demandé le:</strong> {{ formatDate(order.returnRequestedAt) }}</p>
+            
+            <div v-if="order.returnLabelUrl">
+              <p class="success-text">✓ Étiquette retour générée le {{ formatDate(order.returnLabelGeneratedAt) }}</p>
+              <p v-if="order.returnTrackingNumber"><strong>N° de suivi retour:</strong> {{ order.returnTrackingNumber }}</p>
+              <button class="btn btn-secondary" @click="downloadLabel(order.returnLabelUrl)">
+                Télécharger l'étiquette retour
+              </button>
+            </div>
+            <div v-else-if="order.returnStatus === 'requested'">
+              <button 
+                class="btn btn-primary" 
+                @click="showReturnLabelModal = true"
+                :disabled="generatingReturnLabel"
+              >
+                {{ generatingReturnLabel ? 'Génération...' : 'Générer l\'étiquette de retour' }}
+              </button>
+            </div>
+
+            <div class="return-status-update" style="margin-top: 1rem;">
+              <label>Mettre à jour le statut du retour:</label>
+              <select v-model="newReturnStatus" class="form-select">
+                <option value="requested">Demandé</option>
+                <option value="label_generated">Étiquette générée</option>
+                <option value="in_transit">En transit</option>
+                <option value="received">Reçu</option>
+                <option value="completed">Terminé</option>
+              </select>
+              <button class="btn btn-secondary" @click="updateReturnStatus" style="margin-top: 0.5rem;">
+                Mettre à jour
+              </button>
+            </div>
+          </div>
+
+          <div class="shipping-card" v-if="order.isPaid && order.refundStatus !== 'full'">
+            <h4>Remboursement</h4>
+            <div v-if="order.refundStatus !== 'none'">
+              <p><strong>Statut:</strong> <span :class="['status-badge', `status-${order.refundStatus}`]">{{ getRefundStatusLabel(order.refundStatus) }}</span></p>
+              <p v-if="order.refundAmount"><strong>Montant remboursé:</strong> {{ formatPrice(order.refundAmount) }}</p>
+              <p v-if="order.refundedAt"><strong>Date:</strong> {{ formatDate(order.refundedAt) }}</p>
+              <p v-if="order.refundReason"><strong>Raison:</strong> {{ order.refundReason }}</p>
+            </div>
+            <div v-else>
+              <p>Aucun remboursement effectué</p>
+              <button class="btn btn-warning" @click="showRefundModal = true">
+                Effectuer un remboursement
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="order-items">
         <h3>Articles commandés</h3>
         <div class="items-table-container">
@@ -223,6 +304,84 @@
           @click="updateOrderStatus"
         >
           Mettre à jour
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div v-if="showReturnLabelModal" class="modal">
+    <div class="modal-content">
+      <h3>Générer une étiquette de retour</h3>
+      
+      <div class="form-group">
+        <label for="returnReason">Raison du retour (optionnel)</label>
+        <textarea 
+          id="returnReason" 
+          v-model="returnReason" 
+          class="form-control"
+          rows="3"
+          placeholder="Ex: Produit défectueux, taille incorrecte..."
+        ></textarea>
+      </div>
+      
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" @click="showReturnLabelModal = false">Annuler</button>
+        <button 
+          type="button" 
+          class="btn btn-primary" 
+          @click="generateReturnLabel"
+          :disabled="generatingReturnLabel"
+        >
+          {{ generatingReturnLabel ? 'Génération...' : 'Générer l\'étiquette' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div v-if="showRefundModal" class="modal">
+    <div class="modal-content">
+      <h3>Effectuer un remboursement</h3>
+      
+      <p v-if="order">
+        Commande <strong>#{{ order._id.substring(0, 8) }}...</strong><br>
+        Montant total: <strong>{{ formatPrice(order.totalPrice) }}</strong>
+      </p>
+      
+      <div class="form-group">
+        <label for="refundAmount">Montant du remboursement (€)</label>
+        <input 
+          type="number" 
+          id="refundAmount" 
+          v-model.number="refundAmount" 
+          class="form-control"
+          :max="order?.totalPrice"
+          step="0.01"
+          placeholder="Montant à rembourser"
+        />
+        <small>Laisser vide pour un remboursement total</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="refundReason">Raison du remboursement</label>
+        <textarea 
+          id="refundReason" 
+          v-model="refundReasonInput" 
+          class="form-control"
+          rows="3"
+          placeholder="Ex: Retour produit, annulation..."
+          required
+        ></textarea>
+      </div>
+      
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" @click="showRefundModal = false">Annuler</button>
+        <button 
+          type="button" 
+          class="btn btn-warning" 
+          @click="processRefund"
+          :disabled="processingRefund || !refundReasonInput"
+        >
+          {{ processingRefund ? 'Traitement...' : 'Confirmer le remboursement' }}
         </button>
       </div>
     </div>
@@ -329,6 +488,191 @@ async function downloadInvoice(orderId: string) {
 const goBack = () => {
   router.push({ name: 'admin-orders' });
 };
+
+// Gestion des étiquettes et retours
+const generatingLabel = ref(false);
+const generatingReturnLabel = ref(false);
+const showReturnLabelModal = ref(false);
+const showRefundModal = ref(false);
+const returnReason = ref('');
+const newReturnStatus = ref('');
+const refundAmount = ref<number | null>(null);
+const refundReasonInput = ref('');
+const processingRefund = ref(false);
+
+async function generateShippingLabel() {
+  if (!order.value) return;
+  
+  generatingLabel.value = true;
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/shipping-labels/generate/${order.value._id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert(`Étiquette générée avec succès!\nNuméro de suivi: ${data.trackingNumber}`);
+      
+      const blob = await fetch(`data:application/pdf;base64,${data.pdfBase64}`).then(r => r.blob());
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `etiquette_${order.value._id}.pdf`;
+      a.click();
+      
+      await fetchOrderDetails();
+    } else {
+      throw new Error(data.message || 'Erreur lors de la génération');
+    }
+  } catch (error: any) {
+    console.error('Erreur:', error);
+    alert(`Erreur: ${error.message}`);
+  } finally {
+    generatingLabel.value = false;
+  }
+}
+
+async function generateReturnLabel() {
+  if (!order.value) return;
+  
+  generatingReturnLabel.value = true;
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/shipping-labels/return/${order.value._id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ returnReason: returnReason.value })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert(`Étiquette de retour générée!\nNuméro de suivi: ${data.returnTrackingNumber}`);
+      
+      const blob = await fetch(`data:application/pdf;base64,${data.pdfBase64}`).then(r => r.blob());
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `etiquette_retour_${order.value._id}.pdf`;
+      a.click();
+      
+      showReturnLabelModal.value = false;
+      returnReason.value = '';
+      await fetchOrderDetails();
+    } else {
+      throw new Error(data.message || 'Erreur lors de la génération');
+    }
+  } catch (error: any) {
+    console.error('Erreur:', error);
+    alert(`Erreur: ${error.message}`);
+  } finally {
+    generatingReturnLabel.value = false;
+  }
+}
+
+async function updateReturnStatus() {
+  if (!order.value || !newReturnStatus.value) return;
+  
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/shipping-labels/update-return-status/${order.value._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ returnStatus: newReturnStatus.value })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert('Statut de retour mis à jour avec succès');
+      await fetchOrderDetails();
+    } else {
+      throw new Error(data.message || 'Erreur lors de la mise à jour');
+    }
+  } catch (error: any) {
+    console.error('Erreur:', error);
+    alert(`Erreur: ${error.message}`);
+  }
+}
+
+async function processRefund() {
+  if (!order.value || !refundReasonInput.value) return;
+  
+  const confirmMsg = refundAmount.value 
+    ? `Confirmer le remboursement de ${refundAmount.value}€ ?`
+    : `Confirmer le remboursement total de ${order.value.totalPrice}€ ?`;
+  
+  if (!confirm(confirmMsg)) return;
+  
+  processingRefund.value = true;
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/shipping-labels/refund/${order.value._id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ 
+        amount: refundAmount.value || order.value.totalPrice,
+        reason: refundReasonInput.value 
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert(`Remboursement effectué avec succès!\nMontant: ${data.refund.amount}€`);
+      showRefundModal.value = false;
+      refundAmount.value = null;
+      refundReasonInput.value = '';
+      await fetchOrderDetails();
+    } else {
+      throw new Error(data.message || 'Erreur lors du remboursement');
+    }
+  } catch (error: any) {
+    console.error('Erreur:', error);
+    alert(`Erreur: ${error.message}`);
+  } finally {
+    processingRefund.value = false;
+  }
+}
+
+function downloadLabel(labelUrl: string) {
+  window.open(labelUrl, '_blank');
+}
+
+function getReturnStatusLabel(status: string): string {
+  const labels: Record<string, string> = {
+    none: 'Aucun',
+    requested: 'Demandé',
+    label_generated: 'Étiquette générée',
+    in_transit: 'En transit',
+    received: 'Reçu',
+    completed: 'Terminé'
+  };
+  return labels[status] || status;
+}
+
+function getRefundStatusLabel(status: string): string {
+  const labels: Record<string, string> = {
+    none: 'Aucun',
+    pending: 'En attente',
+    processing: 'En cours',
+    partial: 'Partiel',
+    full: 'Complet',
+    failed: 'Échoué'
+  };
+  return labels[status] || status;
+}
 </script>
 
 <style scoped>
@@ -483,6 +827,63 @@ const goBack = () => {
 .summary-row.total {
   font-weight: bold;
   background-color: #f9f9f9;
+}
+
+.shipping-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.shipping-section h3 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.shipping-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.shipping-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shipping-card h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.shipping-card p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.shipping-card .btn {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.success-text {
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.return-status-update {
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.return-status-update label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
 .order-items {
