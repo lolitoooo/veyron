@@ -12,10 +12,20 @@ if (process.env.GLITCHTIP_DSN) {
   console.log('[GlitchTip] Monitoring désactivé (GLITCHTIP_DSN non configuré)');
 }
 
-const requestHandler = Sentry.Handlers.requestHandler();
+const requestHandler = (req, res, next) => {
+  if (process.env.GLITCHTIP_DSN) {
+    Sentry.setContext('request', {
+      url: req.originalUrl,
+      method: req.method,
+      headers: req.headers,
+    });
+  }
+  next();
+};
 
-
-const tracingHandler = Sentry.Handlers.tracingHandler();
+const tracingHandler = (req, res, next) => {
+  next();
+};
 
 const notFound = (req, res, next) => {
   const error = new Error(`Non trouvé - ${req.originalUrl}`);
@@ -74,11 +84,12 @@ const errorHandler = async (err, req, res, next) => {
   });
 };
 
-const sentryErrorHandler = Sentry.Handlers.errorHandler({
-  shouldHandleError(error) {
-    return error.status >= 400;
+const sentryErrorHandler = (err, req, res, next) => {
+  if (process.env.GLITCHTIP_DSN && err.status >= 400) {
+    Sentry.captureException(err);
   }
-});
+  next(err);
+};
 
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
