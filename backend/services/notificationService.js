@@ -54,9 +54,9 @@ class NotificationService {
         title: 'Nouvelle commande',
         priority: 'high',
         tags: 'shopping_cart,money',
-        clickUrl: `https://admin.veyron-paris.fr/orders/${order._id}`,
+        clickUrl: `https://veyron-paris.fr/admin/orders/${order._id}`,
         icon: 'https://veyron-paris.fr/logo.png',
-        actions: `view, Voir la commande, https://admin.veyron-paris.fr/orders/${order._id}`
+        actions: `view, Voir la commande, https://veyron-paris.fr/admin/orders/${order._id}`
       }
     );
   }
@@ -73,8 +73,8 @@ class NotificationService {
         title: 'Nouvelle commande payée',
         priority: 'high',
         tags: 'white_check_mark,money,shopping_cart',
-        clickUrl: `https://admin.veyron-paris.fr/orders/${order._id}`,
-        actions: `view, Voir la commande, https://admin.veyron-paris.fr/orders/${order._id}`
+        clickUrl: `https://veyron-paris.fr/admin/orders/${order._id}`,
+        actions: `view, Voir la commande, https://veyron-paris.fr/admin/orders/${order._id}`
       }
     );
   }
@@ -87,7 +87,7 @@ class NotificationService {
         title: 'Demande de retour',
         priority: 'high',
         tags: 'warning,package',
-        clickUrl: `https://admin.veyron-paris.fr/orders/${order._id}`
+        clickUrl: `https://veyron-paris.fr/admin/orders/${order._id}`
       }
     );
   }
