@@ -10,7 +10,7 @@ services:
       - NTFY_BASE_URL=https://ntfy.veyron-paris.fr
       - NTFY_CACHE_FILE=/var/cache/ntfy/cache.db
       - NTFY_AUTH_FILE=/var/cache/ntfy/auth.db
-      - NTFY_AUTH_DEFAULT_ACCESS=deny-all
+      #- NTFY_AUTH_DEFAULT_ACCESS=deny-all
       - NTFY_BEHIND_PROXY=true
       - NTFY_UPSTREAM_BASE_URL=https://ntfy.sh
       - NTFY_CACHE_DURATION=12h
