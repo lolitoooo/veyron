@@ -6,12 +6,22 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const passport = require('passport');
 const { startPasswordExpiryJob } = require('./jobs/passwordExpiryJob');
+const { 
+  requestHandler, 
+  tracingHandler, 
+  sentryErrorHandler, 
+  notFound, 
+  errorHandler 
+} = require('./middleware/errorHandler');
 
 dotenv.config({ path: path.resolve(__dirname, `.env.${process.env.NODE_ENV || 'development'}`) });
 connectDB();
 startPasswordExpiryJob();
 
 const app = express();
+
+app.use(requestHandler);
+app.use(tracingHandler);
 
 // Initialiser Passport pour OAuth
 app.use(passport.initialize());
@@ -102,6 +112,7 @@ app.use('/api/promo-codes', require('./routes/promoCode'));
 app.use('/api/shipping', require('./routes/shipping'));
 app.use('/api/contact', require('./routes/contact'));
 app.use('/api/loyalty', require('./routes/loyalty'));
+app.use('/api/shipping-labels', require('./routes/shipping-labels'));
 
 app.use('/uploads', express.static('public/uploads', cacheOptions));
 app.use('/images', express.static('public/images', cacheOptions));
@@ -109,6 +120,11 @@ app.use('/images', express.static('public/images', cacheOptions));
 app.get('/', (req, res) => {
   res.send('API VEYRON en ligne');
 });
+
+// Middleware de gestion des erreurs (APRÈS toutes les routes)
+app.use(notFound);
+app.use(sentryErrorHandler);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 

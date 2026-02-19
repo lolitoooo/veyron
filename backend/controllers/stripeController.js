@@ -8,7 +8,7 @@ const invoiceController = require('./invoiceController');
 const { sendEmail } = require('../services/emailService');
 const { orderConfirmationEmailTemplate, activateAccountEmailTemplate } = require('../templates/emailTemplates');
 const User = require('../models/User');
-
+const notificationService = require('../services/notificationService');
 
 const cleanImageUrl = (url) => {
   if (!url) return '';
@@ -215,6 +215,12 @@ exports.createCheckoutSession = async (req, res) => {
     });
     
     const savedOrder = await order.save();
+
+    try {
+      await notificationService.notifyNewOrder(savedOrder);
+    } catch (notifError) {
+      console.error('[Notification] Erreur nouvelle commande:', notifError.message);
+    }
 
     let discountOptions = {};
     
@@ -754,6 +760,12 @@ exports.webhook = async (req, res) => {
         }
         
         await order.save();
+        
+        try {
+          await notificationService.notifyOrderPaid(order);
+        } catch (notifError) {
+          console.error('[Notification] Erreur paiement confirmé:', notifError.message);
+        }
         
         if (order.user) {
           try {
