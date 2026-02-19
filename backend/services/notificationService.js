@@ -62,14 +62,19 @@ class NotificationService {
   }
 
   async notifyOrderPaid(order) {
+    const customerName = order.shippingAddress 
+      ? `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}`
+      : order.guestEmail || 'Client';
+
     await this.sendNotification(
       'veyron-orders',
-      `Paiement confirmé pour la commande #${order._id.substring(0, 8)}\nMontant: ${order.totalPrice.toFixed(2)}€`,
+      `Commande payée par ${customerName}\nMontant: ${order.totalPrice.toFixed(2)}€\nArticles: ${order.orderItems.length}`,
       {
-        title: 'Paiement reçu',
+        title: 'Nouvelle commande payée',
         priority: 'high',
-        tags: 'white_check_mark,money',
-        clickUrl: `https://admin.veyron-paris.fr/orders/${order._id}`
+        tags: 'white_check_mark,money,shopping_cart',
+        clickUrl: `https://admin.veyron-paris.fr/orders/${order._id}`,
+        actions: `view, Voir la commande, https://admin.veyron-paris.fr/orders/${order._id}`
       }
     );
   }

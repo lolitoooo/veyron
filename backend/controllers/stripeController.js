@@ -216,12 +216,6 @@ exports.createCheckoutSession = async (req, res) => {
     
     const savedOrder = await order.save();
 
-    try {
-      await notificationService.notifyNewOrder(savedOrder);
-    } catch (notifError) {
-      console.error('[Notification] Erreur nouvelle commande:', notifError.message);
-    }
-
     let discountOptions = {};
     
     const totalDiscount = discountAmount + cashbackUsed;
