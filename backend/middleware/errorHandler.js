@@ -6,10 +6,6 @@ if (process.env.GLITCHTIP_DSN) {
     dsn: process.env.GLITCHTIP_DSN,
     environment: process.env.NODE_ENV || 'development',
     tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
-    integrations: [
-      new Sentry.Integrations.Http({ tracing: true }),
-      new Sentry.Integrations.Express({ app: true }),
-    ],
   });
   console.log('[GlitchTip] Monitoring d\'erreurs activé');
 } else {
