@@ -1,3 +1,7 @@
+/* === Imports de polices (doivent être en premier en CSS) === */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 /* ========================================
    VEYRON - Design System 2026
    Inspiration: Artisanat de luxe, élégance minimaliste
@@ -123,10 +127,6 @@
   --monogram-opacity: 0.03;
   --monogram-color: var(--color-secondary);
 }
-
-/* === Imports de polices === */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 /* === Reset et base === */
 * {
@@ -395,7 +395,7 @@ select {
   transition: all var(--transition-base);
 }
 
-input:focus,
+input:not([type="checkbox"]):not([type="radio"]):focus,
 textarea:focus,
 select:focus {
   outline: none;

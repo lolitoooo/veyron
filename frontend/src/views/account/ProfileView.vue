@@ -744,7 +744,7 @@ onMounted(() => {
   font-size: 1rem;
 }
 
-.form-group input:focus {
+.form-group input:not([type="checkbox"]):not([type="radio"]):focus {
   border-color: #3498db;
   outline: none;
   box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
@@ -765,14 +765,29 @@ onMounted(() => {
 .checkbox-group {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
-.checkbox-group input {
-  margin-right: 0.5rem;
+.checkbox-group input[type="checkbox"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  accent-color: #3498db;
+}
+
+.checkbox-group input[type="checkbox"]:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+  box-shadow: none;
+  border: none;
 }
 
 .checkbox-group label {
   margin-bottom: 0;
+  flex: 1;
+  font-weight: 500;
 }
 
 .form-actions {

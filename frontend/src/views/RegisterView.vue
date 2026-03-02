@@ -141,6 +141,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
+import { useValidation } from '@/composables/useValidation';
 import { useNotification } from '@/composables/useNotification';
 import { useAnalytics } from '@/composables/useAnalytics';
 import { usePasswordStrength } from '@/composables/usePasswordStrength';

@@ -18,6 +18,10 @@ export default defineConfig(({ mode }) => {
   
   return {
   plugins,
+  optimizeDeps: {
+    // En Docker, le cache .vite peut être désynchronisé : forcer la ré-optimisation en dev
+    force: mode === 'development',
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -26,6 +30,9 @@ export default defineConfig(({ mode }) => {
   server: {
     port: 5173,
     host: true,
+    watch: {
+      usePolling: process.env.DOCKER_ENV === 'true',
+    },
     proxy: {
       '/api': {
         target: process.env.DOCKER_ENV === 'true' ? 'http://backend:3000' : 'http://localhost:3000',

@@ -93,8 +93,8 @@
                 </button>
                 <input 
                   type="number" 
-                  v-model.number="item.quantity"
-                  @change="updateQuantity(item.productId, item.variantId, item.quantity)"
+                  :value="displayQuantity(item)"
+                  @input="onQuantityInput(item, ($event.target as HTMLInputElement).value)"
                   min="1"
                 />
                 <button @click="updateQuantity(item.productId, item.variantId, item.quantity + 1)">
@@ -292,6 +292,18 @@ const cancelRemoval = () => {
   }
   showNotification('Modification annulée', 'info');
   closePromoWarningModal();
+};
+
+const displayQuantity = (item: { quantity?: number }) => {
+  const q = item.quantity;
+  if (typeof q === 'number' && !Number.isNaN(q) && q >= 1) return q;
+  return 1;
+};
+
+const onQuantityInput = (item: { productId: string; variantId: string }, value: string) => {
+  const num = parseInt(value, 10);
+  const quantity = Number.isNaN(num) || num < 1 ? 1 : num;
+  updateQuantity(item.productId, item.variantId, quantity);
 };
 
 const updateQuantity = async (productId, variantId, quantity) => {
@@ -607,10 +619,13 @@ h1 {
 }
 
 .quantity-selector input {
-  width: 40px;
+  width: 3.5rem;
+  min-width: 3.5rem;
   height: 30px;
+  padding: 0 6px;
   border: none;
   text-align: center;
+  box-sizing: content-box;
 }
 
 .btn-remove {

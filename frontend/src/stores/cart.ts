@@ -69,7 +69,10 @@ export const useCartStore = defineStore('cart', () => {
 
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed)) {
-        items.value = parsed;
+        items.value = parsed.map((it: any) => ({
+          ...it,
+          quantity: typeof it.quantity === 'number' ? it.quantity : (it.qty ?? 1)
+        }));
       }
     } catch (err) {
       console.error('Erreur lors du chargement du panier depuis localStorage:', err);
@@ -315,15 +318,18 @@ export const useCartStore = defineStore('cart', () => {
       const response = await api.get(`/cart/${authStore.user!.id}`);
       
       if (response.data) {
+        let raw: CartItemWithStock[] = [];
         if (Array.isArray(response.data.items)) {
-          items.value = response.data.items;
+          raw = response.data.items;
         } else if (response.data.items) {
-          items.value = Object.values(response.data.items);
+          raw = Object.values(response.data.items);
         } else if (Array.isArray(response.data)) {
-          items.value = response.data;
-        } else {
-          items.value = [];
+          raw = response.data;
         }
+        items.value = raw.map((it: any) => ({
+          ...it,
+          quantity: typeof it.quantity === 'number' ? it.quantity : (it.qty ?? 1)
+        }));
       } else {
         items.value = [];
       }
