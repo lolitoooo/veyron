@@ -147,6 +147,8 @@
           </div>
         </div>
       </div>
+      
+      <ProductReviews v-if="product" :product-id="product._id" />
     </div>
   </div>
 </template>
@@ -159,6 +161,7 @@ import { useCartStore } from '@/stores/cart';
 import { useWishlistStore } from '@/stores/wishlist';
 import { useAuthStore } from '@/stores/auth';
 import { getImageUrl } from '@/utils/imageUrl';
+import ProductReviews from '@/components/ProductReviews.vue';
 
 const route = useRoute();
 const cartStore = useCartStore();

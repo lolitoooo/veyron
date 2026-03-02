@@ -325,6 +325,12 @@ const router = createRouter({
           meta: { title: 'Gestion des catégories | Admin VEYRON', breadcrumb: 'Gestion des catégories' }
         },
         {
+          path: 'reviews',
+          name: 'admin-reviews',
+          component: () => import('@/views/admin/ReviewsView.vue'),
+          meta: { title: 'Gestion des avis | Admin VEYRON', breadcrumb: 'Gestion des avis' }
+        },
+        {
           path: 'orders',
           name: 'admin-orders',
           component: () => import('@/views/admin/OrdersView.vue'),
@@ -441,9 +447,7 @@ router.beforeEach(async (to, from, next) => {
   next()
 })
 
-// Accessibilité : Gérer le focus après changement de route (SPA)
 router.afterEach(() => {
-  // Déplacer le focus sur le contenu principal pour les lecteurs d'écran
   const mainContent = document.getElementById('main-content')
   if (mainContent) {
     mainContent.focus()

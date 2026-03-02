@@ -93,6 +93,18 @@
           </select>
         </div>
         
+        <div class="form-group">
+          <label for="maxReviews">Limite d'avis par produit</label>
+          <input 
+            type="number" 
+            id="maxReviews" 
+            v-model.number="product.maxReviewsPerProduct" 
+            min="1"
+            placeholder="Illimité (laisser vide)"
+          />
+          <small class="field-hint">Nombre maximum d'avis approuvés pour ce produit. Laisser vide pour aucune limite.</small>
+        </div>
+        
         <div class="form-group checkbox-group">
           <input type="checkbox" id="active" v-model="product.active" />
           <label for="active">Produit actif</label>
@@ -398,6 +410,7 @@ interface Product {
   sizes: string[];
   colors: ColorVariant[];
   variants: ProductVariant[];
+  maxReviewsPerProduct?: number | null;
 }
 
 const route = useRoute();
@@ -426,7 +439,8 @@ const product = ref<Product>({
   active: true,
   sizes: [],
   colors: [],
-  variants: []
+  variants: [],
+  maxReviewsPerProduct: null
 });
 
 const fileInput = ref<HTMLInputElement | null>(null);

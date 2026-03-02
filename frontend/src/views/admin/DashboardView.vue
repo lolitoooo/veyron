@@ -85,6 +85,15 @@
         </div>
       </router-link>
 
+      <router-link to="/admin/reviews" class="stat-card">
+        <div class="stat-icon">
+          <span class="material-icons">rate_review</span>
+        </div>
+        <div class="stat-content">
+          <p>Gestion des avis</p>
+        </div>
+      </router-link>
+
     </div>
 
     <div class="dashboard-sections">

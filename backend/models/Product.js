@@ -145,6 +145,11 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  maxReviewsPerProduct: {
+    type: Number,
+    default: null,
+    min: [1, 'Le nombre minimum d\'avis est 1']
+  },
   featured: {
     type: Boolean,
     default: false

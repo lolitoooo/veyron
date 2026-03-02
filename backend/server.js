@@ -23,17 +23,21 @@ const app = express();
 app.use(requestHandler);
 app.use(tracingHandler);
 
-// Initialiser Passport pour OAuth
 app.use(passport.initialize());
 
-// Charger la configuration OAuth (doit être après l'initialisation de passport)
 require('./controllers/oauthController');
 
-// IMPORTANT: Stripe webhook a besoin du body brut pour vérifier la signature.
-// Ce middleware doit être défini AVANT express.json().
 app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
 
 app.use(express.json());
+
+app.use((req, res, next) => {
+  if (req.url.includes('/reviews') || req.url.includes('/admin')) {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    console.log('Headers:', req.headers.authorization ? 'Token présent' : 'Pas de token');
+  }
+  next();
+});
 
 const cacheOptions = {
   maxAge: '365d',
@@ -64,7 +68,6 @@ const allowedOrigins = process.env.CORS_ORIGIN
       'https://localhost'
     ];
 
-// Ajouter les regex pour les IPs locales
 const regexOrigins = [
   /^http:\/\/10\.\d+\.\d+\.\d+:\d+$/,
   /^http:\/\/192\.168\.\d+\.\d+:\d+$/
@@ -113,6 +116,8 @@ app.use('/api/promo-codes', require('./routes/promoCode'));
 app.use('/api/shipping', require('./routes/shipping'));
 app.use('/api/contact', require('./routes/contact'));
 app.use('/api/loyalty', require('./routes/loyalty'));
+app.use('/api/reviews', require('./routes/reviews'));
+app.use('/api/admin/reviews', require('./routes/adminReviews'));
 app.use('/api/shipping-labels', require('./routes/shipping-labels'));
 
 app.use('/uploads', express.static('public/uploads', cacheOptions));
@@ -122,7 +127,6 @@ app.get('/', (req, res) => {
   res.send('API VEYRON en ligne');
 });
 
-// Middleware de gestion des erreurs (APRÈS toutes les routes)
 app.use(notFound);
 app.use(sentryErrorHandler);
 app.use(errorHandler);
