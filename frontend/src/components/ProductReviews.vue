@@ -5,11 +5,7 @@
       <div v-if="averageRating" class="rating-summary">
         <div class="average-rating">
           <span class="rating-number">{{ averageRating.toFixed(1) }}</span>
-          <div class="stars">
-            <i v-for="star in 5" :key="star" class="material-icons star" :class="{ filled: star <= Math.round(averageRating) }">
-              {{ star <= Math.round(averageRating) ? 'star' : 'star_border' }}
-            </i>
-          </div>
+          <StarRating :rating="averageRating" />
           <span class="review-count">{{ totalReviews }} avis</span>
         </div>
       </div>
@@ -92,6 +88,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import ReviewCard from './ReviewCard.vue';
 import ReviewForm from './ReviewForm.vue';
+import StarRating from './StarRating.vue';
 import axios from 'axios';
 
 const props = defineProps<{
@@ -194,8 +191,12 @@ onMounted(() => {
 <style scoped>
 .product-reviews {
   margin-top: 3rem;
-  padding: 2rem 0;
+  padding: 2rem;
   border-top: 1px solid #e5e7eb;
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .reviews-header {
@@ -229,19 +230,6 @@ onMounted(() => {
   color: #111827;
 }
 
-.stars {
-  display: flex;
-  gap: 0.25rem;
-}
-
-.star {
-  font-size: 1.25rem;
-  color: #d1d5db;
-}
-
-.star.filled {
-  color: #fbbf24;
-}
 
 .review-count {
   color: #6b7280;

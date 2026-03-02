@@ -147,9 +147,9 @@
           </div>
         </div>
       </div>
-      
-      <ProductReviews v-if="product" :product-id="product._id" />
     </div>
+    
+    <ProductReviews v-if="product" :product-id="product._id" />
   </div>
 </template>
 
