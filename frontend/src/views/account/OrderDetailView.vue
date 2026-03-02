@@ -136,6 +136,40 @@
                 </div>
               </div>
             </div>
+
+            <div v-if="order.trackingNumber" class="section tracking-section">
+              <h2>Suivi de livraison</h2>
+              <p><strong>N° de suivi:</strong> {{ order.trackingNumber }}</p>
+              <p v-if="order.carrier"><strong>Transporteur:</strong> {{ order.carrier }}</p>
+              <button type="button" @click="openTracking(order.trackingNumber)" class="btn-secondary btn-tracking">
+                Suivre le colis
+              </button>
+            </div>
+            
+            <div v-if="order.isPaid" class="section return-section">
+              <h2>Retour</h2>
+              <template v-if="order.returnStatus === 'none'">
+                <p v-if="canRequestReturn" class="return-info">Vous pouvez demander un retour sous 30 jours après réception.</p>
+                <button v-if="canRequestReturn" type="button" @click="showReturnModal = true" class="btn-outline">
+                  Demander un retour
+                </button>
+                <p v-else class="return-info muted">Délai de retour dépassé ou commande non éligible.</p>
+              </template>
+              <template v-else-if="order.returnStatus === 'requested'">
+                <p class="return-status requested">Demande de retour enregistrée. Notre équipe va générer votre étiquette de retour.</p>
+                <p v-if="order.returnRequestedAt" class="return-date">Demandé le {{ formatDate(order.returnRequestedAt) }}</p>
+              </template>
+              <template v-else-if="order.returnStatus === 'label_generated'">
+                <p class="return-status success">Étiquette de retour disponible.</p>
+                <p v-if="order.returnTrackingNumber"><strong>N° suivi retour:</strong> {{ order.returnTrackingNumber }}</p>
+                <button v-if="order.returnLabelUrl" type="button" @click="downloadReturnLabel(order.returnLabelUrl)" class="btn-secondary">
+                  Télécharger l'étiquette de retour
+                </button>
+              </template>
+              <template v-else>
+                <p class="return-status"><strong>Statut retour:</strong> {{ getReturnStatusLabel(order.returnStatus) }}</p>
+              </template>
+            </div>
             
             <div v-if="order.invoiceNumber" class="section invoice-section">
               <h2>Facture</h2>
@@ -195,6 +229,27 @@
         </div>
       </div>
     </div>
+
+    <div v-if="showReturnModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="return-modal-title">
+      <div class="modal-container">
+        <div class="modal-content">
+          <h2 id="return-modal-title">Demander un retour</h2>
+          <p>Indiquez éventuellement la raison de votre retour (optionnel).</p>
+          <div class="form-group">
+            <!-- eslint-disable-next-line vuejs-accessibility/label-has-for -->
+            <label for="return-reason" class="block-label">Raison du retour (optionnel)</label>
+            <textarea id="return-reason" v-model="returnReasonInput" rows="3" placeholder="Ex: article ne convient pas, taille incorrecte..."></textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" @click="showReturnModal = false" class="btn-secondary">Annuler</button>
+            <button @click="submitReturnRequest" class="btn-primary" :disabled="requestReturnInProgress">
+              <span v-if="requestReturnInProgress">Envoi...</span>
+              <span v-else>Confirmer la demande</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </AccountLayout>
 </template>
 
@@ -216,6 +271,11 @@ const order = ref<Order | null>(null);
 const showCancelModal = ref(false);
 const cancelInProgress = ref(false);
 const errorNotification = ref<string | null>(null);
+const showReturnModal = ref(false);
+const returnReasonInput = ref('');
+const requestReturnInProgress = ref(false);
+
+const baseUrl = import.meta.env.VITE_BASE_URL || '';
 
 onMounted(async () => {
   const orderId = route.params.id as string;
@@ -293,6 +353,78 @@ const canCancel = computed(() => {
   return ['pending', 'processing'].includes(order.value.status);
 });
 
+const canRequestReturn = computed(() => {
+  if (!order.value || !order.value.isPaid || order.value.returnStatus !== 'none') return false;
+  const refDate = order.value.deliveredAt ? new Date(order.value.deliveredAt) : new Date(order.value.paidAt || order.value.createdAt);
+  const daysSince = Math.floor((Date.now() - refDate.getTime()) / (1000 * 60 * 60 * 24));
+  return daysSince <= 30;
+});
+
+function getReturnStatusLabel(status: string | undefined): string {
+  const labels: Record<string, string> = {
+    none: 'Aucun',
+    requested: 'Demandé',
+    label_generated: 'Étiquette générée',
+    in_transit: 'En transit',
+    received: 'Reçu',
+    completed: 'Terminé'
+  };
+  return status ? labels[status] || status : '';
+}
+
+async function submitReturnRequest() {
+  if (!order.value) return;
+  requestReturnInProgress.value = true;
+  errorNotification.value = null;
+  try {
+    const response = await fetch(`${baseUrl}/api/shipping-labels/request-return/${order.value._id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ returnReason: returnReasonInput.value || undefined })
+    });
+    const data = await response.json();
+    if (data.success) {
+      showReturnModal.value = false;
+      returnReasonInput.value = '';
+      const result = await orderStore.fetchOrderById(order.value._id);
+      if (result) order.value = result;
+      errorNotification.value = null;
+    } else {
+      errorNotification.value = data.message || 'Erreur lors de la demande de retour';
+    }
+  } catch (err: unknown) {
+    errorNotification.value = err instanceof Error ? err.message : 'Erreur lors de la demande de retour';
+  } finally {
+    requestReturnInProgress.value = false;
+  }
+}
+
+async function openTracking(trackingNumber: string) {
+  try {
+    const response = await fetch(`${baseUrl}/api/shipping-labels/track/${encodeURIComponent(trackingNumber)}`, {
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    });
+    const data = await response.json();
+    if (data.success && data.trackingUrl) {
+      window.open(data.trackingUrl, '_blank');
+    } else if (data.success) {
+      const msg = [data.statusLabel || data.status, ...(data.events || []).slice(0, 3).map((e: { label?: string }) => e.label)].filter(Boolean).join('\n');
+      alert(`Suivi:\n${msg || 'Aucun détail'}`);
+    } else {
+      alert(data.error || 'Impossible de récupérer le suivi');
+    }
+  } catch {
+    alert('Impossible de récupérer le suivi');
+  }
+}
+
+function downloadReturnLabel(url: string) {
+  window.open(url, '_blank');
+}
+
 const downloadInvoice = async (download = true) => {
   if (!order.value) return;
   
@@ -312,7 +444,7 @@ const downloadInvoice = async (download = true) => {
       alert(`L'ouverture automatique a été bloquée. Cliquez sur OK pour essayer à nouveau.`);
       window.open(invoiceUrl, '_blank');
     }
-  } catch (err) {
+  } catch {
     error.value = 'Une erreur est survenue lors de l\'accès à la facture';
   }
 };
@@ -340,7 +472,7 @@ const cancelOrder = async () => {
       }, 10000);
       
     }
-  } catch (err) {
+  } catch {
     errorNotification.value = 'Une erreur est survenue lors de l\'annulation de la commande';
     showCancelModal.value = false;
     
@@ -785,5 +917,87 @@ const goToOrders = () => {
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+.tracking-section,
+.return-section {
+  margin-top: 1rem;
+}
+
+.tracking-section p,
+.return-section p {
+  margin-bottom: 0.5rem;
+}
+
+.btn-tracking {
+  margin-top: 0.75rem;
+}
+
+.return-info {
+  margin-bottom: 0.75rem;
+  color: #555;
+}
+
+.return-info.muted {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.return-status {
+  margin-bottom: 0.5rem;
+}
+
+.return-status.requested {
+  color: #1976d2;
+}
+
+.return-status.success {
+  color: #388e3c;
+}
+
+.return-date {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #333;
+  border: 1px solid #999;
+}
+
+.btn-outline:hover {
+  background: #f5f5f5;
+}
+
+.modal-content .form-group {
+  margin-bottom: 1rem;
+}
+
+.modal-content .form-group label.block-label,
+.modal-content .form-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.modal-content .form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>

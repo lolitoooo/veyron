@@ -486,7 +486,7 @@ h1 {
 }
 
 .btn-primary {
-  background-color: #3498db;
+  background-color: #c9a961;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -497,7 +497,7 @@ h1 {
 }
 
 .btn-primary:hover {
-  background-color: #2980b9;
+  background-color: #8b7355;
 }
 
 .btn-primary:disabled {
@@ -507,8 +507,8 @@ h1 {
 
 .btn-outline {
   background-color: transparent;
-  color: #3498db;
-  border: 1px solid #3498db;
+  color: #c9a961;
+  border: 1px solid #c9a961;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
@@ -517,7 +517,7 @@ h1 {
 }
 
 .btn-outline:hover {
-  background-color: #3498db;
+  background-color: #8b7355;
   color: white;
 }
 

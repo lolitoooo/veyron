@@ -13,6 +13,18 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+
+    <!-- Passerelle Colissimo / Hexa-Go : widget pour visiteurs hors France métropolitaine (livraison internationale) -->
+    <script type="application/javascript">
+      window.hexagoSettings = window.hexagoSettings || {};
+      window.hexagoSettings.key = 'd0bf855b-0b0e-4441-afce-d32f2b97f129';
+      (function (d, s) {
+        var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
+        e.async = true;
+        e.src = 'https://pro.passerelle.colissimo.fr/widget.min.js';
+        t.parentNode.insertBefore(e, t);
+      })(document, "script");
+    </script>
   </head>
   <body>
     <div id="app"></div>

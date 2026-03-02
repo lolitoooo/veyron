@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ShippingConfig = require('../models/ShippingConfig');
 const { protect, authorize } = require('../middleware/auth');
-const relayPointService = require('../services/relayPointService');
+const sendcloudService = require('../services/sendcloudService');
 
 router.get('/', async (req, res) => {
   try {
@@ -21,17 +21,47 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/relay-points/search', async (req, res) => {
+  try {
+    const { postalCode, country = 'FR', limit = 20 } = req.query;
+
+    if (!postalCode) {
+      return res.status(400).json({
+        success: false,
+        message: 'Code postal requis'
+      });
+    }
+
+    const relayPoints = await sendcloudService.searchServicePoints(
+      postalCode,
+      country,
+      parseInt(limit, 10) || 20
+    );
+
+    res.json({
+      success: true,
+      data: relayPoints
+    });
+  } catch (error) {
+    console.error('Erreur lors de la recherche de points relais:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la recherche de points relais'
+    });
+  }
+});
+
 router.get('/:name', async (req, res) => {
   try {
     const shippingConfig = await ShippingConfig.findOne({ name: req.params.name });
-    
+
     if (!shippingConfig) {
       return res.status(404).json({
         success: false,
         message: 'Configuration de livraison non trouvée'
       });
     }
-    
+
     res.json({
       success: true,
       data: shippingConfig
@@ -87,36 +117,6 @@ router.post('/calculate', async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Erreur lors du calcul des frais de livraison'
-    });
-  }
-});
-
-router.get('/relay-points/search', async (req, res) => {
-  try {
-    const { postalCode, country = 'FR', limit = 10 } = req.query;
-    
-    if (!postalCode) {
-      return res.status(400).json({
-        success: false,
-        message: 'Code postal requis'
-      });
-    }
-    
-    const relayPoints = await relayPointService.searchRelayPoints(
-      postalCode,
-      country,
-      parseInt(limit)
-    );
-    
-    res.json({
-      success: true,
-      data: relayPoints
-    });
-  } catch (error) {
-    console.error('Erreur lors de la recherche de points relais:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Erreur lors de la recherche de points relais'
     });
   }
 });

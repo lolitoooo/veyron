@@ -57,7 +57,24 @@ export interface Order {
   isPaid: boolean;
   paidAt?: string;
   status: OrderStatus;
+  shippingMethod?: 'home_delivery' | 'relay_point';
+  relayPoint?: {
+    id: string;
+    carrier: string;
+    name: string;
+    address: string;
+    postalCode: string;
+    city: string;
+  };
   deliveredAt?: string;
+  trackingNumber?: string;
+  carrier?: string;
+  returnStatus?: 'none' | 'requested' | 'label_generated' | 'in_transit' | 'received' | 'completed';
+  returnReason?: string;
+  returnRequestedAt?: string;
+  returnTrackingNumber?: string;
+  returnLabelUrl?: string;
+  returnLabelGeneratedAt?: string;
   invoiceNumber?: string;
   invoiceDate?: string;
   invoiceUrl?: string;

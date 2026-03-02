@@ -33,7 +33,7 @@ router.post('/generate/:orderId', protect, authorize('admin'), async (req, res) 
       order.shippingLabelPath = result.labelPath;
       order.shippingLabelGeneratedAt = new Date();
       order.status = 'processing';
-      
+
       await order.save();
 
       res.json({
@@ -47,10 +47,11 @@ router.post('/generate/:orderId', protect, authorize('admin'), async (req, res) 
       throw new Error('Échec de la génération de l\'étiquette');
     }
   } catch (error) {
-    console.error('Erreur génération étiquette:', error);
-    res.status(500).json({ 
-      message: 'Erreur lors de la génération de l\'étiquette',
-      error: error.message 
+    console.error('Erreur génération étiquette:', error?.response?.data || error);
+    const message = error?.message || 'Erreur lors de la génération de l\'étiquette';
+    res.status(500).json({
+      message,
+      error: message
     });
   }
 });
@@ -84,11 +85,11 @@ router.post('/return/:orderId', protect, authorize('admin'), async (req, res) =>
       order.returnLabelGeneratedAt = new Date();
       order.returnStatus = 'label_generated';
       order.returnReason = returnReason || 'Retour client';
-      
+
       if (!order.returnRequestedAt) {
         order.returnRequestedAt = new Date();
       }
-      
+
       await order.save();
 
       res.json({

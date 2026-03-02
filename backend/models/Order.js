@@ -124,6 +124,12 @@ const OrderSchema = new mongoose.Schema({
   carrier: {
     type: String
   },
+  sendcloudShipmentId: {
+    type: String
+  },
+  sendcloudParcelId: {
+    type: String
+  },
   shippingLabelUrl: {
     type: String
   },

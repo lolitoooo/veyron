@@ -160,9 +160,14 @@
               <p class="success-text">✓ Étiquette générée le {{ formatDate(order.shippingLabelGeneratedAt) }}</p>
               <p><strong>N° de suivi:</strong> {{ order.trackingNumber }}</p>
               <p><strong>Transporteur:</strong> {{ order.carrier }}</p>
-              <button class="btn btn-secondary" @click="downloadLabel(order.shippingLabelUrl)">
-                Télécharger l'étiquette
-              </button>
+              <div class="label-actions">
+                <button class="btn btn-secondary" @click="downloadLabel(order.shippingLabelUrl)">
+                  Télécharger l'étiquette
+                </button>
+                <button v-if="order.trackingNumber" class="btn btn-secondary" @click="openTracking(order.trackingNumber)">
+                  Suivre le colis
+                </button>
+              </div>
             </div>
             <div v-else>
               <p>Aucune étiquette générée</p>
@@ -517,21 +522,24 @@ async function generateShippingLabel() {
 
     if (data.success) {
       alert(`Étiquette générée avec succès!\nNuméro de suivi: ${data.trackingNumber}`);
-      
-      const blob = await fetch(`data:application/pdf;base64,${data.pdfBase64}`).then(r => r.blob());
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `etiquette_${order.value._id}.pdf`;
-      a.click();
-      
+      if (data.labelUrl) {
+        window.open(data.labelUrl, '_blank');
+      } else if (data.pdfBase64) {
+        const blob = await fetch(`data:application/pdf;base64,${data.pdfBase64}`).then(r => r.blob());
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `etiquette_${order.value._id}.pdf`;
+        a.click();
+      }
       await fetchOrderDetails();
     } else {
-      throw new Error(data.message || 'Erreur lors de la génération');
+      throw new Error(data.message || data.error || 'Erreur lors de la génération');
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : (typeof error === 'object' && error !== null && 'message' in error ? String((error as { message: string }).message) : 'Erreur lors de la génération de l\'étiquette');
     console.error('Erreur:', error);
-    alert(`Erreur: ${error.message}`);
+    alert(`Erreur: ${message}`);
   } finally {
     generatingLabel.value = false;
   }
@@ -555,14 +563,16 @@ async function generateReturnLabel() {
 
     if (data.success) {
       alert(`Étiquette de retour générée!\nNuméro de suivi: ${data.returnTrackingNumber}`);
-      
-      const blob = await fetch(`data:application/pdf;base64,${data.pdfBase64}`).then(r => r.blob());
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `etiquette_retour_${order.value._id}.pdf`;
-      a.click();
-      
+      if (data.labelUrl) {
+        window.open(data.labelUrl, '_blank');
+      } else if (data.pdfBase64) {
+        const blob = await fetch(`data:application/pdf;base64,${data.pdfBase64}`).then(r => r.blob());
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `etiquette_retour_${order.value._id}.pdf`;
+        a.click();
+      }
       showReturnLabelModal.value = false;
       returnReason.value = '';
       await fetchOrderDetails();
@@ -648,6 +658,25 @@ async function processRefund() {
 
 function downloadLabel(labelUrl: string) {
   window.open(labelUrl, '_blank');
+}
+
+async function openTracking(trackingNumber: string) {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/shipping-labels/track/${encodeURIComponent(trackingNumber)}`, {
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    });
+    const data = await response.json();
+    if (data.success && data.trackingUrl) {
+      window.open(data.trackingUrl, '_blank');
+    } else if (data.success) {
+      const msg = [data.statusLabel || data.status, ...(data.events || []).slice(0, 5).map((e: { label?: string; date?: string }) => `${e.date || ''} ${e.label || ''}`.trim())].filter(Boolean).join('\n');
+      alert(`Suivi:\n${msg || 'Aucun détail'}`);
+    } else {
+      alert(data.error || 'Impossible de récupérer le suivi');
+    }
+  } catch {
+    alert('Impossible de récupérer le suivi');
+  }
 }
 
 function getReturnStatusLabel(status: string): string {
@@ -863,6 +892,13 @@ function getRefundStatusLabel(status: string): string {
 .shipping-card p {
   margin: 0.5rem 0;
   font-size: 0.95rem;
+}
+
+.shipping-card .label-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
 }
 
 .shipping-card .btn {

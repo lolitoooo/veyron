@@ -655,7 +655,7 @@ onMounted(() => {
 }
 
 .btn-primary {
-  background-color: #3498db;
+  background-color: #c9a961;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -697,8 +697,8 @@ onMounted(() => {
 
 .btn-outline {
   background-color: transparent;
-  color: #3498db;
-  border: 1px solid #3498db;
+  color: #c9a961;
+  border: 1px solid #c9a961;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
@@ -706,7 +706,7 @@ onMounted(() => {
 }
 
 .btn-outline:hover {
-  background-color: #3498db;
+  background-color: #c9a961;
   color: white;
 }
 
@@ -745,7 +745,7 @@ onMounted(() => {
 }
 
 .form-group input:not([type="checkbox"]):not([type="radio"]):focus {
-  border-color: #3498db;
+  border-color: #c9a961;
   outline: none;
   box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
 }
@@ -774,11 +774,11 @@ onMounted(() => {
   margin: 0;
   padding: 0;
   flex-shrink: 0;
-  accent-color: #3498db;
+  accent-color: #c9a961;
 }
 
 .checkbox-group input[type="checkbox"]:focus {
-  outline: 2px solid #3498db;
+  outline: 2px solid #c9a961;
   outline-offset: 2px;
   box-shadow: none;
   border: none;
@@ -899,7 +899,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #3498db;
+  background-color: #c9a961;
   color: white;
   font-size: 2rem;
   font-weight: bold;

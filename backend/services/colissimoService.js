@@ -38,33 +38,35 @@ class ColissimoService {
     try {
       console.log(`[Colissimo] Génération étiquette d'envoi pour commande ${order._id}`);
 
+      const a = order.shippingAddress || {};
       const address = order.shippingMethod === 'relay_point' && order.relayPoint
         ? {
-            companyName: order.relayPoint.name,
-            lastName: order.shippingAddress.lastName,
-            firstName: order.shippingAddress.firstName,
-            line2: order.relayPoint.address,
+            companyName: order.relayPoint.name || '',
+            lastName: a.lastName || 'Client',
+            firstName: a.firstName || '',
+            line2: order.relayPoint.address || [order.relayPoint.street, order.relayPoint.house_number].filter(Boolean).join(' ').trim() || 'Point Relais',
             countryCode: 'FR',
-            city: order.relayPoint.city,
-            zipCode: order.relayPoint.postalCode,
-            phoneNumber: order.shippingAddress.phone,
-            email: order.user ? (await this.getUserEmail(order.user)) : order.guestEmail
+            city: order.relayPoint.city || '',
+            zipCode: order.relayPoint.postalCode || '',
+            phoneNumber: a.phone || order.guestPhone || '',
+            email: order.user ? (await this.getUserEmail(order.user)) : order.guestEmail || ''
           }
         : {
             companyName: '',
-            lastName: order.shippingAddress.lastName,
-            firstName: order.shippingAddress.firstName,
-            line2: order.shippingAddress.addressLine1,
-            line3: order.shippingAddress.addressLine2 || '',
-            countryCode: order.shippingAddress.country || 'FR',
-            city: order.shippingAddress.city,
-            zipCode: order.shippingAddress.postalCode,
-            phoneNumber: order.shippingAddress.phone,
-            email: order.user ? (await this.getUserEmail(order.user)) : order.guestEmail
+            lastName: a.lastName || 'Client',
+            firstName: a.firstName || '',
+            line2: a.addressLine1 || '',
+            line3: a.addressLine2 || '',
+            countryCode: (a.country || 'FR').toUpperCase().slice(0, 2),
+            city: a.city || '',
+            zipCode: a.postalCode || '',
+            phoneNumber: a.phone || '',
+            email: order.user ? (await this.getUserEmail(order.user)) : order.guestEmail || ''
           };
 
-      const productCode = order.shippingMethod === 'relay_point' ? 'A2P' : 'DOM';
-      
+      // DOM = livraison à l'adresse (domicile ou adresse du point relais)
+      const productCode = 'DOM';
+
       const totalWeight = this.calculateOrderWeight(order);
 
       const requestBody = {
@@ -77,21 +79,20 @@ class ColissimoService {
         },
         letter: {
           service: {
-            productCode: productCode,
+            productCode,
             depositDate: new Date().toISOString().split('T')[0],
             transportationAmount: order.shippingPrice || 0,
             totalAmount: order.totalPrice,
-            orderNumber: order.getFormattedOrderNumber(),
+            orderNumber: order.getFormattedOrderNumber ? order.getFormattedOrderNumber() : `ORD-${order._id}`,
             commercialName: 'VEYRON PARIS'
           },
           parcel: {
             weight: totalWeight,
             insuranceValue: order.totalPrice > 100 ? Math.min(order.totalPrice, 5000) : 0,
             returnReceipt: false,
-            instructions: order.notes || '',
-            pickupLocationId: order.relayPoint?.id || ''
+            instructions: order.notes || ''
           },
-          customsDeclarations: order.shippingAddress.country !== 'FR' ? {
+          customsDeclarations: (address.countryCode && address.countryCode !== 'FR') ? {
             includeCustomsDeclarations: true,
             contents: {
               article: order.orderItems.map(item => ({
@@ -167,6 +168,8 @@ class ColissimoService {
     try {
       console.log(`[Colissimo] Génération étiquette de retour pour commande ${order._id}`);
 
+      const s = order.shippingAddress || {};
+      const senderEmail = order.user ? await this.getUserEmail(order.user) : (order.guestEmail || '');
       const requestBody = {
         contractNumber: this.contractNumber,
         password: this.password,
@@ -179,7 +182,7 @@ class ColissimoService {
           service: {
             productCode: 'CORE',
             depositDate: new Date().toISOString().split('T')[0],
-            orderNumber: order.getFormattedOrderNumber(),
+            orderNumber: order.getFormattedOrderNumber ? order.getFormattedOrderNumber() : `ORD-${order._id}`,
             commercialName: 'VEYRON PARIS - RETOUR'
           },
           parcel: {
@@ -188,15 +191,15 @@ class ColissimoService {
           },
           sender: {
             companyName: '',
-            lastName: order.shippingAddress.lastName,
-            firstName: order.shippingAddress.firstName,
-            line2: order.shippingAddress.addressLine1,
-            line3: order.shippingAddress.addressLine2 || '',
-            countryCode: order.shippingAddress.country || 'FR',
-            city: order.shippingAddress.city,
-            zipCode: order.shippingAddress.postalCode,
-            phoneNumber: order.shippingAddress.phone,
-            email: order.user ? (await this.getUserEmail(order.user)) : order.guestEmail
+            lastName: s.lastName || 'Client',
+            firstName: s.firstName || '',
+            line2: s.addressLine1 || '',
+            line3: s.addressLine2 || '',
+            countryCode: (s.country || 'FR').toUpperCase().slice(0, 2),
+            city: s.city || '',
+            zipCode: s.postalCode || '',
+            phoneNumber: s.phone || '',
+            email: senderEmail
           },
           addressee: this.expediteur
         }
