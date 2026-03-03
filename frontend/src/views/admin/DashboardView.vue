@@ -94,6 +94,63 @@
         </div>
       </router-link>
 
+      <!-- Raccourcis outils externes -->
+      <a
+        href="https://monitoring.veyron-paris.fr/"
+        class="stat-card"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="stat-icon">
+          <span class="material-icons">monitor_heart</span>
+        </div>
+        <div class="stat-content">
+          <p>Uptime Kuma</p>
+        </div>
+      </a>
+
+      <a
+        href="https://analytics.veyron-paris.fr/veyron-paris.fr"
+        class="stat-card"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="stat-icon">
+          <span class="material-icons">insights</span>
+        </div>
+        <div class="stat-content">
+          <p>Plausible</p>
+        </div>
+      </a>
+
+      <a
+        href="https://glitchtip.veyron-paris.fr/veyron/issues?project=1"
+        class="stat-card"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="stat-icon">
+          <span class="material-icons">bug_report</span>
+        </div>
+        <div class="stat-content">
+          <p>GlitchTip</p>
+        </div>
+      </a>
+
+      <a
+        href="https://ntfy.veyron-paris.fr/"
+        class="stat-card"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="stat-icon">
+          <span class="material-icons">notifications</span>
+        </div>
+        <div class="stat-content">
+          <p>ntfy</p>
+        </div>
+      </a>
+
     </div>
 
     <div class="dashboard-sections">

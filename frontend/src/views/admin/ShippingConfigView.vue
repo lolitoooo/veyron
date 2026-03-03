@@ -567,11 +567,12 @@ onMounted(() => {
 
 .notification {
   position: fixed;
-  top: 2rem;
-  right: 2rem;
+  /* Affichage sous la barre de navigation */
+  top: 96px;
+  right: 24px;
   padding: 1rem 1.5rem;
   border-radius: 6px;
-  color: #fff;
+  color: var(--color-white);
   font-weight: 500;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 1000;
@@ -590,15 +591,15 @@ onMounted(() => {
 }
 
 .notification-success {
-  background-color: #2e7d32;
+  background-color: var(--color-success);
 }
 
 .notification-error {
-  background-color: #c62828;
+  background-color: var(--color-error);
 }
 
 .notification-warning {
-  background-color: #f57c00;
+  background-color: var(--color-warning);
 }
 
 @media (max-width: 768px) {

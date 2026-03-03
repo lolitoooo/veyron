@@ -6,6 +6,14 @@
         <p>Gérez vos produits favoris</p>
       </div>
 
+      <div
+        v-if="notification.show"
+        class="notification"
+        :class="notification.type"
+      >
+        {{ notification.message }}
+      </div>
+
     <div class="wishlist-content">
       <div v-if="loading" class="loading-spinner">
         <i class="fas fa-spinner fa-spin"></i>
@@ -91,6 +99,23 @@ const error = computed(() => wishlistStore.error);
 const categoriesCache = ref({});
 const loadingCategories = ref(false);
 
+const notification = ref({
+  show: false,
+  message: '',
+  type: 'success' as 'success' | 'error' | 'info' | 'warning'
+});
+
+const showNotification = (message: string, type: 'success' | 'error' | 'info' | 'warning' = 'info') => {
+  notification.value = {
+    show: true,
+    message,
+    type
+  };
+  setTimeout(() => {
+    notification.value.show = false;
+  }, 3000);
+};
+
 const loadCategories = async () => {
   try {
     loadingCategories.value = true;
@@ -131,6 +156,7 @@ const loadWishlist = async () => {
 const removeFromWishlist = async (wishlistItemId) => {
   try {
     await wishlistStore.removeFromWishlist(wishlistItemId);
+    showNotification('Produit retiré de vos favoris', 'error');
   } catch (err) {
     console.error('Erreur lors de la suppression du favori:', err);
   }
@@ -177,6 +203,22 @@ onMounted(async () => {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.notification {
+  position: fixed;
+  top: 96px;
+  right: 24px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 4px;
+  color: var(--color-white);
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+.notification.error {
+  background-color: var(--color-error);
 }
 
 .page-header {
@@ -351,7 +393,7 @@ onMounted(async () => {
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
+  background-color: black;
   color: white;
 }
 

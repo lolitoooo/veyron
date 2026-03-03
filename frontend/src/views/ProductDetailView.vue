@@ -492,7 +492,7 @@ const toggleWishlist = async () => {
       notification.value = {
         show: true,
         message: 'Produit retiré de vos favoris',
-        type: 'success',
+        type: 'error',
         timeout: setTimeout(() => {
           notification.value.show = false;
         }, 3000)
@@ -534,8 +534,9 @@ onMounted(() => {
 <style scoped>
 .notification {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  /* Affichage sous la barre de navigation */
+  top: 96px;
+  right: 24px;
   padding: 15px 20px;
   border-radius: 4px;
   color: white;
@@ -561,19 +562,19 @@ onMounted(() => {
 }
 
 .notification.success {
-  background-color: #4caf50;
+  background-color: var(--color-success);
 }
 
 .notification.error {
-  background-color: #f44336;
+  background-color: var(--color-error);
 }
 
 .notification.warning {
-  background-color: #ff9800;
+  background-color: var(--color-warning);
 }
 
 .notification.info {
-  background-color: #2196f3;
+  background-color: var(--color-info);
 }
 
 .close-btn {

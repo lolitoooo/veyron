@@ -862,8 +862,9 @@ h1 {
 
 .notification {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  /* Affichage sous la barre de navigation */
+  top: 96px;
+  right: 24px;
   padding: 1rem 1.5rem;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -872,19 +873,19 @@ h1 {
 }
 
 .notification-success {
-  background-color: #4caf50;
+  background-color: var(--color-success);
 }
 
 .notification-error {
-  background-color: #f44336;
+  background-color: var(--color-error);
 }
 
 .notification-warning {
-  background-color: #ff9800;
+  background-color: var(--color-warning);
 }
 
 .notification-info {
-  background-color: #2196f3;
+  background-color: var(--color-info);
 }
 
 .modal-overlay {
