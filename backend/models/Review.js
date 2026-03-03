@@ -31,6 +31,37 @@ const ReviewSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+  verificationToken: {
+    type: String,
+    unique: true,
+    sparse: true
+  },
+  order: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Order'
+  },
+  images: {
+    type: [String],
+    validate: {
+      validator: function(v) {
+        return v.length <= 3;
+      },
+      message: 'Un avis ne peut contenir que 3 images maximum'
+    },
+    default: []
+  },
+  reportCount: {
+    type: Number,
+    default: 0
+  },
+  reportedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   approvedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

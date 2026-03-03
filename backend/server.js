@@ -29,7 +29,8 @@ require('./controllers/oauthController');
 
 app.use('/api/stripe/webhook', bodyParser.raw({ type: 'application/json' }));
 
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ limit: '5mb', extended: true }));
 
 app.use((req, res, next) => {
   if (req.url.includes('/reviews') || req.url.includes('/admin')) {
@@ -117,6 +118,7 @@ app.use('/api/shipping', require('./routes/shipping'));
 app.use('/api/contact', require('./routes/contact'));
 app.use('/api/loyalty', require('./routes/loyalty'));
 app.use('/api/reviews', require('./routes/reviews'));
+app.use('/api/reviews/verified', require('./routes/verifiedReviews'));
 app.use('/api/admin/reviews', require('./routes/adminReviews'));
 app.use('/api/shipping-labels', require('./routes/shipping-labels'));
 

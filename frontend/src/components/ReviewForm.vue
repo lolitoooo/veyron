@@ -42,6 +42,13 @@
           <p class="char-count">{{ comment.length }}/1000 caractères</p>
         </div>
 
+        <ImageUpload 
+          v-model="images"
+          :max-images="3"
+          :max-file-size="5"
+          label="Ajoutez des photos de votre produit (optionnel)"
+        />
+
         <div v-if="error" class="error-message">
           <i class="material-icons">error</i>
           {{ error }}
@@ -64,6 +71,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
+import ImageUpload from '@/components/ImageUpload.vue';
 
 const props = defineProps<{
   productId: string;
@@ -78,6 +86,7 @@ const emit = defineEmits<{
 const rating = ref(0);
 const hoverRating = ref(0);
 const comment = ref('');
+const images = ref<string[]>([]);
 const loading = ref(false);
 const error = ref('');
 
@@ -108,7 +117,8 @@ const submitReview = async () => {
     const data = {
       product: props.productId,
       rating: rating.value,
-      comment: comment.value.trim()
+      comment: comment.value.trim(),
+      images: images.value
     };
 
     if (props.existingReview) {
@@ -130,7 +140,6 @@ const submitReview = async () => {
     const errorMessage = err.response?.data?.message || 'Erreur lors de l\'envoi de l\'avis';
     error.value = errorMessage;
     
-    // Si c'est une erreur 403 (avis approuvé non modifiable), fermer le formulaire après 3 secondes
     if (err.response?.status === 403) {
       setTimeout(() => {
         emit('cancel');
@@ -145,6 +154,7 @@ onMounted(() => {
   if (props.existingReview) {
     rating.value = props.existingReview.rating;
     comment.value = props.existingReview.comment;
+    images.value = props.existingReview.images || [];
   }
 });
 </script>

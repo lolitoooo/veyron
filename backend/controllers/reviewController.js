@@ -3,9 +3,6 @@ const Product = require('../models/Product');
 const asyncHandler = require('express-async-handler');
 const mongoose = require('mongoose');
 
-// @desc    Get reviews for a product
-// @route   GET /api/reviews/product/:productId
-// @access  Public
 exports.getProductReviews = asyncHandler(async (req, res) => {
   const reviews = await Review.find({ 
     product: req.params.productId,
@@ -21,9 +18,6 @@ exports.getProductReviews = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Get average rating for a product
-// @route   GET /api/reviews/product/:productId/average
-// @access  Public
 exports.getProductAverageRating = asyncHandler(async (req, res) => {
   const result = await Review.aggregate([
     {
@@ -47,9 +41,6 @@ exports.getProductAverageRating = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Create a review
-// @route   POST /api/reviews
-// @access  Private
 exports.createReview = asyncHandler(async (req, res) => {
   const { product, rating, comment } = req.body;
 
@@ -75,15 +66,16 @@ exports.createReview = asyncHandler(async (req, res) => {
     }
   }
 
-  const existingReview = await Review.findOne({
+  const existingUnverifiedReview = await Review.findOne({
     product,
-    user: req.user._id
+    user: req.user._id,
+    isVerified: false
   });
 
-  if (existingReview) {
+  if (existingUnverifiedReview) {
     return res.status(400).json({
       success: false,
-      message: 'Vous avez déjà laissé un avis pour ce produit'
+      message: 'Vous avez déjà laissé un avis non vérifié pour ce produit. Les avis vérifiés peuvent être ajoutés via les liens reçus par email après vos commandes.'
     });
   }
 
@@ -92,7 +84,9 @@ exports.createReview = asyncHandler(async (req, res) => {
     user: req.user._id,
     rating,
     comment,
-    status: 'pending'
+    status: 'pending',
+    isVerified: false,
+    images: req.body.images || []
   });
 
   const populatedReview = await Review.findById(review._id)
@@ -105,9 +99,6 @@ exports.createReview = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Update a review
-// @route   PUT /api/reviews/:id
-// @access  Private
 exports.updateReview = asyncHandler(async (req, res) => {
   let review = await Review.findById(req.params.id);
 
@@ -125,7 +116,6 @@ exports.updateReview = asyncHandler(async (req, res) => {
     });
   }
 
-  // Empêcher la modification des avis approuvés
   if (review.status === 'approved') {
     return res.status(403).json({
       success: false,
@@ -133,11 +123,18 @@ exports.updateReview = asyncHandler(async (req, res) => {
     });
   }
 
-  const { rating, comment } = req.body;
+  const { rating, comment, images } = req.body;
 
   review = await Review.findByIdAndUpdate(
     req.params.id,
-    { rating, comment, updatedAt: Date.now(), status: 'pending', isApproved: false },
+    { 
+      rating, 
+      comment, 
+      images: images || [],
+      updatedAt: Date.now(), 
+      status: 'pending', 
+      isApproved: false 
+    },
     { new: true, runValidators: true }
   ).populate('user', 'firstName lastName');
 
@@ -147,9 +144,6 @@ exports.updateReview = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Delete a review
-// @route   DELETE /api/reviews/:id
-// @access  Private
 exports.deleteReview = asyncHandler(async (req, res) => {
   const review = await Review.findById(req.params.id);
 
@@ -175,9 +169,6 @@ exports.deleteReview = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Get user's review for a product
-// @route   GET /api/reviews/product/:productId/user
-// @access  Private
 exports.getUserReviewForProduct = asyncHandler(async (req, res) => {
   const review = await Review.findOne({
     product: req.params.productId,
@@ -187,5 +178,33 @@ exports.getUserReviewForProduct = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     data: review
+  });
+});
+
+exports.reportReview = asyncHandler(async (req, res) => {
+  const review = await Review.findById(req.params.id);
+
+  if (!review) {
+    return res.status(404).json({
+      success: false,
+      message: 'Avis non trouvé'
+    });
+  }
+
+  if (review.reportedBy.includes(req.user._id)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Vous avez déjà signalé cet avis'
+    });
+  }
+
+  review.reportedBy.push(req.user._id);
+  review.reportCount = review.reportedBy.length;
+  await review.save();
+
+  res.json({
+    success: true,
+    message: 'Avis signalé avec succès',
+    data: { reportCount: review.reportCount }
   });
 });

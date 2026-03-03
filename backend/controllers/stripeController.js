@@ -5,7 +5,8 @@ const Product = require('../models/Product');
 const PromoCode = require('../models/PromoCode');
 const ShippingConfig = require('../models/ShippingConfig');
 const invoiceController = require('./invoiceController');
-const { sendEmail } = require('../services/emailService');
+const { sendEmail, sendReviewRequestEmail } = require('../services/emailService');
+const ReviewToken = require('../models/ReviewToken');
 const { orderConfirmationEmailTemplate, activateAccountEmailTemplate } = require('../templates/emailTemplates');
 const User = require('../models/User');
 const notificationService = require('../services/notificationService');
@@ -803,12 +804,46 @@ exports.webhook = async (req, res) => {
             ? await User.findById(order.user)
             : { firstName: order.shippingAddress?.firstName || 'Bonjour' };
 
+          const reviewLinks = [];
+          if (recipientEmail) {
+            const uniqueProducts = [...new Map(order.orderItems.map(item => [item.product.toString(), item])).values()];
+
+            for (const item of uniqueProducts) {
+              try {
+                const product = await Product.findById(item.product);
+                if (!product) continue;
+
+                const token = ReviewToken.generateToken();
+
+                await ReviewToken.create({
+                  order: order._id,
+                  user: order.user || null,
+                  email: recipientEmail,
+                  product: product._id,
+                  token
+                });
+
+                const reviewLink = `${process.env.FRONTEND_URL}/review/verified/${token}`;
+                reviewLinks.push({
+                  productName: product.name,
+                  url: reviewLink
+                });
+
+                console.log(`[Stripe webhook] ✅ Token créé pour ${product.name}: ${reviewLink}`);
+              } catch (reviewTokenError) {
+                console.error(`[Stripe webhook] ❌ Erreur token pour ${item.product}:`, reviewTokenError);
+              }
+            }
+          }
+
+          console.log('[Stripe webhook] Total reviewLinks générés:', reviewLinks.length);
+
           if (recipientEmail && templateUser) {
-            console.log('[Stripe webhook] Envoi email confirmation commande ->', recipientEmail);
+            console.log('[Stripe webhook] Envoi email confirmation commande avec', reviewLinks.length, 'liens d\'avis ->', recipientEmail);
             await sendEmail({
               to: recipientEmail,
               subject: `Confirmation de commande #${order.invoiceNumber || order._id} - Veyron Paris`,
-              html: orderConfirmationEmailTemplate(order, templateUser)
+              html: orderConfirmationEmailTemplate(order, templateUser, reviewLinks)
             });
           }
 

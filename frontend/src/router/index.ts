@@ -149,6 +149,12 @@ const router = createRouter({
           meta: { title: 'Développement durable | VEYRON', breadcrumb: 'Développement durable' }
         },
         {
+          path: 'review/verified/:token',
+          name: 'verified-review',
+          component: () => import('@/views/VerifiedReviewView.vue'),
+          meta: { title: 'Laisser un avis vérifié | VEYRON' }
+        },
+        {
           path: 'careers',
           name: 'careers',
           component: () => import('@/views/legal/CareersView.vue'),

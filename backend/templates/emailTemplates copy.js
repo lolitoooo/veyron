@@ -148,6 +148,12 @@ const orderConfirmationEmailTemplate = (order, user, reviewLinks = []) => {
         '</p>' +
       '</div>';
   }
+  
+  const reviewLinksHtmlWithLinks = `
+    <p style="color: #999999; font-size: 12px; line-height: 1.6; margin: 15px 0 0 0;">
+      Ces liens sont valables pendant 30 jours. Votre avis portera le badge "Achat vérifié".
+    </p>
+  `;
 
   const content = `
     <h2 style="color: #333333; font-size: 24px; margin-bottom: 20px;">

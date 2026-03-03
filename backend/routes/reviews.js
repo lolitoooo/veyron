@@ -6,7 +6,8 @@ const {
   createReview,
   updateReview,
   deleteReview,
-  getUserReviewForProduct
+  getUserReviewForProduct,
+  reportReview
 } = require('../controllers/reviewController');
 const { protect } = require('../middleware/auth');
 
@@ -16,5 +17,6 @@ router.post('/', protect, createReview);
 router.put('/:id', protect, updateReview);
 router.delete('/:id', protect, deleteReview);
 router.get('/product/:productId/user', protect, getUserReviewForProduct);
+router.post('/:id/report', protect, reportReview);
 
 module.exports = router;

@@ -73,11 +73,69 @@
       </div>
 
       <div v-else>
-        <ReviewCard
-          v-for="review in otherReviews"
-          :key="review._id"
-          :review="review"
-        />
+        <div class="pagination-controls">
+          <div class="per-page-selector">
+            <label>Afficher :</label>
+            <button 
+              @click="itemsPerPage = 5" 
+              :class="{ active: itemsPerPage === 5 }"
+              class="per-page-btn"
+            >
+              5
+            </button>
+            <button 
+              @click="itemsPerPage = 10" 
+              :class="{ active: itemsPerPage === 10 }"
+              class="per-page-btn"
+            >
+              10
+            </button>
+          </div>
+          <div class="pagination-info">
+            {{ paginationStart }}-{{ paginationEnd }} sur {{ otherReviews.length }} avis
+          </div>
+        </div>
+
+        <div class="reviews-container">
+          <ReviewCard
+            v-for="review in paginatedReviews"
+            :key="review._id"
+            :review="review"
+            @report="reportReview"
+          />
+        </div>
+
+        <div v-if="totalPages > 1" class="pagination-navigation">
+          <button 
+            @click="previousPage" 
+            :disabled="currentPage === 1"
+            class="pagination-btn"
+          >
+            <i class="material-icons">chevron_left</i>
+            Précédent
+          </button>
+          
+          <div class="page-numbers">
+            <button
+              v-for="page in displayedPages"
+              :key="page"
+              @click="currentPage = page"
+              :class="{ active: currentPage === page }"
+              class="page-btn"
+            >
+              {{ page }}
+            </button>
+          </div>
+
+          <button 
+            @click="nextPage" 
+            :disabled="currentPage === totalPages"
+            class="pagination-btn"
+          >
+            Suivant
+            <i class="material-icons">chevron_right</i>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -104,11 +162,69 @@ const averageRating = ref<number>(0);
 const totalReviews = ref<number>(0);
 const loading = ref(false);
 const showReviewForm = ref(false);
+const currentPage = ref(1);
+const itemsPerPage = ref(5);
 
 const otherReviews = computed(() => {
   if (!userReview.value) return reviews.value;
   return reviews.value.filter(r => r._id !== userReview.value._id);
 });
+
+const totalPages = computed(() => {
+  return Math.ceil(otherReviews.value.length / itemsPerPage.value);
+});
+
+const paginatedReviews = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return otherReviews.value.slice(start, end);
+});
+
+const paginationStart = computed(() => {
+  return (currentPage.value - 1) * itemsPerPage.value + 1;
+});
+
+const paginationEnd = computed(() => {
+  const end = currentPage.value * itemsPerPage.value;
+  return Math.min(end, otherReviews.value.length);
+});
+
+const displayedPages = computed(() => {
+  const pages = [];
+  const maxDisplayed = 5;
+  let start = Math.max(1, currentPage.value - Math.floor(maxDisplayed / 2));
+  let end = Math.min(totalPages.value, start + maxDisplayed - 1);
+  
+  if (end - start < maxDisplayed - 1) {
+    start = Math.max(1, end - maxDisplayed + 1);
+  }
+  
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+  return pages;
+});
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+    scrollToReviews();
+  }
+};
+
+const previousPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+    scrollToReviews();
+  }
+};
+
+const scrollToReviews = () => {
+  const reviewsSection = document.querySelector('.reviews-list');
+  if (reviewsSection) {
+    reviewsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
 
 const fetchReviews = async () => {
   loading.value = true;
@@ -129,6 +245,29 @@ const fetchAverageRating = async () => {
     totalReviews.value = response.data.data.totalReviews || 0;
   } catch (error) {
     console.error('Erreur lors du chargement de la note moyenne:', error);
+  }
+};
+
+const reportReview = async (reviewId: string) => {
+  if (!isAuthenticated.value) {
+    alert('Vous devez être connecté pour signaler un avis');
+    return;
+  }
+
+  try {
+    const token = localStorage.getItem('auth_token');
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/reviews/${reviewId}/report`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    if (response.data.success) {
+      alert('Avis signalé avec succès. Notre équipe va l\'examiner.');
+    }
+  } catch (error: any) {
+    const errorMsg = error.response?.data?.message || 'Erreur lors du signalement';
+    alert(errorMsg);
   }
 };
 
@@ -402,5 +541,150 @@ onMounted(() => {
 .no-reviews .subtitle {
   font-size: 0.875rem;
   color: #9ca3af;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.per-page-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.per-page-selector label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.per-page-btn {
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.per-page-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.per-page-btn.active {
+  background: #111827;
+  color: white;
+  border-color: #111827;
+}
+
+.pagination-info {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.reviews-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pagination-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.pagination-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-btn i {
+  font-size: 1.25rem;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.page-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.page-btn.active {
+  background: #111827;
+  color: white;
+  border-color: #111827;
+}
+
+@media (max-width: 640px) {
+  .pagination-controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .pagination-navigation {
+    flex-wrap: wrap;
+  }
+  
+  .page-numbers {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+  }
 }
 </style>
