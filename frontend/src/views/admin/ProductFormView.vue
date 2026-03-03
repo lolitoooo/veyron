@@ -794,13 +794,13 @@ async function saveProduct() {
           const relativePath = convertUrlToRelativePath(img.url);
           return {
             ...img,
-            url: typeof relativePath === 'string' ? relativePath : relativePath.url
+            url: typeof relativePath === 'string' ? relativePath : (relativePath as { url: string }).url
           };
-        } 
+        }
         else if (typeof img === 'string') {
           const relativePath = convertUrlToRelativePath(img);
           return {
-            url: typeof relativePath === 'string' ? relativePath : relativePath.url,
+            url: typeof relativePath === 'string' ? relativePath : (relativePath as { url: string }).url,
             alt: productCopy.name || 'Image produit',
             isMain: false
           };
@@ -822,12 +822,12 @@ async function saveProduct() {
               const relativePath = convertUrlToRelativePath(img.url);
               return {
                 ...img,
-                url: typeof relativePath === 'string' ? relativePath : relativePath.url
+                url: typeof relativePath === 'string' ? relativePath : (relativePath as { url: string }).url
               };
             }
             return img;
           });
-          
+
           const hasMainImage = color.images.some(img => img.isMain);
           if (!hasMainImage && color.images.length > 0) {
             color.images[0].isMain = true;

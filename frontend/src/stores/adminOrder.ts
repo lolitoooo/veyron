@@ -25,8 +25,16 @@ export const useAdminOrderStore = defineStore('adminOrder', () => {
     return orders.value.filter(order => order.status === 'pending').length;
   });
 
-  async function fetchOrders(params: { page?: number; limit?: number; status?: string; sort?: string } = {}) {
-    const { page = 1, limit = 10, status = '', sort = '-createdAt' } = params;
+  async function fetchOrders(params: { page?: number; limit?: number; status?: string; sort?: string; search?: string; dateFrom?: string; dateTo?: string } = {}) {
+    const {
+      page = 1,
+      limit = 10,
+      status = '',
+      sort = '-createdAt',
+      search,
+      dateFrom,
+      dateTo
+    } = params;
     if (!authStore.isAuthenticated || authStore.user?.role !== 'admin') {
       error.value = 'Accès non autorisé';
       return;
@@ -38,7 +46,15 @@ export const useAdminOrderStore = defineStore('adminOrder', () => {
 
     try {
       const response = await api.get('/orders', {
-        params: { page, limit, status, sort }
+        params: {
+          page,
+          limit,
+          status,
+          sort,
+          search,
+          dateFrom,
+          dateTo
+        }
       });
       
       orders.value = response.data.data;

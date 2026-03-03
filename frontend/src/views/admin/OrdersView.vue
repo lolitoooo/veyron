@@ -1,16 +1,51 @@
 <template>
   <div class="orders-container">
     <div class="admin-header">
-      <h1>Gestion des commandes</h1>
-      <div class="filters">
-        <select v-model="statusFilter" class="filter-select">
-          <option value="all">Tous les statuts</option>
-          <option value="pending">En attente</option>
-          <option value="processing">En traitement</option>
-          <option value="shipped">Expédiée</option>
-          <option value="delivered">Livrée</option>
-          <option value="cancelled">Annulée</option>
-        </select>
+      <h1 class="admin-header-title">Gestion des commandes</h1>
+
+      <div class="filters-row">
+        <div class="filter-item filter-search">
+          <div class="search-group">
+            <span class="material-icons search-icon">search</span>
+            <input
+              v-model="searchTerm"
+              type="text"
+              class="search-input"
+              placeholder="Nom, email ou n° de commande…"
+            />
+          </div>
+        </div>
+
+        <div class="filter-item">
+          <select v-model="statusFilter" class="filter-select">
+            <option value="all">Tous les statuts</option>
+            <option value="pending">En attente</option>
+            <option value="processing">En traitement</option>
+            <option value="shipped">Expédiée</option>
+            <option value="delivered">Livrée</option>
+            <option value="cancelled">Annulée</option>
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <input
+            v-model="dateFrom"
+            type="date"
+            class="filter-input"
+            placeholder="Du"
+            @change="onFiltersChange"
+          />
+        </div>
+
+        <div class="filter-item">
+          <input
+            v-model="dateTo"
+            type="date"
+            class="filter-input"
+            placeholder="Au"
+            @change="onFiltersChange"
+          />
+        </div>
       </div>
     </div>
     
@@ -180,6 +215,9 @@ const orders = computed(() => adminOrderStore.orders);
 const totalOrders = computed(() => adminOrderStore.totalOrders);
 const totalPages = computed(() => adminOrderStore.totalPages);
 const statusFilter = ref('all');
+const searchTerm = ref('');
+const dateFrom = ref<string | null>(null);
+const dateTo = ref<string | null>(null);
 const showStatusModal = ref(false);
 const selectedOrder = ref<Order | null>(null);
 const newStatus = ref('');
@@ -187,16 +225,35 @@ const currentPage = ref(1);
 const itemsPerPage = ref(10);
 
 const filteredOrders = computed(() => {
-  if (statusFilter.value === 'all') {
-    return orders.value;
-  }
-  return orders.value.filter(order => order.status === statusFilter.value);
+  return orders.value;
 });
 
 watch(statusFilter, () => {
   currentPage.value = 1;
   fetchOrders();
 });
+
+let searchTimeout: number | undefined;
+
+watch(searchTerm, () => {
+  if (searchTimeout) {
+    clearTimeout(searchTimeout);
+  }
+  searchTimeout = window.setTimeout(() => {
+    currentPage.value = 1;
+    fetchOrders();
+  }, 400);
+});
+
+const onSearch = () => {
+  currentPage.value = 1;
+  fetchOrders();
+};
+
+const onFiltersChange = () => {
+  currentPage.value = 1;
+  fetchOrders();
+};
 
 onMounted(() => {
   fetchOrders();
@@ -206,7 +263,10 @@ async function fetchOrders() {
     await adminOrderStore.fetchOrders({
       page: currentPage.value,
       limit: itemsPerPage.value,
-      status: statusFilter.value !== 'all' ? statusFilter.value : undefined
+      status: statusFilter.value !== 'all' ? statusFilter.value : undefined,
+      search: searchTerm.value.trim() || undefined,
+      dateFrom: dateFrom.value || undefined,
+      dateTo: dateTo.value || undefined
     });
   } catch (err) {
     console.error('Erreur lors du chargement des commandes:', err);
@@ -343,21 +403,126 @@ const closeModal = () => {
 
 .admin-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
   margin-bottom: 2rem;
 }
 
-.filters {
+.admin-header-title {
+  margin: 0;
+  font-family: var(--font-primary, 'Cormorant Garamond', serif);
+  /* Titre large mais pas énorme */
+  font-size: var(--text-3xl, 1.875rem);
+  letter-spacing: -0.02em;
+  font-weight: var(--font-light, 300);
+}
+
+.filters-row {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-top: 0.5rem;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.filter-search {
+  flex: 1 1 50%;
+  min-width: 320px;
+}
+
+.search-group {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  padding: 0.25rem 0.5rem 0.25rem 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.search-icon {
+  font-size: 20px;
+  color: #999;
+  margin-right: 0.5rem;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.5rem;
+}
+
+.search-input::placeholder {
+  color: #aaa;
+}
+
+.btn-search {
+  border: none;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  background-color: #111;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-search:hover {
+  background-color: #333;
+}
+
+.btn-search:active {
+  transform: translateY(1px);
 }
 
 .filter-select {
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 0.9rem;
+  min-width: 150px;
+}
+
+.filter-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  min-width: 150px;
+}
+
+/* Responsive : empiler proprement les filtres en mobile */
+@media (max-width: 768px) {
+  .filters-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .filter-item,
+  .filter-search {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .filter-select,
+  .filter-input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .search-group {
+    width: 100%;
+  }
 }
 
 .loading-container {

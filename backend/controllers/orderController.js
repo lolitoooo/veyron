@@ -302,16 +302,118 @@ exports.getAllOrders = async (req, res) => {
     if (req.query.status) {
       filter.status = req.query.status;
     }
-    
-    const sort = req.query.sort || '-createdAt';
-    
-    const orders = await Order.find(filter)
-      .populate('user', 'firstName lastName email')
-      .sort(sort)
-      .skip(skip)
-      .limit(limit);
-    
-    const total = await Order.countDocuments(filter);
+
+    const search = (req.query.search || '').trim();
+    const customer = (req.query.customer || '').trim();
+    const orderId = (req.query.orderId || '').trim();
+    const email = (req.query.email || '').trim();
+    const dateFrom = req.query.dateFrom ? new Date(req.query.dateFrom) : null;
+    const dateTo = req.query.dateTo ? new Date(req.query.dateTo) : null;
+
+    const userConditions = [];
+
+    if (customer) {
+      userConditions.push({
+        $or: [
+          { 'user.firstName': { $regex: customer, $options: 'i' } },
+          { 'user.lastName': { $regex: customer, $options: 'i' } }
+        ]
+      });
+    }
+
+    if (email) {
+      userConditions.push({
+        'user.email': { $regex: email, $options: 'i' }
+      });
+    }
+
+    if (orderId) {
+      filter._id = orderId;
+    }
+
+    if (dateFrom || dateTo) {
+      filter.createdAt = {};
+      if (dateFrom) {
+        filter.createdAt.$gte = dateFrom;
+      }
+      if (dateTo) {
+        dateTo.setHours(23, 59, 59, 999);
+        filter.createdAt.$lte = dateTo;
+      }
+    }
+
+    if (search) {
+      const searchRegex = { $regex: search, $options: 'i' };
+      userConditions.push({
+        $or: [
+          { 'user.firstName': searchRegex },
+          { 'user.lastName': searchRegex },
+          { 'user.email': searchRegex }
+        ]
+      });
+      if (/^[0-9a-f]{6,24}$/i.test(search)) {
+        filter._id = { $regex: search, $options: 'i' };
+      }
+    }
+
+    const matchStage = Object.keys(filter).length ? { $match: filter } : null;
+
+    const pipeline = [];
+    if (matchStage) {
+      pipeline.push(matchStage);
+    }
+
+    pipeline.push(
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: {
+          path: '$user',
+          preserveNullAndEmptyArrays: true
+        }
+      }
+    );
+
+    if (userConditions.length) {
+      pipeline.push({
+        $match: { $and: userConditions }
+      });
+    }
+
+    const sortField = req.query.sort || '-createdAt';
+    const sortStage = {};
+    if (sortField.startsWith('-')) {
+      sortStage[sortField.substring(1)] = -1;
+    } else {
+      sortStage[sortField] = 1;
+    }
+
+    pipeline.push(
+      { $sort: sortStage },
+      {
+        $facet: {
+          data: [
+            { $skip: skip },
+            { $limit: limit }
+          ],
+          totalCount: [
+            { $count: 'count' }
+          ]
+        }
+      }
+    );
+
+    const result = await Order.aggregate(pipeline);
+    const orders = (result[0] && result[0].data) ? result[0].data : [];
+    const total = result[0] && result[0].totalCount && result[0].totalCount[0]
+      ? result[0].totalCount[0].count
+      : 0;
     
     res.status(200).json({
       success: true,
@@ -326,11 +428,6 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
-/**
- * @desc    Récupère toutes les commandes sans pagination pour les statistiques
- * @route   GET /api/orders/all
- * @access  Private/Admin
- */
 exports.getAllOrdersWithoutPagination = async (req, res) => {
   try {
     const filter = {};
