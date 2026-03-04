@@ -92,12 +92,10 @@ exports.checkToken = async (req, res) => {
       });
     }
 
-    const isValid = reviewToken.isValid();
-
     res.json({
       success: true,
       data: {
-        valid: isValid,
+        valid: reviewToken.isValid(),
         used: reviewToken.used,
         expired: reviewToken.expiresAt < new Date(),
         product: reviewToken.product,

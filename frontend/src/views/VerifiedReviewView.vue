@@ -18,15 +18,15 @@
       <div v-else-if="tokenData && !submitted" class="review-form-container">
         <div class="header">
           <i class="material-icons verified-icon">verified</i>
-          <h1>Laissez un avis vérifié</h1>
-          <p class="subtitle">Votre avis sera marqué comme "Achat vérifié"</p>
+          <h1>Avis sur votre achat</h1>
+          <p class="subtitle">Cet avis est associé à une commande Veyron Paris.</p>
         </div>
 
         <div class="product-info">
           <img 
-            v-if="tokenData.product?.images?.[0]" 
-            :src="`${imageUrl}${tokenData.product.images[0]}`" 
-            :alt="tokenData.product.name"
+            v-if="productImageUrl" 
+            :src="productImageUrl" 
+            :alt="tokenData.product?.name || 'Produit commandé'"
             class="product-image"
           >
           <div class="product-details">
@@ -79,8 +79,8 @@
           <div class="info-box">
             <i class="material-icons">info</i>
             <div>
-              <p><strong>Votre avis sera vérifié</strong></p>
-              <p>Il sera visible après validation par notre équipe, généralement sous 24-48h.</p>
+              <p><strong>Avis client certifié</strong></p>
+              <p>Seules les personnes ayant réellement acheté ce produit peuvent laisser un avis ici.</p>
             </div>
           </div>
 
@@ -109,7 +109,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import ImageUpload from '@/components/ImageUpload.vue';
@@ -128,7 +128,27 @@ const images = ref<string[]>([]);
 const submitting = ref(false);
 const submitted = ref(false);
 
-const imageUrl = import.meta.env.VITE_IMAGE_URL || 'http://localhost:3000';
+const imageUrl = (import.meta.env.VITE_IMAGE_URL || 'http://localhost:3000').replace(/\/$/, '');
+
+const productImageUrl = computed(() => {
+  const product = tokenData.value?.product;
+  if (!product || !product.images || !product.images.length) return '';
+
+  const firstImage = product.images[0];
+  const path = typeof firstImage === 'string' ? firstImage : firstImage?.url;
+  if (!path) return '';
+
+  if (typeof path === 'string' && /^https?:\/\//i.test(path)) {
+    return path;
+  }
+
+  const normalizedPath = typeof path === 'string' ? path : '';
+  if (!normalizedPath) return '';
+
+  return normalizedPath.startsWith('/')
+    ? `${imageUrl}${normalizedPath}`
+    : `${imageUrl}/${normalizedPath}`;
+});
 
 const checkToken = async () => {
   try {
@@ -306,18 +326,28 @@ onMounted(() => {
 .header {
   text-align: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #111827 0%, #374151 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  color: var(--color-white);
 }
 
 .header h1 {
-  font-size: 2rem;
+  font-family: var(--font-primary);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-medium);
   margin-bottom: 0.5rem;
+  color: var(--color-white);
 }
 
-.subtitle {
-  color: #d1d5db;
-  font-size: 0.875rem;
+.header .subtitle {
+  color: var(--color-secondary-light);
+  font-size: var(--text-sm);
+}
+
+.header .verified-icon {
+  color: var(--color-secondary);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
 .product-info {
@@ -418,21 +448,21 @@ textarea:focus {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: #eff6ff;
-  border-left: 4px solid #3b82f6;
-  border-radius: 0.5rem;
+  background: var(--color-cream);
+  border-left: 4px solid var(--color-secondary);
+  border-radius: var(--border-radius-md);
   margin-bottom: 2rem;
 }
 
 .info-box i {
-  color: #3b82f6;
+  color: var(--color-secondary);
   font-size: 1.5rem;
 }
 
 .info-box p {
   margin: 0;
-  font-size: 0.875rem;
-  color: #1e40af;
+  font-size: var(--text-sm);
+  color: var(--color-gray-700);
 }
 
 .submit-btn {
