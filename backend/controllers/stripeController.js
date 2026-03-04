@@ -770,9 +770,10 @@ exports.webhook = async (req, res) => {
               order.user,
               orderItemsTotal,
               order._id,
-              session.id
+              session.id,
+              { skipCashback: !!(order.cashbackUsed && order.cashbackUsed > 0) }
             );
-            
+
             if (order.cashbackUsed && order.cashbackUsed > 0) {
               await loyaltyService.spendCashback(
                 order.user,

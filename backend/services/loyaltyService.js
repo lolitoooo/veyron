@@ -116,7 +116,9 @@ async function calculateRank(xpTotal, config) {
   return 'Bronze';
 }
 
-async function creditCashbackAndXp(userId, orderItemsTotal, orderId, stripeSessionId) {
+async function creditCashbackAndXp(userId, orderItemsTotal, orderId, stripeSessionId, options) {
+  const opts = options || {};
+  const skipCashback = !!opts.skipCashback;
   const config = await getOrCreateConfig();
   
   if (!config.enabled) {
@@ -136,7 +138,7 @@ async function creditCashbackAndXp(userId, orderItemsTotal, orderId, stripeSessi
   const wallet = await getOrCreateWallet(userId);
 
   const effectiveCashbackRate = config.cashbackRatePercent + (wallet.rank ? getRankBonus(wallet.rank, config) : 0);
-  let cashbackEarn = (orderItemsTotal * effectiveCashbackRate) / 100;
+  let cashbackEarn = skipCashback ? 0 : (orderItemsTotal * effectiveCashbackRate) / 100;
   cashbackEarn = Math.min(cashbackEarn, config.cashbackMaxEarnPerOrder);
   cashbackEarn = Math.round(cashbackEarn * 100) / 100;
 
@@ -145,18 +147,22 @@ async function creditCashbackAndXp(userId, orderItemsTotal, orderId, stripeSessi
   const expiresAt = new Date(Date.now() + config.cashbackExpiryDays * 24 * 60 * 60 * 1000);
 
   try {
-    console.log(`[Loyalty] Tentative d'insertion cashback pour user ${userId}`);
-    
-    const cashbackEntry = await LoyaltyLedger.create({
-      user: userId,
-      type: 'CASHBACK_EARN',
-      amount: cashbackEarn,
-      expiresAt,
-      order: orderId,
-      stripeSessionId,
-      description: `Cashback ${effectiveCashbackRate}% sur commande`
-    });
-    console.log(`[Loyalty] Cashback entry créée: ${cashbackEntry._id}`);
+    if (!skipCashback && cashbackEarn > 0) {
+      console.log(`[Loyalty] Tentative d'insertion cashback pour user ${userId}`);
+      
+      const cashbackEntry = await LoyaltyLedger.create({
+        user: userId,
+        type: 'CASHBACK_EARN',
+        amount: cashbackEarn,
+        expiresAt,
+        order: orderId,
+        stripeSessionId,
+        description: `Cashback ${effectiveCashbackRate}% sur commande`
+      });
+      console.log(`[Loyalty] Cashback entry créée: ${cashbackEntry._id}`);
+    } else {
+      console.log(`[Loyalty] Cashback non crédité (skipCashback=${skipCashback}) pour user ${userId}`);
+    }
 
     const xpEntry = await LoyaltyLedger.create({
       user: userId,
@@ -174,7 +180,7 @@ async function creditCashbackAndXp(userId, orderItemsTotal, orderId, stripeSessi
     await wallet.save();
     console.log(`[Loyalty] Wallet sauvegardé: XP=${wallet.xpTotal}, Rank=${newRank}`);
 
-    console.log(`[Loyalty] Crédité ${cashbackEarn}€ cashback + ${xpEarn} XP pour user ${userId}`);
+    console.log(`[Loyalty] Crédité ${cashbackEarn}€ cashback (skipCashback=${skipCashback}) + ${xpEarn} XP pour user ${userId}`);
 
     return { cashback: cashbackEarn, xp: xpEarn, newRank };
   } catch (insertError) {
@@ -208,6 +214,17 @@ async function calculateMaxCashbackUsage(userId, orderItemsTotal) {
 
 async function spendCashback(userId, amount, orderId, stripeSessionId) {
   if (amount <= 0) {
+    return;
+  }
+
+  // Idempotence : éviter de débiter plusieurs fois pour la même commande
+  const existing = await LoyaltyLedger.findOne({
+    user: userId,
+    type: 'CASHBACK_SPEND',
+    order: orderId
+  });
+  if (existing) {
+    console.log(`[Loyalty] Cashback déjà dépensé pour order ${orderId}, on ne recrée pas d'entrée.`);
     return;
   }
 
