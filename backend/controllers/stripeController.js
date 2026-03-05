@@ -705,7 +705,11 @@ exports.getCheckoutSessionPublic = async (req, res) => {
 };
 
 exports.webhook = async (req, res) => {
+  console.log('[Webhook] Webhook appelé - NODE_ENV:', process.env.NODE_ENV);
+  console.log('[Webhook] STRIPE_WEBHOOK_SECRET défini:', !!process.env.STRIPE_WEBHOOK_SECRET);
+  
   if (process.env.NODE_ENV === 'development' && !process.env.STRIPE_WEBHOOK_SECRET) {
+    console.log('[Webhook] Mode développement sans STRIPE_WEBHOOK_SECRET - webhook ignoré');
     return res.status(200).json({ received: true, mode: 'development' });
   }
   
@@ -831,9 +835,9 @@ exports.webhook = async (req, res) => {
                   url: reviewLink
                 });
 
-                console.log(`[Stripe webhook] ✅ Token créé pour ${product.name}: ${reviewLink}`);
+                console.log(`[Stripe webhook] Token créé pour ${product.name}: ${reviewLink}`);
               } catch (reviewTokenError) {
-                console.error(`[Stripe webhook] ❌ Erreur token pour ${item.product}:`, reviewTokenError);
+                console.error(`[Stripe webhook] Erreur token pour ${item.product}:`, reviewTokenError);
               }
             }
           }
@@ -847,6 +851,46 @@ exports.webhook = async (req, res) => {
               subject: `Confirmation de commande #${order.invoiceNumber || order._id} - Veyron Paris`,
               html: orderConfirmationEmailTemplate(order, templateUser, reviewLinks)
             });
+            
+            console.log('[Stock] Début décrémentation du stock après envoi email');
+            for (const item of order.orderItems) {
+              try {
+                const product = await Product.findById(item.product);
+                if (!product) {
+                  console.error(`[Stock] Produit non trouvé: ${item.product}`);
+                  continue;
+                }
+
+                const colorName = item.variant.color;
+                const sizeName = item.variant.size;
+                
+                console.log('colorName', colorName);
+                console.log('sizeName', sizeName);
+
+                const variant = product.variants.find(
+                  v => v.size === sizeName && v.color === colorName
+                );
+                
+                if (!variant) {
+                  console.error(`[Stock] Variante non trouvée: ${sizeName}/${colorName} pour ${product.name}`);
+                  continue;
+                }
+
+                if (variant.stock >= item.qty) {
+                  variant.stock -= item.qty;
+                  
+                  product.stock = product.variants.reduce((sum, v) => sum + (v.stock || 0), 0);
+                  
+                  await product.save();
+                  console.log(`[Stock] Décrémenté ${item.qty} unité(s) pour ${product.name} - ${sizeName}/${colorName} (Stock restant variante: ${variant.stock}, Stock total: ${product.stock})`);
+                } else {
+                  console.error(`[Stock] Stock insuffisant pour ${product.name} - ${sizeName}/${colorName} (Disponible: ${variant.stock}, Demandé: ${item.qty})`);
+                }
+              } catch (stockError) {
+                console.error(`[Stock] Erreur pour l'article ${item.name}:`, stockError);
+              }
+            }
+            console.log('[Stock] Fin décrémentation du stock');
           }
 
           if (!order.user) {
