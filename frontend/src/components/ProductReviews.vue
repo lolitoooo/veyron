@@ -26,38 +26,30 @@
       @cancel="showReviewForm = false"
     />
 
-    <div v-if="userReview && !showReviewForm" class="user-review-card" :class="{ 'approved': userReview.status === 'approved' }">
-      <div class="review-header">
+    <div v-if="userReview" class="user-review-section">
+      <div class="review-header-simple">
         <h3>Votre avis</h3>
-        <div class="review-status">
-          <span v-if="userReview.status === 'pending'" class="status-badge pending">
-            <i class="material-icons">schedule</i>
-            En attente de validation
-          </span>
-          <span v-else-if="userReview.status === 'approved'" class="status-badge approved">
-            <i class="material-icons">check_circle</i>
-            Approuvé
-          </span>
-          <span v-else-if="userReview.status === 'rejected'" class="status-badge rejected">
-            <i class="material-icons">cancel</i>
-            Rejeté
-          </span>
-        </div>
-        <div class="review-actions">
+      </div>
+      <div class="user-review-wrapper">
+        <ReviewCard 
+          :review="userReview" 
+          :is-user-review="true"
+          :show-status="true"
+        />
+        <div class="review-actions-bottom">
           <button 
             v-if="userReview.status !== 'approved'"
             @click="showReviewForm = true" 
-            class="btn-icon" 
+            class="action-btn edit-btn" 
             title="Modifier"
           >
             <i class="material-icons">edit</i>
           </button>
-          <button @click="deleteUserReview" class="btn-icon delete" title="Cliquez pour supprimer définitivement">
+          <button @click="deleteUserReview" class="action-btn delete-btn" title="Supprimer cet avis">
             <i class="material-icons">delete</i>
           </button>
         </div>
       </div>
-      <ReviewCard :review="userReview" :is-user-review="true" />
     </div>
 
     <div class="reviews-list">
@@ -414,58 +406,61 @@ onMounted(() => {
   border-color: #10b981;
 }
 
-.review-header {
+.review-header-simple {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  gap: 1rem;
 }
 
-.review-header h3 {
+.review-header-simple h3 {
   font-size: 1.125rem;
   font-weight: 600;
   color: #111827;
 }
 
-.review-status {
-  flex: 1;
-  display: flex;
-  justify-content: center;
+.user-review-wrapper {
+  position: relative;
 }
 
-.status-badge {
-  display: inline-flex;
+.review-actions-bottom {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: white;
+  border: 1px solid #d1d5db;
   border-radius: 0.375rem;
-  font-size: 0.875rem;
-  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.status-badge i {
-  font-size: 1.125rem;
+.action-btn i {
+  font-size: 1.25rem;
 }
 
-.status-badge.pending {
-  background: #fef3c7;
-  color: #92400e;
+.action-btn.edit-btn:hover {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  color: #3b82f6;
+  transform: scale(1.05);
 }
 
-.status-badge.approved {
-  background: #10b981;
-  color: white;
-}
-
-.status-badge.rejected {
-  background: #ef4444;
-  color: white;
-}
-
-.review-actions {
-  display: flex;
-  gap: 0.5rem;
+.action-btn.delete-btn:hover {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #ef4444;
+  transform: scale(1.05);
 }
 
 .btn-icon {

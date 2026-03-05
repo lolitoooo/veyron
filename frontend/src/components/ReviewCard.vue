@@ -8,13 +8,27 @@
         <div class="reviewer-details">
           <h4 class="reviewer-name">
             {{ reviewerName }}
-            <span v-if="review.isVerified" class="verified-badge" title="Achat vérifié">
-              <i class="material-icons">verified</i>
-              Vérifié
-            </span>
-            <span v-else class="unverified-badge" title="Avis non vérifié">
-              Non vérifié
-            </span>
+            <div class="badges-group">
+              <span v-if="review.isVerified" class="verified-badge" title="Achat vérifié">
+                <i class="material-icons">verified</i>
+                Vérifié
+              </span>
+              <span v-else class="unverified-badge" title="Avis non vérifié">
+                Non vérifié
+              </span>
+              <span v-if="showStatus && review.status === 'pending'" class="status-badge pending">
+                <i class="material-icons">schedule</i>
+                En attente
+              </span>
+              <span v-else-if="showStatus && review.status === 'approved'" class="status-badge approved">
+                <i class="material-icons">check_circle</i>
+                Approuvé
+              </span>
+              <span v-else-if="showStatus && review.status === 'rejected'" class="status-badge rejected">
+                <i class="material-icons">cancel</i>
+                Rejeté
+              </span>
+            </div>
           </h4>
           <p class="review-date">{{ formattedDate }}</p>
         </div>
@@ -58,6 +72,7 @@ import { computed } from 'vue';
 const props = defineProps<{
   review: any;
   isUserReview?: boolean;
+  showStatus?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -136,6 +151,17 @@ const openImageModal = (image: string) => {
   font-weight: 600;
   color: #111827;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badges-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .review-date {
@@ -174,7 +200,7 @@ const openImageModal = (image: string) => {
   border-radius: 0.25rem;
   font-size: 0.75rem;
   font-weight: 500;
-  margin-left: 0.5rem;
+  margin-left: 0;
 }
 
 .verified-badge i {
@@ -190,7 +216,36 @@ const openImageModal = (image: string) => {
   border-radius: 0.25rem;
   font-size: 0.75rem;
   font-weight: 500;
-  margin-left: 0.5rem;
+  margin-left: 0;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-badge i {
+  font-size: 0.875rem;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.approved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.rejected {
+  background: #fee2e2;
+  color: #991b1b;
 }
 
 .header-right {
