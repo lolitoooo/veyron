@@ -510,28 +510,98 @@ exports.cancelOrderBySession = async (req, res) => {
 
 exports.getTotalRevenue = async (req, res) => {
   try {
-    
     const orders = await Order.find({});
-        
+
     let totalRevenue = 0;
     let orderCount = 0;
-    
+
     for (const order of orders) {
       if (order.totalPrice) {
         totalRevenue += Number(order.totalPrice);
         orderCount++;
       }
     }
-    
-    
+
     res.status(200).json({
       success: true,
-      totalRevenue: totalRevenue,
-      orderCount: orderCount,
-      totalOrders: orders.length
+      totalRevenue,
+      orderCount,
+      totalOrders: orders.length,
     });
   } catch (err) {
     console.error('Erreur lors du calcul du chiffre d\'affaires:', err);
-    res.status(500).json({ message: err.message });
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors du calcul du chiffre d\'affaires',
+      error: err.message,
+    });
+  }
+};
+
+exports.getTopSellingProducts = async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit, 10) || 5;
+
+    const pipeline = [
+      { $unwind: '$orderItems' },
+      {
+        $group: {
+          _id: '$orderItems.product',
+          totalQuantity: { $sum: '$orderItems.qty' },
+          totalRevenue: {
+            $sum: { $multiply: ['$orderItems.price', '$orderItems.qty'] },
+          },
+        },
+      },
+      { $sort: { totalQuantity: -1 } },
+      { $limit: limit },
+      {
+        $lookup: {
+          from: 'products',
+          localField: '_id',
+          foreignField: '_id',
+          as: 'product',
+        },
+      },
+      { $unwind: '$product' },
+      {
+        $project: {
+          _id: 0,
+          id: '$product._id',
+          name: '$product.name',
+          price: '$product.price',
+          stock: '$product.stock',
+          category: '$product.category',
+          images: '$product.images',
+          salesCount: '$totalQuantity',
+          revenue: '$totalRevenue',
+        },
+      },
+    ];
+
+    const results = await Order.aggregate(pipeline);
+
+    const populated = await Product.populate(results, {
+      path: 'category',
+      select: 'name',
+    });
+
+    const formatted = populated.map((item) => ({
+      ...item,
+      category: item.category && item.category.name ? item.category.name : null,
+    }));
+
+    res.status(200).json({
+      success: true,
+      count: formatted.length,
+      data: formatted,
+    });
+  } catch (err) {
+    console.error('Erreur lors du calcul des produits les plus vendus:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors du calcul des produits les plus vendus',
+      error: err.message,
+    });
   }
 };

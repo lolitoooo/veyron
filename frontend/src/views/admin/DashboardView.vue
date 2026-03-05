@@ -217,8 +217,13 @@
             <tr v-for="product in popularProducts" :key="product.id">
               <td class="product-cell">
                 <div class="product-info">
-                  <img v-if="product.images && product.images.length > 0" :src="getFullImageUrl(product.images[0].url)" :alt="product.name" class="product-thumbnail" />
-                  <img v-else src="" alt="Image non disponible" class="product-thumbnail" />
+                  <img
+                    v-if="product.images && product.images.length > 0"
+                    :src="getFullImageUrl(product.images[0].url || product.images[0])"
+                    :alt="product.name"
+                    class="product-thumbnail"
+                  />
+                  <div v-else class="product-thumbnail placeholder"></div>
                   <span>{{ product.name || 'Produit sans nom' }}</span>
                 </div>
               </td>
@@ -227,7 +232,7 @@
               <td>{{ product.stock !== undefined ? product.stock : 0 }}</td>
               <td>{{ product.salesCount !== undefined ? product.salesCount : 0 }}</td>
               <td>
-                <button class="btn-icon" @click="editProduct(product.id)" :disabled="!product.id">
+                <button class="btn-icon" @click="editProduct(product.id || product._id)" :disabled="!product.id && !product._id">
                   <i class="fas fa-edit"></i>
                 </button>
               </td>
@@ -488,32 +493,19 @@ const fetchRecentOrders = async () => {
 const fetchPopularProducts = async () => {
   loading.value.products = true;
   error.value.products = '';
-  
-  try {    
-    try {
-      const response = await api.get('/products?sort=popular&limit=5');
-      
-      if (response.data && Array.isArray(response.data)) {
-        popularProducts.value = response.data;
-      } else if (response.data && Array.isArray(response.data.data)) {
-        popularProducts.value = response.data.data;
-      } else {
-        throw new Error('Format de réponse non valide');
-      }
-    } catch (sortError) {
-      console.warn('Échec avec le paramètre de tri, tentative sans tri:', sortError);
-      
-      const response = await api.get('/products');
-      
-      if (response.data && Array.isArray(response.data)) {
-        popularProducts.value = response.data.slice(0, 5);
-      } else if (response.data && Array.isArray(response.data.data)) {
-        popularProducts.value = response.data.data.slice(0, 5);
-      } else {
-        throw new Error('Format de réponse non valide');
-      }
+
+  try {
+    const response = await api.get('/orders/stats/top-products?limit=5');
+
+    if (response.data && Array.isArray(response.data)) {
+      popularProducts.value = response.data;
+    } else if (response.data && Array.isArray(response.data.data)) {
+      popularProducts.value = response.data.data;
+    } else if (response.data && Array.isArray(response.data.products)) {
+      popularProducts.value = response.data.products;
+    } else {
+      throw new Error('Format de réponse non valide pour les produits populaires');
     }
-    
   } catch (err: any) {
     console.error('Erreur lors du chargement des produits populaires:', err);
     error.value.products = err.message || 'Erreur lors du chargement des produits populaires';
@@ -556,7 +548,7 @@ const viewOrder = (orderId: string) => {
 };
 
 const editProduct = (productId: string) => {
-  router.push(`/admin/products/edit/${productId}`);
+  router.push(`/admin/products/${productId}/edit`);
 };
 
 onMounted(() => {

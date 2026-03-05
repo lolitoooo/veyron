@@ -15,7 +15,8 @@ const {
   generateInvoice,
   cancelOrder,
   cancelOrderBySession,
-  getTotalRevenue
+  getTotalRevenue,
+  getTopSellingProducts
 } = require('../controllers/orderController');
 
 router.post('/', protect, createOrder);
@@ -23,6 +24,7 @@ router.get('/user/:userId', protect, getUserOrders);
 
 // Routes spécifiques qui doivent être placées AVANT les routes avec paramètres d'ID
 router.get('/stats/revenue', protect, authorize('admin'), getTotalRevenue);
+router.get('/stats/top-products', protect, authorize('admin'), getTopSellingProducts);
 router.get('/all', protect, authorize('admin'), getAllOrdersWithoutPagination);
 router.get('/', protect, authorize('admin'), getAllOrders);
 router.put('/cancel-by-session/:sessionId', cancelOrderBySession);
