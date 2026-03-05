@@ -1,7 +1,10 @@
 import { loadStripe } from '@stripe/stripe-js';
 import api from './apiService';
 
-const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY || 'pk_test_votreclépublique';
+const STRIPE_PUBLIC_KEY =
+  import.meta.env.VITE_STRIPE_PUBLIC_KEY ||
+  import.meta.env.STRIPE_PUBLISHABLE_KEY ||
+  'pk_test_votreclépublique';
 
 let stripePromise: Promise<any> | null = null;
 

@@ -83,6 +83,12 @@ const router = createRouter({
           meta: { title: 'Paiement | VEYRON' }
         },
         {
+          path: 'payment-checkout',
+          name: 'payment-checkout',
+          component: () => import('@/views/PaymentCheckoutView.vue'),
+          meta: { title: 'Paiement sécurisé | VEYRON' }
+        },
+        {
           path: 'payment-result',
           name: 'payment-result',
           component: () => import('@/views/PaymentResultView.vue'),

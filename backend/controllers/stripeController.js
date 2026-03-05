@@ -263,8 +263,8 @@ exports.createCheckoutSession = async (req, res) => {
         ...(promoCodeData && { promoCode: promoCodeData.code }),
         ...(discountAmount > 0 && { discountAmount: discountAmount.toString() }),
       },
-      success_url: `${process.env.FRONTEND_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL}/payment-failed?session_id={CHECKOUT_SESSION_ID}`,
+      ui_mode: 'embedded',
+      return_url: `${process.env.FRONTEND_URL}/payment-result?session_id={CHECKOUT_SESSION_ID}`,
       ...discountOptions,
       shipping_options: [
         {
@@ -298,7 +298,7 @@ exports.createCheckoutSession = async (req, res) => {
     res.status(200).json({
       success: true,
       sessionId: session.id,
-      url: session.url,
+      clientSecret: session.client_secret,
       orderId: savedOrder._id
     });
   } catch (err) {
@@ -512,8 +512,8 @@ exports.createCheckoutSessionGuest = async (req, res) => {
         ...(promoCodeData && { promoCode: promoCodeData.code }),
         ...(discountAmount > 0 && { discountAmount: discountAmount.toString() }),
       },
-      success_url: `${process.env.FRONTEND_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL}/payment-failed?session_id={CHECKOUT_SESSION_ID}`,
+      ui_mode: 'embedded',
+      return_url: `${process.env.FRONTEND_URL}/payment-result?session_id={CHECKOUT_SESSION_ID}`,
       ...discountOptions,
       shipping_options: [
         {
@@ -547,7 +547,7 @@ exports.createCheckoutSessionGuest = async (req, res) => {
     res.status(200).json({
       success: true,
       sessionId: session.id,
-      url: session.url,
+      clientSecret: session.client_secret,
       orderId: savedOrder._id
     });
   } catch (err) {
@@ -658,7 +658,13 @@ exports.getCheckoutSession = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      session,
+      session: {
+        id: session.id,
+        clientSecret: session.client_secret,
+        payment_status: session.payment_status,
+        status: session.status,
+        customer_email: session.customer_details?.email || session.customer_email
+      },
       order
     });
   } catch (err) {
@@ -685,17 +691,12 @@ exports.getCheckoutSessionPublic = async (req, res) => {
       success: true,
       session: {
         id: session.id,
+        clientSecret: session.client_secret,
         payment_status: session.payment_status,
         status: session.status,
         customer_email: session.customer_details?.email || session.customer_email
       },
-      order: {
-        id: order._id,
-        invoiceNumber: order.invoiceNumber,
-        isPaid: order.isPaid,
-        status: order.status,
-        totalPrice: order.totalPrice
-      }
+      order
     });
   } catch (err) {
     console.error('Erreur Stripe (public session):', err);

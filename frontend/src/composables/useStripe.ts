@@ -4,7 +4,7 @@ import type { Stripe, StripeElements, StripeCardElement } from '@stripe/stripe-j
 import { createPaymentIntent, processPayment as confirmPayment } from '@/services/stripeService';
 
 export function useStripe() {
-  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+  const stripePromise = loadStripe(import.meta.env.STRIPE_PUBLISHABLE_KEY);
   const stripe = ref<Stripe | null>(null);
   const elements = ref<StripeElements | null>(null);
   const cardElement = ref<StripeCardElement | null>(null);

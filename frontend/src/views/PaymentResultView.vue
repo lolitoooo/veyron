@@ -40,7 +40,11 @@
             
             <div class="action-buttons">
               <button @click="viewOrderDetails" class="btn-secondary">Voir les détails</button>
-              <button @click="downloadInvoice" class="btn-primary" v-if="order.invoiceUrl">
+              <button
+                v-if="canDownloadInvoice"
+                @click="downloadInvoice"
+                class="btn-primary"
+              >
                 Télécharger la facture
               </button>
             </div>
@@ -81,6 +85,7 @@ import { useCartStore } from '../stores/cart';
 import type { Order } from '@/types/order';
 import { useAuthStore } from '@/stores/auth';
 import api from '@/services/apiService';
+import { getFullApiUrl } from '@/utils/apiUrl';
 
 const route = useRoute();
 const router = useRouter();
@@ -108,22 +113,13 @@ onMounted(async () => {
       ? await orderStore.getCheckoutSession(sessionId)
       : await api.get(`/stripe/checkout-session-public/${sessionId}`).then(r => r.data);
     
-    if (result && result.status === 'complete') {
+    if (result && result.success && result.session && (result.session.status === 'complete' || result.session.payment_status === 'paid')) {
       paymentSuccess.value = true;
-      order.value = result.order;
-      orderNumber.value = result.order._id;
-      
-      cartStore.$reset();
-    } else if (result && result.success && result.session && (result.session.status === 'complete' || result.session.payment_status === 'paid')) {
-      paymentSuccess.value = true;
-      order.value = {
-        _id: result.order.id,
-        totalPrice: result.order.totalPrice,
-        status: result.order.status,
-        createdAt: new Date().toISOString()
-      } as any;
-      orderNumber.value = result.order.invoiceNumber || result.order.id;
-      cartStore.clearCart();
+      if (result.order) {
+        order.value = result.order as Order;
+        orderNumber.value = result.order.invoiceNumber || result.order._id || result.order.id || '';
+      }
+      await cartStore.clearCart();
     } else {
       paymentSuccess.value = false;
     }
@@ -179,6 +175,14 @@ const statusClass = computed(() => {
   return statusClassMap[order.value.status] || '';
 });
 
+const canDownloadInvoice = computed(() => {
+  return !!(
+    authStore.isAuthenticated &&
+    order.value &&
+    ((order.value as any)._id || (order.value as any).id)
+  );
+});
+
 const goToHome = () => {
   router.push('/');
 };
@@ -188,18 +192,36 @@ const goToCart = () => {
 };
 
 const goToOrders = () => {
-  router.push('/account/orders');
+  router.push({ name: 'orders' });
 };
 
 const viewOrderDetails = () => {
-  if (order.value) {
-    router.push(`/account/orders/${order.value._id}`);
+  if (order.value && (order.value as any)._id) {
+    router.push({ name: 'order-detail', params: { id: (order.value as any)._id } });
   }
 };
 
 const downloadInvoice = () => {
-  if (order.value && order.value.invoiceUrl) {
-    window.open(order.value.invoiceUrl, '_blank');
+  if (!order.value || !authStore.isAuthenticated) {
+    return;
+  }
+
+  const token = localStorage.getItem('auth_token');
+  if (!token) {
+    error.value = 'Vous devez être connecté pour télécharger la facture.';
+    return;
+  }
+
+  const id = (order.value as any)._id || (order.value as any).id;
+  if (!id) {
+    return;
+  }
+
+  const invoiceUrl = `${getFullApiUrl(`orders/${id}/invoice/download`)}?token=${token}`;
+  const win = window.open(invoiceUrl, '_blank');
+
+  if (!win) {
+    alert('Le téléchargement a été bloqué. Veuillez autoriser les pop-ups pour ce site.');
   }
 };
 </script>
@@ -263,8 +285,6 @@ const downloadInvoice = () => {
 }
 
 .success-message {
-  background-color: #f0fff0;
-  border: 1px solid #c8e6c9;
   border-radius: 8px;
   padding: 2rem;
   text-align: center;
@@ -275,7 +295,6 @@ const downloadInvoice = () => {
 .success-icon {
   width: 80px;
   height: 80px;
-  background-color: #4caf50;
   color: white;
   border-radius: 50%;
   display: flex;
@@ -288,7 +307,6 @@ const downloadInvoice = () => {
 h1 {
   font-family: var(--font-heading);
   margin-bottom: 1rem;
-  color: #4caf50;
 }
 
 h2 {

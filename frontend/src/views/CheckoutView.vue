@@ -791,14 +791,20 @@ async function proceedToPayment() {
       ? await api.post('/stripe/create-checkout-session', orderData)
       : await api.post('/stripe/create-checkout-session-guest', { ...orderData, email: guestEmail.value });
     
-    if (response.data && response.data.url) {
-      window.location.href = response.data.url;
-    } else {
-      throw new Error('Erreur lors de la création de la session de paiement');
+    if (response.data && response.data.sessionId) {
+      await router.push({
+        name: 'payment-checkout',
+        query: {
+          session_id: response.data.sessionId
+        }
+      });
+      return;
     }
-  } catch (err) {
+
+    throw new Error('Erreur lors de la création de la session de paiement');
+  } catch (err: any) {
     console.error('Erreur lors du paiement:', err);
-    error.value = err.response?.data?.message || 'Erreur lors du traitement du paiement';
+    error.value = err?.response?.data?.message || err?.message || 'Erreur lors du traitement du paiement';
     isProcessing.value = false;
   }
 }
@@ -811,6 +817,10 @@ async function proceedToPayment() {
   width: 100%;
   overflow-x: hidden;
   box-sizing: border-box;
+}
+
+.embedded-checkout-section {
+  margin-top: 1.5rem;
 }
 
  .address-form {
