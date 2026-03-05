@@ -11,7 +11,8 @@ const {
   getProductsByCategory,
   getSaleProducts,
   updateProductStock,
-  searchProducts
+  searchProducts,
+  subscribeStockAlert
 } = require('../controllers/productController');
 
 router.get('/', getProducts);
@@ -19,6 +20,8 @@ router.get('/sale', getSaleProducts);
 router.get('/category/:categoryId', getProductsByCategory);
 router.get('/search', searchProducts);
 router.get('/:id', getProductById);
+
+router.post('/:id/stock-alerts', subscribeStockAlert);
 
 router.post('/:id/reviews', protect, createProductReview);
 

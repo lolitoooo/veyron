@@ -175,6 +175,12 @@
                 :src="viewMode === 1 ? getImageUrl(product) : getFlatProductImage(product)" 
                 :alt="product.name" 
               />
+              <div
+                v-if="product.stock === 0"
+                class="stock-badge"
+              >
+                Rupture de stock
+              </div>
             </div>
             
             <div class="product-info" v-if="viewMode === 1">
@@ -238,6 +244,7 @@ interface Product {
   discount?: number;
   discountPrice?: number;
   slug?: string;
+  stock?: number;
 }
 
 const products = ref<Product[]>([]);
@@ -1094,6 +1101,21 @@ onUnmounted(() => {
 
 .product-card:hover .product-image img {
   transform: scale(1.05);
+}
+
+.stock-badge {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--color-gray-300, #d4d4d4);
+  font-family: var(--font-secondary, 'Montserrat', sans-serif);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-gray-700, #2d2d2d);
 }
 
 .discount-badge {

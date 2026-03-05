@@ -99,8 +99,37 @@
               class="add-to-cart-btn"
               :disabled="!stockAvailable || !selectedSize || !selectedColor"
             >
-              Ajouter au panier
+              {{ stockAvailable ? 'Ajouter au panier' : 'Rupture de stock' }}
             </button>
+          </div>
+
+          <div v-if="!stockAvailable && selectedSize && selectedColor" class="stock-alert-box">
+            <p class="stock-alert-title">Me notifier quand il y aura du stock</p>
+            <p class="stock-alert-text">
+              Laissez votre adresse email pour être prévenu dès que cette combinaison sera à nouveau disponible.
+            </p>
+            <form class="stock-alert-form" @submit.prevent="subscribeStockAlert">
+              <input
+                type="email"
+                v-model="stockAlertEmail"
+                placeholder="Votre adresse email"
+                required
+              />
+              <button
+                type="submit"
+                :disabled="stockAlertLoading || stockAlertSubscribed || !isValidEmail(stockAlertEmail)"
+              >
+                <template v-if="stockAlertSubscribed">
+                  Inscription enregistrée
+                </template>
+                <template v-else>
+                  {{ stockAlertLoading ? 'Enregistrement...' : 'Me notifier' }}
+                </template>
+              </button>
+            </form>
+            <p v-if="stockAlertMessage" class="stock-alert-message">
+              {{ stockAlertMessage }}
+            </p>
           </div>
           
           <div class="product-details">
@@ -284,6 +313,11 @@ const stockAvailable = computed(() => {
   return selectedVariant.value.stock;
 });
 
+const stockAlertEmail = ref('');
+const stockAlertLoading = ref(false);
+const stockAlertMessage = ref('');
+const stockAlertSubscribed = ref(false);
+
 const selectImage = (imageUrl) => {
   currentImage.value = imageUrl;
 };
@@ -332,6 +366,40 @@ const addToCart = () => {
     alert(`${product.value.name} (${selectedColor.value}, ${selectedSize.value}) ajouté au panier`);
   } catch (error) {
     console.error('Erreur lors de l\'ajout au panier:', error);
+  }
+};
+
+const isValidEmail = (email: string) => {
+  const value = email.trim();
+  if (!value) return false;
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(value);
+};
+
+const subscribeStockAlert = async () => {
+  if (!product.value || !isValidEmail(stockAlertEmail.value) || stockAlertSubscribed.value) return;
+
+  try {
+    stockAlertLoading.value = true;
+    stockAlertMessage.value = '';
+
+    const response = await axios.post(`/api/products/${product.value._id}/stock-alerts`, {
+      email: stockAlertEmail.value.trim(),
+    });
+
+    stockAlertMessage.value =
+      response.data?.message ||
+      'Merci, vous serez prévenu dès que ce produit sera de nouveau en stock.';
+    if (response.data?.success) {
+      stockAlertSubscribed.value = true;
+    }
+  } catch (err: any) {
+    console.error('Erreur lors de l\'inscription à l\'alerte stock:', err);
+    stockAlertMessage.value =
+      err?.response?.data?.message ||
+      'Une erreur est survenue lors de votre inscription. Veuillez réessayer.';
+  } finally {
+    stockAlertLoading.value = false;
   }
 };
 
@@ -694,11 +762,72 @@ onMounted(() => {
 }
 
 .add-to-cart-btn:disabled {
-  background: #ccc;
+  background: #e0e0e0;
+  color: #6b6b6b;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
-  opacity: 0.7;
+  opacity: 1;
+}
+
+.stock-alert-box {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.75rem;
+  background-color: var(--color-cream, #f5f3ef);
+  border: 1px solid var(--color-gray-200, #e8e8e8);
+}
+
+.stock-alert-title {
+  font-family: var(--font-secondary, 'Montserrat', sans-serif);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  color: var(--color-primary, #1a1a1a);
+}
+
+.stock-alert-text {
+  font-size: 0.85rem;
+  color: var(--color-gray-600, #4a4a4a);
+  margin-bottom: 0.75rem;
+}
+
+.stock-alert-form {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.stock-alert-form input[type="email"] {
+  flex: 1 1 200px;
+  padding: 0.6rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-gray-300, #d4d4d4);
+  font-size: 0.9rem;
+}
+
+.stock-alert-form button {
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  border: none;
+  background-color: var(--color-primary, #1a1a1a);
+  color: #fff;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.stock-alert-form button:disabled {
+  background-color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+.stock-alert-message {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-gray-600, #4a4a4a);
 }
 
 .product-details {
