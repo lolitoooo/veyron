@@ -819,6 +819,18 @@ onMounted(() => {
   margin-top: 10px;
 }
 
+.color-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.size-options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .color-label, .size-label {
   font-size: 0.9rem;
   margin-bottom: 10px;
@@ -826,6 +838,7 @@ onMounted(() => {
 
 .color-swatches {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
