@@ -151,7 +151,7 @@
         </div>
       </div>
       
-      <div class="shipping-section" v-if="order.isPaid">
+      <div class="shipping-section">
         <h3>Gestion de la livraison</h3>
         <div class="shipping-cards">
           <div class="shipping-card">
@@ -166,7 +166,9 @@
             </div>
             <div v-else>
               <p>Aucune étiquette générée</p>
+              <p v-if="!isOrderPaidOrHasPayment" class="muted small">Réservé aux commandes payées.</p>
               <button 
+                v-else
                 class="btn btn-primary" 
                 @click="generateShippingLabel"
                 :disabled="generatingLabel"
@@ -214,20 +216,26 @@
             </div>
           </div>
 
-          <div class="shipping-card" v-if="order.isPaid && order.refundStatus !== 'full'">
+          <div class="shipping-card">
             <h4>Remboursement</h4>
-            <div v-if="order.refundStatus !== 'none'">
-              <p><strong>Statut:</strong> <span :class="['status-badge', `status-${order.refundStatus}`]">{{ getRefundStatusLabel(order.refundStatus) }}</span></p>
-              <p v-if="order.refundAmount"><strong>Montant remboursé:</strong> {{ formatPrice(order.refundAmount) }}</p>
-              <p v-if="order.refundedAt"><strong>Date:</strong> {{ formatDate(order.refundedAt) }}</p>
-              <p v-if="order.refundReason"><strong>Raison:</strong> {{ order.refundReason }}</p>
-            </div>
-            <div v-else>
-              <p>Aucun remboursement effectué</p>
-              <button class="btn btn-warning" @click="showRefundModal = true">
-                Effectuer un remboursement
-              </button>
-            </div>
+            <template v-if="!isOrderPaidOrHasPayment">
+              <p class="muted">Remboursement possible uniquement pour les commandes payées.</p>
+            </template>
+            <template v-else>
+              <div v-if="refundStatusValue && refundStatusValue !== 'none'">
+                <p><strong>Statut:</strong> <span :class="['status-badge', `status-${refundStatusValue}`]">{{ getRefundStatusLabel(refundStatusValue) }}</span></p>
+                <p v-if="order.refundAmount"><strong>Montant remboursé:</strong> {{ formatPrice(order.refundAmount) }}</p>
+                <p v-if="order.refundedAt"><strong>Date:</strong> {{ formatDate(order.refundedAt) }}</p>
+                <p v-if="order.refundReason"><strong>Raison:</strong> {{ order.refundReason }}</p>
+                <p v-if="refundStatusValue === 'full'" class="muted">Commande entièrement remboursée.</p>
+              </div>
+              <div v-else>
+                <p>Aucun remboursement effectué</p>
+                <button v-if="refundStatusValue !== 'full'" class="btn btn-warning" @click="openRefundModal">
+                  Effectuer un remboursement
+                </button>
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -287,6 +295,7 @@
           <option value="shipped">Expédiée</option>
           <option value="delivered">Livrée</option>
           <option value="cancelled">Annulée</option>
+          <option value="refunded">Remboursée</option>
         </select>
       </div>
       
@@ -358,7 +367,7 @@
           step="0.01"
           placeholder="Montant à rembourser"
         />
-        <small>Laisser vide pour un remboursement total</small>
+        <small>Modifier si besoin ; par défaut = remboursement total</small>
       </div>
       
       <div class="form-group">
@@ -378,12 +387,52 @@
         <button 
           type="button" 
           class="btn btn-warning" 
-          @click="processRefund"
+          @click="askConfirmRefund"
           :disabled="processingRefund || !refundReasonInput"
         >
           {{ processingRefund ? 'Traitement...' : 'Confirmer le remboursement' }}
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- Modale confirmation remboursement -->
+  <div v-if="showRefundConfirmModal" class="modal">
+    <div class="modal-content modal-confirm">
+      <h3>Êtes-vous sûr de rembourser ?</h3>
+      <p class="confirm-text">
+        Remboursement de <strong>{{ formatPrice(refundConfirmAmount) }}</strong> pour la commande #{{ order?._id?.substring(0, 8) }}...
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" @click="showRefundConfirmModal = false">Annuler</button>
+        <button type="button" class="btn btn-primary" @click="confirmAndProcessRefund" :disabled="processingRefund">
+          {{ processingRefund ? 'Traitement...' : 'Oui, rembourser' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale succès remboursement -->
+  <div v-if="showRefundSuccessModal" class="modal">
+    <div class="modal-content modal-success">
+      <div class="success-icon-wrap">
+        <span class="material-icons success-icon">check_circle</span>
+      </div>
+      <h3>Remboursement effectué</h3>
+      <p class="success-text">Le remboursement de <strong>{{ formatPrice(refundSuccessAmount) }}</strong> a bien été effectué.</p>
+      <button type="button" class="btn btn-primary btn-block" @click="closeRefundSuccessModal">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Modale erreur remboursement -->
+  <div v-if="showRefundErrorModal" class="modal">
+    <div class="modal-content modal-error">
+      <div class="error-icon-wrap">
+        <span class="material-icons error-icon">error</span>
+      </div>
+      <h3>Erreur</h3>
+      <p class="error-text">{{ refundErrorMessage }}</p>
+      <button type="button" class="btn btn-primary btn-block" @click="showRefundErrorModal = false">Fermer</button>
     </div>
   </div>
 </template>
@@ -403,6 +452,18 @@ const error = computed(() => adminOrderStore.error);
 const order = ref<Order | null>(null);
 const showUpdateStatusModal = ref(false);
 const newStatus = ref('');
+
+const refundStatusValue = computed(() => (order.value as Record<string, unknown>)?.refundStatus ?? 'none');
+
+const isOrderPaidOrHasPayment = computed(() => {
+  const o = order.value as Record<string, unknown> | null;
+  if (!o) return false;
+  if (o.isPaid === true) return true;
+  const paymentResult = o.paymentResult as { payment_intent?: string } | undefined;
+  if (paymentResult?.payment_intent) return true;
+  if (o.stripeSessionId) return true;
+  return false;
+});
 
 async function fetchOrderDetails() {
   if (!orderId.value) return;
@@ -427,7 +488,8 @@ const getStatusLabel = (status: string): string => {
     processing: 'En traitement',
     shipped: 'Expédiée',
     delivered: 'Livrée',
-    cancelled: 'Annulée'
+    cancelled: 'Annulée',
+    refunded: 'Remboursée'
   };
   return statusLabels[status] || status;
 };
@@ -499,6 +561,20 @@ const newReturnStatus = ref('');
 const refundAmount = ref<number | null>(null);
 const refundReasonInput = ref('');
 const processingRefund = ref(false);
+const showRefundConfirmModal = ref(false);
+const refundConfirmAmount = ref(0);
+const showRefundSuccessModal = ref(false);
+const refundSuccessAmount = ref(0);
+const showRefundErrorModal = ref(false);
+const refundErrorMessage = ref('');
+
+function openRefundModal() {
+  if (order.value) {
+    refundAmount.value = order.value.totalPrice ?? null;
+  }
+  refundReasonInput.value = 'Remboursement Veyron Paris';
+  showRefundModal.value = true;
+}
 
 async function generateShippingLabel() {
   if (!order.value) return;
@@ -509,7 +585,7 @@ async function generateShippingLabel() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
       }
     });
 
@@ -546,7 +622,7 @@ async function generateReturnLabel() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
       },
       body: JSON.stringify({ returnReason: returnReason.value })
     });
@@ -585,7 +661,7 @@ async function updateReturnStatus() {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
       },
       body: JSON.stringify({ returnStatus: newReturnStatus.value })
     });
@@ -604,43 +680,50 @@ async function updateReturnStatus() {
   }
 }
 
-async function processRefund() {
+function askConfirmRefund() {
   if (!order.value || !refundReasonInput.value) return;
-  
-  const confirmMsg = refundAmount.value 
-    ? `Confirmer le remboursement de ${refundAmount.value}€ ?`
-    : `Confirmer le remboursement total de ${order.value.totalPrice}€ ?`;
-  
-  if (!confirm(confirmMsg)) return;
-  
+  refundConfirmAmount.value = refundAmount.value ?? order.value.totalPrice ?? 0;
+  showRefundConfirmModal.value = true;
+}
+
+function closeRefundSuccessModal() {
+  showRefundSuccessModal.value = false;
+  refundSuccessAmount.value = 0;
+  fetchOrderDetails();
+}
+
+async function confirmAndProcessRefund() {
+  if (!order.value || !refundReasonInput.value) return;
+  showRefundConfirmModal.value = false;
   processingRefund.value = true;
   try {
     const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/shipping-labels/refund/${order.value._id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         amount: refundAmount.value || order.value.totalPrice,
-        reason: refundReasonInput.value 
+        reason: refundReasonInput.value
       })
     });
 
     const data = await response.json();
 
     if (data.success) {
-      alert(`Remboursement effectué avec succès!\nMontant: ${data.refund.amount}€`);
       showRefundModal.value = false;
       refundAmount.value = null;
       refundReasonInput.value = '';
-      await fetchOrderDetails();
+      refundSuccessAmount.value = data.refund?.amount ?? order.value.totalPrice ?? 0;
+      showRefundSuccessModal.value = true;
     } else {
       throw new Error(data.message || 'Erreur lors du remboursement');
     }
   } catch (error: any) {
     console.error('Erreur:', error);
-    alert(`Erreur: ${error.message}`);
+    refundErrorMessage.value = error?.message || 'Une erreur est survenue.';
+    showRefundErrorModal.value = true;
   } finally {
     processingRefund.value = false;
   }
@@ -991,6 +1074,20 @@ function getRefundStatusLabel(status: string): string {
   color: #d32f2f;
 }
 
+.status-refunded {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.muted {
+  color: var(--color-gray-500, #6b7280);
+}
+
+.muted.small {
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
 .btn {
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
@@ -1024,7 +1121,7 @@ function getRefundStatusLabel(status: string): string {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1032,17 +1129,69 @@ function getRefundStatusLabel(status: string): string {
 }
 
 .modal-content {
-  background-color: white;
-  border-radius: 8px;
+  background-color: var(--color-off-white, #fafaf8);
+  border-radius: 0.5rem;
   padding: 2rem;
   width: 100%;
   max-width: 500px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--color-gray-200, #e8e8e8);
 }
 
 .modal-content h3 {
   margin-top: 0;
   margin-bottom: 1.5rem;
+  font-family: var(--font-primary, 'Cormorant Garamond', serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-primary, #1a1a1a);
+  letter-spacing: 0.02em;
+}
+
+/* Modales confirmation / succès / erreur — style Veyron */
+.modal-confirm,
+.modal-success,
+.modal-error {
+  max-width: 400px;
+  text-align: center;
+}
+
+.modal-confirm .confirm-text,
+.modal-success .success-text,
+.modal-error .error-text {
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  color: var(--color-gray-700, #374151);
+  line-height: 1.5;
+}
+
+.modal-success .success-icon-wrap,
+.modal-error .error-icon-wrap {
+  margin-bottom: 1rem;
+}
+
+.modal-success .success-icon {
+  font-size: 3rem;
+  color: var(--color-secondary, #c9a961);
+}
+
+.modal-error .error-icon {
+  font-size: 3rem;
+  color: var(--color-error, #b91c1c);
+}
+
+.btn-block {
+  width: 100%;
+  justify-content: center;
+}
+
+.modal-success .modal-actions,
+.modal-error .modal-actions {
+  justify-content: center;
+}
+
+.modal-confirm .modal-actions {
+  margin-top: 1.5rem;
 }
 
 .form-group {

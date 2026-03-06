@@ -175,7 +175,8 @@ const translateStatus = (status: string) => {
     'processing': 'En traitement',
     'shipped': 'Expédiée',
     'delivered': 'Livrée',
-    'cancelled': 'Annulée'
+    'cancelled': 'Annulée',
+    'refunded': 'Remboursée'
   };
   
   return statusMap[status] || status;
@@ -187,7 +188,8 @@ const getStatusClass = (status: string) => {
     'processing': 'status-processing',
     'shipped': 'status-shipped',
     'delivered': 'status-delivered',
-    'cancelled': 'status-cancelled'
+    'cancelled': 'status-cancelled',
+    'refunded': 'status-refunded'
   };
   
   return statusClassMap[status] || '';
@@ -382,6 +384,11 @@ const downloadInvoice = (orderId: string) => {
 .status-cancelled {
   background-color: #ffebee;
   color: #d32f2f;
+}
+
+.status-refunded {
+  background-color: #fef3c7;
+  color: #92400e;
 }
 
 .order-card-body {

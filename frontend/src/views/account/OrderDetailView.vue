@@ -267,7 +267,8 @@ const translateStatus = (status: string) => {
     'processing': 'En traitement',
     'shipped': 'Expédiée',
     'delivered': 'Livrée',
-    'cancelled': 'Annulée'
+    'cancelled': 'Annulée',
+    'refunded': 'Remboursée'
   };
   
   return statusMap[status] || status;
@@ -281,7 +282,8 @@ const statusClass = computed(() => {
     'processing': 'status-processing',
     'shipped': 'status-shipped',
     'delivered': 'status-delivered',
-    'cancelled': 'status-cancelled'
+    'cancelled': 'status-cancelled',
+    'refunded': 'status-refunded'
   };
   
   return statusClassMap[order.value.status] || '';
@@ -639,6 +641,11 @@ const goToOrders = () => {
 .status-cancelled {
   background-color: #ffebee;
   color: #d32f2f;
+}
+
+.status-refunded {
+  background-color: #fef3c7;
+  color: #92400e;
 }
 
 .btn-primary, .btn-secondary, .btn-danger {

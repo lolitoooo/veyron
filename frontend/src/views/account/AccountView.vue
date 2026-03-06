@@ -201,7 +201,8 @@ const getStatusLabel = (status: string): string => {
     'processing': 'En traitement',
     'shipped': 'Expédiée',
     'delivered': 'Livrée',
-    'cancelled': 'Annulée'
+    'cancelled': 'Annulée',
+    'refunded': 'Remboursée'
   };
   return statusMap[status] || status;
 };
@@ -489,6 +490,11 @@ th {
 .status-badge.cancelled {
   background-color: #f8d7da;
   color: #721c24;
+}
+
+.status-badge.refunded {
+  background-color: #fef3c7;
+  color: #92400e;
 }
 
 .btn-link {

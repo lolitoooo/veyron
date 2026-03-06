@@ -36,6 +36,7 @@
                 <option value="shipped">Expédié</option>
                 <option value="delivered">Livré</option>
                 <option value="cancelled">Annulé</option>
+                <option value="refunded">Remboursé</option>
               </select>
             </div>
           </div>
@@ -152,7 +153,8 @@ const getStatusLabel = (status: string): string => {
     'processing': 'En traitement',
     'shipped': 'Expédié',
     'delivered': 'Livré',
-    'cancelled': 'Annulé'
+    'cancelled': 'Annulé',
+    'refunded': 'Remboursé'
   };
   
   return statusMap[status] || status;
@@ -352,6 +354,11 @@ th {
 .status-badge.cancelled {
   background-color: #f8d7da;
   color: #721c24;
+}
+
+.status-badge.refunded {
+  background-color: #fef3c7;
+  color: #92400e;
 }
 
 .btn-link {

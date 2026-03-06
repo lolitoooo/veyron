@@ -252,7 +252,7 @@ exports.updateOrderStatus = async (req, res) => {
       return res.status(404).json({ message: 'Commande non trouvée' });
     }
     
-    const validStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+    const validStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ message: 'Statut invalide' });
     }

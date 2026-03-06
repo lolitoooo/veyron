@@ -190,7 +190,8 @@ const getOrderStatusLabel = (status: string): string => {
     processing: 'En traitement',
     shipped: 'Expédiée',
     delivered: 'Livrée',
-    cancelled: 'Annulée'
+    cancelled: 'Annulée',
+    refunded: 'Remboursée'
   };
   return statusLabels[status] || status;
 };
@@ -476,6 +477,11 @@ const goBack = () => {
 .status-cancelled {
   background-color: #ffebee;
   color: #d32f2f;
+}
+
+.status-refunded {
+  background-color: #fef3c7;
+  color: #92400e;
 }
 
 .btn-icon {

@@ -191,16 +191,16 @@ router.post('/refund/:orderId', protect, authorize('admin'), async (req, res) =>
       return res.status(404).json({ message: 'Commande non trouvée' });
     }
 
-    if (!order.isPaid) {
-      return res.status(400).json({ message: 'La commande n\'est pas payée' });
+    if (!order.paymentResult || !order.paymentResult.payment_intent) {
+      return res.status(400).json({ message: 'Aucun paiement Stripe trouvé pour cette commande' });
     }
 
     if (order.refundStatus === 'full') {
       return res.status(400).json({ message: 'Cette commande a déjà été entièrement remboursée' });
     }
 
-    if (!order.paymentResult || !order.paymentResult.payment_intent) {
-      return res.status(400).json({ message: 'Aucun paiement Stripe trouvé pour cette commande' });
+    if (!order.isPaid) {
+      order.isPaid = true;
     }
 
     const refundAmount = amount || order.totalPrice;
@@ -224,11 +224,15 @@ router.post('/refund/:orderId', protect, authorize('admin'), async (req, res) =>
     order.refundReason = reason || 'Remboursement effectué';
     order.refundedAt = new Date();
     order.stripeRefundId = refund.id;
-    
+
+    if (order.refundStatus === 'full') {
+      order.status = 'refunded';
+    }
+
     if (order.returnStatus === 'received') {
       order.returnStatus = 'completed';
     }
-    
+
     await order.save();
 
     res.json({

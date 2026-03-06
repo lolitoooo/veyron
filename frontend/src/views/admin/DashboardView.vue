@@ -720,6 +720,11 @@ onMounted(() => {
   color: #d32f2f;
 }
 
+.status-refunded {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
 .btn-icon {
   background: none;
   border: none;

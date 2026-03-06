@@ -462,7 +462,7 @@ const fetchOrderData = async () => {
 const generateMockOrderData = () => {
   const data = [];
   const today = new Date();
-  const statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+  const statuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'];
   
   for (let i = 30; i >= 0; i--) {
     const date = new Date(today);
@@ -476,7 +476,8 @@ const generateMockOrderData = () => {
       processing: 0,
       shipped: 0,
       delivered: 0,
-      cancelled: 0
+      cancelled: 0,
+      refunded: 0
     };
     
     const dailyOrdersDetails = [];
@@ -662,7 +663,8 @@ const updateOrderStatusOptions = (orders = []) => {
     processing: 0,
     shipped: 0,
     delivered: 0,
-    cancelled: 0
+    cancelled: 0,
+    refunded: 0
   };
   
   if (orders && orders.length > 0) {
@@ -687,15 +689,17 @@ const updateOrderStatusOptions = (orders = []) => {
     processing: 'En traitement',
     shipped: 'Expédiée',
     delivered: 'Livrée',
-    cancelled: 'Annulée'
+    cancelled: 'Annulée',
+    refunded: 'Remboursée'
   };
-  
+
   const statusColors = {
     pending: '#fac858',
     processing: '#5470c6',
     shipped: '#91cc75',
     delivered: '#3ba272',
-    cancelled: '#ee6666'
+    cancelled: '#ee6666',
+    refunded: '#d97706'
   };
   
   orderStatusOptions.value = {

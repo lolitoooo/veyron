@@ -33,6 +33,7 @@
             <option value="shipped">Expédiée</option>
             <option value="delivered">Livrée</option>
             <option value="cancelled">Annulée</option>
+            <option value="refunded">Remboursée</option>
           </select>
         </div>
 
@@ -191,6 +192,7 @@
           <option value="shipped">Expédiée</option>
           <option value="delivered">Livrée</option>
           <option value="cancelled">Annulée</option>
+          <option value="refunded">Remboursée</option>
         </select>
       </div>
       
@@ -361,7 +363,8 @@ const getStatusLabel = (status: string): string => {
     'processing': 'En traitement',
     'shipped': 'Expédiée',
     'delivered': 'Livrée',
-    'cancelled': 'Annulée'
+    'cancelled': 'Annulée',
+    'refunded': 'Remboursée'
   };
   
   return statusLabels[status] || status;
@@ -683,6 +686,11 @@ const closeModal = () => {
   background-color: #e8f5e9;
   color: #2e7d32;
   font-weight: 600;
+}
+
+.status-refunded {
+  background: #fef3c7;
+  color: #92400e;
 }
 
 .status-cancelled {
