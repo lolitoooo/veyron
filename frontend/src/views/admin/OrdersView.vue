@@ -1,22 +1,31 @@
 <template>
   <div class="orders-container">
-    <div class="admin-header">
-      <h1 class="admin-header-title">Gestion des commandes</h1>
+    <div class="page-header">
+      <h1>Gestion des commandes</h1>
+      <div class="header-actions">
+        <span class="count-badge" v-if="totalOrders > 0">
+          {{ totalOrders }} commande(s)
+        </span>
+      </div>
+    </div>
 
-      <div class="filters-row">
-        <div class="filter-item filter-search">
-          <div class="search-group">
-            <span class="material-icons search-icon">search</span>
-            <input
-              v-model="searchTerm"
-              type="text"
-              class="search-input"
-              placeholder="Nom, email ou n° de commande…"
-            />
-          </div>
-        </div>
+    <div class="search-filters-section">
+      <div class="search-bar">
+        <i class="material-icons">search</i>
+        <input
+          v-model="searchTerm"
+          type="text"
+          class="search-input"
+          placeholder="Rechercher par nom, email ou n° de commande…"
+        />
+        <button v-if="searchTerm" @click="searchTerm = ''" class="clear-btn">
+          <i class="material-icons">close</i>
+        </button>
+      </div>
 
-        <div class="filter-item">
+      <div class="advanced-filters">
+        <div class="filter-group">
+          <label>Statut :</label>
           <select v-model="statusFilter" class="filter-select">
             <option value="all">Tous les statuts</option>
             <option value="pending">En attente</option>
@@ -27,25 +36,30 @@
           </select>
         </div>
 
-        <div class="filter-item">
+        <div class="filter-group">
+          <label>Du :</label>
           <input
             v-model="dateFrom"
             type="date"
-            class="filter-input"
-            placeholder="Du"
+            class="filter-select filter-input-date"
             @change="onFiltersChange"
           />
         </div>
 
-        <div class="filter-item">
+        <div class="filter-group">
+          <label>Au :</label>
           <input
             v-model="dateTo"
             type="date"
-            class="filter-input"
-            placeholder="Au"
+            class="filter-select filter-input-date"
             @change="onFiltersChange"
           />
         </div>
+
+        <button @click="resetFilters" class="reset-filters-btn">
+          <i class="material-icons">refresh</i>
+          Réinitialiser
+        </button>
       </div>
     </div>
     
@@ -255,6 +269,15 @@ const onFiltersChange = () => {
   fetchOrders();
 };
 
+const resetFilters = () => {
+  searchTerm.value = '';
+  statusFilter.value = 'all';
+  dateFrom.value = null;
+  dateTo.value = null;
+  currentPage.value = 1;
+  fetchOrders();
+};
+
 onMounted(() => {
   fetchOrders();
 });
@@ -401,127 +424,171 @@ const closeModal = () => {
   margin: 0 auto;
 }
 
-.admin-header {
+/* Même style que ReviewsView : en-tête et section filtres */
+.page-header {
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.75rem;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 2rem;
 }
 
-.admin-header-title {
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #111827;
   margin: 0;
-  font-family: var(--font-primary, 'Cormorant Garamond', serif);
-  /* Titre large mais pas énorme */
-  font-size: var(--text-3xl, 1.875rem);
-  letter-spacing: -0.02em;
-  font-weight: var(--font-light, 300);
 }
 
-.filters-row {
+.header-actions {
   display: flex;
+  align-items: center;
   gap: 0.75rem;
-  align-items: center;
-  flex-wrap: nowrap;
-  margin-top: 0.5rem;
 }
 
-.filter-item {
+.count-badge {
+  background: #111827;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.search-filters-section {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.search-bar {
+  position: relative;
   display: flex;
   align-items: center;
-  flex: 0 0 auto;
+  margin-bottom: 1.5rem;
 }
 
-.filter-search {
-  flex: 1 1 50%;
-  min-width: 320px;
-}
-
-.search-group {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  border-radius: 999px;
-  border: 1px solid #ddd;
-  padding: 0.25rem 0.5rem 0.25rem 0.75rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-.search-icon {
-  font-size: 20px;
-  color: #999;
-  margin-right: 0.5rem;
+.search-bar i {
+  position: absolute;
+  left: 1rem;
+  color: #6b7280;
+  font-size: 1.25rem;
 }
 
 .search-input {
-  flex: 1;
-  border: none;
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 3rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+}
+
+.search-input:focus {
   outline: none;
-  font-size: 0.9rem;
-  padding: 0.4rem 0.5rem;
+  border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.1);
 }
 
-.search-input::placeholder {
-  color: #aaa;
-}
-
-.btn-search {
+.clear-btn {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
   border: none;
-  border-radius: 999px;
-  padding: 0.4rem 0.9rem;
-  font-size: 0.85rem;
-  background-color: #111;
-  color: #fff;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
+  padding: 0.5rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  border-radius: 0.25rem;
+  transition: all 0.2s;
 }
 
-.btn-search:hover {
-  background-color: #333;
+.clear-btn:hover {
+  background: #f3f4f6;
+  color: #111827;
 }
 
-.btn-search:active {
-  transform: translateY(1px);
+.advanced-filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 150px;
+}
+
+.filter-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
 }
 
 .filter-select {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  min-width: 150px;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.filter-input {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  min-width: 150px;
+.filter-select:focus {
+  outline: none;
+  border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.1);
 }
 
-/* Responsive : empiler proprement les filtres en mobile */
+.filter-input-date {
+  cursor: text;
+  min-width: 0;
+}
+
+.reset-filters-btn {
+  padding: 0.625rem 1.25rem;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.reset-filters-btn:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.reset-filters-btn i {
+  font-size: 1.125rem;
+}
+
 @media (max-width: 768px) {
-  .filters-row {
+  .advanced-filters {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.5rem;
   }
 
-  .filter-item,
-  .filter-search {
-    flex: 1 1 100%;
+  .filter-group {
     min-width: 100%;
   }
 
-  .filter-select,
-  .filter-input {
+  .reset-filters-btn {
     width: 100%;
-    min-width: 0;
-  }
-
-  .search-group {
-    width: 100%;
+    justify-content: center;
   }
 }
 
