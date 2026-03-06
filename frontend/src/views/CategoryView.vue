@@ -35,12 +35,12 @@
       {{ error }}
     </div>
     
-    <div v-else-if="filteredProducts.length === 0" class="no-products">
-      <p>Aucun produit trouvé dans cette catégorie.</p>
-    </div>
-    
     <div v-else class="category-content">
       <div class="filter-panel" v-show="showFilters">
+        <div class="filter-header">
+          <h2>FILTRES</h2>
+          <button class="close-filters" @click="toggleFilters">✕</button>
+        </div>
         <div class="filter-actions">
           <button class="reset-filters" @click="resetFilters">Réinitialiser les filtres</button>
         </div>
@@ -59,71 +59,39 @@
               <input type="radio" id="sort-price-desc" name="sort" value="price-desc" v-model="sortOption">
               <label for="sort-price-desc">PRIX DÉCROISSANT</label>
             </div>
-            <div class="filter-option">
-              <input type="radio" id="sort-new" name="sort" value="new" v-model="sortOption">
-              <label for="sort-new">NEW</label>
-            </div>
           </div>
         </div>
         
         <div class="filter-section" @click.stop>
           <h3>PRIX</h3>
-          <div class="price-range">
-            <!-- <div class="price-inputs">
-              <div class="price-input-group">
-                <label>Min:</label>
-                <input 
-                  type="number" 
-                  v-model.number="priceRange[0]" 
-                  :min="0" 
-                  :max="priceRange[1]" 
-                  @input="validatePriceInput(0)"
-                  @click.stop
-                  class="price-input"
-                />
-                <span>EUR</span>
-              </div>
-              <div class="price-input-group">
-                <label>Max:</label>
-                <input 
-                  type="number" 
-                  v-model.number="priceRange[1]" 
-                  :min="priceRange[0]" 
-                  :max="maxPrice" 
-                  @input="validatePriceInput(1)"
-                  @click.stop
-                  class="price-input"
-                />
-                <span>EUR</span>
-              </div>
-            </div> -->
-            
-            <div class="custom-price-slider" @click.stop>
-              <div class="price-track">
-                <div 
-                  class="price-range-selected" 
-                  :style="{ 
-                    left: (priceRange[0] / maxPrice) * 100 + '%', 
-                    width: ((priceRange[1] - priceRange[0]) / maxPrice) * 100 + '%' 
-                  }"
-                ></div>
-              </div>
-              <div 
-                class="price-handle min-handle" 
-                :style="{ left: (priceRange[0] / maxPrice) * 100 + '%' }"
-                @mousedown="startDrag($event, 0)"
-                @touchstart.passive="startDrag($event, 0)"
-              ></div>
-              <div 
-                class="price-handle max-handle" 
-                :style="{ left: (priceRange[1] / maxPrice) * 100 + '%' }"
-                @mousedown="startDrag($event, 1)"
-                @touchstart.passive="startDrag($event, 1)"
-              ></div>
+          <div class="price-inputs">
+            <div class="price-input-group">
+              <label>Min</label>
+              <input 
+                type="number" 
+                v-model.number="priceRange[0]" 
+                :min="0" 
+                :max="50" 
+                @input="validatePriceInput(0)"
+                @click.stop
+                class="price-input"
+                placeholder="0"
+              />
+              <span>EUR</span>
             </div>
-            
-            <div class="price-display">
-              {{ formatPrice(priceRange[0]) }} EUR - {{ formatPrice(priceRange[1]) }} EUR
+            <div class="price-input-group">
+              <label>Max</label>
+              <input 
+                type="number" 
+                v-model.number="priceRange[1]" 
+                :min="0" 
+                :max="50" 
+                @input="validatePriceInput(1)"
+                @click.stop
+                class="price-input"
+                placeholder="50"
+              />
+              <span>EUR</span>
             </div>
           </div>
         </div>
@@ -162,7 +130,10 @@
       </div>
       
       <div class="products-container">
-        <div class="products-grid" :class="{ 'minimal-view': viewMode === 2 }">
+        <div v-if="filteredProducts.length === 0" class="no-products">
+          <p>Aucun produit trouvé dans cette catégorie.</p>
+        </div>
+        <div v-else class="products-grid" :class="{ 'minimal-view': viewMode === 2 }">
           <div 
             v-for="(product, index) in filteredProducts" 
             :key="product._id || index" 
@@ -215,6 +186,7 @@ import { ref, computed, onMounted, onUnmounted, defineProps, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/services/apiService';
 import { getImageUrl as getImageUrlUtil } from '@/utils/imageUrl';
+import '@/styles/filters.css';
 
 const props = defineProps({
   slug: {
@@ -255,14 +227,12 @@ const error = ref('');
 const viewMode = ref<number>(1);
 const showFilters = ref<boolean>(false);
 const sortOption = ref<string>('default');
-const priceRange = ref<number[]>([0, 1000]);
+const priceRange = ref<number[]>([0, 50]);
 const selectedSizes = ref<string[]>([]);
 const selectedColors = ref<string[]>([]);
 const showMoreSizes = ref<boolean>(false);
 const showMoreColors = ref<boolean>(false);
 
-const isDragging = ref<boolean>(false);
-const currentHandle = ref<number>(-1);
 const categorySlug = computed(() => {
   if (props.slug) {
     return props.slug;
@@ -347,7 +317,9 @@ const loadProducts = async () => {
       const prices = products.value.map(p => p.price);
       const minPrice = Math.floor(Math.min(...prices));
       const maxPriceValue = Math.ceil(Math.max(...prices));
-      priceRange.value = [minPrice, maxPriceValue];
+      priceRange.value = [0, 50];
+    } else {
+      priceRange.value = [0, 50];
     }
     
     
@@ -426,81 +398,28 @@ const maxPrice = computed(() => {
 });
 const validatePriceInput = (index: number) => {
   if (index === 0) {
-    if (priceRange.value[0] > priceRange.value[1]) {
-      priceRange.value[0] = priceRange.value[1];
-    }
     if (priceRange.value[0] < 0) {
       priceRange.value[0] = 0;
     }
+    if (priceRange.value[0] > 50) {
+      priceRange.value[0] = 50;
+    }
+    if (priceRange.value[0] > priceRange.value[1]) {
+      priceRange.value[0] = priceRange.value[1];
+    }
   } else if (index === 1) {
+    if (priceRange.value[1] < 0) {
+      priceRange.value[1] = 0;
+    }
+    if (priceRange.value[1] > 50) {
+      priceRange.value[1] = 50;
+    }
     if (priceRange.value[1] < priceRange.value[0]) {
       priceRange.value[1] = priceRange.value[0];
     }
-    if (priceRange.value[1] > maxPrice.value) {
-      priceRange.value[1] = maxPrice.value;
-    }
   }
-  
-  showFilters.value = true;
 };
 
-const startDrag = (event: MouseEvent | TouchEvent, handleIndex: number) => {
-  if (event.type !== 'touchstart') {
-    event.preventDefault();
-  }
-  event.stopPropagation();
-  
-  isDragging.value = true;
-  currentHandle.value = handleIndex;
-  
-  document.addEventListener('mousemove', handleDrag);
-  document.addEventListener('touchmove', handleDrag, { passive: true });
-  document.addEventListener('mouseup', stopDrag);
-  document.addEventListener('touchend', stopDrag, { passive: true });
-  
-  showFilters.value = true;
-};
-
-const handleDrag = (event: MouseEvent | TouchEvent) => {
-  if (!isDragging.value) return;
-  
-  if (event.type !== 'touchmove') {
-    event.preventDefault?.();
-  }
-  
-  let clientX: number;
-  if (event instanceof MouseEvent) {
-    clientX = event.clientX;
-  } else {
-    clientX = event.touches[0].clientX;
-  }
-  
-  const slider = document.querySelector('.custom-price-slider') as HTMLElement;
-  if (!slider) return;
-  
-  const rect = slider.getBoundingClientRect();
-  const position = (clientX - rect.left) / rect.width;
-  const value = Math.round(position * maxPrice.value);
-  
-  if (currentHandle.value === 0) {
-    priceRange.value[0] = Math.max(0, Math.min(value, priceRange.value[1]));
-  } else {
-    priceRange.value[1] = Math.max(priceRange.value[0], Math.min(value, maxPrice.value));
-  }
-  
-  showFilters.value = true;
-};
-
-const stopDrag = () => {
-  isDragging.value = false;
-  
-  document.removeEventListener('mousemove', handleDrag);
-  document.removeEventListener('touchmove', handleDrag);
-  document.removeEventListener('mouseup', stopDrag);
-  document.removeEventListener('touchend', stopDrag);
-  
-  showFilters.value = true;
-};
 
 const toggleFilters = () => {
   showFilters.value = !showFilters.value;
@@ -530,20 +449,9 @@ const handleOutsideClick = (event: Event) => {
 };
 const resetFilters = () => {
   sortOption.value = 'default';
-  
-  if (products.value.length > 0) {
-    const prices = products.value.map(p => p.price);
-    const minPrice = Math.floor(Math.min(...prices));
-    const maxPriceValue = Math.ceil(Math.max(...prices));
-    priceRange.value = [minPrice, maxPriceValue];
-  } else {
-    priceRange.value = [0, 1000];
-  }
-  
+  priceRange.value = [0, 50];
   selectedSizes.value = [];
   selectedColors.value = [];
-  
-  showFilters.value = true;
 };
 
 const allSizes = computed(() => {
