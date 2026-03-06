@@ -71,7 +71,7 @@
                 type="number" 
                 v-model.number="priceRange[0]" 
                 :min="0" 
-                :max="50" 
+                :max="maxPrice" 
                 @input="validatePriceInput(0)"
                 @click.stop
                 class="price-input"
@@ -85,11 +85,11 @@
                 type="number" 
                 v-model.number="priceRange[1]" 
                 :min="0" 
-                :max="50" 
+                :max="maxPrice" 
                 @input="validatePriceInput(1)"
                 @click.stop
                 class="price-input"
-                placeholder="50"
+                :placeholder="maxPrice.toString()"
               />
               <span>EUR</span>
             </div>
@@ -315,11 +315,10 @@ const loadProducts = async () => {
     
     if (products.value.length > 0) {
       const prices = products.value.map(p => p.price);
-      const minPrice = Math.floor(Math.min(...prices));
-      const maxPriceValue = Math.ceil(Math.max(...prices));
-      priceRange.value = [0, 50];
+      const maxPriceValue = Math.max(...prices);
+      priceRange.value = [0, maxPriceValue];
     } else {
-      priceRange.value = [0, 50];
+      priceRange.value = [0, 1000];
     }
     
     
@@ -394,15 +393,16 @@ const toggleColor = (colorName: string) => {
 
 const maxPrice = computed(() => {
   if (products.value.length === 0) return 1000;
-  return Math.ceil(Math.max(...products.value.map(p => p.price)) / 10) * 10;
+  const prices = products.value.map(p => p.price);
+  return Math.max(...prices);
 });
 const validatePriceInput = (index: number) => {
   if (index === 0) {
     if (priceRange.value[0] < 0) {
       priceRange.value[0] = 0;
     }
-    if (priceRange.value[0] > 50) {
-      priceRange.value[0] = 50;
+    if (priceRange.value[0] > maxPrice.value) {
+      priceRange.value[0] = maxPrice.value;
     }
     if (priceRange.value[0] > priceRange.value[1]) {
       priceRange.value[0] = priceRange.value[1];
@@ -411,8 +411,8 @@ const validatePriceInput = (index: number) => {
     if (priceRange.value[1] < 0) {
       priceRange.value[1] = 0;
     }
-    if (priceRange.value[1] > 50) {
-      priceRange.value[1] = 50;
+    if (priceRange.value[1] > maxPrice.value) {
+      priceRange.value[1] = maxPrice.value;
     }
     if (priceRange.value[1] < priceRange.value[0]) {
       priceRange.value[1] = priceRange.value[0];
@@ -449,7 +449,7 @@ const handleOutsideClick = (event: Event) => {
 };
 const resetFilters = () => {
   sortOption.value = 'default';
-  priceRange.value = [0, 50];
+  priceRange.value = [0, maxPrice.value];
   selectedSizes.value = [];
   selectedColors.value = [];
 };
