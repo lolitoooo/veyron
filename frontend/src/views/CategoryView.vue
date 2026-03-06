@@ -605,13 +605,8 @@ onMounted(() => {
   loadProducts();
 });
 onUnmounted(() => {
-  document.removeEventListener('mousemove', handleDrag);
-  document.removeEventListener('touchmove', handleDrag);
-  document.removeEventListener('mouseup', stopDrag);
-  document.removeEventListener('touchend', stopDrag);
   document.removeEventListener('click', handleOutsideClick);
   document.removeEventListener('touchstart', handleOutsideClick);
-  isDragging.value = false;
   showFilters.value = false;
 });
 </script>
@@ -770,7 +765,7 @@ onUnmounted(() => {
 
 .price-input-group {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 0.5rem;
 }
 

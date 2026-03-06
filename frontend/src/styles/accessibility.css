@@ -137,6 +137,10 @@ label {
   color: var(--text-primary);
 }
 
+.filter-panel label {
+  margin-bottom: 0;
+}
+
 input,
 textarea,
 select {
