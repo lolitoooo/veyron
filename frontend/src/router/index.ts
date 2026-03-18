@@ -125,6 +125,12 @@ const router = createRouter({
           meta: { title: 'Contact | VEYRON', breadcrumb: 'Contact' }
         },
         {
+          path: 'voyage/tahiti',
+          name: 'travel-us-stopover-checklist',
+          component: () => import('@/views/TravelTahitiUsStopoverView.vue'),
+          meta: { title: 'Voyage à Tahiti – Escale US | VEYRON', breadcrumb: 'Voyage' }
+        },
+        {
           path: 'terms',
           name: 'terms',
           component: () => import('@/views/legal/TermsView.vue'),
@@ -437,7 +443,7 @@ router.beforeEach(async (to, from, next) => {
   if (!authStore.user && authStore.isAuthenticated) {
     try {
       await authStore.loadUser()
-    } catch (error) {
+    } catch {
     }
   }
   

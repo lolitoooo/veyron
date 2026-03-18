@@ -173,10 +173,10 @@ const handleLogoutMobile = async () => {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(250, 250, 248, 0.96);
+  backdrop-filter: blur(12px);
   z-index: 1000;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  /* Support pour les encoches iPhone (safe area) */
+  border-bottom: 1px solid var(--color-gray-200);
   padding-top: env(safe-area-inset-top);
 }
 
@@ -184,8 +184,8 @@ const handleLogoutMobile = async () => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  max-width: 1400px;
+  padding: var(--space-4) var(--space-6);
+  max-width: var(--container-xl);
   margin: 0 auto;
 }
 
@@ -209,36 +209,36 @@ const handleLogoutMobile = async () => {
 .navigation ul {
   display: flex;
   list-style: none;
-  gap: 2rem;
+  gap: var(--space-6);
   margin: 0;
   padding: 0;
 }
 
 .navigation a {
-  color: #333;
+  color: var(--color-gray-700);
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.1rem;
+  font-family: var(--font-secondary);
+  font-size: var(--text-xs);
+  letter-spacing: 0.16em;
   position: relative;
-  transition: color 0.3s ease;
-  padding: 0;
+  padding-bottom: 4px;
+  transition: color var(--transition-base);
 }
 
 .navigation a::after {
   content: '';
   position: absolute;
-  bottom: -4px;
+  bottom: 0;
   left: 0;
   width: 0;
   height: 1px;
-  background-color: #000;
-  transition: width 0.3s ease;
+  background-color: var(--color-primary);
+  transition: width var(--transition-base);
 }
 
 .navigation a:hover {
-  color: #000;
-  background-color: transparent;
+  color: var(--color-primary);
 }
 
 .navigation a:hover::after,
@@ -248,22 +248,27 @@ const handleLogoutMobile = async () => {
 
 .header-actions {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--space-3);
   align-items: center;
 }
 
 .icon-button {
-  background: none;
+  background: transparent;
   border: none;
   cursor: pointer;
-  color: #333;
+  color: var(--color-gray-700);
   font-size: 1rem;
   padding: 0.5rem;
-  transition: color 0.3s ease;
+  min-width: 40px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-base);
 }
 
 .icon-button:hover {
-  color: #000;
+  color: var(--color-primary);
 }
 
 .cart-button,
@@ -273,21 +278,21 @@ const handleLogoutMobile = async () => {
 
 .account-indicator {
   position: absolute;
-  top: 0px;
+  top: 2px;
   right: 6px;
   width: 8px;
   height: 8px;
-  background-color: #4CAF50;
+  background-color: var(--color-secondary);
   border-radius: 50%;
-  border: 1px solid #fff;
+  border: 1px solid var(--color-white);
 }
 
 .cart-count {
   position: absolute;
-  top: -5px;
-  right: -5px;
-  background-color: #000;
-  color: #fff;
+  top: -4px;
+  right: -4px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   font-size: 0.7rem;
   width: 18px;
   height: 18px;
@@ -299,13 +304,13 @@ const handleLogoutMobile = async () => {
 
 .cart-loading {
   position: absolute;
-  top: -5px;
-  right: -5px;
+  top: -4px;
+  right: -4px;
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-top-color: #000;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-top-color: var(--color-primary);
   animation: spin 0.8s linear infinite;
 }
 
@@ -319,27 +324,27 @@ const handleLogoutMobile = async () => {
   top: 100%;
   left: 0;
   width: 100%;
-  background-color: #fff;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.05);
-  animation: slideDown 0.3s ease forwards;
+  background-color: var(--color-white);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-gray-200);
   z-index: 1001;
 }
 
 .search-container {
-  max-width: 800px;
+  max-width: 640px;
   margin: 0 auto;
   position: relative;
 }
 
 .search-input {
   width: 100%;
-  padding: 1rem 0;
+  padding: 0.75rem 0;
   border: none;
-  border-bottom: 1px solid #eaeaea;
-  font-size: 1.2rem;
+  border-bottom: 1px solid var(--color-gray-300);
+  font-size: 1rem;
   outline: none;
   background: transparent;
+  font-family: var(--font-secondary);
 }
 
 .search-close {
@@ -350,8 +355,8 @@ const handleLogoutMobile = async () => {
   background: none;
   border: none;
   cursor: pointer;
-  color: #333;
-  font-size: 1.2rem;
+  color: var(--color-gray-600);
+  font-size: 1.1rem;
 }
 
 .mobile-menu-toggle {
@@ -359,228 +364,122 @@ const handleLogoutMobile = async () => {
   background: none;
   border: none;
   cursor: pointer;
-  color: #333;
+  color: var(--color-gray-800);
   font-size: 1.5rem;
-  padding: 0.5rem;
+  padding: 0.25rem;
 }
 
 .mobile-menu {
   display: none;
-  position: fixed;
-  top: calc(60px + env(safe-area-inset-top));
-  left: 0;
-  width: 100%;
-  height: calc(100vh - 60px - env(safe-area-inset-top));
-  background-color: #fff;
-  z-index: 999;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  overflow-y: auto;
-  /* Padding pour les bords de l'iPhone */
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.mobile-menu.open {
-  transform: translateX(0);
-}
-
-.mobile-nav {
-  padding: 2rem;
-}
-
-.mobile-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.mobile-nav li {
-  margin-bottom: 1.5rem;
-}
-
-.mobile-nav a {
-  display: block;
-  font-size: 1.2rem;
-  color: #333;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
-  padding: 0.5rem 0;
-}
-
-.mobile-logout-btn {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  color: #333;
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
-  padding: 0.5rem 0;
-  cursor: pointer;
-  text-align: left;
-  width: 100%;
-  font-family: var(--font-body);
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @media (max-width: 768px) {
   .header-container {
-    padding: 1rem;
-    min-height: 60px;
-    gap: 0.5rem;
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-2);
   }
-  
+
   .desktop-nav {
     display: none;
   }
-  
+
   .mobile-menu-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
-    order: 1;
-    flex-shrink: 0;
-    min-width: 44px;
-    min-height: 44px;
+    min-width: 40px;
+    min-height: 40px;
   }
-  
-  .mobile-menu-toggle .material-icons {
-    font-size: 24px;
-  }
-  
+
   .logo {
-    order: 2;
-    flex-grow: 1;
-    text-align: center;
+    flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
   }
-  
+
   .logo-desktop {
     display: none;
   }
-  
+
   .logo-mobile {
     display: block;
-    height: 35px;
-    max-width: 100%;
-    object-fit: contain;
+    height: 32px;
   }
-  
+
   .header-actions {
-    order: 3;
-    gap: 0.5rem;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
+    gap: var(--space-2);
   }
-  
-  .icon-button {
-    padding: 0.5rem;
-    min-width: 44px;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  .mobile-menu {
+    display: block;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 64px);
+    background-color: var(--color-white);
+    z-index: 999;
+    transform: translateX(-100%);
+    transition: transform var(--transition-base);
+    overflow-y: auto;
   }
-  
-  .icon-button .material-icons {
-    font-size: 22px;
+
+  .mobile-menu.open {
+    transform: translateX(0);
   }
-  
+
+  .mobile-nav {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mobile-nav li {
+    margin-bottom: var(--space-4);
+  }
+
+  .mobile-nav a,
+  .mobile-logout-btn {
+    display: block;
+    font-size: 1rem;
+    color: var(--color-gray-800);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 0.5rem 0;
+    background: none;
+    border: none;
+    text-align: left;
+    width: 100%;
+    font-family: var(--font-secondary);
+  }
+
   .hide-on-mobile {
     display: none;
   }
-  
-  .mobile-menu {
-    display: block;
-  }
-  
+
   .search-panel {
-    padding: 1rem;
-  }
-  
-  .search-input {
-    font-size: 1rem;
-    padding: 0.75rem 0;
-  }
-  
-  .cart-count {
-    font-size: 0.65rem;
-    width: 16px;
-    height: 16px;
-    top: -3px;
-    right: -3px;
+    padding: var(--space-3) var(--space-4);
   }
 }
 
 @media (max-width: 480px) {
   .header-container {
-    padding: 0.75rem;
-    min-height: 56px;
+    padding: var(--space-2) var(--space-3);
   }
-  
-  .mobile-menu-toggle {
-    min-width: 40px;
-    min-height: 40px;
-  }
-  
-  .icon-button {
-    padding: 0.4rem;
-    min-width: 40px;
-    min-height: 40px;
-  }
-  
-  .icon-button .material-icons {
-    font-size: 20px;
-  }
-  
+
   .logo-mobile {
     height: 28px;
   }
-  
-  .header-actions {
-    gap: 0.25rem;
-  }
-  
-  .cart-count {
-    font-size: 0.6rem;
-    width: 14px;
-    height: 14px;
-  }
-}
 
-@media (max-width: 360px) {
-  .header-container {
-    padding: 0.5rem;
-  }
-  
-  .mobile-menu-toggle,
-  .icon-button {
-    min-width: 36px;
-    min-height: 36px;
-    padding: 0.3rem;
-  }
-  
-  .icon-button .material-icons {
-    font-size: 18px;
-  }
-  
-  .logo-mobile {
-    height: 24px;
+  .cart-count {
+    width: 16px;
+    height: 16px;
+    font-size: 0.65rem;
   }
 }
 </style>

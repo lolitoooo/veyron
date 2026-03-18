@@ -1,11 +1,22 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+const fs = require('fs');
 const Review = require('../models/Review');
 const Product = require('../models/Product');
 const User = require('../models/User');
 
-dotenv.config({ path: path.resolve(__dirname, '../.env.development') });
+// Charger l'env selon NODE_ENV (en prod, ne pas charger .env.development pour garder MONGO_URI du conteneur).
+// En production : exécuter le script DANS le conteneur backend pour que "veyron-mongodb-prod" soit résolu :
+//   docker exec veyron-backend-prod node scripts/seedReviews.js
+const envName = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+const envPath = path.resolve(__dirname, `../.env.${envName}`);
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+}
+if (!process.env.MONGO_URI) {
+  dotenv.config({ path: path.resolve(__dirname, '../.env') });
+}
 
 const reviewComments = [
   "Excellent produit, très satisfait de mon achat !",
@@ -184,6 +195,11 @@ const seedReviews = async () => {
     process.exit(0);
   } catch (error) {
     console.error('❌ Erreur lors du seed des avis:', error);
+    if (error.message && error.message.includes('ENOTFOUND') && process.env.MONGO_URI && process.env.MONGO_URI.includes('mongodb')) {
+      console.error('\n💡 En production, le hostname MongoDB (ex: veyron-mongodb-prod) ne se résout que dans le réseau Docker.');
+      console.error('   Exécutez le script depuis le conteneur backend :');
+      console.error('   docker exec veyron-backend-prod node scripts/seedReviews.js\n');
+    }
     process.exit(1);
   }
 };
