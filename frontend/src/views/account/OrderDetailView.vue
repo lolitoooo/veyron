@@ -374,6 +374,8 @@ const goToOrders = () => {
 .order-detail-view {
   padding: 2rem 0;
   width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .container {
@@ -452,20 +454,67 @@ const goToOrders = () => {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   gap: 2rem;
+  min-width: 0;
+}
+
+.order-details,
+.order-summary {
+  min-width: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .order-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .order-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .order-summary .section {
+    margin-bottom: 0;
+  }
+
+  .order-summary .actions {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 768px) {
   .order-grid {
     grid-template-columns: 1fr;
   }
-  
+
+  .order-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .order-summary .section {
+    margin-bottom: 1rem;
+  }
+
   .order-header {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .order-status {
     margin-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-header {
+    gap: 0.5rem;
+  }
+
+  .order-id {
+    font-size: 0.9rem;
+    word-break: break-all;
   }
 }
 
@@ -537,7 +586,7 @@ const goToOrders = () => {
   gap: 1rem;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 640px) {
   .addresses {
     grid-template-columns: 1fr;
   }
@@ -562,9 +611,19 @@ const goToOrders = () => {
 .summary-row {
   display: flex;
   justify-content: space-between;
+  gap: 0.5rem;
   margin-bottom: 0.8rem;
   padding-bottom: 0.8rem;
   border-bottom: 1px solid #eee;
+}
+
+.summary-row span:first-child {
+  flex-shrink: 0;
+}
+
+.summary-row span:last-child {
+  text-align: right;
+  word-break: break-word;
 }
 
 .summary-row:last-child {
@@ -586,7 +645,19 @@ const goToOrders = () => {
 .payment-row, .invoice-row {
   display: flex;
   justify-content: space-between;
+  gap: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.payment-row span:first-child,
+.invoice-row span:first-child {
+  flex-shrink: 0;
+}
+
+.payment-row span:last-child,
+.invoice-row span:last-child {
+  text-align: right;
+  word-break: break-word;
 }
 
 .invoice-actions {

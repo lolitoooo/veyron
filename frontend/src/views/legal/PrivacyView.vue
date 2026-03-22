@@ -115,6 +115,15 @@
           </ul>
           <p>Vous avez également le droit d'introduire une réclamation auprès de l'autorité de protection des données compétente si vous estimez que le traitement de vos données personnelles constitue une violation des lois applicables.</p>
         </section>
+
+        <section id="delete-account">
+          <h2>12. Suppression de compte</h2>
+          <p>Si vous souhaitez demander la suppression de votre compte, vous pouvez nous écrire à :</p>
+          <ul>
+            <li><a href="mailto:contact@veyron-paris.com">contact@veyron-paris.com</a> (demande de suppression)</li>
+          </ul>
+          <p>Nous traiterons votre demande conformément aux lois applicables en matière de protection des données.</p>
+        </section>
       </div>
     </div>
   </div>
