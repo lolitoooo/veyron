@@ -97,7 +97,7 @@ async function retryConnection() {
 :root {
   --font-heading: 'Cormorant Garamond', serif;
   --font-body: 'Montserrat', sans-serif;
-  --color-bg: #f8f8f8;
+  --color-bg: #F4F2EC;
   --color-text: #111;
   --color-text-light: #666;
   --color-accent: #111;

@@ -1,11 +1,11 @@
 <template>
   <div class="main-layout">
-    <TheHeader />
+    <TheHeader v-if="!isHomePage" />
     <main id="main-content" class="content" :class="{ 'home-content': isHomePage }" tabindex="-1">
       <Breadcrumb v-if="!isHomePage" class="breadcrumb-container" />
       <RouterView />
     </main>
-    <TheFooter />
+    <TheFooter v-if="!isHomePage" />
     <CookieBanner />
     <CookieSettings />
   </div>

@@ -1,350 +1,442 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 
-const router = useRouter();
-const categories = ref([
-  { id: 1, name: 'Femme', slug: 'femme', image: '/images/categories/femme.jpg' },
-  { id: 2, name: 'Homme', slug: 'homme', image: '/images/categories/homme.jpg' },
-  { id: 3, name: 'Accessoires', slug: 'accessoires', image: '/images/categories/accessoires.jpg' },
-  { id: 4, name: 'Collections', slug: 'collections', image: '/images/categories/collections.jpg' }
-]);
-
-const currentSlide = ref(0);
-const isMobile = ref(window.innerWidth < 768);
-
-const navigateToCategory = (slug: string) => {
-  router.push(`/category/${slug}`);
-};
-
-const nextSlide = () => {
-  currentSlide.value = (currentSlide.value + 1) % categories.value.length;
-};
-
-const prevSlide = () => {
-  currentSlide.value = (currentSlide.value - 1 + categories.value.length) % categories.value.length;
-};
-
-const setSlide = (index: number) => {
-  currentSlide.value = index;
-};
-
-onMounted(() => {
-  window.addEventListener('resize', handleResize);
-  
-  if (isMobile.value) {
-    startAutoSlide();
-  }
-});
-
-const handleResize = () => {
-  isMobile.value = window.innerWidth < 768;
-};
-
-let slideInterval: number | null = null;
-
-const startAutoSlide = () => {
-  if (slideInterval) return;
-  slideInterval = window.setInterval(() => {
-    nextSlide();
-  }, 5000);
-};
-
-const stopAutoSlide = () => {
-  if (slideInterval) {
-    clearInterval(slideInterval);
-    slideInterval = null;
-  }
-};
+const menuOpen = ref(false);
+const toggleMenu = () => { menuOpen.value = !menuOpen.value; };
+const closeMenu = () => { menuOpen.value = false; };
 </script>
 
 <template>
-  <main class="home bg-monogram bg-monogram-right">
-    <div class="hero desktop-hero">
-      <h1 class="brand-name">VEYRON</h1>
-      <p class="tagline">L'élégance parisienne</p>
-      <div class="categories">
-        <div 
-          v-for="category in categories" 
-          :key="category.id" 
-          class="category"
-          @click="navigateToCategory(category.slug)"
-        >
-          {{ category.name }}
-        </div>
-      </div>
+  <div class="home" role="presentation" @click="closeMenu" @keydown.escape="closeMenu">
+
+    <!-- ── Grille (divs CSS) ── -->
+    <div class="grid-line grid-v1"></div>
+    <div class="grid-line grid-h1"></div>
+    <div class="grid-line grid-v2"></div>
+    <div class="grid-line grid-d1"></div>
+
+    <!-- ── Burger ── -->
+    <button class="menu-btn" @click.stop="toggleMenu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- ── Menu slide-in ── -->
+    <div class="slide-menu" :class="{ open: menuOpen }" role="dialog" aria-modal="true" aria-label="Navigation">
+      <button class="slide-close" @click="closeMenu" aria-label="Fermer">✕</button>
+      <nav class="slide-nav">
+        <router-link to="/category/femme"      @click="closeMenu">Femme</router-link>
+        <router-link to="/category/homme"      @click="closeMenu">Homme</router-link>
+        <router-link to="/category/accessoires" @click="closeMenu">Accessoires</router-link>
+        <router-link to="/category/collections" @click="closeMenu">Collections</router-link>
+        <router-link to="/contact"             @click="closeMenu">Contact</router-link>
+        <router-link to="/account"             @click="closeMenu">Mon compte</router-link>
+        <router-link to="/cart"                @click="closeMenu">Panier</router-link>
+      </nav>
     </div>
-    
-    <div class="hero mobile-hero">
-      <h1 class="brand-name">VEYRON</h1>
-      <p class="tagline">L'élégance parisienne</p>
-      
-      <div class="mobile-slider">
-        <div class="slider-container" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
-          <div 
-            v-for="category in categories" 
-            :key="category.id" 
-            class="slide"
-            @click="navigateToCategory(category.slug)"
-          >
-            <div class="slide-content">
-              <h2>{{ category.name }}</h2>
-              <button class="explore-btn">Découvrir</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="slider-controls">
-          <button class="slider-arrow prev" @click="prevSlide" aria-label="Précédent">
-            <i class="material-icons">chevron_left</i>
-          </button>
-          <div class="slider-dots">
-            <button 
-              v-for="(category, index) in categories" 
-              :key="category.id"
-              class="slider-dot" 
-              :class="{ active: index === currentSlide }"
-              @click="setSlide(index)"
-              :aria-label="`Slide ${index + 1}`"
-            ></button>
-          </div>
-          <button class="slider-arrow next" @click="nextSlide" aria-label="Suivant">
-            <i class="material-icons">chevron_right</i>
-          </button>
-        </div>
-      </div>
+    <button v-if="menuOpen" class="slide-backdrop" aria-label="Fermer le menu" @click="closeMenu"></button>
+
+    <!-- ── Photo du mannequin (sous le titre) ── -->
+    <div class="hero-wrap">
+      <img
+        src="@/assets/images/bg-home.png"
+        alt="VEYRON – L'élégance parisienne"
+        class="hero-img"
+      />
     </div>
-  </main>
+
+    <!-- ── Titre VEYRON – à droite, par-dessus l'image ── -->
+    <h1 class="brand-title" aria-label="VEYRON">VEYRON</h1>
+
+    <!-- ── Texte éditorial gauche ── -->
+    <div class="left-copy">
+      <h2 class="headline">L'ÉLÉGENCE<br>PARISINNE</h2>
+      <p class="sub">AVANT-GARDE V2.</p>
+      <p class="sub">LE FUTURE DE LA MODE.</p>
+    </div>
+
+    <!-- ── Trait de séparation bas ── -->
+    <div class="bottom-line" aria-hidden="true"></div>
+
+    <!-- ── Navigation basse ── -->
+    <router-link to="/category" class="blink nav-explore">EXPLORE</router-link>
+    <div class="nav-center">
+      <router-link to="/contact" class="blink">CONTACT</router-link>
+      <router-link to="/account" class="blink">ACCOUNT</router-link>
+    </div>
+    <span class="blink nav-paris">PARIS</span>
+
+  </div>
 </template>
 
+<!-- Police lourde pour le titre éditorial -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap');
+</style>
+
 <style scoped>
+/* ─────────────────────────────────────────
+   Base
+───────────────────────────────────────── */
 .home {
-  height: 100vh;
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 100vh;
+  background: var(--color-bg);
+  overflow: hidden;
+  font-family: var(--font-body);
+}
+
+/* ─────────────────────────────────────────
+   Grille
+───────────────────────────────────────── */
+.grid-line {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  background: #111;
+}
+
+/* Verticale 1 — 200px du bord gauche, pleine hauteur */
+.grid-v1 {
+  left: 200px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+}
+
+/* Horizontale — pleine largeur à 50% de la hauteur */
+.grid-h1 {
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+}
+
+/* Verticale 2 — à 58.5% du bord gauche, du haut jusqu'à 50% */
+.grid-v2 {
+  left: 60.25%;
+  top: 0;
+  width: 2px;
+  height: 50%;
+}
+
+/* Diagonale — bas-gauche → croisement (200px, 50%) → haut vers titre */
+.grid-d1 {
+  left: 200px;
+  top: 50.5%;
+  width: 2px;
+  height: 120vh;
+  transform: translate(-50%, -50%) rotate(21deg);
+}
+
+/* ─────────────────────────────────────────
+   Hamburger
+───────────────────────────────────────── */
+.menu-btn {
+  position: absolute;
+  top: 3.5%;
+  left: 3.5%;
+  z-index: 20;
+  background: none;
+  border: none;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #f8f8f8;
-  position: relative;
-  overflow: hidden;
+  gap: 15px;
+  padding: 6px;
 }
 
-.hero {
-  text-align: center;
-  width: 100%;
+.menu-btn span {
+  display: block;
+  width: 70px;
+  height: 2px;
+  background: #111;
+  transition: opacity 0.2s;
 }
 
-.brand-name {
-  font-size: 5rem;
-  font-weight: 300;
-  letter-spacing: 1.5rem;
-  margin-bottom: 1rem;
-  color: #111;
-  font-family: 'Times New Roman', serif;
-}
+.menu-btn:hover span { opacity: 0.45; }
 
-.tagline {
-  font-size: 1.2rem;
-  font-weight: 300;
-  letter-spacing: 0.2rem;
-  margin-bottom: 3rem;
-  color: #666;
-  font-family: var(--font-body);
-}
-
-.categories {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-}
-
-.category {
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-  color: #333;
-  cursor: pointer;
-  padding: 0.5rem 0;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.category::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background-color: #333;
-  transition: width 0.3s ease;
-}
-
-.category:hover {
-  color: #000;
-}
-
-.category:hover::after {
-  width: 100%;
-}
-
-.mobile-hero {
-  display: none;
-}
-
-.mobile-slider {
-  width: 100%;
-  height: 60vh;
-  position: relative;
-  overflow: hidden;
-  margin-top: 2rem;
-}
-
-.slider-container {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.5s ease;
-}
-
-.slide {
-  min-width: 100%;
-  height: 100%;
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-.slide:nth-child(1) { background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/images/categories/femme.jpg'); }
-.slide:nth-child(2) { background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/images/categories/homme.jpg'); }
-.slide:nth-child(3) { background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/images/categories/accessoires.jpg'); }
-.slide:nth-child(4) { background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/images/categories/collections.jpg'); }
-
-.slide-content {
-  text-align: center;
-  padding: 2rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
-  backdrop-filter: blur(5px);
-}
-
-.slide-content h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-}
-
-.explore-btn {
-  background-color: #fff;
-  color: #000;
+/* ─────────────────────────────────────────
+   Menu slide
+───────────────────────────────────────── */
+.slide-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 29;
+  background: transparent;
   border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
+  padding: 0;
+  cursor: default;
+}
+
+.slide-menu {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 290px;
+  background: #111;
+  z-index: 30;
+  transform: translateX(-100%);
+  transition: transform 0.42s cubic-bezier(0.76, 0, 0.24, 1);
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 2rem;
+}
+
+.slide-menu.open { transform: translateX(0); }
+
+.slide-close {
+  background: none;
+  border: none;
+  color: #ece6d4;
+  font-size: 1.15rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: var(--font-body);
+  align-self: flex-end;
+  margin-bottom: 2.5rem;
+  opacity: 0.65;
+  transition: opacity 0.2s;
 }
 
-.explore-btn:hover {
-  background-color: #000;
-  color: #fff;
+.slide-close:hover { opacity: 1; }
+
+.slide-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-.slider-controls {
+.slide-nav a {
+  color: #ece6d4;
+  text-decoration: none;
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 1.65rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  border-bottom: 1px solid rgba(236,230,212,0.1);
+  padding: 1.1rem 0;
+}
+
+.slide-nav a:last-child { border-bottom: none; }
+.slide-nav a:hover { opacity: 0.55; }
+
+/* ─────────────────────────────────────────
+   Image du mannequin
+   Positionnée au croisement ligne 3 (x=44%)
+   – ligne 4 (y) à venir
+───────────────────────────────────────── */
+.hero-wrap {
   position: absolute;
-  bottom: 20px;
+  left: 44%;         /* alignée sur la ligne 3 */
+  top: 15%;           /* légèrement baissée */
+  width: 30%;
+  height: 80%;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top center;
+  display: block;
+}
+
+/* ─────────────────────────────────────────
+   Titre VEYRON
+   – collé à droite, passe par-dessus l'image
+───────────────────────────────────────── */
+.brand-title {
+  position: absolute;
+  top: 0;
   left: 0;
   right: 0;
+  text-align: right;
+  padding-right: 0.3%;
+  /* font-family: 'Playfair Display', var(--font-heading), serif; */
+  font-weight: 900;
+  font-size: clamp(4.5rem, 19.5vw, 17.4rem);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  color: #0d0d0d;
+  z-index: 5;           /* par-dessus l'image */
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────
+   Texte éditorial gauche
+   – entre ligne 1 et ligne 3, sous la mi-hauteur
+───────────────────────────────────────── */
+.left-copy {
+  position: absolute;
+  left: 16.5%;
+  bottom: 20%;
+  width: 35%;
+  z-index: 4;
+}
+
+.headline {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(1.6rem, 3.2vw, 4.2rem);
+  line-height: 1.08;
+  color: #111;
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.01em;
+  font-size: 5rem;
+}
+
+.sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.52rem, 0.72vw, 0.76rem);
+  letter-spacing: 0.2em;
+  color: #111;
+  margin: 0;
+  line-height: 1.85;
+}
+
+/* ─────────────────────────────────────────
+   Navigation basse
+───────────────────────────────────────── */
+.bottom-line {
+  position: absolute;
+  bottom: 8%;
+  left: 0;
+  right: 0;
+  height: 0.7px;
+  background: rgba(17,17,17,0.22);
+  z-index: 6;
+}
+
+.blink {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(0.75rem, 1vw, 1.05rem);
+  letter-spacing: 0.2em;
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 0.7px;
+  transition: opacity 0.2s;
+}
+
+.blink:hover {
+  opacity: 0.45;
+}
+
+.nav-explore {
+  position: absolute;
+  left: 16.5%;
+  bottom: 3%;
+  z-index: 6;
+}
+
+.nav-center {
+  position: absolute;
+  left: 44%;
+  bottom: 3%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 1.8rem;
+  z-index: 6;
 }
 
-.slider-arrow {
-  background: rgba(255, 255, 255, 0.5);
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.3s ease;
+.nav-paris {
+  position: absolute;
+  right: 5%;
+  bottom: 3%;
+  opacity: 0.45;
+  z-index: 6;
+  text-decoration: none;
+  font-size: clamp(0.75rem, 1vw, 1.05rem);
 }
 
-.slider-arrow:hover {
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.slider-dots {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.slider-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.slider-dot.active {
-  background-color: #fff;
-}
-
-@media (max-width: 768px) {
-  .desktop-hero {
-    display: none;
+/* ─────────────────────────────────────────
+   RESPONSIVE – Tablette
+───────────────────────────────────────── */
+@media (max-width: 960px) {
+  .hero-wrap {
+    left: 44%;
+    width: 33%;
+    height: 76%;
   }
-  
-  .mobile-hero {
-    display: block;
-    height: 100%;
-    padding: 1rem;
-  }
-  
-  .brand-name {
-    font-size: 3rem;
-    letter-spacing: 0.8rem;
-    margin-top: 2rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .tagline {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
+
+  .left-copy {
+    bottom: 14%;
+    width: 37%;
   }
 }
 
-@media (max-width: 480px) {
-  .brand-name {
-    font-size: 2.5rem;
-    letter-spacing: 0.5rem;
+/* ─────────────────────────────────────────
+   RESPONSIVE – Mobile
+───────────────────────────────────────── */
+@media (max-width: 640px) {
+  .grid-line { display: none; }
+
+  .menu-btn {
+    top: 3%;
+    left: 4%;
   }
-  
-  .mobile-slider {
-    height: 50vh;
+
+  /* Titre fantôme derrière l'image sur mobile */
+  .brand-title {
+    top: auto;
+    bottom: 38%;
+    font-size: clamp(3.5rem, 20vw, 6rem);
+    color: rgba(13,13,13,0.07);
+    z-index: 2;
+    line-height: 1;
   }
-  
-  .slide-content h2 {
-    font-size: 1.5rem;
+
+  .hero-wrap {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 58%;
+    z-index: 3;
   }
-  
-  .explore-btn {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.9rem;
+
+  .left-copy {
+    left: 5%;
+    bottom: 12%;
+    width: 90%;
+    z-index: 4;
   }
+
+  .headline {
+    font-size: clamp(2rem, 8.5vw, 3.2rem);
+  }
+
+  .sub {
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+  }
+
+  .bottom-bar {
+    height: 10%;
+    min-height: 46px;
+    padding: 0 4%;
+  }
+
+  .bottom-left,
+  .bottom-right {
+    gap: 0.9rem;
+  }
+
+  .blink {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+  }
+}
+
+@media (max-width: 380px) {
+  /* "VIEW LOOKBOOK" trop large sur très petit écran */
+  .bottom-left .blink:last-child { display: none; }
 }
 </style>

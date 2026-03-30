@@ -112,7 +112,7 @@ const openCookieSettings = () => {
 
 <style scoped>
 .footer {
-  background-color: #f8f8f8;
+  background-color: var(--color-bg);
   color: #333;
   padding: 4rem 2rem 2rem;
   margin-top: 4rem;
