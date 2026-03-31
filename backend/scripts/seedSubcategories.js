@@ -33,9 +33,7 @@ const subcategoriesData = {
     { name: 'Pantalons', category: 'femme', description: 'Pantalons classiques et modernes', order: 11, type: 'Bas' },
     { name: 'Jeans', category: 'femme', description: 'Jeans de toutes coupes', order: 12, type: 'Bas' },
     { name: 'Shorts', category: 'femme', description: 'Shorts d\'été et sport', order: 13, type: 'Bas' },
-    { name: 'Chaussures', category: 'femme', description: 'Escarpins, ballerines, sandales', order: 14, type: 'Bas' },
-    { name: 'Baskets', category: 'femme', description: 'Baskets sport et lifestyle', order: 15, type: 'Bas' },
-    { name: 'Bottes', category: 'femme', description: 'Bottes hautes, bottines, boots', order: 16, type: 'Bas' }
+    { name: 'Chaussures', category: 'femme', description: 'Escarpins, ballerines, sandales', order: 14, type: 'Bas' }
   ],
   'homme': [
     { name: 'Chemises', category: 'homme', description: 'Chemises habillées et casual', order: 1, type: 'Haut' },
@@ -50,8 +48,7 @@ const subcategoriesData = {
     { name: 'Pantalons', category: 'homme', description: 'Pantalons chino, costume, cargo', order: 10, type: 'Bas' },
     { name: 'Jeans', category: 'homme', description: 'Jeans slim, regular, loose', order: 11, type: 'Bas' },
     { name: 'Shorts', category: 'homme', description: 'Shorts d\'été et bermudas', order: 12, type: 'Bas' },
-    { name: 'Chaussures', category: 'homme', description: 'Derbies, mocassins, richelieus', order: 13, type: 'Bas' },
-    { name: 'Baskets', category: 'homme', description: 'Baskets sport et lifestyle', order: 14, type: 'Bas' }
+    { name: 'Chaussures', category: 'homme', description: 'Derbies, mocassins, richelieus', order: 13, type: 'Bas' }
   ],
   'accessoires': [
     { name: 'Sacs à Main', category: 'accessoires', description: 'Sacs à main de toutes tailles', order: 1 },
@@ -59,12 +56,9 @@ const subcategoriesData = {
     { name: 'Portefeuilles', category: 'accessoires', description: 'Portefeuilles en cuir et textile', order: 3 },
     { name: 'Ceintures', category: 'accessoires', description: 'Ceintures en cuir et tissu', order: 4 },
     { name: 'Écharpes', category: 'accessoires', description: 'Écharpes légères et chaudes', order: 5 },
-    { name: 'Bonnets', category: 'accessoires', description: 'Bonnets d\'hiver', order: 6 },
-    { name: 'Casquettes', category: 'accessoires', description: 'Casquettes sport et mode', order: 7 },
     { name: 'Chapeaux', category: 'accessoires', description: 'Chapeaux élégants et décontractés', order: 8 },
     { name: 'Gants', category: 'accessoires', description: 'Gants d\'hiver et mi-saison', order: 9 },
     { name: 'Lunettes de Soleil', category: 'accessoires', description: 'Lunettes de soleil tendance', order: 10 },
-    { name: 'Montres', category: 'accessoires', description: 'Montres classiques et modernes', order: 11 },
     { name: 'Bijoux', category: 'accessoires', description: 'Colliers, bracelets, boucles d\'oreilles', order: 12 }
   ]
 };

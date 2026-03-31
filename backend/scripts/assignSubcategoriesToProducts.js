@@ -79,8 +79,8 @@ const assignSubcategoriesToProducts = async () => {
         'portefeuille': ['Portefeuilles'],
         'ceinture': ['Ceintures'],
         'écharpe': ['Écharpes'],
-        'bonnet': ['Bonnets'],
-        'casquette': ['Casquettes'],
+        'bonnet': ['Chapeaux'],
+        'casquette': ['Chapeaux'],
         'chapeau': ['Chapeaux'],
         'gant': ['Gants'],
         'lunette': ['Lunettes'],
@@ -91,7 +91,8 @@ const assignSubcategoriesToProducts = async () => {
         'foulard': ['Écharpes'],
         'chaussure': ['Chaussures'],
         'basket': ['Chaussures'],
-        'botte': ['Chaussures']
+        'botte': ['Chaussures'],
+        'bracelet': ['Bijoux']
       };
       
       for (const [keyword, possibleSubcategories] of Object.entries(keywordMapping)) {
