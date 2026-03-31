@@ -71,11 +71,21 @@ exports.createOrder = async (req, res) => {
           message: `Le prix du produit ${product.name} a changé` 
         });
       }
+
+      if (product.partner) {
+        item.partner = product.partner;
+        console.log('[ORDER] Assigned partner', product.partner, 'to item', item.name);
+      }
     }
+
+    const finalItems = cleanedOrderItems.map(item => ({
+      ...item,
+      partner: item.partner || undefined
+    }));
 
     const order = new Order({
       user: req.user.id,
-      orderItems: cleanedOrderItems,
+      orderItems: finalItems,
       shippingAddress,
       billingAddress,
       paymentMethod,

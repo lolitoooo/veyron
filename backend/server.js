@@ -121,6 +121,7 @@ app.use('/api/loyalty', require('./routes/loyalty'));
 app.use('/api/reviews', require('./routes/reviews'));
 app.use('/api/reviews/verified', require('./routes/verifiedReviews'));
 app.use('/api/admin/reviews', require('./routes/adminReviews'));
+app.use('/api/partners', require('./routes/partners'));
 app.use('/api/shipping-labels', require('./routes/shipping-labels'));
 
 app.use('/uploads', express.static('public/uploads', cacheOptions));

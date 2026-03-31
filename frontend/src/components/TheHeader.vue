@@ -105,6 +105,12 @@
         </button>
         
         <template v-if="isAuthenticated">
+          <router-link v-if="isPartner" to="/partner" class="icon-button" aria-label="Espace partenaire" title="Espace partenaire">
+            <i class="material-icons">storefront</i>
+          </router-link>
+          <router-link v-if="isAdmin" to="/admin" class="icon-button" aria-label="Administration" title="Administration">
+            <i class="material-icons">admin_panel_settings</i>
+          </router-link>
           <router-link to="/account" class="icon-button account-button" aria-label="Mon compte">
             <i class="material-icons">person</i>
             <span class="account-indicator"></span>
@@ -136,6 +142,8 @@
           <li><router-link to="/category/homme" @click="closeMobileMenu">Homme</router-link></li>
           <li><router-link to="/category/accessoires" @click="closeMobileMenu">Accessoires</router-link></li>
           <li><router-link to="/category/collections" @click="closeMobileMenu">Collections</router-link></li>
+          <li v-if="isPartner"><router-link to="/partner" @click="closeMobileMenu">Espace Partenaire</router-link></li>
+          <li v-if="isAdmin"><router-link to="/admin" @click="closeMobileMenu">Administration</router-link></li>
           <li v-if="isAuthenticated"><router-link to="/account" @click="closeMobileMenu">Mon Compte</router-link></li>
           <li v-if="isAuthenticated"><button class="mobile-logout-btn" @click="handleLogoutMobile">Déconnexion</button></li>
           <li v-else><router-link to="/login" @click="closeMobileMenu">Connexion</router-link></li>
@@ -213,10 +221,9 @@ const subcategoriesByCategory = computed(() => {
   return grouped;
 });
 
-const isAuthenticated = computed(() => {
-  const status = authStore.isAuthenticated;
-  return status;
-});
+const isAuthenticated = computed(() => authStore.isAuthenticated);
+const isPartner = computed(() => authStore.isPartner);
+const isAdmin = computed(() => authStore.isAdmin);
 
 const cartItemCount = computed(() => {
   return cartStore.items.reduce((total, item) => total + item.quantity, 0);

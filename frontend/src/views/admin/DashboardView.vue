@@ -94,6 +94,15 @@
         </div>
       </router-link>
 
+      <router-link to="/admin/partners" class="stat-card">
+        <div class="stat-icon">
+          <span class="material-icons">storefront</span>
+        </div>
+        <div class="stat-content">
+          <p>Partenaires</p>
+        </div>
+      </router-link>
+
       <!-- Raccourcis outils externes -->
       <a
         href="https://monitoring.veyron-paris.fr/"

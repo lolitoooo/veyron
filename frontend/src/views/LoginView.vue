@@ -176,7 +176,13 @@ const handleLogin = async () => {
     if (loginSuccess) {
       trackLogin('email');
       success('Connexion réussie');
-      await router.push({ path: '/account' });
+      if (authStore.isPartner) {
+        await router.push({ path: '/partner' });
+      } else if (authStore.isAdmin) {
+        await router.push({ path: '/admin' });
+      } else {
+        await router.push({ path: '/account' });
+      }
     } else {
       error.value = authStore.error || 'Identifiants invalides. Veuillez vérifier votre email et mot de passe.';
     }

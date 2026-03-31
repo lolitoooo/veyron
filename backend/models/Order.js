@@ -31,6 +31,11 @@ const OrderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Product'
+      },
+      partner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Partner',
+        default: null
       }
     }
   ],
