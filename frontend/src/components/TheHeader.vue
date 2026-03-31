@@ -14,9 +14,87 @@
       
       <nav class="navigation desktop-nav">
         <ul>
-          <li><router-link to="/category/femme">Femme</router-link></li>
-          <li><router-link to="/category/homme">Homme</router-link></li>
-          <li><router-link to="/category/accessoires">Accessoires</router-link></li>
+          <li 
+            @mouseenter="showCategoryMenu('femme')" 
+            @mouseleave="hideCategoryMenu"
+            class="nav-item-with-dropdown"
+          >
+            <router-link to="/category/femme">Femme</router-link>
+            <div v-if="hoveredCategory === 'femme' && subcategoriesByCategory.femme.length > 0" class="dropdown-menu dropdown-menu-split">
+              <div class="dropdown-column">
+                <h4 class="dropdown-title">Haut</h4>
+                <router-link 
+                  v-for="sub in subcategoriesByCategory.femme.filter(s => s.type === 'Haut')" 
+                  :key="sub._id"
+                  :to="`/category/femme?subcategory=${sub.slug}`"
+                  class="dropdown-item"
+                  :data-slug="sub.slug"
+                  :data-name="sub.name"
+                >
+                  {{ sub.name }}
+                </router-link>
+              </div>
+              <div class="dropdown-column">
+                <h4 class="dropdown-title">Bas</h4>
+                <router-link 
+                  v-for="sub in subcategoriesByCategory.femme.filter(s => s.type === 'Bas')" 
+                  :key="sub._id"
+                  :to="`/category/femme?subcategory=${sub.slug}`"
+                  class="dropdown-item"
+                >
+                  {{ sub.name }}
+                </router-link>
+              </div>
+            </div>
+          </li>
+          <li 
+            @mouseenter="showCategoryMenu('homme')" 
+            @mouseleave="hideCategoryMenu"
+            class="nav-item-with-dropdown"
+          >
+            <router-link to="/category/homme">Homme</router-link>
+            <div v-if="hoveredCategory === 'homme' && subcategoriesByCategory.homme.length > 0" class="dropdown-menu dropdown-menu-split">
+              <div class="dropdown-column">
+                <h4 class="dropdown-title">Haut</h4>
+                <router-link 
+                  v-for="sub in subcategoriesByCategory.homme.filter(s => s.type === 'Haut')" 
+                  :key="sub._id"
+                  :to="`/category/homme?subcategory=${sub.slug}`"
+                  class="dropdown-item"
+                >
+                  {{ sub.name }}
+                </router-link>
+              </div>
+              <div class="dropdown-column">
+                <h4 class="dropdown-title">Bas</h4>
+                <router-link 
+                  v-for="sub in subcategoriesByCategory.homme.filter(s => s.type === 'Bas')" 
+                  :key="sub._id"
+                  :to="`/category/homme?subcategory=${sub.slug}`"
+                  class="dropdown-item"
+                >
+                  {{ sub.name }}
+                </router-link>
+              </div>
+            </div>
+          </li>
+          <li 
+            @mouseenter="showCategoryMenu('accessoires')" 
+            @mouseleave="hideCategoryMenu"
+            class="nav-item-with-dropdown"
+          >
+            <router-link to="/category/accessoires">Accessoires</router-link>
+            <div v-if="hoveredCategory === 'accessoires' && subcategoriesByCategory.accessoires.length > 0" class="dropdown-menu">
+              <router-link 
+                v-for="sub in subcategoriesByCategory.accessoires" 
+                :key="sub._id"
+                :to="`/category/accessoires?subcategory=${sub.slug}`"
+                class="dropdown-item"
+              >
+                {{ sub.name }}
+              </router-link>
+            </div>
+          </li>
           <li><router-link to="/category/collections">Collections</router-link></li>
         </ul>
       </nav>
@@ -88,6 +166,15 @@ import { useRouter } from 'vue-router';
 import { useCartStore } from '@/stores/cart';
 import { useAuthStore } from '@/stores/auth';
 import { useNotification } from '@/composables/useNotification';
+import axios from 'axios';
+
+interface Subcategory {
+  _id: string;
+  name: string;
+  slug: string;
+  categorySlug: string;
+  type?: string;
+}
 
 const router = useRouter();
 const cartStore = useCartStore();
@@ -98,6 +185,33 @@ const isSearchOpen = ref(false);
 const searchQuery = ref('');
 const isCartLoading = computed(() => cartStore.isLoading);
 const isMobileMenuOpen = ref(false);
+const subcategories = ref<Subcategory[]>([]);
+const hoveredCategory = ref<string | null>(null);
+let hideMenuTimeout: ReturnType<typeof setTimeout> | null = null;
+
+const subcategoriesByCategory = computed(() => {
+  const grouped: Record<string, Subcategory[]> = {
+    femme: [],
+    homme: [],
+    accessoires: [],
+    collections: []
+  };
+  
+  subcategories.value.forEach(sub => {
+    const category = sub.categorySlug?.toLowerCase() || 'accessoires';
+    if (grouped[category]) {
+      grouped[category].push({ ...sub });
+    }
+  });
+  
+  const tshirtsFemme = grouped.femme.filter(s => s.name === 'T-shirts');
+  const tshirtsHomme = grouped.homme.filter(s => s.name === 'T-shirts');
+  
+  console.log('T-shirts Femme:', tshirtsFemme.map(s => ({ name: s.name, slug: s.slug, categorySlug: s.categorySlug })));
+  console.log('T-shirts Homme:', tshirtsHomme.map(s => ({ name: s.name, slug: s.slug, categorySlug: s.categorySlug })));
+  
+  return grouped;
+});
 
 const isAuthenticated = computed(() => {
   const status = authStore.isAuthenticated;
@@ -111,8 +225,9 @@ const cartItemCount = computed(() => {
 watch(() => authStore.isAuthenticated, (newValue) => {
 });
 
-onMounted(() => {
+onMounted(async () => {
   window.addEventListener('resize', handleResize);
+  await loadSubcategories();
 });
 
 onUnmounted(() => {
@@ -165,6 +280,32 @@ const handleLogoutMobile = async () => {
   await handleLogout();
   closeMobileMenu();
 };
+
+const loadSubcategories = async () => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/subcategories`);
+    if (response.data.success) {
+      subcategories.value = response.data.data;
+      console.log('Sous-catégories chargées:', response.data.data.filter(s => s.name === 'T-shirts'));
+    }
+  } catch (error) {
+    console.error('Erreur lors du chargement des sous-catégories:', error);
+  }
+};
+
+const showCategoryMenu = (category: string) => {
+  if (hideMenuTimeout) {
+    clearTimeout(hideMenuTimeout);
+    hideMenuTimeout = null;
+  }
+  hoveredCategory.value = category;
+};
+
+const hideCategoryMenu = () => {
+  hideMenuTimeout = setTimeout(() => {
+    hoveredCategory.value = null;
+  }, 200);
+};
 </script>
 
 <style scoped>
@@ -214,6 +355,14 @@ const handleLogoutMobile = async () => {
   padding: 0;
 }
 
+.navigation li {
+  position: relative;
+}
+
+.nav-item-with-dropdown {
+  position: relative;
+}
+
 .navigation a {
   color: var(--color-gray-700);
   text-decoration: none;
@@ -244,6 +393,86 @@ const handleLogoutMobile = async () => {
 .navigation a:hover::after,
 .navigation a.router-link-active::after {
   width: 100%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  padding: var(--space-2) 0;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown-menu-split {
+  display: flex;
+  gap: var(--space-4);
+  min-width: 350px;
+  padding: var(--space-3);
+}
+
+.dropdown-column {
+  flex: 1;
+  min-width: 150px;
+}
+
+.dropdown-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-gray-500);
+  margin-bottom: var(--space-2);
+  padding: 0 var(--space-2);
+}
+
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+  right: 0;
+  height: 0.5rem;
+  background: transparent;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.dropdown-item {
+  display: block;
+  padding: var(--space-1) var(--space-2);
+  color: var(--color-gray-700);
+  text-decoration: none;
+  font-size: 0.75rem;
+  transition: background-color var(--transition-base), color var(--transition-base);
+  white-space: nowrap;
+  border-radius: 3px;
+}
+
+.dropdown-item::after {
+  display: none;
+}
+
+.dropdown-item:hover {
+  background-color: var(--color-gray-50);
+  color: var(--color-primary);
+  font-weight: 600;
 }
 
 .header-actions {

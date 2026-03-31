@@ -108,6 +108,7 @@ app.use('/api/products', require('./routes/products'));
 app.use('/api/orders', require('./routes/orders'));
 app.use('/api/search', require('./routes/search'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
+app.use('/api/subcategories', require('./routes/subcategories'));
 app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/cart', require('./routes/cart'));
 app.use('/api/stripe', require('./routes/stripe'));

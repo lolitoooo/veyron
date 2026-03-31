@@ -97,6 +97,19 @@
         </div>
         
         <div class="filter-section">
+          <h3>SOUS-CATÉGORIE</h3>
+          <div class="filter-options">
+            <div class="filter-option" v-for="subcategory in availableSubcategories" :key="subcategory">
+              <input type="checkbox" :id="`subcategory-${subcategory}`" :value="subcategory" v-model="selectedSubcategories">
+              <label :for="`subcategory-${subcategory}`">{{ subcategory }}</label>
+            </div>
+            <div class="filter-option see-more" v-if="moreSubcategories">
+              <button @click="showMoreSubcategories = !showMoreSubcategories">{{ showMoreSubcategories ? 'VOIR MOINS' : 'VOIR PLUS' }}</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="filter-section">
           <h3>TAILLE</h3>
           <div class="filter-options">
             <div class="filter-option" v-for="size in availableSizes" :key="size">
@@ -210,6 +223,7 @@ interface Product {
   description: string;
   price: number;
   category: string | { _id: string, name: string, slug?: string };
+  subcategory?: { _id: string, name: string, slug?: string };
   images?: Array<{ url: string, alt?: string, isMain?: boolean }>;
   image?: string;
   colors?: Array<{ name: string, code: string, images?: Array<{ url: string, alt?: string, isMain?: boolean }> }>;
@@ -221,6 +235,7 @@ interface Product {
 
 const products = ref<Product[]>([]);
 const categories = ref<Category[]>([]);
+const allCategorySubcategories = ref<string[]>([]);
 const isLoading = ref(true);
 const error = ref('');
 
@@ -228,8 +243,10 @@ const viewMode = ref<number>(1);
 const showFilters = ref<boolean>(false);
 const sortOption = ref<string>('default');
 const priceRange = ref<number[]>([0, 50]);
+const selectedSubcategories = ref<string[]>([]);
 const selectedSizes = ref<string[]>([]);
 const selectedColors = ref<string[]>([]);
+const showMoreSubcategories = ref<boolean>(false);
 const showMoreSizes = ref<boolean>(false);
 const showMoreColors = ref<boolean>(false);
 
@@ -301,7 +318,31 @@ const loadProducts = async () => {
       return;
     }
     
-    const response = await api.get(`/products?category=${categoryId}`);
+    const subcategorySlug = route.query.subcategory as string;
+    
+    const subcategoriesResponse = await api.get('/subcategories');
+    if (subcategoriesResponse.data.success) {
+      const categorySubcategories = subcategoriesResponse.data.data.filter((sub: any) => {
+        return sub.categorySlug === slug;
+      });
+      allCategorySubcategories.value = categorySubcategories.map((sub: any) => sub.name).sort();
+    }
+    
+    let url = `/products?category=${categoryId}`;
+    if (subcategorySlug) {
+      if (subcategoriesResponse.data.success) {
+        const subcategory = subcategoriesResponse.data.data.find((sub: any) => sub.slug === subcategorySlug);
+        if (subcategory) {
+          url += `&subcategory=${subcategory._id}`;
+          selectedSubcategories.value = [subcategory.name];
+          showFilters.value = true;
+        }
+      }
+    } else if (selectedSubcategories.value.length === 0) {
+      selectedSubcategories.value = [];
+    }
+    
+    const response = await api.get(url);
     
     if (response.data && response.data.data && Array.isArray(response.data.data)) {
       products.value = response.data.data;
@@ -450,9 +491,18 @@ const handleOutsideClick = (event: Event) => {
 const resetFilters = () => {
   sortOption.value = 'default';
   priceRange.value = [0, maxPrice.value];
+  selectedSubcategories.value = [];
   selectedSizes.value = [];
   selectedColors.value = [];
+  
+  if (route.query.subcategory) {
+    router.push({ path: route.path });
+  }
 };
+
+const allSubcategories = computed(() => {
+  return allCategorySubcategories.value;
+});
 
 const allSizes = computed(() => {
   const sizes = new Set<string>();
@@ -476,6 +526,14 @@ const allColors = computed(() => {
     }
   });
   return colors;
+});
+
+const availableSubcategories = computed(() => {
+  return showMoreSubcategories.value ? allSubcategories.value : allSubcategories.value.slice(0, 8);
+});
+
+const moreSubcategories = computed(() => {
+  return allSubcategories.value.length > 8;
 });
 
 const availableSizes = computed(() => {
@@ -506,6 +564,14 @@ const filteredProducts = computed(() => {
     const price = hasDiscount(product) ? product.discountPrice || 0 : product.price;
     return price >= priceRange.value[0] && price <= priceRange.value[1];
   });
+  
+  if (selectedSubcategories.value.length > 0) {
+    result = result.filter(product => {
+      return product.subcategory && 
+             typeof product.subcategory === 'object' && 
+             selectedSubcategories.value.includes(product.subcategory.name);
+    });
+  }
   
   if (selectedSizes.value.length > 0) {
     result = result.filter(product => {
@@ -597,9 +663,49 @@ const generateProductSlug = (product: Product): string => {
 
 watch(categorySlug, (newSlug, oldSlug) => {
   if (newSlug !== oldSlug) {
+    selectedSubcategories.value = [];
+    selectedSizes.value = [];
+    selectedColors.value = [];
+    showFilters.value = false;
     loadProducts();
   }
 }, { immediate: false });
+
+watch(() => route.query.subcategory, (newSubcategory, oldSubcategory) => {
+  if (newSubcategory !== oldSubcategory) {
+    loadProducts();
+  }
+});
+
+watch(selectedSubcategories, async (newSubcategories) => {
+  if (newSubcategories.length === 0) {
+    if (route.query.subcategory) {
+      await router.push({ path: route.path });
+    }
+    return;
+  }
+  
+  if (newSubcategories.length === 1) {
+    const subcategoriesResponse = await api.get('/subcategories');
+    if (subcategoriesResponse.data.success) {
+      const currentCategorySlug = categorySlug.value;
+      const selectedSubcategory = subcategoriesResponse.data.data.find((sub: any) => 
+        newSubcategories.includes(sub.name) && sub.categorySlug === currentCategorySlug
+      );
+      
+      if (selectedSubcategory && selectedSubcategory.slug !== route.query.subcategory) {
+        await router.push({ 
+          path: route.path, 
+          query: { subcategory: selectedSubcategory.slug } 
+        });
+      }
+    }
+  } else {
+    if (route.query.subcategory) {
+      await router.push({ path: route.path });
+    }
+  }
+});
 
 onMounted(() => {
   loadProducts();

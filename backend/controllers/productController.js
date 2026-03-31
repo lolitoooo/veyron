@@ -69,8 +69,12 @@ exports.getProducts = async (req, res) => {
     const startIndex = (page - 1) * limit;
     
     const queryObj = { ...req.query };
-    const excludedFields = ['page', 'limit', 'sort', 'fields', 'q', 'showAll'];
+    const excludedFields = ['page', 'limit', 'sort', 'fields', 'q', 'showAll', 'subcategory'];
     excludedFields.forEach(field => delete queryObj[field]);
+    
+    if (req.query.subcategory) {
+      queryObj.subcategory = req.query.subcategory;
+    }
     
     if (req.query.showAll !== 'true') {
       queryObj.isActive = true;
@@ -103,7 +107,7 @@ exports.getProducts = async (req, res) => {
       query = query.select('-__v');
     }
     
-    const products = await query.skip(startIndex).limit(limit);
+    const products = await query.skip(startIndex).limit(limit).populate('subcategory', 'name slug');
     
     const total = await Product.countDocuments(JSON.parse(queryStr));
     
