@@ -40,7 +40,13 @@ const ProductSchema = new mongoose.Schema({
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
-    required: [true, 'Veuillez sélectionner une catégorie']
+    required: [function() { return !this.partner; }, 'Veuillez sélectionner une catégorie'],
+    default: null
+  },
+  partner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Partner',
+    default: null
   },
   brand: {
     type: String,

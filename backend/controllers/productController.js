@@ -125,7 +125,23 @@ exports.getProducts = async (req, res) => {
 
 exports.getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).populate('category');
+    const paramId = req.params.id;
+    let product = null;
+
+    if (/^[0-9a-fA-F]{24}$/.test(paramId)) {
+      product = await Product.findById(paramId).populate('category');
+    }
+
+    if (!product) {
+      const trailingId = paramId.match(/([0-9a-fA-F]{24})$/);
+      if (trailingId) {
+        product = await Product.findById(trailingId[1]).populate('category');
+      }
+    }
+
+    if (!product) {
+      product = await Product.findOne({ slug: paramId }).populate('category');
+    }
     
     if (!product) {
       return res.status(404).json({ message: 'Produit non trouvé' });

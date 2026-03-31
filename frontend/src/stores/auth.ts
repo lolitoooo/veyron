@@ -17,6 +17,7 @@ export const useAuthStore = defineStore('auth', () => {
   });
   
   const isAdmin = computed(() => user.value?.role === 'admin');
+  const isPartner = computed(() => user.value?.role === 'partner');
 
   async function loadUser(): Promise<boolean> {
     if (!token.value) return false;
@@ -169,6 +170,7 @@ export const useAuthStore = defineStore('auth', () => {
     error,
     isAuthenticated,
     isAdmin,
+    isPartner,
     loadUser,
     login,
     logout,

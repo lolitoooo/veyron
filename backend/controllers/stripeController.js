@@ -11,6 +11,18 @@ const { orderConfirmationEmailTemplate, activateAccountEmailTemplate } = require
 const User = require('../models/User');
 const notificationService = require('../services/notificationService');
 
+const enrichOrderItemsWithPartner = async (orderItems) => {
+  for (const item of orderItems) {
+    if (!item.partner) {
+      const product = await Product.findById(item.product);
+      if (product && product.partner) {
+        item.partner = product.partner;
+      }
+    }
+  }
+  return orderItems;
+};
+
 const cleanImageUrl = (url) => {
   if (!url) return '';
   
@@ -176,6 +188,8 @@ exports.createCheckoutSession = async (req, res) => {
     
     const discountedSubtotal = parseFloat((subtotal - discountAmount - cashbackUsed).toFixed(2));
     const totalPrice = parseFloat((discountedSubtotal + shippingPrice).toFixed(2));
+
+    await enrichOrderItemsWithPartner(orderItems);
 
     const order = new Order({
       user: req.user.id,
@@ -445,6 +459,8 @@ exports.createCheckoutSessionGuest = async (req, res) => {
 
     const discountedSubtotal = parseFloat((subtotal - discountAmount).toFixed(2));
     const totalPrice = parseFloat((discountedSubtotal + shippingPrice).toFixed(2));
+
+    await enrichOrderItemsWithPartner(orderItems);
 
     const order = new Order({
       guestEmail: emailLower,

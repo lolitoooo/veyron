@@ -46,9 +46,15 @@ const router = createRouter({
         {
           path: 'category/collections',
           name: 'category-collections',
-          component: () => import('@/views/CategoryView.vue'),
-          props: { slug: 'collections' },
-          meta: { title: 'Collections | VEYRON', breadcrumb: 'Collections' }
+          component: () => import('@/views/CollectionView.vue'),
+          meta: { title: 'Nos Boutiques | VEYRON', breadcrumb: 'Boutiques' }
+        },
+        {
+          path: 'collection/:slug',
+          name: 'partner-shop',
+          component: () => import('@/views/PartnerShopView.vue'),
+          props: true,
+          meta: { title: 'Boutique | VEYRON', breadcrumb: 'Boutique' }
         },
         {
           path: 'category/:slug',
@@ -308,6 +314,55 @@ const router = createRouter({
       meta: { title: 'Vérification du lien magique | VEYRON' }
     },
     {
+      path: '/partner',
+      component: MainLayout,
+      meta: { requiresAuth: true, requiresPartner: true },
+      children: [
+        {
+          path: '',
+          name: 'partner-dashboard',
+          component: () => import('@/views/partner/DashboardView.vue'),
+          meta: { title: 'Tableau de bord | Partenaire VEYRON', breadcrumb: 'Tableau de bord' }
+        },
+        {
+          path: 'orders',
+          name: 'partner-orders',
+          component: () => import('@/views/partner/OrdersView.vue'),
+          meta: { title: 'Commandes | Partenaire VEYRON', breadcrumb: 'Commandes' }
+        },
+        {
+          path: 'orders/:id',
+          name: 'partner-order-detail',
+          component: () => import('@/views/partner/OrderDetailView.vue'),
+          meta: { title: 'Détail commande | Partenaire VEYRON', breadcrumb: 'Détail commande' }
+        },
+        {
+          path: 'products',
+          name: 'partner-products',
+          component: () => import('@/views/partner/ProductsView.vue'),
+          meta: { title: 'Mes articles | Partenaire VEYRON', breadcrumb: 'Articles' }
+        },
+        {
+          path: 'stats',
+          name: 'partner-stats',
+          component: () => import('@/views/partner/StatsView.vue'),
+          meta: { title: 'Statistiques | Partenaire VEYRON', breadcrumb: 'Statistiques' }
+        },
+        {
+          path: 'payouts',
+          name: 'partner-payouts',
+          component: () => import('@/views/partner/PayoutsView.vue'),
+          meta: { title: 'Reversements | Partenaire VEYRON', breadcrumb: 'Reversements' }
+        },
+        {
+          path: 'profile',
+          name: 'partner-profile',
+          component: () => import('@/views/partner/ProfileView.vue'),
+          meta: { title: 'Ma boutique | Partenaire VEYRON', breadcrumb: 'Ma boutique' }
+        }
+      ]
+    },
+    {
       path: '/admin',
       component: MainLayout,
       meta: { requiresAuth: true, requiresAdmin: true },
@@ -414,6 +469,48 @@ const router = createRouter({
           component: () => import('@/views/admin/UserFormView.vue'),
           meta: { title: 'Supprimer l\'utilisateur | Admin VEYRON', breadcrumb: 'Supprimer l\'utilisateur' }
         },
+        {
+          path: 'partners',
+          name: 'admin-partners',
+          component: () => import('@/views/admin/PartnersView.vue'),
+          meta: { title: 'Gestion des partenaires | Admin VEYRON', breadcrumb: 'Partenaires' }
+        },
+        {
+          path: 'partners/create',
+          name: 'admin-partner-create',
+          component: () => import('@/views/admin/PartnerFormView.vue'),
+          meta: { title: 'Créer un partenaire | Admin VEYRON', breadcrumb: 'Créer un partenaire' }
+        },
+        {
+          path: 'partners/:id',
+          name: 'admin-partner-detail',
+          component: () => import('@/views/admin/PartnerDetailView.vue'),
+          meta: { title: 'Détail partenaire | Admin VEYRON', breadcrumb: 'Détail partenaire' }
+        },
+        {
+          path: 'partners/:id/edit',
+          name: 'admin-partner-edit',
+          component: () => import('@/views/admin/PartnerFormView.vue'),
+          meta: { title: 'Modifier le partenaire | Admin VEYRON', breadcrumb: 'Modifier le partenaire' }
+        },
+        {
+          path: 'partners/:id/products',
+          name: 'admin-partner-products',
+          component: () => import('@/views/admin/PartnerProductsView.vue'),
+          meta: { title: 'Articles partenaire | Admin VEYRON', breadcrumb: 'Articles partenaire' }
+        },
+        {
+          path: 'partners/:id/products/create',
+          name: 'admin-partner-product-create',
+          component: () => import('@/views/admin/PartnerProductFormView.vue'),
+          meta: { title: 'Ajouter un article partenaire | Admin VEYRON', breadcrumb: 'Ajouter un article' }
+        },
+        {
+          path: 'partners/:id/products/:productId/edit',
+          name: 'admin-partner-product-edit',
+          component: () => import('@/views/admin/PartnerProductFormView.vue'),
+          meta: { title: 'Modifier un article partenaire | Admin VEYRON', breadcrumb: 'Modifier un article' }
+        },
       ]
     },
     {
@@ -438,6 +535,7 @@ router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin)
+  const requiresPartner = to.matched.some(record => record.meta.requiresPartner)
   const isGuestRoute = to.matched.some(record => record.meta.guest)
   
   if (!authStore.user && authStore.isAuthenticated) {
@@ -453,6 +551,11 @@ router.beforeEach(async (to, from, next) => {
   }
   
   if (requiresAdmin && !authStore.isAdmin) {
+    next({ name: 'home' })
+    return
+  }
+  
+  if (requiresPartner && !authStore.isPartner) {
     next({ name: 'home' })
     return
   }
