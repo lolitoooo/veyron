@@ -17,12 +17,6 @@ const router = createRouter({
           meta: { title: 'VEYRON - Mode de luxe', breadcrumb: 'Accueil' }
         },
         {
-          path: 'category',
-          name: 'categories',
-          component: () => import('@/views/CategoriesView.vue'),
-          meta: { title: 'Nos Collections | VEYRON', breadcrumb: 'Collections' }
-        },
-        {
           path: 'category/homme',
           name: 'category-men',
           component: () => import('@/views/CategoryView.vue'),
@@ -61,7 +55,7 @@ const router = createRouter({
           name: 'category',
           component: () => import('@/views/CategoryView.vue'),
           props: true,
-          meta: { title: 'Catégorie | VEYRON', breadcrumb: 'Catégorie' }
+          meta: { title: 'Catégorie | VEYRON' }
         },
         {
           path: 'category/:slug/:productSlug',

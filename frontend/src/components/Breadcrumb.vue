@@ -124,11 +124,6 @@ const generateBreadcrumbs = async () => {
     const productId = route.params.id as string;
     
     result.push({
-      label: 'Catégories',
-      to: '/category'
-    });
-    
-    result.push({
       label: categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1),
       to: `/category/${categorySlug}`
     });
@@ -169,11 +164,6 @@ const generateBreadcrumbs = async () => {
   
   if (route.path === '/category/homme' || route.path === '/category/femme' || route.path === '/category/accessoires') {
     const categorySlug = route.path.split('/').pop() || '';
-    
-    result.push({
-      label: 'Catégories',
-      to: '/category'
-    });
     
     result.push({
       label: categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1),
