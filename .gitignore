@@ -17,6 +17,7 @@ coverage
 .env.development
 .env.production
 .env.preprod
+.env.monitoring
 
 frontend/.env.production
 frontend/.env.preprod

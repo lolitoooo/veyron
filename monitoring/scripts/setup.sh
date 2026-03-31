@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Script d'installation automatique pour ntfy + GlitchTip
+# Script d'installation automatique pour ntfy + GlitchTip + Prometheus + Grafana
 # Usage: ./setup.sh
 
 set -e
 
-echo "🚀 Installation ntfy.sh + GlitchTip pour Veyron"
-echo "================================================"
+echo "🚀 Installation ntfy + GlitchTip + Prometheus + Grafana pour Veyron"
+echo "==================================================================="
 
 # Couleurs
 RED='\033[0;31m'
@@ -55,12 +55,15 @@ echo ""
 echo "Configuration des domaines:"
 read -p "Domaine pour ntfy (ex: ntfy.veyron-paris.fr): " NTFY_DOMAIN
 read -p "Domaine pour GlitchTip (ex: glitchtip.veyron-paris.fr): " GLITCHTIP_DOMAIN
+read -p "Domaine pour Grafana (ex: grafana.veyron-paris.fr): " GRAFANA_DOMAIN
+read -p "Domaine pour Prometheus (ex: prometheus.veyron-paris.fr): " PROMETHEUS_DOMAIN
 
 # Générer les secrets
 echo ""
 echo "Génération des secrets..."
 GLITCHTIP_SECRET_KEY=$(openssl rand -hex 32)
 GLITCHTIP_DB_PASSWORD=$(openssl rand -base64 32)
+GRAFANA_ADMIN_PASSWORD=$(openssl rand -base64 24)
 
 echo -e "${GREEN}✓ Secrets générés${NC}"
 
@@ -70,7 +73,7 @@ read -p "Email pour les certificats SSL: " SSL_EMAIL
 # Créer la structure de dossiers
 echo ""
 echo "Création de la structure de dossiers..."
-mkdir -p /opt/monitoring/{ntfy/{cache,config},glitchtip/{postgres-data,redis-data,uploads},nginx}
+mkdir -p /opt/monitoring/{ntfy/{cache,config},glitchtip/{postgres-data,redis-data,uploads},nginx,prometheus,grafana/provisioning/{datasources,dashboards}}
 cd /opt/monitoring
 
 # Créer le fichier .env
@@ -82,6 +85,10 @@ GLITCHTIP_SECRET_KEY=${GLITCHTIP_SECRET_KEY}
 EMAIL_URL=smtp://contact@veyron-paris.fr:LolitoP77!@smtp.mail.ovh.net:587
 NTFY_DOMAIN=${NTFY_DOMAIN}
 GLITCHTIP_DOMAIN=${GLITCHTIP_DOMAIN}
+GRAFANA_ADMIN_USER=admin
+GRAFANA_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+GRAFANA_DOMAIN=${GRAFANA_DOMAIN}
+PROMETHEUS_DOMAIN=${PROMETHEUS_DOMAIN}
 EOF
 
 echo -e "${GREEN}✓ Fichier .env créé${NC}"
@@ -183,9 +190,117 @@ EOF
 
 sed -i "s/GLITCHTIP_DOMAIN_PLACEHOLDER/${GLITCHTIP_DOMAIN}/g" /etc/nginx/sites-available/${GLITCHTIP_DOMAIN}
 
+# Config Grafana
+cat > /etc/nginx/sites-available/${GRAFANA_DOMAIN} << 'EOF'
+upstream grafana_backend {
+    server 127.0.0.1:3003;
+    keepalive 32;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name GRAFANA_DOMAIN_PLACEHOLDER;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name GRAFANA_DOMAIN_PLACEHOLDER;
+
+    ssl_certificate /etc/letsencrypt/live/GRAFANA_DOMAIN_PLACEHOLDER/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/GRAFANA_DOMAIN_PLACEHOLDER/privkey.pem;
+
+    location / {
+        proxy_pass http://grafana_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_buffering off;
+        client_max_body_size 10m;
+    }
+
+    location /api/live/ {
+        proxy_pass http://grafana_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+    }
+}
+EOF
+
+sed -i "s/GRAFANA_DOMAIN_PLACEHOLDER/${GRAFANA_DOMAIN}/g" /etc/nginx/sites-available/${GRAFANA_DOMAIN}
+
+# Config Prometheus (avec auth basique)
+cat > /etc/nginx/sites-available/${PROMETHEUS_DOMAIN} << 'EOF'
+upstream prometheus_backend {
+    server 127.0.0.1:9090;
+    keepalive 32;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name PROMETHEUS_DOMAIN_PLACEHOLDER;
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://$server_name$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name PROMETHEUS_DOMAIN_PLACEHOLDER;
+
+    ssl_certificate /etc/letsencrypt/live/PROMETHEUS_DOMAIN_PLACEHOLDER/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/PROMETHEUS_DOMAIN_PLACEHOLDER/privkey.pem;
+
+    auth_basic "Prometheus";
+    auth_basic_user_file /etc/nginx/.htpasswd-prometheus;
+
+    location / {
+        proxy_pass http://prometheus_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+EOF
+
+sed -i "s/PROMETHEUS_DOMAIN_PLACEHOLDER/${PROMETHEUS_DOMAIN}/g" /etc/nginx/sites-available/${PROMETHEUS_DOMAIN}
+
+# Créer le fichier htpasswd pour Prometheus
+echo -e "${YELLOW}Création du mot de passe pour l'accès Prometheus...${NC}"
+PROM_PASSWORD=$(openssl rand -base64 16)
+echo "admin:$(openssl passwd -apr1 ${PROM_PASSWORD})" > /etc/nginx/.htpasswd-prometheus
+echo -e "${GREEN}✓ Auth Prometheus créée (user: admin, pass: ${PROM_PASSWORD})${NC}"
+
 # Activer les sites
 ln -sf /etc/nginx/sites-available/${NTFY_DOMAIN} /etc/nginx/sites-enabled/
 ln -sf /etc/nginx/sites-available/${GLITCHTIP_DOMAIN} /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available/${GRAFANA_DOMAIN} /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available/${PROMETHEUS_DOMAIN} /etc/nginx/sites-enabled/
 
 # Tester la config Nginx
 nginx -t
@@ -199,6 +314,8 @@ systemctl stop nginx
 
 certbot certonly --standalone -d ${NTFY_DOMAIN} --email ${SSL_EMAIL} --agree-tos --non-interactive
 certbot certonly --standalone -d ${GLITCHTIP_DOMAIN} --email ${SSL_EMAIL} --agree-tos --non-interactive
+certbot certonly --standalone -d ${GRAFANA_DOMAIN} --email ${SSL_EMAIL} --agree-tos --non-interactive
+certbot certonly --standalone -d ${PROMETHEUS_DOMAIN} --email ${SSL_EMAIL} --agree-tos --non-interactive
 
 systemctl start nginx
 
@@ -232,9 +349,9 @@ docker exec -it glitchtip-web ./manage.py createsuperuser
 
 # Résumé
 echo ""
-echo -e "${GREEN}================================================${NC}"
+echo -e "${GREEN}==================================================================${NC}"
 echo -e "${GREEN}✅ Installation terminée avec succès!${NC}"
-echo -e "${GREEN}================================================${NC}"
+echo -e "${GREEN}==================================================================${NC}"
 echo ""
 echo "📝 Informations importantes:"
 echo ""
@@ -250,6 +367,19 @@ echo "   URL: https://${GLITCHTIP_DOMAIN}"
 echo "   Connectez-vous avec le compte créé ci-dessus"
 echo "   Créez un projet et récupérez le DSN"
 echo ""
+echo "📊 Grafana:"
+echo "   URL: https://${GRAFANA_DOMAIN}"
+echo "   User: admin"
+echo "   Password: ${GRAFANA_ADMIN_PASSWORD}"
+echo "   Prometheus est pré-configuré comme datasource"
+echo "   Dashboards recommandés à importer:"
+echo "   - Node Exporter Full (ID: 1860)"
+echo "   - Docker cAdvisor (ID: 14282)"
+echo ""
+echo "🔥 Prometheus:"
+echo "   URL: https://${PROMETHEUS_DOMAIN}"
+echo "   Auth basique: admin / ${PROM_PASSWORD}"
+echo ""
 echo "📱 Configuration iPhone:"
 echo "   1. Installez l'app ntfy depuis l'App Store"
 echo "   2. Configurez le serveur: https://${NTFY_DOMAIN}"
@@ -259,6 +389,7 @@ echo "🔧 Prochaines étapes:"
 echo "   1. Ajoutez NTFY_URL=https://${NTFY_DOMAIN} dans .env.production du backend"
 echo "   2. Récupérez le DSN GlitchTip et ajoutez GLITCHTIP_DSN dans .env.production"
 echo "   3. Redémarrez le backend: docker-compose restart backend"
+echo "   4. Changez les mots de passe Grafana et Prometheus après le premier login"
 echo ""
 echo "📚 Documentation complète: /opt/monitoring/DEPLOYMENT.md"
 echo ""
